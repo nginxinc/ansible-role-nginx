@@ -1,0 +1,18 @@
+---
+- import_tasks: keys/apt-key.yml
+  when: ansible_os_family == "Debian"
+
+- import_tasks: keys/rpm-key.yml
+  when: ansible_os_family == "RedHat" or ansible_os_family == "Suse"
+
+- import_tasks: opensource/install-oss.yml
+  when: type == "opensource"
+
+- import_tasks: plus/install-plus.yml
+  when: type == "plus"
+
+- import_tasks: conf/nginx-status.yml
+  when: status
+
+- import_tasks: amplify/install-amplify.yml
+  when: amplify is defined and amplify

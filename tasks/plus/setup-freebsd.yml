@@ -1,0 +1,13 @@
+---
+- name: "(FreeBSD) Add NGINX Plus Repository"
+  get_url:
+    url: https://cs.nginx.com/static/files/nginx-plus.conf
+    dest: /etc/pkg/nginx-plus.conf
+
+- name: "(FreeBSD) Verify NGINX Plus License"
+  blockinfile:
+    path: /usr/local/etc/pkg.conf
+    block: |
+      PKG_ENV: { SSL_NO_VERIFY_PEER: "1",
+      SSL_CLIENT_CERT_FILE: "/etc/ssl/nginx/nginx-repo.crt",
+      SSL_CLIENT_KEY_FILE: "/etc/ssl/nginx/nginx-repo.key" }

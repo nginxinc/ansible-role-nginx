@@ -1,0 +1,32 @@
+---
+- import_tasks: setup-license.yml
+
+- import_tasks: setup-debian.yml
+  when: ansible_os_family == "Debian"
+
+- import_tasks: setup-redhat.yml
+  when: ansible_os_family == "RedHat"
+
+- import_tasks: setup-suse.yml
+  when: ansible_os_family == "Suse"
+
+- import_tasks: setup-freebsd.yml
+  when: ansible_os_family == "FreeBSD"
+
+- name: "(All OSs) Install NGINX Plus"
+  package:
+    name: nginx-plus
+    state: present
+  notify: "(All OSs) Start NGINX"
+
+- name: "(All OSs) Install NGINX NJS Module"
+  package:
+    name: nginx-plus-module-njs
+    state: present
+  when: njs
+
+- name: "(All OSs) Install NGINX Perl Module"
+  package:
+    name: nginx-plus-module-perl
+    state: present
+  when: perl

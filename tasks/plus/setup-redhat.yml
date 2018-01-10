@@ -1,0 +1,25 @@
+---
+- name: "(CentOS/RedHat/Amazon Linux/Oracle Linux) Gather Distribution Version"
+  set_fact:
+    version: "6"
+  when: ansible_distribution_major_version|int == 6
+
+- name: "(CentOS/RedHat/Amazon Linux/Oracle Linux) Gather Distribution Version"
+  set_fact:
+    version: "7"
+  when: ansible_distribution_major_version|int >= 7 and ansible_distribution_major_version|int <= 7.3
+
+- name: "(CentOS/RedHat/Amazon Linux/Oracle Linux) Gather Distribution Version"
+  set_fact:
+    version: "7.4"
+  when: ansible_distribution_major_version|int == 7.4
+
+- name: "(CentOS/RedHat/Amazon Linux/Oracle Linux) Gather Distribution Version"
+  set_fact:
+    version: "amazon"
+  when: ansible_distribution == "Amazon"
+
+- name: "(CentOS/RedHat/Amazon Linux/Oracle Linux) Add NGINX Plus Repository"
+  get_url:
+    url: https://cs.nginx.com/static/files/nginx-plus-{{ version }}.repo
+    dest: /etc/yum.repos.d/nginx-plus-{{ version }}.repo

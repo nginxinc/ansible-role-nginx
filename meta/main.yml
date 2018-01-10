@@ -1,0 +1,38 @@
+galaxy_info:
+  author: Alessandro Fael Garcia
+  description: Ansible role for NGINX
+  company: NGINX Inc
+
+  license: Apache License, Version 2.0
+
+  min_ansible_version: 2.4.0.0
+
+  platforms:
+  - name: Debian
+    versions:
+      - wheezy
+      - jessie
+      - stretch
+  - name: Ubuntu
+    versions:
+      - precise
+      - trusty
+      - xenial
+      - yakkety
+  - name: EL
+    versions:
+      - 6
+      - 7
+  - name: SLES
+    versions:
+      - 12
+
+  galaxy_tags:
+    - nginx
+    - amplify
+    - oss
+    - plus
+    - web
+    - server
+
+dependencies: []

@@ -1,0 +1,13 @@
+---
+- name: "(All OSs) Create SSL directory"
+  file:
+    path: /etc/ssl/nginx
+    state: directory
+
+- name: "(All OSs) Copy NGINX Plus Certificate and License Key"
+  copy:
+    src: "{{ item }}"
+    dest: /etc/ssl/nginx
+  with_items:
+    - "{{ license.certificate }}"
+    - "{{ license.key }}"

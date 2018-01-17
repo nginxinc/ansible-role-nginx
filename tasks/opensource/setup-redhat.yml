@@ -14,7 +14,7 @@
 - name: "(CentOS/RedHat) Add Stable NGINX Repository"
   yum_repository:
     name: nginx
-    baseurl: https://nginx.org/packages/mainline/{{ item }}/{{ ansible_distribution_major_version|int }}/$basearch/
+    baseurl: https://nginx.org/packages/{{ item }}/{{ ansible_distribution_major_version|int }}/$basearch/
     description: NGINX Repository
     enabled: yes
     gpgcheck: yes

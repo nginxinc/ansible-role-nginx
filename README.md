@@ -101,9 +101,10 @@ This role has multiple variables. The defaults for all these variables are the f
     # Default is false.
     status: false
     # Location of your NGINX Plus license in your local machine.
+    # Default is the files folder within the NGINX Ansible role
     license:
-      certificate: ~/.ssh/ngx-certs/nginx-repo.crt
-      key: ~/.ssh/ngx-certs/nginx-repo.key
+      certificate: nginx-repo.crt
+      key: nginx-repo.key
 
 Dependencies
 ------------

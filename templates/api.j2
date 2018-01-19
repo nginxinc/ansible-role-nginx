@@ -1,0 +1,15 @@
+server {
+    listen 8080;
+    location /api {
+{% if api.write %}
+        api write=on;
+{% else %}
+        api;
+{% endif %}
+    }
+{% if api.dashboard %}
+    location = /dashboard.html {
+        root /usr/share/nginx/html;
+    }
+{% endif %}
+}

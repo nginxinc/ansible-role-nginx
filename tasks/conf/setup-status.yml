@@ -5,13 +5,12 @@
     create: yes
     block: |
       server {
-        listen 127.0.0.1:80;
-        server_name 127.0.0.1;
-        location /nginx_status {
-            stub_status on;
-            allow 127.0.0.1;
-            deny all;
-        }
+          listen 127.0.0.1:80;
+          location /nginx_status {
+              stub_status on;
+              allow 127.0.0.1;
+              deny all;
+          }
       }
   when: type == "opensource"
   notify: "(All OSs) Reload NGINX"
@@ -22,13 +21,12 @@
     create: yes
     block: |
       server {
-        listen 127.0.0.1:80;
-        server_name 127.0.0.1;
-        location /status {
-            status;
-            allow 127.0.0.1;
-            deny all;
-        }
+          listen 127.0.0.1:80;
+          location /status {
+              status;
+              allow 127.0.0.1;
+              deny all;
+          }
       }
   when: type == "plus"
   notify: "(All OSs) Reload NGINX"

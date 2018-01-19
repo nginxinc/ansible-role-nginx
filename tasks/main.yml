@@ -11,8 +11,20 @@
 - import_tasks: plus/install-plus.yml
   when: type == "plus"
 
-- import_tasks: conf/nginx-status.yml
+- import_tasks: modules/install-njs.yml
+  when: modules.njs
+
+- import_tasks: modules/install-perl.yml
+  when: modules.perl
+
+- import_tasks: modules/install-waf.yml
+  when: modules.waf and type == "plus"
+
+- import_tasks: conf/setup-status.yml
   when: status
+
+- import_tasks: conf/setup-api.yml
+  when: api.enable and type == "plus"
 
 - import_tasks: amplify/install-amplify.yml
   when: amplify is defined and amplify

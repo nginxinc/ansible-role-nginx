@@ -13,15 +13,3 @@
     name: nginx
     state: present
   notify: "(All OSs) Start NGINX"
-
-- name: "(All OSs) Install NGINX NJS Module"
-  package:
-    name: nginx-module-njs
-    state: present
-  when: njs
-
-- name: "(All OSs) Install NGINX Perl Module"
-  package:
-    name: nginx-module-perl
-    state: present
-  when: perl

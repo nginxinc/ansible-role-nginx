@@ -7,12 +7,12 @@ type: opensource
 # Options are 'mainline' or 'stable'.
 # Default is stable.
 branch: mainline
-# Install nginscript module.
+# Install nginscript, perl and/or waf modules.
 # Default is false.
-njs: false
-# Install Perl module.
-# Default is false.
-perl: false
+modules:
+  njs: false
+  perl: false
+  waf: false
 # Install NGINX Amplify.
 # Use your NGINX Amplify API key.
 # Default is null.
@@ -21,6 +21,12 @@ amplify: null
 # Will enable 'stub_status' in open source NGINX and 'status' in NGINX Plus.
 # Default is false.
 status: false
+# Enable NGINX Plus REST API and dashboard.
+# Default is false.
+api:
+  enable: false
+  write: false
+  dashboard: false
 # Location of your NGINX Plus license in your local machine.
 # Default is the files folder within the NGINX Ansible role.
 license:

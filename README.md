@@ -15,7 +15,7 @@ Use `ansible-galaxy install nginxinc.nginx` to install the role on your system.
 
 It supports all platforms supported by [open source NGINX](https://nginx.org/en/linux_packages.html#mainline) and [NGINX Plus](https://www.nginx.com/products/technical-specs/):
 
-Open Source NGINX:
+**Open Source NGINX:**
 
     CentOS:
       versions:
@@ -38,7 +38,7 @@ Open Source NGINX:
       versions:
         - 12
 
-NGINX Plus:
+**NGINX Plus:**
 
     CentOS:
       versions:
@@ -86,12 +86,12 @@ This role has multiple variables. The defaults for all these variables are the f
     # Options are 'mainline' or 'stable'.
     # Default is stable.
     branch: mainline
-    # Install nginscript module.
+    # Install nginscript, perl and/or waf modules.
     # Default is false.
-    njs: false
-    # Install Perl module.
-    # Default is false.
-    perl: false
+    modules:
+      njs: false
+      perl: false
+      waf: false
     # Install NGINX Amplify.
     # Use your NGINX Amplify API key.
     # Default is null.
@@ -100,11 +100,18 @@ This role has multiple variables. The defaults for all these variables are the f
     # Will enable 'stub_status' in open source NGINX and 'status' in NGINX Plus.
     # Default is false.
     status: false
+    # Enable NGINX Plus REST API and dashboard.
+    # Default is false.
+    api:
+      enable: false
+      write: false
+      dashboard: false
     # Location of your NGINX Plus license in your local machine.
-    # Default is the files folder within the NGINX Ansible role
+    # Default is the files folder within the NGINX Ansible role.
     license:
       certificate: nginx-repo.crt
       key: nginx-repo.key
+
 
 Dependencies
 ------------

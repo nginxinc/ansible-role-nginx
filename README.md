@@ -65,7 +65,7 @@ It supports all platforms supported by [open source NGINX](https://nginx.org/en/
       versions:
         - 10.3
         - 11
-    OracleLinux:
+    Oracle Linux:
       versions:
         - 6.5
         - 7

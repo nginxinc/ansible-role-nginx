@@ -1,12 +1,12 @@
 ---
 # Start NGINX
-- name: "(All OSs) Start NGINX"
+- name: "(Handler: All OSs) Start NGINX"
   service:
     name: nginx
     state: started
 
 # Reload NGINX
-- name: "(All OSs) Reload NGINX"
+- name: "(Handler: All OSs) Reload NGINX"
   service:
     name: nginx
     state: reloaded

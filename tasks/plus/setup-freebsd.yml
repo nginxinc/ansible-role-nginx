@@ -1,10 +1,10 @@
 ---
-- name: "(FreeBSD) Add NGINX Plus Repository"
+- name: "(Install: FreeBSD) Add NGINX Plus Repository"
   get_url:
     url: https://cs.nginx.com/static/files/nginx-plus.conf
     dest: /etc/pkg/nginx-plus.conf
 
-- name: "(FreeBSD) Verify NGINX Plus License"
+- name: "(Install: FreeBSD) Verify NGINX Plus License"
   blockinfile:
     path: /usr/local/etc/pkg.conf
     block: |

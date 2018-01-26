@@ -8,8 +8,8 @@
 - import_tasks: setup-suse.yml
   when: ansible_os_family == "Suse"
 
-- name: "(All OSs) Install NGINX"
+- name: "(Install: All OSs) Install NGINX"
   package:
     name: nginx
     state: present
-  notify: "(All OSs) Start NGINX"
+  notify: "(Handler: All OSs) Start NGINX"

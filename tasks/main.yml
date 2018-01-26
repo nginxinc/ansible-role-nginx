@@ -20,6 +20,12 @@
 - import_tasks: modules/install-waf.yml
   when: modules.waf and type == "plus"
 
+- import_tasks: conf/upload-files.yml
+  when: configuration_files.enable
+
+- import_tasks: conf/upload-templates.yml
+  when: configuration_templates.enable
+
 - import_tasks: conf/setup-status.yml
   when: status
 

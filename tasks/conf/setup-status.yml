@@ -1,5 +1,5 @@
 ---
-- name: "(All OSs) Enable Open Source NGINX Status"
+- name: "(Setup: Open Source NGINX) Enable Open Source NGINX Status"
   blockinfile:
     path: /etc/nginx/conf.d/stub_status.conf
     create: yes
@@ -13,9 +13,9 @@
           }
       }
   when: type == "opensource"
-  notify: "(All OSs) Reload NGINX"
+  notify: "(Handler: All OSs) Reload NGINX"
 
-- name: "(All OSs) Enable NGINX Plus Status"
+- name: "(Setup: NGINX Plus) Enable NGINX Plus Status"
   blockinfile:
     path: /etc/nginx/conf.d/status.conf
     create: yes
@@ -29,4 +29,4 @@
           }
       }
   when: type == "plus"
-  notify: "(All OSs) Reload NGINX"
+  notify: "(Handler: All OSs) Reload NGINX"

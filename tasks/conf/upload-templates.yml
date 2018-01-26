@@ -1,0 +1,32 @@
+---
+- name: "(Setup: Open Source NGINX) Upload Open Source NGINX Main Configuration File"
+  template:
+    src: opensource/nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  when: type == "opensource"
+  notify: "(Handler: All OSs) Reload NGINX"
+
+- name: "(Setup: Open Source NGINX) Upload Open Source NGINX HTTP Configuration Files"
+  template:
+    src: "{{ item }}"
+    dest: /etc/nginx/conf.d/{{ item | basename | regex_replace('\.j2','') }}
+  with_fileglob:
+    - "../templates/opensource/http/*.j2"
+  when: type == "opensource"
+  notify: "(Handler: All OSs) Reload NGINX"
+
+- name: "(Setup: NGINX Plus) Upload NGINX Plus Main Configuration File"
+  template:
+    src: plus/nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  when: type == "plus"
+  notify: "(Handler: All OSs) Reload NGINX"
+
+- name: "(Setup: NGINX Plus) Upload NGINX Plus HTTP Configuration Files"
+  template:
+    src: "{{ item }}"
+    dest: /etc/nginx/conf.d/{{ item | basename | regex_replace('\.j2','') }}
+  with_fileglob:
+    - "../templates/plus/http/*.j2"
+  when: type == "plus"
+  notify: "(Handler: All OSs) Reload NGINX"

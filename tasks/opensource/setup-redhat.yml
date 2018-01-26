@@ -1,5 +1,5 @@
 ---
-- name: "(CentOS/RedHat) Add Mainline NGINX Repository"
+- name: "(Install: CentOS/RedHat) Add Mainline NGINX Repository"
   yum_repository:
     name: nginx
     baseurl: https://nginx.org/packages/mainline/{{ item }}/{{ ansible_distribution_major_version|int }}/$basearch/
@@ -11,7 +11,7 @@
     - rhel
   when: branch == "mainline"
 
-- name: "(CentOS/RedHat) Add Stable NGINX Repository"
+- name: "(Install: CentOS/RedHat) Add Stable NGINX Repository"
   yum_repository:
     name: nginx
     baseurl: https://nginx.org/packages/{{ item }}/{{ ansible_distribution_major_version|int }}/$basearch/

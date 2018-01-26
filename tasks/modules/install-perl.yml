@@ -1,19 +1,19 @@
 ---
-- name: "(All OSs) Install NGINX Perl Module"
+- name: "(Install: All OSs) Install NGINX Perl Module"
   package:
     name: nginx-module-perl
     state: present
   when: type == "opensource"
 
-- name: "(All OSs) Install NGINX Perl Module"
+- name: "(Install: All OSs) Install NGINX Perl Module"
   package:
     name: nginx-plus-module-perl
     state: present
   when: type == "plus"
 
-- name: "(All OSs) Load NGINX Perl Module"
+- name: "(Setup: All NGINX) Load NGINX Perl Module"
   lineinfile:
     path: /etc/nginx/nginx.conf
     insertbefore: BOF
     line: load_module modules/ngx_http_perl.so;
-  notify: "(All OSs) Reload NGINX"
+  notify: "(Handler: All OSs) Reload NGINX"

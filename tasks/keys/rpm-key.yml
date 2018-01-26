@@ -1,4 +1,4 @@
 ---
-- name: "(RPM OSs) Add RPM NGINX Signing Key"
+- name: "(Install: RPM OSs) Add RPM NGINX Signing Key"
   rpm_key:
     key: http://nginx.org/keys/nginx_signing.key

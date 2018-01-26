@@ -1,12 +1,12 @@
 ---
-- name: "(Debian/Ubuntu) Add NGINX Plus Repository"
+- name: "(Install: Debian/Ubuntu) Add NGINX Plus Repository"
   shell: printf "deb https://plus-pkgs.nginx.com/{{ ansible_distribution|lower }} `lsb_release -cs` nginx-plus\n" | sudo tee /etc/apt/sources.list.d/nginx-plus.list
 
-- name: "(Debian/Ubuntu) Verify NGINX Plus License"
+- name: "(Install: Debian/Ubuntu) Verify NGINX Plus License"
   get_url:
     url: https://cs.nginx.com/static/files/90nginx
     dest: /etc/apt/apt.conf.d/90nginx
 
-- name: "(Debian/Ubuntu) Update APT Cache"
+- name: "(Install: Debian/Ubuntu) Update APT Cache"
   apt:
     update_cache: yes

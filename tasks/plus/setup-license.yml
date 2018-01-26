@@ -1,5 +1,5 @@
 ---
-- name: "(All OSs) Create SSL directory"
+- name: "(All OSs) Create SSL Directory"
   file:
     path: /etc/ssl/nginx
     state: directory

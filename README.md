@@ -78,6 +78,7 @@ Role Variables
 
 This role has multiple variables. The defaults for all these variables are the following:
 
+    ---
     # Specify which version of NGINX you want to install.
     # Options are 'opensource' or 'plus'.
     # Default is 'opensource'.
@@ -101,7 +102,7 @@ This role has multiple variables. The defaults for all these variables are the f
     # Default is false.
     status: false
     # Enable NGINX Plus REST API and dashboard.
-    # Default is false.
+    # Default is false for all three variables.
     api:
       enable: false
       write: false
@@ -109,8 +110,34 @@ This role has multiple variables. The defaults for all these variables are the f
     # Location of your NGINX Plus license in your local machine.
     # Default is the files folder within the NGINX Ansible role.
     license:
-      certificate: nginx-repo.crt
-      key: nginx-repo.key
+      certificate: license/nginx-repo.crt
+      key: license/nginx-repo.key
+    # Location of the configuration files you wish to upload to NGINX.
+    # Default is the files folder within the NGINX Ansible role.
+    configuration_files:
+      enable: false
+      main: conf/nginx.conf
+      http: conf/http/*.conf
+    # Configuration variables to create a templated NGINX configuration.
+    # Defaults are the values found in a fresh NGINX installation.
+    configuration_templates:
+      enable: false
+      opensource:
+        user: nginx
+        worker_processes: 1
+        error_level: warn
+        worker_connections: 1024
+        keepalive_timeout: 65
+        listen: 80
+        server_name: localhost
+      plus:
+        user: nginx
+        worker_processes: auto
+        error_level: notice
+        worker_connections: 1024
+        keepalive_timeout: 65
+        listen: 80
+        server_name: localhost
 
 
 Dependencies

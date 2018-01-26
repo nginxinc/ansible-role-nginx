@@ -1,5 +1,5 @@
 ---
-- name: "(APT OSs) Add APT NGINX Signing Key"
+- name: "(Install: APT OSs) Add APT NGINX Signing Key"
   apt_key:
     id: 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
     keyserver: ha.pool.sks-keyservers.net

@@ -2,23 +2,35 @@
 - name: "(Install: CentOS/RedHat) Add Mainline NGINX Repository"
   yum_repository:
     name: nginx
-    baseurl: https://nginx.org/packages/mainline/{{ item }}/{{ ansible_distribution_major_version|int }}/$basearch/
+    baseurl: https://nginx.org/packages/mainline/rhel/{{ ansible_distribution_major_version|int }}/$basearch/
     description: NGINX Repository
     enabled: yes
     gpgcheck: yes
-  with_items:
-    - centos
-    - rhel
-  when: branch == "mainline"
+  when: branch == "mainline" and ansible_distribution == "RedHat"
+
+- name: "(Install: CentOS/RedHat) Add Mainline NGINX Repository"
+  yum_repository:
+    name: nginx
+    baseurl: https://nginx.org/packages/mainline/centos/{{ ansible_distribution_major_version|int }}/$basearch/
+    description: NGINX Repository
+    enabled: yes
+    gpgcheck: yes
+  when: branch == "mainline" and ansible_distribution == "CentOS"
 
 - name: "(Install: CentOS/RedHat) Add Stable NGINX Repository"
   yum_repository:
     name: nginx
-    baseurl: https://nginx.org/packages/{{ item }}/{{ ansible_distribution_major_version|int }}/$basearch/
+    baseurl: https://nginx.org/packages/rhel/{{ ansible_distribution_major_version|int }}/$basearch/
     description: NGINX Repository
     enabled: yes
     gpgcheck: yes
-  with_items:
-    - centos
-    - rhel
-  when: branch == "stable"
+  when: branch == "stable" and ansible_distribution == "RedHat"
+
+- name: "(Install: CentOS/RedHat) Add Stable NGINX Repository"
+  yum_repository:
+    name: nginx
+    baseurl: https://nginx.org/packages/centos/{{ ansible_distribution_major_version|int }}/$basearch/
+    description: NGINX Repository
+    enabled: yes
+    gpgcheck: yes
+  when: branch == "stable" and ansible_distribution == "CentOS"

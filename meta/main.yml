@@ -1,6 +1,6 @@
 galaxy_info:
   author: Alessandro Fael Garcia
-  description: Ansible role for NGINX
+  description: Official Ansible role for NGINX
   company: NGINX Inc
 
   license: Apache License, Version 2.0

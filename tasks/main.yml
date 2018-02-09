@@ -21,7 +21,7 @@
   when: modules.geoip
 
 - import_tasks: modules/install-image-filter.yml
-  when: modules.image-filter
+  when: modules.image_filter
 
 - import_tasks: modules/install-rtmp.yml
   when: modules.rtmp

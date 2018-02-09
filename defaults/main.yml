@@ -14,7 +14,7 @@ modules:
   perl: false
   waf: false
   geoip: false
-  image-filter: false
+  image_filter: false
   rtmp: false
   xslt: false
 # Install NGINX Amplify.

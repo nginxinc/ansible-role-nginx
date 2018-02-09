@@ -1,11 +1,11 @@
 ---
-- name: "(Install: All OSs) Install NGINX Perl Module"
+- name: "(Install: All OSs) Install Open Source NGINX Perl Module"
   package:
     name: nginx-module-perl
     state: present
   when: type == "opensource"
 
-- name: "(Install: All OSs) Install NGINX Perl Module"
+- name: "(Install: All OSs) Install NGINX Plus Perl Module"
   package:
     name: nginx-plus-module-perl
     state: present

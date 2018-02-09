@@ -1,0 +1,19 @@
+---
+- name: "(Install: All OSs) Install Open Source NGINX Image Filter Module"
+  package:
+    name: nginx-module-image-filter
+    state: present
+  when: type == "opensource"
+
+- name: "(Install: All OSs) Install NGINX Plus Image Filter Module"
+  package:
+    name: nginx-plus-module-image-filter
+    state: present
+  when: type == "plus"
+
+- name: "(Setup: All NGINX) Load NGINX Image Filter Module"
+  lineinfile:
+    path: /etc/nginx/nginx.conf
+    insertbefore: BOF
+    line: load_module modules/ngx_http_image_filter_module.so;
+  notify: "(Handler: All OSs) Reload NGINX"

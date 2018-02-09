@@ -1,11 +1,11 @@
 ---
-- name: "(Install: All OSs) Install NGINX NJS Module"
+- name: "(Install: All OSs) Install Open Source NGINX NJS Module"
   package:
     name: nginx-module-njs
     state: present
   when: type == "opensource"
 
-- name: "(Install: All OSs) Install NGINX NJS Module"
+- name: "(Install: All OSs) Install NGINX Plus NJS Module"
   package:
     name: nginx-plus-module-njs
     state: present

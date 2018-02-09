@@ -17,6 +17,18 @@
 - import_tasks: modules/install-perl.yml
   when: modules.perl
 
+- import_tasks: modules/install-geoip.yml
+  when: modules.geoip
+
+- import_tasks: modules/install-image-filter.yml
+  when: modules.image_filter
+
+- import_tasks: modules/install-rtmp.yml
+  when: modules.rtmp
+
+- import_tasks: modules/install-xslt.yml
+  when: modules.xslt
+
 - import_tasks: modules/install-waf.yml
   when: modules.waf and type == "plus"
 

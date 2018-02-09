@@ -7,12 +7,16 @@ type: opensource
 # Options are 'mainline' or 'stable'.
 # Default is stable.
 branch: mainline
-# Install nginscript, perl and/or waf modules.
+# Install nginscript, perl, waf, geoip, image-filter, rtmp and/or xslt modules.
 # Default is false.
 modules:
   njs: false
   perl: false
   waf: false
+  geoip: false
+  image_filter: false
+  rtmp: false
+  xslt: false
 # Install NGINX Amplify.
 # Use your NGINX Amplify API key.
 # Default is null.

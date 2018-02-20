@@ -32,17 +32,17 @@
 - import_tasks: modules/install-waf.yml
   when: modules.waf and type == "plus"
 
-- import_tasks: conf/upload-files.yml
-  when: configuration_files.enable
+- import_tasks: conf/push-config.yml
+  when: main_push_enable or http_push_enable or stream_push_enable
 
-- import_tasks: conf/upload-templates.yml
-  when: configuration_templates.enable
+- import_tasks: conf/template-config.yml
+  when: main_template_enable or http_template_enable or stream_template_enable
 
 - import_tasks: conf/setup-status.yml
-  when: status
+  when: status_enable
 
-- import_tasks: conf/setup-api.yml
-  when: api.enable and type == "plus"
+- import_tasks: conf/setup-rest-api.yml
+  when: rest_api_enable and type == "plus"
 
 - import_tasks: amplify/install-amplify.yml
-  when: amplify is defined and amplify
+  when: amplify_enable and amplify_key is defined and amplify_key

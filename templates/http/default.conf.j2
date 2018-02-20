@@ -1,6 +1,6 @@
 server {
-    listen       {{ configuration_templates.plus.listen }} default_server;
-    server_name  {{ configuration_templates.plus.server_name }};
+    listen       {{ http_template_listen }};
+    server_name  {{ http_template_server_name }};
 
     #charset koi8-r;
     #access_log  /var/log/nginx/host.access.log  main;
@@ -40,21 +40,5 @@ server {
     #
     #location ~ /\.ht {
     #    deny  all;
-    #}
-
-    # enable /api/ location with appropriate access control in order
-    # to make use of NGINX Plus API
-    #
-    #location /api/ {
-    #    api write=on;
-    #    allow 127.0.0.1;
-    #    deny all;
-    #}
-
-    # enable NGINX Plus Dashboard; requires /api/ location to be
-    # enabled and appropriate access control for remote access
-    #
-    #location = /dashboard.html {
-    #    root /usr/share/nginx/html;
     #}
 }

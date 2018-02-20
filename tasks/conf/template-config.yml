@@ -1,0 +1,22 @@
+---
+- name: "(Setup: All NGINX) Dynamically Generate NGINX Main Configuration File"
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  notify: "(Handler: All OSs) Reload NGINX"
+
+- name: "(Setup: All NGINX) Dynamically Generate NGINX HTTP Configuration Files"
+  template:
+    src: "{{ item }}"
+    dest: /etc/nginx/conf.d/{{ item | basename | regex_replace('\.j2','') }}
+  with_fileglob:
+    - "../templates/http/*.j2"
+  notify: "(Handler: All OSs) Reload NGINX"
+
+- name: "(Setup: All NGINX) Dynamically Generate NGINX Stream Configuration Files"
+  template:
+    src: "{{ item }}"
+    dest: /etc/nginx/conf.d/{{ item | basename | regex_replace('\.j2','') }}
+  with_fileglob:
+    - "../templates/stream/*.j2"
+  notify: "(Handler: All OSs) Reload NGINX"

@@ -5,7 +5,7 @@
 type: opensource
 # Specify which branch of Open Source NGINX you want to install.
 # Options are 'mainline' or 'stable'.
-# Default is stable.
+# Default is mainline.
 branch: mainline
 # Install nginscript, perl, waf, geoip, image-filter, rtmp and/or xslt modules.
 # Default is false.
@@ -20,45 +20,43 @@ modules:
 # Install NGINX Amplify.
 # Use your NGINX Amplify API key.
 # Default is null.
-amplify: null
+amplify_enable: false
+amplify_key: null
 # Enable NGINX status data.
 # Will enable 'stub_status' in open source NGINX and 'status' in NGINX Plus.
 # Default is false.
-status: false
-# Enable NGINX Plus REST API and dashboard.
-# Default is false for all three variables.
-api:
-  enable: false
-  write: false
-  dashboard: false
+status_enable: false
+# Enable NGINX Plus REST API and write access.
+# Default is false.
+rest_api_enable: false
+rest_api_write: false
+# Enable NGINX Plus dashboard. REST API also needs to be enabled.
+# Default is false.
+dashboard: false
 # Location of your NGINX Plus license in your local machine.
 # Default is the files folder within the NGINX Ansible role.
 license:
   certificate: license/nginx-repo.crt
   key: license/nginx-repo.key
-# Location of the configuration files you wish to upload to NGINX.
-# Default is the files folder within the NGINX Ansible role.
-configuration_files:
-  enable: false
-  main: conf/nginx.conf
-  http: conf/http/*.conf
+# Enable uploading NGINX configuration files to your system.
+# Default for uploading files is false.
+# Default location of files is the files folder within the NGINX Ansible role.
+main_push_enable: false
+main_push_location: conf/nginx.conf
+http_push_enable: false
+http_push_location: conf/http/*.conf
+stream_push_enable: false
+stream_push_location: conf/stream/*.conf
 # Configuration variables to create a templated NGINX configuration.
 # Defaults are the values found in a fresh NGINX installation.
-configuration_templates:
-  enable: false
-  opensource:
-    user: nginx
-    worker_processes: 1
-    error_level: warn
-    worker_connections: 1024
-    keepalive_timeout: 65
-    listen: 80
-    server_name: localhost
-  plus:
-    user: nginx
-    worker_processes: auto
-    error_level: notice
-    worker_connections: 1024
-    keepalive_timeout: 65
-    listen: 80
-    server_name: localhost
+main_template_enable: false
+main_template_user: nginx
+main_template_worker_processes: auto
+main_template_error_level: warn
+main_template_worker_connections: 1024
+main_template_keepalive_timeout: 65
+http_template_enable: false
+http_template_listen: 80
+http_template_server_name: localhost
+stream_template_enable: false
+stream_template_listen: 12345

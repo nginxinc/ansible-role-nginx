@@ -1,6 +1,0 @@
----
-- name: "(Setup: NGINX Plus) Setup NGINX Plus API"
-  template:
-    src: api.j2
-    dest: /etc/nginx/conf.d/api.conf
-  notify: "(Handler: All OSs) Reload NGINX"

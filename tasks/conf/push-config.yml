@@ -1,0 +1,25 @@
+---
+- name: "(Setup: All NGINX) Upload NGINX Main Configuration File"
+  copy:
+    src: "{{ main_upload_location }}"
+    dest: /etc/nginx/nginx.conf
+  notify: "(Handler: All OSs) Reload NGINX"
+  when: main_upload_enable
+
+- name: "(Setup: All NGINX) Upload NGINX HTTP Configuration Files"
+  copy:
+    src: "{{ item }}"
+    dest: /etc/nginx/conf.d/
+  with_fileglob:
+    - "{{ http_upload_location }}"
+  notify: "(Handler: All OSs) Reload NGINX"
+  when: http_upload_enable
+
+- name: "(Setup: All NGINX) Upload NGINX Stream Configuration Files"
+  copy:
+    src: "{{ item }}"
+    dest: /etc/nginx/conf.d/
+  with_fileglob:
+    - "{{ stream_upload_location }}"
+  notify: "(Handler: All OSs) Reload NGINX"
+  when: stream_upload_enable

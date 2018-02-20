@@ -7,4 +7,4 @@
     dest: /tmp/install.sh
 
 - name: "(Install: All NGINX) Install NGINX Amplify"
-  shell: API_KEY='{{ amplify }}' sh /tmp/install.sh -y
+  shell: API_KEY='{{ amplify_key }}' sh /tmp/install.sh -y

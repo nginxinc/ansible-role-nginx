@@ -3,7 +3,6 @@
   package:
     name: nginx-plus-module-modsecurity
     state: present
-  when: waf
 
 - name: "(Setup: NGINX Plus) Load NGINX Plus WAF Module"
   lineinfile:

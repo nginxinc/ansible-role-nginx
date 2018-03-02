@@ -2,5 +2,5 @@
 - name: "(Setup: NGINX Plus) Setup NGINX Plus API"
   template:
     src: api.conf.j2
-    dest: "{{ (http_template_enable) | ternary('/etc/nginx/conf.d/http/api.conf','/etc/nginx/conf.d/api.conf')}}"
+    dest: "{{ (http_template_enable) | ternary('/etc/nginx/conf.d/http/api.conf','/etc/nginx/conf.d/api.conf') }}"
   notify: "(Handler: All OSs) Reload NGINX"

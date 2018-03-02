@@ -1,28 +1,8 @@
 ---
-- name: "(Install: CentOS/RedHat/Amazon Linux/Oracle Linux) Gather Distribution Version"
-  set_fact:
-    version: "6"
-  when: ansible_distribution_major_version|int == 6
-
-- name: "(Install: CentOS/RedHat/Amazon Linux/Oracle Linux) Gather Distribution Version"
-  set_fact:
-    version: "7"
-  when: ansible_distribution_major_version|float >= 7.0 and ansible_distribution_major_version|float <= 7.3
-
-- name: "(Install: CentOS/RedHat/Amazon Linux/Oracle Linux) Gather Distribution Version"
-  set_fact:
-    version: "7.4"
-  when: ansible_distribution_major_version|float == 7.4
-
-- name: "(Install: CentOS/RedHat/Amazon Linux/Oracle Linux) Gather Distribution Version"
-  set_fact:
-    version: "amazon"
-  when: ansible_distribution == "Amazon"
-
 - name: "(Install: CentOS/RedHat/Oracle Linux) Add NGINX Plus Repository"
   yum_repository:
     name: nginx-plus
-    baseurl: https://plus-pkgs.nginx.com/centos/{{ version }}/$basearch/
+    baseurl: https://plus-pkgs.nginx.com/centos/{{ ansible_distribution_major_version|int }}/$basearch/
     description: NGINX Plus Repository
     sslclientcert: /etc/ssl/nginx/nginx-repo.crt
     sslclientkey: /etc/ssl/nginx/nginx-repo.key

@@ -83,10 +83,12 @@ This role has multiple variables. The defaults for all these variables are the f
     # Options are 'opensource' or 'plus'.
     # Default is 'opensource'.
     type: opensource
+
     # Specify which branch of Open Source NGINX you want to install.
     # Options are 'mainline' or 'stable'.
     # Default is mainline.
     branch: mainline
+
     # Install nginscript, perl, waf, geoip, image-filter, rtmp and/or xslt modules.
     # Default is false.
     modules:
@@ -97,27 +99,33 @@ This role has multiple variables. The defaults for all these variables are the f
       image_filter: false
       rtmp: false
       xslt: false
+
     # Install NGINX Amplify.
     # Use your NGINX Amplify API key.
     # Default is null.
     amplify_enable: false
     amplify_key: null
+
     # Enable NGINX status data.
     # Will enable 'stub_status' in open source NGINX and 'status' in NGINX Plus.
     # Default is false.
     status_enable: false
+
     # Enable NGINX Plus REST API and write access.
     # Default is false.
     rest_api_enable: false
     rest_api_write: false
+
     # Enable NGINX Plus dashboard. REST API also needs to be enabled.
     # Default is false.
     dashboard: false
+
     # Location of your NGINX Plus license in your local machine.
     # Default is the files folder within the NGINX Ansible role.
     license:
       certificate: license/nginx-repo.crt
       key: license/nginx-repo.key
+
     # Enable uploading NGINX configuration files to your system.
     # Default for uploading files is false.
     # Default location of files is the files folder within the NGINX Ansible role.
@@ -127,6 +135,7 @@ This role has multiple variables. The defaults for all these variables are the f
     http_push_location: conf/http/*.conf
     stream_push_enable: false
     stream_push_location: conf/stream/*.conf
+
     # Configuration variables to create a templated NGINX configuration.
     # Defaults are the values found in a fresh NGINX installation.
     main_template_enable: false

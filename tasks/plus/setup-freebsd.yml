@@ -1,8 +1,14 @@
 ---
 - name: "(Install: FreeBSD) Add NGINX Plus Repository"
-  get_url:
-    url: https://cs.nginx.com/static/files/nginx-plus.conf
-    dest: /etc/pkg/nginx-plus.conf
+  blockinfile:
+    path: /etc/pkg/nginx-plus.conf
+    create: yes
+    block: |
+      nginx-plus: {
+      URL: pkg+https://plus-pkgs.nginx.com/freebsd/${ABI}/latest
+      ENABLED: yes
+      MIRROR_TYPE: SRV
+      }
 
 - name: "(Install: FreeBSD) Verify NGINX Plus License"
   blockinfile:

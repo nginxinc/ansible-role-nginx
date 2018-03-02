@@ -19,7 +19,24 @@
     version: "amazon"
   when: ansible_distribution == "Amazon"
 
-- name: "(Install: CentOS/RedHat/Amazon Linux/Oracle Linux) Add NGINX Plus Repository"
-  get_url:
-    url: https://cs.nginx.com/static/files/nginx-plus-{{ version }}.repo
-    dest: /etc/yum.repos.d/nginx-plus-{{ version }}.repo
+- name: "(Install: CentOS/RedHat/Oracle Linux) Add NGINX Plus Repository"
+  yum_repository:
+    name: nginx-plus
+    baseurl: https://plus-pkgs.nginx.com/centos/{{ version }}/$basearch/
+    description: NGINX Plus Repository
+    sslclientcert: /etc/ssl/nginx/nginx-repo.crt
+    sslclientkey: /etc/ssl/nginx/nginx-repo.key
+    enabled: yes
+    gpgcheck: yes
+  when: ansible_distribution != "Amazon"
+
+- name: "(Install: Amazon Linux) Add NGINX Plus Repository"
+  yum_repository:
+    name: nginx-plus
+    baseurl: https://plus-pkgs.nginx.com/amzn/$releasever/$basearch
+    description: NGINX Plus Repository
+    sslclientcert: /etc/ssl/nginx/nginx-repo.crt
+    sslclientkey: /etc/ssl/nginx/nginx-repo.key
+    enabled: yes
+    gpgcheck: yes
+  when: ansible_distribution == "Amazon"

@@ -1,6 +1,8 @@
 ---
 - name: "(Install: SUSE) Combine NGINX Plus Certificate and License Keys"
-  shell: cat /etc/ssl/nginx/nginx-repo.crt /etc/ssl/nginx/nginx-repo.key > /etc/ssl/nginx/nginx-repo-bundle.crt
+  assemble:
+    src: /etc/ssl/nginx
+    dest: /etc/ssl/nginx/nginx-repo-bundle.crt
 
 - name: "(Install: SUSE) Add NGINX Plus Repository"
   zypper_repository:

@@ -2,7 +2,7 @@
 - name: "(Install: CentOS/RedHat/Oracle Linux) Add NGINX Plus Repository"
   yum_repository:
     name: nginx-plus
-    baseurl: https://plus-pkgs.nginx.com/centos/{{ ansible_distribution_major_version|int }}/$basearch/
+    baseurl: https://plus-pkgs.nginx.com/centos/{{ (ansible_distribution_version|float < 7.4) | ternary(ansible_distribution_major_version|int, 7.4) }}/$basearch/
     description: NGINX Plus Repository
     sslclientcert: /etc/ssl/nginx/nginx-repo.crt
     sslclientkey: /etc/ssl/nginx/nginx-repo.key

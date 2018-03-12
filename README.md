@@ -89,7 +89,7 @@ This role has multiple variables. The defaults for all these variables are the f
     # Default is mainline.
     branch: mainline
 
-    # Install nginscript, perl, waf, geoip, image-filter, rtmp and/or xslt modules.
+    # Install nginscript, perl, waf (NGINX Plus only), geoip, image-filter, rtmp and/or xslt modules.
     # Default is false.
     modules:
       njs: false

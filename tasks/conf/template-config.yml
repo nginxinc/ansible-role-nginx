@@ -5,18 +5,32 @@
     dest: /etc/nginx/nginx.conf
   notify: "(Handler: All OSs) Reload NGINX"
 
+- name: "(Setup: All NGINX) Ensures /etc/nginx/conf.d/http dir exists"
+  file:
+    path: /etc/nginx/conf.d/http
+    state: directory
+  when: http_template_enable
+
 - name: "(Setup: All NGINX) Dynamically Generate NGINX HTTP Configuration Files"
   template:
     src: "{{ item }}"
-    dest: /etc/nginx/conf.d/{{ item | basename | regex_replace('\.j2','') }}
+    dest: /etc/nginx/conf.d/http/{{ item | basename | regex_replace('\.j2','') }}
   with_fileglob:
     - "../templates/http/*.j2"
+  when: http_template_enable
   notify: "(Handler: All OSs) Reload NGINX"
+
+- name: "(Setup: All NGINX) Ensures /etc/nginx/conf.d/stream dir exists"
+  file:
+    path: /etc/nginx/conf.d/stream
+    state: directory
+  when: stream_template_enable
 
 - name: "(Setup: All NGINX) Dynamically Generate NGINX Stream Configuration Files"
   template:
     src: "{{ item }}"
-    dest: /etc/nginx/conf.d/{{ item | basename | regex_replace('\.j2','') }}
+    dest: /etc/nginx/conf.d/stream/{{ item | basename | regex_replace('\.j2','') }}
   with_fileglob:
     - "../templates/stream/*.j2"
+  when: stream_template_enable
   notify: "(Handler: All OSs) Reload NGINX"

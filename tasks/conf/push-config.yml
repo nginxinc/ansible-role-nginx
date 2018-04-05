@@ -6,19 +6,31 @@
   notify: "(Handler: All OSs) Reload NGINX"
   when: main_upload_enable
 
+- name: "(Setup: All NGINX) Ensure NGINX HTTP Directory Exists"
+  file:
+    path: /etc/nginx/conf.d/http
+    state: directory
+  when: http_template_enable
+
 - name: "(Setup: All NGINX) Upload NGINX HTTP Configuration Files"
   copy:
     src: "{{ item }}"
-    dest: /etc/nginx/conf.d/
+    dest: /etc/nginx/conf.d/http
   with_fileglob:
     - "{{ http_upload_location }}"
   notify: "(Handler: All OSs) Reload NGINX"
   when: http_upload_enable
 
+- name: "(Setup: All NGINX) Ensure NGINX Stream Directory Exists"
+  file:
+    path: /etc/nginx/conf.d/stream
+    state: directory
+  when: stream_template_enable
+
 - name: "(Setup: All NGINX) Upload NGINX Stream Configuration Files"
   copy:
     src: "{{ item }}"
-    dest: /etc/nginx/conf.d/
+    dest: /etc/nginx/conf.d/stream
   with_fileglob:
     - "{{ stream_upload_location }}"
   notify: "(Handler: All OSs) Reload NGINX"

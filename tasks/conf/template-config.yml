@@ -5,7 +5,7 @@
     dest: /etc/nginx/nginx.conf
   notify: "(Handler: All OSs) Reload NGINX"
 
-- name: "(Setup: All NGINX) Ensures /etc/nginx/conf.d/http dir exists"
+- name: "(Setup: All NGINX) Ensure NGINX HTTP Directory Exists"
   file:
     path: /etc/nginx/conf.d/http
     state: directory
@@ -20,7 +20,7 @@
   when: http_template_enable
   notify: "(Handler: All OSs) Reload NGINX"
 
-- name: "(Setup: All NGINX) Ensures /etc/nginx/conf.d/stream dir exists"
+- name: "(Setup: All NGINX) Ensure NGINX Stream Directory Exists"
   file:
     path: /etc/nginx/conf.d/stream
     state: directory

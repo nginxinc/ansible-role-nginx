@@ -1,3 +1,4 @@
+{% if rest_api_enable %}
 server {
     listen 8080;
     location /api {
@@ -13,3 +14,4 @@ server {
     }
 {% endif %}
 }
+{% endif %}

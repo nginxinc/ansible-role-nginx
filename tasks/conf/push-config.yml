@@ -1,4 +1,22 @@
 ---
+- name: "(Setup: All NGINX) Check NGINX Default Configuration File Exists"
+  stat:
+    path: /etc/nginx/conf.d/default.conf
+  register: default_exists
+
+- name: "(Setup: All NGINX) Backup NGINX Default Configuration File"
+  copy:
+    remote_src: yes
+    src: /etc/nginx/conf.d/default.conf
+    dest: /etc/nginx/conf.d/default.conf.bak
+  when: default_exists.stat.exists
+
+- name: "(Setup: All NGINX) Delete NGINX Default Configuration File"
+  file:
+    path: /etc/nginx/conf.d/default.conf
+    state: absent
+  when: default_exists.stat.exists
+
 - name: "(Setup: All NGINX) Upload NGINX Main Configuration File"
   copy:
     src: "{{ main_upload_location }}"

@@ -23,7 +23,7 @@ http {
     sendfile        on;
     #tcp_nopush     on;
 
-    keepalive_timeout  {{ main_template_keepalive_timeout }};
+    keepalive_timeout  {{ http_template_keepalive_timeout }};
 
     #gzip  on;
 

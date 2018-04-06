@@ -31,14 +31,11 @@ amplify_key: null
 # Default is false.
 status_enable: false
 
-# Enable NGINX Plus REST API and write access.
+# Enable NGINX Plus REST API, write access to the REST API, and NGINX Plus dashboard.
 # Default is false.
 rest_api_enable: false
 rest_api_write: false
-
-# Enable NGINX Plus dashboard. REST API also needs to be enabled.
-# Default is false.
-dashboard: false
+rest_api_dashboard: false
 
 # Location of your NGINX Plus license in your local machine.
 # Default is the files folder within the NGINX Ansible role.
@@ -63,8 +60,8 @@ main_template_user: nginx
 main_template_worker_processes: auto
 main_template_error_level: warn
 main_template_worker_connections: 1024
-main_template_keepalive_timeout: 65
 http_template_enable: false
+http_template_keepalive_timeout: 65
 http_template_listen: 80
 http_template_server_name: localhost
 stream_template_enable: false

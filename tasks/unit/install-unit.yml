@@ -11,7 +11,7 @@
     state: present
   notify: "(Handler: All OSs) Start NGINX Unit"
 
-- name: "(Install: All OSs) Install NGINX Unit"
+- name: "(Install: CentOS) Install NGINX Unit Packages"
   package:
     name: "{{ item }}"
     state: present
@@ -20,10 +20,10 @@
     - unit-python
     - unit-go
     - unit-perl
-  when: ansible_distribution == "CentOS"
+  when: ansible_distribution == "CentOS" and unit_packages
   notify: "(Handler: All OSs) Start NGINX Unit"
 
-- name: "(Install: All OSs) Install NGINX Unit"
+- name: "(Install: RedHat) Install NGINX Unit Packages"
   package:
     name: "{{ item }}"
     state: present
@@ -31,10 +31,10 @@
     - unit-php
     - unit-python
     - unit-perl
-  when: ansible_distribution == "RedHat" and ansible_distribution_major_version|int == 6
+  when: ansible_distribution == "RedHat" and ansible_distribution_major_version|int == 6 and unit_packages
   notify: "(Handler: All OSs) Start NGINX Unit"
 
-- name: "(Install: All OSs) Install NGINX Unit"
+- name: "(Install: RedHat) Install NGINX Unit Packages"
   package:
     name: "{{ item }}"
     state: present
@@ -43,10 +43,10 @@
     - unit-python
     - unit-go
     - unit-perl
-  when: ansible_distribution == "RedHat" and ansible_distribution_major_version|int == 6
+  when: ansible_distribution == "RedHat" and ansible_distribution_major_version|int == 7 and unit_packages
   notify: "(Handler: All OSs) Start NGINX Unit"
 
-- name: "(Install: All OSs) Install NGINX Unit"
+- name: "(Install: Amazon Linux) Install NGINX Unit Packages"
   package:
     name: "{{ item }}"
     state: present
@@ -61,20 +61,7 @@
   when: ansible_distribution == "Amazon"
   notify: "(Handler: All OSs) Start NGINX Unit"
 
-- name: "(Install: All OSs) Install NGINX Unit"
-  package:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - unit-php
-    - unit-python2.7
-    - unit-python3.5
-    - unit-go
-    - unit-perl
-  when: ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int == 16
-  notify: "(Handler: All OSs) Start NGINX Unit"
-
-- name: "(Install: All OSs) Install NGINX Unit"
+- name: "(Install: Debian 8) Install NGINX Unit"
   package:
     name: "{{ item }}"
     state: present
@@ -83,10 +70,10 @@
     - unit-python2.7
     - unit-python3.4
     - unit-perl
-  when: ansible_distribution == "Debian" and ansible_distribution_major_version|int == 8
+  when: ansible_distribution == "Debian" and ansible_distribution_major_version|int == 8 and unit_packages
   notify: "(Handler: All OSs) Start NGINX Unit"
 
-- name: "(Install: All OSs) Install NGINX Unit"
+- name: "(Install: Debian 9) Install NGINX Unit"
   package:
     name: "{{ item }}"
     state: present
@@ -97,5 +84,18 @@
     - unit-go1.7
     - unit-go1.8
     - unit-perl
-  when: ansible_distribution == "RedHat" and ansible_distribution_major_version|int == 9
+  when: ansible_distribution == "Debian" and ansible_distribution_major_version|int == 9 and unit_packages
+  notify: "(Handler: All OSs) Start NGINX Unit"
+
+- name: "(Install: Ubuntu) Install NGINX Unit"
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - unit-php
+    - unit-python2.7
+    - unit-python3.5
+    - unit-go
+    - unit-perl
+  when: ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int == 16 and unit_packages
   notify: "(Handler: All OSs) Start NGINX Unit"

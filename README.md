@@ -4,7 +4,7 @@ Ansible NGINX Role
 [![Ansible Galaxy](https://img.shields.io/badge/galaxy-nginxinc.nginx-5bbdbf.svg)](https://galaxy.ansible.com/nginxinc/nginx)
 [![Build Status](https://travis-ci.org/nginxinc/ansible-role-nginx.svg?branch=master)](https://travis-ci.org/nginxinc/ansible-role-nginx)
 
-This role installs open source NGINX or NGINX Plus on your target host.
+This role installs open source NGINX, NGINX Plus, or NGINX Unit on your target host.
 
 Requirements
 ------------
@@ -40,6 +40,41 @@ It supports all platforms supported by [open source NGINX](https://nginx.org/en/
 
 **NGINX Plus:**
 
+    Debian:
+      versions:
+        - jessie
+        - stretch
+    Ubuntu:
+      versions:
+        - trusty
+        - xenial
+        - zesty
+        - artful
+    CentOS:
+      versions:
+        - 6.5
+        - 7
+    RedHat:
+      versions:
+        - 6.5
+        - 7
+    Oracle Linux:
+      versions:
+        - 6.5
+        - 7
+    Amazon Linux:
+      versions:
+        - 2016.09
+    SUSE/SLES:
+      versions:
+        - 12
+    FreeBSD:
+      versions:
+        - 10.3
+        - 11
+
+**NGINX Unit:**
+
     CentOS:
       versions:
         - 6
@@ -50,25 +85,12 @@ It supports all platforms supported by [open source NGINX](https://nginx.org/en/
         - 7
     Debian:
       versions:
-        - wheezy
         - jessie
         - stretch
     Ubuntu:
       versions:
-        - trusty
         - xenial
-        - zesty
-    SUSE/SLES:
-      versions:
-        - 12
-    FreeBSD:
-      versions:
-        - 10.3
-        - 11
-    Oracle Linux:
-      versions:
-        - 6.5
-        - 7
+        - artful
     Amazon Linux:
       versions:
         - 2016.09
@@ -88,6 +110,11 @@ This role has multiple variables. The defaults for all these variables are the f
     # Options are 'mainline' or 'stable'.
     # Default is mainline.
     branch: mainline
+
+    # Install NGINX Unit and NGINX Unit packages.
+    # Default is false.
+    unit_enable: false
+    unit_packages: false
 
     # Install nginscript, perl, waf (NGINX Plus only), geoip, image-filter, rtmp and/or xslt modules.
     # Default is false.
@@ -183,6 +210,17 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role to a 
       remote_user: root
       roles:
         - role: nginxinc.nginx
+
+This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a localhost to install NGINX Unit and all NGINX Unit language packages.
+
+    ---
+    - hosts: localhost
+      become: true
+      roles:
+        - role: nginxinc.nginx
+      vars:
+        - unit_enable: true
+        - unit_packages: true
 
 To run any of the above sample playbooks create a `setup-nginx.yml` file and paste the contents. Executing the Ansible Playbook is then as simple as executing `ansible-playbook setup-nginx.yml`.
 

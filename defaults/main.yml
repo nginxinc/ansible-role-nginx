@@ -4,12 +4,12 @@
 # Default is 'opensource'.
 type: opensource
 
-# Specify which branch of Open Source NGINX you want to install.
+# Specify which branch of NGINX Open Source you want to install.
 # Options are 'mainline' or 'stable'.
 # Default is mainline.
 branch: mainline
 
-# Install nginscript, perl, waf (NGINX Plus only), geoip, image-filter, rtmp and/or xslt modules.
+# Install NGINX JavaScript, Perl, ModSecurity WAF (NGINX Plus only), GeoIP, Image-Filter, RTMP Media Streaming, and/or XSLT modules.
 # Default is false.
 modules:
   njs: false
@@ -27,7 +27,7 @@ amplify_enable: false
 amplify_key: null
 
 # Enable NGINX status data.
-# Will enable 'stub_status' in open source NGINX and 'status' in NGINX Plus.
+# Will enable 'stub_status' in NGINX Open Source and 'status' in NGINX Plus.
 # Default is false.
 status_enable: false
 

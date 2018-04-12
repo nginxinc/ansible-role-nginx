@@ -1,5 +1,5 @@
 ---
-- name: "(Install: All OSs) Install Open Source NGINX Perl Module"
+- name: "(Install: All OSs) Install NGINX Open Source Perl Module"
   package:
     name: nginx-module-perl
     state: present

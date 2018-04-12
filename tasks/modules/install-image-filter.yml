@@ -1,5 +1,5 @@
 ---
-- name: "(Install: All OSs) Install Open Source NGINX Image Filter Module"
+- name: "(Install: All OSs) Install NGINX Open Source Image Filter Module"
   package:
     name: nginx-module-image-filter
     state: present

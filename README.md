@@ -4,7 +4,7 @@ Ansible NGINX Role
 [![Ansible Galaxy](https://img.shields.io/badge/galaxy-nginxinc.nginx-5bbdbf.svg)](https://galaxy.ansible.com/nginxinc/nginx)
 [![Build Status](https://travis-ci.org/nginxinc/ansible-role-nginx.svg?branch=master)](https://travis-ci.org/nginxinc/ansible-role-nginx)
 
-This role installs open source NGINX or NGINX Plus on your target host.
+This role installs NGINX Open Source or NGINX Plus on your target host.
 
 Requirements
 ------------
@@ -13,9 +13,9 @@ This role was developed using Ansible 2.4.0.0. Backwards compatibility is not gu
 
 Use `ansible-galaxy install nginxinc.nginx` to install the role on your system.
 
-It supports all platforms supported by [open source NGINX](https://nginx.org/en/linux_packages.html#mainline) and [NGINX Plus](https://www.nginx.com/products/technical-specs/):
+It supports all platforms supported by [NGINX Open Source](https://nginx.org/en/linux_packages.html#mainline) and [NGINX Plus](https://www.nginx.com/products/technical-specs/):
 
-**Open Source NGINX:**
+**NGINX Open Source:**
 
     CentOS:
       versions:
@@ -84,7 +84,7 @@ This role has multiple variables. The defaults for all these variables are the f
     # Default is 'opensource'.
     type: opensource
 
-    # Specify which branch of Open Source NGINX you want to install.
+    # Specify which branch of NGINX Open Source you want to install.
     # Options are 'mainline' or 'stable'.
     # Default is mainline.
     branch: mainline
@@ -107,7 +107,7 @@ This role has multiple variables. The defaults for all these variables are the f
     amplify_key: null
 
     # Enable NGINX status data.
-    # Will enable 'stub_status' in open source NGINX and 'status' in NGINX Plus.
+    # Will enable 'stub_status' in NGINX Open Source and 'status' in NGINX Plus.
     # Default is false.
     status_enable: false
 

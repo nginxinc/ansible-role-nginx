@@ -1,5 +1,5 @@
 ---
-- name: "(Setup: Open Source NGINX) Enable Open Source NGINX Status"
+- name: "(Setup: NGINX Open Source) Enable NGINX Open Source Status"
   blockinfile:
     path: "{{ (http_template_enable) | ternary('/etc/nginx/conf.d/http/stub_status.conf','/etc/nginx/conf.d/stub_status.conf') }}"
     create: yes

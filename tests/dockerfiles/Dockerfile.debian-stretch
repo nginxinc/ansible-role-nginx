@@ -11,7 +11,7 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
     systemd \
     apt-transport-https \
     curl \
-    gnupg1 \
+    gnupg2 \
  && rm -rf /var/lib/apt/lists/*
 
 RUN pip install --upgrade setuptools && pip install ansible

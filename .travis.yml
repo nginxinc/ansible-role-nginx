@@ -1,30 +1,34 @@
 ---
-language: python
-python: "2.7"
-# Use the new container infrastructure
 sudo: required
-# Install ansible
-addons:
-  apt:
-    packages:
-    - python-pip
-install:
-  # Install ansible
-  - pip install ansible
-  # Check ansible version
-  - ansible --version
-  # Create ansible.cfg with correct roles_path
-  - printf '[defaults]\nroles_path=../' >ansible.cfg
+services:
+  - docker
+env:
+  - distribution: centos
+    version: 6
+  - distribution: centos
+    version: 7
+  - distribution: ubuntu
+    version: trusty
+  - distribution: ubuntu
+    version: xenial
+  - distribution: debian
+    version: jessie
+  - distribution: debian
+    version: stretch
+before_install:
+  - 'sudo docker pull ${distribution}:${version}'
+  - 'sudo docker build --no-cache --rm --file=tests/dockerfiles/Dockerfile.${distribution}-${version} --tag=${distribution}-${version}:ansible tests'
 script:
-  # Basic role syntax check
-  - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
-  # Run the role with ansible-playbook.
-  - ansible-playbook tests/test.yml -i tests/inventory --connection=local --become
-  # Run the role again, checking to make sure it's idempotent.
+  - container_id=$(mktemp)
+  - 'sudo docker run --detach --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro --volume="${PWD}":/etc/ansible/roles/ansible-role-nginx:ro ${distribution}-${version}:ansible > "${container_id}"'
+  - 'sudo docker exec "$(cat ${container_id})" env ANSIBLE_FORCE_COLOR=1 ansible-playbook -v /etc/ansible/roles/ansible-role-nginx/tests/test.yml --syntax-check'
+  - 'sudo docker exec "$(cat ${container_id})" env ANSIBLE_FORCE_COLOR=1 ansible-playbook -v /etc/ansible/roles/ansible-role-nginx/tests/test.yml'
   - >
-    ansible-playbook tests/test.yml -i tests/inventory --connection=local --become | grep -q 'changed=0.*failed=0'
-    && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
-  # Request a page via the web server, to make sure NGINX is running and responds.
-  - curl http://localhost/
+    sudo docker exec "$(cat ${container_id})" env ANSIBLE_FORCE_COLOR=1 ansible-playbook -v /etc/ansible/roles/ansible-role-nginx/tests/test.yml
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
+  - 'sudo docker exec "$(cat ${container_id})" curl http://localhost/'
+  - 'sudo docker rm -f "$(cat ${container_id})"'
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

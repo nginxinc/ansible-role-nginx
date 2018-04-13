@@ -8,6 +8,7 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
     python-dev \
     python-pip \
     git \
+    apt-transport-https
  && rm -rf /var/lib/apt/lists/*
 
 RUN pip install --upgrade setuptools && pip install ansible

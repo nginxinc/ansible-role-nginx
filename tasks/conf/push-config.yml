@@ -10,13 +10,13 @@
     remote_src: yes
     src: /etc/nginx/conf.d/default.conf
     dest: /etc/nginx/conf.d/default.conf.bak
-  when: default_exists.stat.exists && main_upload_enable
+  when: default_exists.stat.exists and main_upload_enable
 
 - name: "(Setup: All NGINX) Delete NGINX Default Configuration File"
   file:
     path: /etc/nginx/conf.d/default.conf
     state: absent
-  when: default_exists.stat.exists && main_upload_enable
+  when: default_exists.stat.exists and main_upload_enable
 
 - name: "(Setup: All NGINX) Upload NGINX Main Configuration File"
   copy:

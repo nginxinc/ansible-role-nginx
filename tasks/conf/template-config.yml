@@ -10,13 +10,13 @@
     remote_src: yes
     src: /etc/nginx/conf.d/default.conf
     dest: /etc/nginx/conf.d/default.conf.bak
-  when: default_exists.stat.exists && main_template_enable
+  when: default_exists.stat.exists and main_template_enable
 
 - name: "(Setup: All NGINX) Delete NGINX Default Configuration File"
   file:
     path: /etc/nginx/conf.d/default.conf
     state: absent
-  when: default_exists.stat.exists && main_template_enable
+  when: default_exists.stat.exists and main_template_enable
 
 - name: "(Setup: All NGINX) Dynamically Generate NGINX Main Configuration File"
   template:

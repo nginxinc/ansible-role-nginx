@@ -5,7 +5,7 @@ RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y software-pro
 RUN apt-add-repository -y ppa:ansible/ansible && apt-get update && apt-get install -y \
     git \
     ansible \
-    apt-transport-https
+    apt-transport-https \
  && rm -rf /var/lib/apt/lists/*
 
 RUN echo "[local]\nlocalhost ansible_connection=local" > /etc/ansible/hosts

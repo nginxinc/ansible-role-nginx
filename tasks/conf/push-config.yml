@@ -20,7 +20,7 @@
 
 - name: "(Setup: All NGINX) Upload NGINX Main Configuration File"
   copy:
-    src: "{{ main_upload_location }}"
+    src: "{{ main_push_location }}"
     dest: /etc/nginx/nginx.conf
   notify: "(Handler: All OSs) Reload NGINX"
   when: main_push_enable
@@ -36,9 +36,9 @@
     src: "{{ item }}"
     dest: /etc/nginx/conf.d/http
   with_fileglob:
-    - "{{ http_upload_location }}"
+    - "{{ http_push_location }}"
   notify: "(Handler: All OSs) Reload NGINX"
-  when: http_push_enablee
+  when: http_push_enable
 
 - name: "(Setup: All NGINX) Ensure NGINX Stream Directory Exists"
   file:
@@ -51,6 +51,6 @@
     src: "{{ item }}"
     dest: /etc/nginx/conf.d/stream
   with_fileglob:
-    - "{{ stream_upload_location }}"
+    - "{{ stream_push_location }}"
   notify: "(Handler: All OSs) Reload NGINX"
   when: stream_push_enable

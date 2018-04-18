@@ -1,27 +1,9 @@
 ---
-- name: "(Setup: All NGINX) Check NGINX Default Configuration File Exists"
-  stat:
-    path: /etc/nginx/nginx.conf
-  when: main_push_enable
-  register: main_exists
-
-- name: "(Setup: All NGINX) Backup NGINX Default Configuration File"
-  copy:
-    remote_src: yes
-    src: /etc/nginx/nginx.conf
-    dest: /etc/nginx/nginx.conf.bak
-  when: main_exists.stat.exists and main_exists.stat.isreg and main_push_enable
-
-- name: "(Setup: All NGINX) Delete NGINX Default Configuration File"
-  file:
-    path: /etc/nginx/nginx.conf
-    state: absent
-  when: main_exists.stat.exists is defined and main_exists.stat.isreg and main_push_enable
-
 - name: "(Setup: All NGINX) Upload NGINX Main Configuration File"
   copy:
     src: "{{ main_push_location }}"
     dest: /etc/nginx/nginx.conf
+    backup: yes
   notify: "(Handler: All OSs) Reload NGINX"
   when: main_push_enable
 
@@ -35,6 +17,7 @@
   copy:
     src: "{{ item }}"
     dest: /etc/nginx/conf.d/http
+    backup: yes
   with_fileglob:
     - "{{ http_push_location }}"
   notify: "(Handler: All OSs) Reload NGINX"
@@ -50,6 +33,7 @@
   copy:
     src: "{{ item }}"
     dest: /etc/nginx/conf.d/stream
+    backup: yes
   with_fileglob:
     - "{{ stream_push_location }}"
   notify: "(Handler: All OSs) Reload NGINX"

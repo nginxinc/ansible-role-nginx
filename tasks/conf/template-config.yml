@@ -1,27 +1,9 @@
 ---
-- name: "(Setup: All NGINX) Check NGINX Default Configuration File Exists"
-  stat:
-    path: /etc/nginx/nginx.conf
-  when: main_template_enable
-  register: main_exists
-
-- name: "(Setup: All NGINX) Backup NGINX Default Configuration File"
-  copy:
-    remote_src: yes
-    src: /etc/nginx/nginx.conf
-    dest: /etc/nginx/nginx.conf.bak
-  when: main_exists.stat.exists is defined and main_exists.stat.isreg and main_template_enable
-
-- name: "(Setup: All NGINX) Delete NGINX Default Configuration File"
-  file:
-    path: /etc/nginx/conf.d/default.conf
-    state: absent
-  when: main_exists.stat.exists is defined and main_exists.stat.isreg and main_template_enable
-
 - name: "(Setup: All NGINX) Dynamically Generate NGINX Main Configuration File"
   template:
     src: nginx.conf.j2
     dest: /etc/nginx/nginx.conf
+    backup: yes
   when: main_template_enable
   notify: "(Handler: All OSs) Reload NGINX"
 
@@ -35,6 +17,7 @@
   template:
     src: "{{ item }}"
     dest: /etc/nginx/conf.d/http/{{ item | basename | regex_replace('\.j2','') }}
+    backup: yes
   with_fileglob:
     - "../templates/http/*.j2"
   when: http_template_enable
@@ -50,6 +33,7 @@
   template:
     src: "{{ item }}"
     dest: /etc/nginx/conf.d/stream/{{ item | basename | regex_replace('\.j2','') }}
+    backup: yes
   with_fileglob:
     - "../templates/stream/*.j2"
   when: stream_template_enable

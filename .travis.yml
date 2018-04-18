@@ -21,24 +21,6 @@ env:
   - distribution: centos
     version: 7
     playbook: push
-  - distribution: ubuntu
-    version: trusty
-    playbook: opensource
-  - distribution: ubuntu
-    version: trusty
-    playbook: template
-  - distribution: ubuntu
-    version: trusty
-    playbook: push
-  - distribution: ubuntu
-    version: xenial
-    playbook: opensource
-  - distribution: ubuntu
-    version: xenial
-    playbook: template
-  - distribution: ubuntu
-    version: xenial
-    playbook: push
   - distribution: debian
     version: jessie
     playbook: opensource
@@ -56,6 +38,24 @@ env:
     playbook: template
   - distribution: debian
     version: stretch
+    playbook: push
+  - distribution: ubuntu
+    version: trusty
+    playbook: opensource
+  - distribution: ubuntu
+    version: trusty
+    playbook: template
+  - distribution: ubuntu
+    version: trusty
+    playbook: push
+  - distribution: ubuntu
+    version: xenial
+    playbook: opensource
+  - distribution: ubuntu
+    version: xenial
+    playbook: template
+  - distribution: ubuntu
+    version: xenial
     playbook: push
 before_install:
   - 'sudo docker pull ${distribution}:${version}'

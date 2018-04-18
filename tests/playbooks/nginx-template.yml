@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  become: true
+  remote_user: root
+  roles:
+    - ansible-role-nginx
+  vars:
+    http_template_enable: true
+    http_template_keepalive_timeout: 70
+    http_template_listen: 82

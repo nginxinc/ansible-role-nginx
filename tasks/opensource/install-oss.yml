@@ -19,7 +19,7 @@
   notify: "(Handler: All OSs) Start NGINX"
 
 - name: "(Install: FreeBSD) Install NGINX"
-  package:
+  portinstall:
     name: nginx
     state: present
   when: ansible_os_family == "FreeBSD"

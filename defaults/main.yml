@@ -4,8 +4,14 @@
 # Default is 'opensource'.
 type: opensource
 
+# Specify source respository for NGINX Open Source.
+# Options are 'nginx_repository' or 'os_repository'.
+# Default is nginx_repository.
+install_from: nginx_repository
+
 # Specify which branch of NGINX Open Source you want to install.
 # Options are 'mainline' or 'stable'.
+# Only works if 'install_from' is set to 'nginx_repository'.
 # Default is mainline.
 branch: mainline
 

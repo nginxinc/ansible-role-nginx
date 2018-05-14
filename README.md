@@ -84,12 +84,31 @@ This role has multiple variables. The defaults for all these variables are the f
     # Default is 'opensource'.
     type: opensource
 
+    # Specify repository origin for NGINX Open Source.
+    # Options are 'nginx_repository' or 'os_repository'.
+    # Only works if 'type' is set to 'opensource'.
+    # Default is nginx_repository.
+    install_from: nginx_repository
+
+    # Specify source repository for NGINX Open Source.
+    # Only works if 'install_from' is set to 'nginx_repository'.
+    # Defaults are the official NGINX repositories.
+    nginx_repository:
+      debian:
+        - 'deb https://nginx.org/packages/{{ "mainline/" if branch == "mainline" }}{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} nginx'
+        - 'deb-src https://nginx.org/packages/{{ "mainline/" if branch == "mainline" }}{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} nginx'
+      redhat:
+        - https://nginx.org/packages/{{ "mainline/" if branch == "mainline" }}{{ (ansible_distribution == "RedHat") | ternary('rhel/', 'centos/') }}{{ ansible_distribution_major_version|int }}/$basearch/
+      suse:
+        - https://nginx.org/packages/{{ "mainline/" if branch == "mainline" }}sles/12
+
     # Specify which branch of NGINX Open Source you want to install.
     # Options are 'mainline' or 'stable'.
+    # Only works if 'install_from' is set to 'nginx_repository'.
     # Default is mainline.
     branch: mainline
 
-    # Install nginscript, perl, waf (NGINX Plus only), geoip, image-filter, rtmp and/or xslt modules.
+    # Install NGINX JavaScript, Perl, ModSecurity WAF (NGINX Plus only), GeoIP, Image-Filter, RTMP Media Streaming, and/or XSLT modules.
     # Default is false.
     modules:
       njs: false

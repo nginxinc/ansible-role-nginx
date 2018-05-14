@@ -5,55 +5,73 @@ services:
 env:
   - distribution: centos
     version: 6
-    playbook: opensource
-  - distribution: centos
-    version: 6
-    playbook: template
+    playbook: basic
   - distribution: centos
     version: 6
     playbook: push
   - distribution: centos
+    version: 6
+    playbook: stable
+  - distribution: centos
+    version: 6
+    playbook: template
+  - distribution: centos
     version: 7
-    playbook: opensource
+    playbook: basic
   - distribution: centos
     version: 7
     playbook: template
+  - distribution: centos
+    version: 7
+    playbook: stable
   - distribution: centos
     version: 7
     playbook: push
   - distribution: debian
     version: jessie
-    playbook: opensource
+    playbook: basic
   - distribution: debian
     version: jessie
     playbook: template
+  - distribution: debian
+    version: jessie
+    playbook: stable
   - distribution: debian
     version: jessie
     playbook: push
   - distribution: debian
     version: stretch
-    playbook: opensource
+    playbook: basic
   - distribution: debian
     version: stretch
     playbook: template
+  - distribution: debian
+    version: stretch
+    playbook: stable
   - distribution: debian
     version: stretch
     playbook: push
   - distribution: ubuntu
     version: trusty
-    playbook: opensource
+    playbook: basic
   - distribution: ubuntu
     version: trusty
     playbook: template
+  - distribution: ubuntu
+    version: trusty
+    playbook: stable
   - distribution: ubuntu
     version: trusty
     playbook: push
   - distribution: ubuntu
     version: xenial
-    playbook: opensource
+    playbook: basic
   - distribution: ubuntu
     version: xenial
     playbook: template
+  - distribution: ubuntu
+    version: xenial
+    playbook: stable
   - distribution: ubuntu
     version: xenial
     playbook: push

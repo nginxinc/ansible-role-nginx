@@ -1,6 +1,22 @@
 ---
 - name: "(Setup: NGINX Plus) Setup NGINX Plus API"
-  template:
-    src: api.conf.j2
-    dest: "{{ (http_template_enable) | ternary('/etc/nginx/conf.d/http/api.conf','/etc/nginx/conf.d/api.conf') }}"
+  blockinfile:
+    path: "{{ (http_template_enable) | ternary('/etc/nginx/conf.d/http/api.conf','/etc/nginx/conf.d/api.conf') }}"
+    create: yes
+    block: |
+      server {
+          listen 8080;
+          location /api {
+      {% if rest_api_write %}
+              api write=on;
+      {% else %}
+              api;
+      {% endif %}
+          }
+      {% if rest_api_dashboard %}
+          location = /dashboard.html {
+              root /usr/share/nginx/html;
+          }
+      {% endif %}
+      }
   notify: "(Handler: All OSs) Reload NGINX"

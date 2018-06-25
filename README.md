@@ -4,7 +4,7 @@ Ansible NGINX Role
 [![Ansible Galaxy](https://img.shields.io/badge/galaxy-nginxinc.nginx-5bbdbf.svg)](https://galaxy.ansible.com/nginxinc/nginx)
 [![Build Status](https://travis-ci.org/nginxinc/ansible-role-nginx.svg?branch=master)](https://travis-ci.org/nginxinc/ansible-role-nginx)
 
-This role installs open source NGINX, NGINX Plus, or NGINX Unit on your target host.
+This role installs NGINX Open Source, NGINX Plus, or NGINX Unit on your target host.
 
 Requirements
 ------------
@@ -13,9 +13,9 @@ This role was developed using Ansible 2.4.0.0. Backwards compatibility is not gu
 
 Use `ansible-galaxy install nginxinc.nginx` to install the role on your system.
 
-It supports all platforms supported by [open source NGINX](https://nginx.org/en/linux_packages.html#mainline) and [NGINX Plus](https://www.nginx.com/products/technical-specs/):
+It supports all platforms supported by [NGINX Open Source](https://nginx.org/en/linux_packages.html#mainline) and [NGINX Plus](https://www.nginx.com/products/technical-specs/):
 
-**Open Source NGINX:**
+**NGINX Open Source:**
 
     CentOS:
       versions:
@@ -106,8 +106,27 @@ This role has multiple variables. The defaults for all these variables are the f
     # Default is 'opensource'.
     type: opensource
 
-    # Specify which branch of Open Source NGINX you want to install.
+    # Specify repository origin for NGINX Open Source.
+    # Options are 'nginx_repository' or 'os_repository'.
+    # Only works if 'type' is set to 'opensource'.
+    # Default is nginx_repository.
+    install_from: nginx_repository
+
+    # Specify source repository for NGINX Open Source.
+    # Only works if 'install_from' is set to 'nginx_repository'.
+    # Defaults are the official NGINX repositories.
+    nginx_repository:
+      debian:
+        - 'deb https://nginx.org/packages/{{ "mainline/" if branch == "mainline" }}{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} nginx'
+        - 'deb-src https://nginx.org/packages/{{ "mainline/" if branch == "mainline" }}{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} nginx'
+      redhat:
+        - https://nginx.org/packages/{{ "mainline/" if branch == "mainline" }}{{ (ansible_distribution == "RedHat") | ternary('rhel/', 'centos/') }}{{ ansible_distribution_major_version|int }}/$basearch/
+      suse:
+        - https://nginx.org/packages/{{ "mainline/" if branch == "mainline" }}sles/12
+
+    # Specify which branch of NGINX Open Source you want to install.
     # Options are 'mainline' or 'stable'.
+    # Only works if 'install_from' is set to 'nginx_repository'.
     # Default is mainline.
     branch: mainline
 
@@ -116,8 +135,7 @@ This role has multiple variables. The defaults for all these variables are the f
     unit_enable: false
     unit_packages: false
 
-    # Install nginscript, perl, waf (NGINX Plus only), geoip, image-filter, rtmp and/or xslt modules.
-    # Default is false.
+    # Install NGINX JavaScript, Perl, ModSecurity WAF (NGINX Plus only), GeoIP, Image-Filter, RTMP Media Streaming, and/or XSLT modules.    # Default is false.
     modules:
       njs: false
       perl: false
@@ -134,18 +152,15 @@ This role has multiple variables. The defaults for all these variables are the f
     amplify_key: null
 
     # Enable NGINX status data.
-    # Will enable 'stub_status' in open source NGINX and 'status' in NGINX Plus.
+    # Will enable 'stub_status' in NGINX Open Source and 'status' in NGINX Plus.
     # Default is false.
     status_enable: false
 
-    # Enable NGINX Plus REST API and write access.
+    # Enable NGINX Plus REST API, write access to the REST API, and NGINX Plus dashboard.
     # Default is false.
     rest_api_enable: false
     rest_api_write: false
-
-    # Enable NGINX Plus dashboard. REST API also needs to be enabled.
-    # Default is false.
-    dashboard: false
+    rest_api_dashboard: false
 
     # Location of your NGINX Plus license in your local machine.
     # Default is the files folder within the NGINX Ansible role.
@@ -170,8 +185,8 @@ This role has multiple variables. The defaults for all these variables are the f
     main_template_worker_processes: auto
     main_template_error_level: warn
     main_template_worker_connections: 1024
-    main_template_keepalive_timeout: 65
     http_template_enable: false
+    http_template_keepalive_timeout: 65
     http_template_listen: 80
     http_template_server_name: localhost
     stream_template_enable: false

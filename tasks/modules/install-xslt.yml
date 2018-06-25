@@ -1,5 +1,5 @@
 ---
-- name: "(Install: All OSs) Install Open Source NGINX XSLT Module"
+- name: "(Install: All OSs) Install NGINX Open Source XSLT Module"
   package:
     name: nginx-module-xslt
     state: present

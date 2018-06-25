@@ -1,5 +1,5 @@
 ---
-- name: "(Install: All OSs) Install Open Source NGINX GeoIP Module"
+- name: "(Install: All OSs) Install NGINX Open Source GeoIP Module"
   package:
     name: nginx-geoip-perl
     state: present

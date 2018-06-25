@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  become: true
+  remote_user: root
+  roles:
+    - ansible-role-nginx
+  vars:
+    main_push_enable: true
+    main_push_location: ../files/nginx.conf
+    http_push_enable: true
+    http_push_location: ../files/http/*.conf

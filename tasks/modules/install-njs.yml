@@ -1,17 +1,17 @@
 ---
-- name: "(Install: All OSs) Install Open Source NGINX NJS Module"
+- name: "(Install: All OSs) Install NGINX Open Source JavaScript Module"
   package:
     name: nginx-module-njs
     state: present
   when: type == "opensource"
 
-- name: "(Install: All OSs) Install NGINX Plus NJS Module"
+- name: "(Install: All OSs) Install NGINX Plus JavaScript Module"
   package:
     name: nginx-plus-module-njs
     state: present
   when: type == "plus"
 
-- name: "(Setup: All NGINX) Load NGINX NJS Module"
+- name: "(Setup: All NGINX) Load NGINX JavaScript Module"
   blockinfile:
     path: /etc/nginx/nginx.conf
     insertbefore: BOF

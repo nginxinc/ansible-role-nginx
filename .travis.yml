@@ -1,30 +1,94 @@
 ---
-language: python
-python: "2.7"
-# Use the new container infrastructure
-sudo: false
-# Install ansible
-addons:
-  apt:
-    packages:
-    - python-pip
-install:
-  # Install ansible
-  - pip install ansible
-  # Check ansible version
-  - ansible --version
-  # Create ansible.cfg with correct roles_path
-  - printf '[defaults]\nroles_path=../' >ansible.cfg
+sudo: required
+services:
+  - docker
+env:
+  - distribution: centos
+    version: 6
+    playbook: basic
+  - distribution: centos
+    version: 6
+    playbook: push
+  - distribution: centos
+    version: 6
+    playbook: stable
+  - distribution: centos
+    version: 6
+    playbook: template
+  - distribution: centos
+    version: 7
+    playbook: basic
+  - distribution: centos
+    version: 7
+    playbook: template
+  - distribution: centos
+    version: 7
+    playbook: stable
+  - distribution: centos
+    version: 7
+    playbook: push
+  - distribution: debian
+    version: jessie
+    playbook: basic
+  - distribution: debian
+    version: jessie
+    playbook: template
+  - distribution: debian
+    version: jessie
+    playbook: stable
+  - distribution: debian
+    version: jessie
+    playbook: push
+  - distribution: debian
+    version: stretch
+    playbook: basic
+  - distribution: debian
+    version: stretch
+    playbook: template
+  - distribution: debian
+    version: stretch
+    playbook: stable
+  - distribution: debian
+    version: stretch
+    playbook: push
+  - distribution: ubuntu
+    version: trusty
+    playbook: basic
+  - distribution: ubuntu
+    version: trusty
+    playbook: template
+  - distribution: ubuntu
+    version: trusty
+    playbook: stable
+  - distribution: ubuntu
+    version: trusty
+    playbook: push
+  - distribution: ubuntu
+    version: xenial
+    playbook: basic
+  - distribution: ubuntu
+    version: xenial
+    playbook: template
+  - distribution: ubuntu
+    version: xenial
+    playbook: stable
+  - distribution: ubuntu
+    version: xenial
+    playbook: push
+before_install:
+  - 'sudo docker pull ${distribution}:${version}'
+  - 'sudo docker build --no-cache --rm --file=tests/dockerfiles/Dockerfile.${distribution}-${version} --tag=${distribution}-${version}:ansible tests'
 script:
-  # Basic role syntax check
-  - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
-  # Run the role with ansible-playbook.
-  - ansible-playbook tests/test.yml -i tests/inventory --connection=local --sudo
-  # Run the role again, checking to make sure it's idempotent.
+  - container_id=$(mktemp)
+  - 'sudo docker run --detach --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro --volume="${PWD}":/etc/ansible/roles/ansible-role-nginx:ro ${distribution}-${version}:ansible > "${container_id}"'
+  - 'sudo docker exec "$(cat ${container_id})" env ANSIBLE_FORCE_COLOR=1 ansible-playbook -v /etc/ansible/roles/ansible-role-nginx/tests/playbooks/nginx-${playbook}.yml --syntax-check'
+  - 'sudo docker exec "$(cat ${container_id})" env ANSIBLE_FORCE_COLOR=1 ansible-playbook -v /etc/ansible/roles/ansible-role-nginx/tests/playbooks/nginx-${playbook}.yml'
   - >
-    ansible-playbook tests/test.yml -i tests/inventory --connection=local --sudo | grep -q 'changed=0.*failed=0'
-    && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
-  # Request a page via the web server, to make sure NGINX is running and responds.
-  - curl http://localhost/
+    sudo docker exec "$(cat ${container_id})" env ANSIBLE_FORCE_COLOR=1 ansible-playbook -v /etc/ansible/roles/ansible-role-nginx/tests/playbooks/nginx-${playbook}.yml
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
+  - 'sudo docker exec "$(cat ${container_id})" curl http://localhost/'
+  - 'sudo docker rm -f "$(cat ${container_id})"'
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

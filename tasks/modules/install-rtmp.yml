@@ -1,5 +1,5 @@
 ---
-- name: "(Install: All OSs) Install Open Source NGINX RTMP Module"
+- name: "(Install: All OSs) Install NGINX Open Source RTMP Module"
   package:
     name: nginx-module-rtmp
     state: present

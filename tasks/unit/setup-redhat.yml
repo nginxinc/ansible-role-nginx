@@ -2,20 +2,11 @@
 - name: "(Install: RedHat) Add NGINX Unit Repository"
   yum_repository:
     name: nginx
-    baseurl: https://packages.nginx.org/unit/rhel/$releasever/$basearch/
+    baseurl: https://packages.nginx.org/unit/{{ (ansible_distribution == "RedHat") | ternary('rhel/', 'centos/') }}$releasever/$basearch/
     description: NGINX Repository
     enabled: yes
     gpgcheck: yes
-  when: ansible_distribution == "RedHat"
-
-- name: "(Install: CentOS) Add NGINX Unit Repository"
-  yum_repository:
-    name: nginx
-    baseurl: https://packages.nginx.org/unit/centos/$releasever/$basearch/
-    description: NGINX Repository
-    enabled: yes
-    gpgcheck: yes
-  when: ansible_distribution == "CentOS"
+  when: ansible_distribution != "Amazon"
 
 - name: "(Install: Amazon Linux) Add NGINX Unit Repository"
   yum_repository:

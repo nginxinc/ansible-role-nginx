@@ -91,6 +91,7 @@ It supports all platforms supported by [NGINX Open Source](https://nginx.org/en/
       versions:
         - xenial
         - artful
+        - bionic
     Amazon Linux:
       versions:
         - 2016.09

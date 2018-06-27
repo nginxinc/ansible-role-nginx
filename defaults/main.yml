@@ -28,7 +28,8 @@ nginx_repository:
 # Default is mainline.
 branch: mainline
 
-# Install NGINX Unit and NGINX Unit packages.
+# Install NGINX Unit and NGINX Unit modules.
+# Use a list of supported NGINX Unit modules.
 # Default is false.
 unit_enable: false
 unit_modules: null

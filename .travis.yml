@@ -90,6 +90,36 @@ env:
   - distribution: ubuntu
     version: xenial
     playbook: unit
+  - distribution: ubuntu
+    version: artful
+    playbook: basic
+  - distribution: ubuntu
+    version: artful
+    playbook: push
+  - distribution: ubuntu
+    version: artful
+    playbook: stable
+  - distribution: ubuntu
+    version: artful
+    playbook: template
+  - distribution: ubuntu
+    version: artful
+    playbook: unit
+  - distribution: ubuntu
+    version: bionic
+    playbook: basic
+  - distribution: ubuntu
+    version: bionic
+    playbook: push
+  - distribution: ubuntu
+    version: bionic
+    playbook: stable
+  - distribution: ubuntu
+    version: bionic
+    playbook: template
+  - distribution: ubuntu
+    version: bionic
+    playbook: unit
 before_install:
   - 'sudo docker pull ${distribution}:${version}'
   - 'sudo docker build --no-cache --rm --file=tests/dockerfiles/Dockerfile.${distribution}-${version} --tag=${distribution}-${version}:ansible tests'

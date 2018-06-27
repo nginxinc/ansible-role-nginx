@@ -31,7 +31,7 @@ branch: mainline
 # Install NGINX Unit and NGINX Unit packages.
 # Default is false.
 unit_enable: false
-unit_packages: false
+unit_modules: null
 
 # Install NGINX JavaScript, Perl, ModSecurity WAF (NGINX Plus only), GeoIP, Image-Filter, RTMP Media Streaming, and/or XSLT modules.
 # Default is false.

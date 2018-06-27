@@ -11,5 +11,5 @@
     state: present
   notify: "(Handler: All OSs) Start NGINX Unit"
 
-- import_tasks: install-packages.yml
-  when: unit_packages
+- import_tasks: install-modules.yml
+  when: unit_modules is defined and unit_modules

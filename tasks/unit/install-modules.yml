@@ -1,0 +1,6 @@
+- name: "(Install: All OSs) Install NGINX Unit Modules"
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ unit_modules }}"
+  notify: "(Handler: All OSs) Start NGINX Unit"

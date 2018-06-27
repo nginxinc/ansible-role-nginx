@@ -28,6 +28,12 @@ nginx_repository:
 # Default is mainline.
 branch: mainline
 
+# Install NGINX Unit and NGINX Unit modules.
+# Use a list of supported NGINX Unit modules.
+# Default is false.
+unit_enable: false
+unit_modules: null
+
 # Install NGINX JavaScript, Perl, ModSecurity WAF (NGINX Plus only), GeoIP, Image-Filter, RTMP Media Streaming, and/or XSLT modules.
 # Default is false.
 modules:

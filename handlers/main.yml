@@ -10,3 +10,8 @@
   service:
     name: nginx
     state: reloaded
+
+- name: "(Handler: All OSs) Start NGINX Unit"
+  service:
+    name: unit
+    state: started

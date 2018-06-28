@@ -118,12 +118,12 @@ This role has multiple variables. The defaults for all these variables are the f
     # Defaults are the official NGINX repositories.
     nginx_repository:
       debian:
-        - 'deb https://nginx.org/packages/{{ "mainline/" if branch == "mainline" }}{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} nginx'
-        - 'deb-src https://nginx.org/packages/{{ "mainline/" if branch == "mainline" }}{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} nginx'
+        - deb https://nginx.org/packages/{{ (branch == 'mainline') | ternary('mainline/','') }}{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} nginx
+        - deb-src https://nginx.org/packages/{{ (branch == 'mainline') | ternary('mainline/','') }}{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} nginx
       redhat:
-        - https://nginx.org/packages/{{ "mainline/" if branch == "mainline" }}{{ (ansible_distribution == "RedHat") | ternary('rhel/', 'centos/') }}{{ ansible_distribution_major_version|int }}/$basearch/
+        - https://nginx.org/packages/{{ (branch == 'mainline') | ternary('mainline/','') }}{{ (ansible_distribution == "RedHat") | ternary('rhel/', 'centos/') }}{{ ansible_distribution_major_version|int }}/$basearch/
       suse:
-        - https://nginx.org/packages/{{ "mainline/" if branch == "mainline" }}sles/12
+        - https://nginx.org/packages/{{ (branch == 'mainline') | ternary('mainline/','') }}sles/12
 
     # Specify which branch of NGINX Open Source you want to install.
     # Options are 'mainline' or 'stable'.
@@ -131,12 +131,14 @@ This role has multiple variables. The defaults for all these variables are the f
     # Default is mainline.
     branch: mainline
 
-    # Install NGINX Unit and NGINX Unit packages.
+    # Install NGINX Unit and NGINX Unit modules.
+    # Use a list of supported NGINX Unit modules.
     # Default is false.
     unit_enable: false
-    unit_packages: false
+    unit_modules: null
 
-    # Install NGINX JavaScript, Perl, ModSecurity WAF (NGINX Plus only), GeoIP, Image-Filter, RTMP Media Streaming, and/or XSLT modules.    # Default is false.
+    # Install NGINX JavaScript, Perl, ModSecurity WAF (NGINX Plus only), GeoIP, Image-Filter, RTMP Media Streaming, and/or XSLT modules.
+    # Default is false.
     modules:
       njs: false
       perl: false

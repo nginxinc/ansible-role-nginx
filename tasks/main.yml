@@ -5,47 +5,52 @@
 - import_tasks: keys/rpm-key.yml
   when: ansible_os_family == "RedHat" or ansible_os_family == "Suse"
 
-- import_tasks: opensource/install-oss.yml
-  when: type == "opensource"
+- name: "(Install: Debian/Ubuntu/CentOS/RedHat/FreeBSD) Install NGINX"
+  block:
 
-- import_tasks: plus/install-plus.yml
-  when: type == "plus"
+    - import_tasks: opensource/install-oss.yml
+      when: type == "opensource"
 
-- import_tasks: modules/install-njs.yml
-  when: modules.njs
+    - import_tasks: plus/install-plus.yml
+      when: type == "plus"
 
-- import_tasks: modules/install-perl.yml
-  when: modules.perl
+    - import_tasks: modules/install-njs.yml
+      when: modules.njs
 
-- import_tasks: modules/install-geoip.yml
-  when: modules.geoip
+    - import_tasks: modules/install-perl.yml
+      when: modules.perl
 
-- import_tasks: modules/install-image-filter.yml
-  when: modules.image_filter
+    - import_tasks: modules/install-geoip.yml
+      when: modules.geoip
 
-- import_tasks: modules/install-rtmp.yml
-  when: modules.rtmp
+    - import_tasks: modules/install-image-filter.yml
+      when: modules.image_filter
 
-- import_tasks: modules/install-xslt.yml
-  when: modules.xslt
+    - import_tasks: modules/install-rtmp.yml
+      when: modules.rtmp
 
-- import_tasks: modules/install-waf.yml
-  when: modules.waf and type == "plus"
+    - import_tasks: modules/install-xslt.yml
+      when: modules.xslt
 
-- import_tasks: conf/push-config.yml
-  when: main_push_enable or http_push_enable or stream_push_enable
+    - import_tasks: modules/install-waf.yml
+      when: modules.waf and type == "plus"
 
-- import_tasks: conf/template-config.yml
-  when: main_template_enable or http_template_enable or stream_template_enable
+    - import_tasks: conf/push-config.yml
+      when: main_push_enable or http_push_enable or stream_push_enable
 
-- import_tasks: conf/setup-status.yml
-  when: status_enable
+    - import_tasks: conf/template-config.yml
+      when: main_template_enable or http_template_enable or stream_template_enable
 
-- import_tasks: conf/setup-rest-api.yml
-  when: rest_api_enable and type == "plus"
+    - import_tasks: conf/setup-status.yml
+      when: status_enable
 
-- import_tasks: amplify/install-amplify.yml
-  when: amplify_enable and amplify_key is defined and amplify_key
+    - import_tasks: conf/setup-rest-api.yml
+      when: rest_api_enable and type == "plus"
+
+    - import_tasks: amplify/install-amplify.yml
+      when: amplify_enable and amplify_key is defined and amplify_key
+
+  when: nginx_enable
 
 - import_tasks: unit/install-unit.yml
   when: unit_enable

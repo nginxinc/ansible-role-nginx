@@ -1,5 +1,5 @@
 ---
-- name: ""
+- name: "(Install: Debian/Ubuntu/CentOS/RedHat/FreeBSD) Install NGINX"
   block:
 
     - import_tasks: setup-debian.yml

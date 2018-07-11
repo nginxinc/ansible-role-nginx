@@ -102,6 +102,10 @@ Role Variables
 This role has multiple variables. The defaults for all these variables are the following:
 
     ---
+    # Install NGINX.
+    # Default is true.
+    nginx_enable: true
+
     # Specify which version of NGINX you want to install.
     # Options are 'opensource' or 'plus'.
     # Default is 'opensource'.
@@ -130,12 +134,6 @@ This role has multiple variables. The defaults for all these variables are the f
     # Only works if 'install_from' is set to 'nginx_repository'.
     # Default is mainline.
     branch: mainline
-
-    # Install NGINX Unit and NGINX Unit modules.
-    # Use a list of supported NGINX Unit modules.
-    # Default is false.
-    unit_enable: false
-    unit_modules: null
 
     # Install NGINX JavaScript, Perl, ModSecurity WAF (NGINX Plus only), GeoIP, Image-Filter, RTMP Media Streaming, and/or XSLT modules.
     # Default is false.
@@ -194,6 +192,12 @@ This role has multiple variables. The defaults for all these variables are the f
     http_template_server_name: localhost
     stream_template_enable: false
     stream_template_listen: 12345
+
+    # Install NGINX Unit and NGINX Unit modules.
+    # Use a list of supported NGINX Unit modules.
+    # Default is false.
+    unit_enable: false
+    unit_modules: null
 
 Dependencies
 ------------

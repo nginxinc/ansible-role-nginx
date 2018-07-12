@@ -223,7 +223,7 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a 
       roles:
         - role: nginxinc.nginx
       vars:
-        - type: plus
+        type: plus
 
 This is a sample playbook file for deploying the Ansible Galaxy NGINX role to a dynamic inventory containing the `nginx` tag.
 
@@ -233,7 +233,7 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role to a 
       roles:
         - role: nginxinc.nginx
 
-This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a localhost to install NGINX Unit and all NGINX Unit language packages.
+This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a localhost to install NGINX Unit and the PHP/Perl NGINX Unit language modules.
 
     ---
     - hosts: localhost
@@ -241,8 +241,11 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a 
       roles:
         - role: nginxinc.nginx
       vars:
-        - unit_enable: true
-        - unit_packages: true
+        nginx_enable: false
+        unit_enable: true
+        unit_packages:
+          - unit-php
+          - unit-perl
 
 To run any of the above sample playbooks create a `setup-nginx.yml` file and paste the contents. Executing the Ansible Playbook is then as simple as executing `ansible-playbook setup-nginx.yml`.
 

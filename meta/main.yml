@@ -34,5 +34,8 @@ galaxy_info:
     - plus
     - web
     - server
+    - unit
+    - development
+    - web
 
 dependencies: []

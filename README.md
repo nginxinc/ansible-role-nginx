@@ -243,7 +243,7 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a 
       vars:
         nginx_enable: false
         unit_enable: true
-        unit_packages:
+        unit_modules:
           - unit-php
           - unit-perl
 

@@ -133,7 +133,7 @@ script:
     | grep -q 'changed=0.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
-  - 'sudo docker exec "$(cat ${container_id})" curl http://localhost/'
+  - 'if [${playbook} != "unit"]; then sudo docker exec "$(cat ${container_id})" curl http://localhost/; fi'
   - 'sudo docker rm -f "$(cat ${container_id})"'
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

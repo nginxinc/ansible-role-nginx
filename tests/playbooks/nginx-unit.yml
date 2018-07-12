@@ -5,6 +5,7 @@
   roles:
     - ansible-role-nginx
   vars:
+    nginx_enable: false
     unit_enable: true
     unit_modules:
       - unit-php

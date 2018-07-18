@@ -11,7 +11,7 @@
 
 - name: "(Handler: Debian/Ubuntu/CentOS/RedHat) Start NGINX Unit"
   service:
-    name: unitd
+    name: unit
     state: started
 
 - name: "(Handler: FreeBSD) Start NGINX Unit"

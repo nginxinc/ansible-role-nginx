@@ -1,17 +1,20 @@
 ---
-# Start NGINX
 - name: "(Handler: All OSs) Start NGINX"
   service:
     name: nginx
     state: started
 
-# Reload NGINX
 - name: "(Handler: All OSs) Reload NGINX"
   service:
     name: nginx
     state: reloaded
 
-- name: "(Handler: All OSs) Start NGINX Unit"
+- name: "(Handler: Debian/Ubuntu/CentOS/RedHat) Start NGINX Unit"
   service:
-    name: unit
+    name: unitd
+    state: started
+
+- name: "(Handler: FreeBSD) Start NGINX Unit"
+  service:
+    name: unitd
     state: started

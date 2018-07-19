@@ -11,7 +11,7 @@
 - name: "(Install: Amazon Linux) Add NGINX Unit Repository"
   yum_repository:
     name: unit
-    baseurl: https://packages.nginx.org/unit/amzn/$releasever/$basearch/
+    baseurl: https://packages.nginx.org/unit/amzn{{ (ansible_distribution_version == "2") | ternary('2', '') }}/$releasever/$basearch/
     description: NGINX Unit Repository
     enabled: yes
     gpgcheck: yes

@@ -1,5 +1,6 @@
 ---
 galaxy_info:
+  role_name: nginx
   author: Alessandro Fael Garcia
   description: Official Ansible role for NGINX
   company: NGINX, Inc.
@@ -28,8 +29,8 @@ galaxy_info:
       - 12
   - name: FreeBSD
     versions:
-      - 10
-      - 11
+      - 10.4
+      - 11.2
 
   galaxy_tags:
     - nginx

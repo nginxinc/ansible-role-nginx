@@ -1,13 +1,13 @@
 ---
 - name: "(Install: All OSs) Install NGINX Open Source GeoIP Module"
   package:
-    name: nginx-geoip-perl
+    name: nginx-module-geoip
     state: present
   when: type == "opensource"
 
 - name: "(Install: All OSs) Install NGINX Plus GeoIP Module"
   package:
-    name: nginx-plus-geoip-perl
+    name: nginx-plus-module-geoip
     state: present
   when: type == "plus"
 

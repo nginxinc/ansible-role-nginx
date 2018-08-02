@@ -6,6 +6,8 @@ Ansible NGINX Role
 
 This role installs NGINX Open Source, NGINX Plus, or NGINX Unit on your target host.
 
+**Note:** This role is still in active development. There may be unidentified issues and the role variables may change as development continues.
+
 Requirements
 ------------
 
@@ -139,12 +141,12 @@ install_from: nginx_repository
 # Defaults are the official NGINX repositories.
 nginx_repository:
   debian:
-    - deb https://nginx.org/packages/{{ (branch == 'mainline') | ternary('mainline/','') }}{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} nginx
-    - deb-src https://nginx.org/packages/{{ (branch == 'mainline') | ternary('mainline/','') }}{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} nginx
+    - deb https://nginx.org/packages/{{ (branch == 'mainline') | ternary('mainline/', '') }}{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} nginx
+    - deb-src https://nginx.org/packages/{{ (branch == 'mainline') | ternary('mainline/', '') }}{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} nginx
   redhat:
-    - https://nginx.org/packages/{{ (branch == 'mainline') | ternary('mainline/','') }}{{ (ansible_distribution == "RedHat") | ternary('rhel/', 'centos/') }}{{ ansible_distribution_major_version|int }}/$basearch/
+    - https://nginx.org/packages/{{ (branch == 'mainline') | ternary('mainline/', '') }}{{ (ansible_distribution == "RedHat") | ternary('rhel/', 'centos/') }}{{ ansible_distribution_major_version|int }}/$basearch/
   suse:
-    - https://nginx.org/packages/{{ (branch == 'mainline') | ternary('mainline/','') }}sles/12
+    - https://nginx.org/packages/{{ (branch == 'mainline') | ternary('mainline/', '') }}sles/12
 
 # Specify which branch of NGINX Open Source you want to install.
 # Options are 'mainline' or 'stable'.
@@ -185,6 +187,10 @@ rest_api_dashboard: false
 license:
   certificate: license/nginx-repo.crt
   key: license/nginx-repo.key
+
+# Delete NGINX Plus license after installation for security purposes.
+# Default is true.
+delete_license: true
 
 # Enable uploading NGINX configuration files to your system.
 # Default for uploading files is false.

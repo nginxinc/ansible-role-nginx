@@ -1,4 +1,6 @@
 ---
+- import_tasks: prerequisites/install-prerequisites.yml
+
 - import_tasks: keys/apt-key.yml
   when: ansible_os_family == "Debian"
 

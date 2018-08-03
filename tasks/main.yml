@@ -14,26 +14,8 @@
     - import_tasks: plus/install-plus.yml
       when: type == "plus"
 
-    - import_tasks: modules/install-njs.yml
-      when: modules.njs
-
-    - import_tasks: modules/install-perl.yml
-      when: modules.perl
-
-    - import_tasks: modules/install-geoip.yml
-      when: modules.geoip
-
-    - import_tasks: modules/install-image-filter.yml
-      when: modules.image_filter
-
-    - import_tasks: modules/install-rtmp.yml
-      when: modules.rtmp
-
-    - import_tasks: modules/install-xslt.yml
-      when: modules.xslt
-
-    - import_tasks: modules/install-waf.yml
-      when: modules.waf and type == "plus"
+    - import_tasks: modules/install-modules.yml
+      when: true in modules.values()
 
     - import_tasks: conf/push-config.yml
       when: main_push_enable or http_push_enable or stream_push_enable

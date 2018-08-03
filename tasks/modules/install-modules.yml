@@ -1,0 +1,21 @@
+---
+- import_tasks: install-njs.yml
+  when: modules.njs | default(false)
+
+- import_tasks: install-perl.yml
+  when: modules.perl | default(false)
+
+- import_tasks: install-geoip.yml
+  when: modules.geoip | default(false)
+
+- import_tasks: install-image-filter.yml
+  when: modules.image_filter | default(false)
+
+- import_tasks: install-rtmp.yml
+  when: modules.rtmp | default(false)
+
+- import_tasks: install-xslt.yml
+  when: modules.xslt | default(false)
+
+- import_tasks: install-waf.yml
+  when: modules.waf | default(false) and type == "plus"

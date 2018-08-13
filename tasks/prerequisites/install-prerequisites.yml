@@ -1,3 +1,2 @@
 ---
 - import_tasks: setup-debian.yml
-  when: ansible_os_family == "Debian"

@@ -3,6 +3,7 @@
   service:
     name: nginx
     state: started
+    enabled: yes
 
 - name: "(Handler: All OSs) Reload NGINX"
   service:

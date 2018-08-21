@@ -14,8 +14,10 @@
   service:
     name: unit
     state: started
+    enabled: yes
 
 - name: "(Handler: FreeBSD) Start NGINX Unit"
   service:
     name: unitd
     state: started
+    enabled: yes

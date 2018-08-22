@@ -1,5 +1,5 @@
 ---
-- Name: "(Install: Debian/Ubuntu) Install Required Debian and Ubuntu Dependencies"
+- name: "(Install: Debian/Ubuntu) Install Required Debian and Ubuntu Dependencies"
   apt:
     name: "{{ item }}"
   with_items:

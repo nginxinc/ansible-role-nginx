@@ -1,0 +1,42 @@
+---
+- import_tasks: setup-debian.yml
+  when: ansible_os_family == "Debian"
+
+- import_tasks: setup-redhat.yml
+  when: ansible_os_family == "RedHat"
+
+- name: "(Install: All OSs) Install NGINX Controller Agent"
+  package:
+    name: nginx-controller-agent
+    state: present
+
+- name: "(Setup: All OSs) Copy NGINX Controller Agent Configuration Template"
+  copy:
+    remote_src: yes
+    src: /etc/controller-agent/agent.controller.conf.default
+    dest: /etc/controller-agent/agent.conf
+
+- name: "(Setup: All OSs) Copy NGINX Configurator Agent Configuration Template"
+  copy:
+    remote_src: yes
+    src: /etc/controller-agent/agent.configurator.conf.default
+    dest: /etc/controller-agent/agent.configurator.conf
+
+- name: "(Setup: All OSs) Configure NGINX Controller Agent API Key"
+  lineinfile:
+    dest: /etc/controller-agent/agent.conf
+    regexp: api_key =.*
+    line: "api_key = {{ controller_license }}"
+
+- name: "(Setup: All OSs) Configure NGINX Controller Agent API URL"
+  lineinfile:
+    dest: /etc/controller-agent/agent.conf
+    regexp: api_url =.*
+    line: "api_url = {{ controller_api_url }}"
+
+- name: "(Setup: All OSs) Configure NGINX Controller Agent API Hostname"
+  lineinfile:
+    dest: /etc/controller-agent/agent.conf
+    regexp: hostname =.*
+    line: "hostname = {{ ansible_hostname }}"
+  notify: "(Handler: All OSs) Start NGINX Controller Agent"

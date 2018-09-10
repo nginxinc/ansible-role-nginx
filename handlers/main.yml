@@ -21,3 +21,8 @@
     name: unitd
     state: started
     enabled: yes
+
+- name: "(Handler: All OSs) Start NGINX Controller Agent"
+  service:
+    name: controller-agent
+    state: started

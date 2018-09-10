@@ -49,6 +49,13 @@ modules:
 amplify_enable: false
 amplify_key: null
 
+# Install NGINX Controller.
+# Use your NGINX Controller API key.
+# Default is null.
+controller_enable: false
+controller_license: null
+controller_api_url: null
+
 # Enable NGINX status data.
 # Will enable 'stub_status' in NGINX Open Source and 'status' in NGINX Plus.
 # Default is false.

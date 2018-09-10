@@ -35,6 +35,7 @@ galaxy_info:
   galaxy_tags:
     - nginx
     - amplify
+    - controller
     - oss
     - plus
     - web

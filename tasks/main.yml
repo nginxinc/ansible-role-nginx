@@ -31,10 +31,13 @@
     - import_tasks: conf/setup-rest-api.yml
       when: rest_api_enable and type == "plus"
 
-    - import_tasks: amplify/install-amplify.yml
-      when: amplify_enable and amplify_key is defined and amplify_key
-
   when: nginx_enable
+
+- import_tasks: amplify/install-amplify.yml
+  when: amplify_enable and amplify_key is defined and amplify_key
+
+- import_tasks: controller/install-controller.yml
+  when: controller_enable and controller_license is defined and controller_license and controller_api_url is defined and controller_api_url
 
 - import_tasks: unit/install-unit.yml
   when: unit_enable

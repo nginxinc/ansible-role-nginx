@@ -1,0 +1,7 @@
+---
+- name: "(Install: CentOS/RedHat) Add NGINX Controller Agent Repository"
+  yum_repository:
+    name: nginx-controller
+    baseurl: http://packages.nginx.org/controller/centos/$releasever/$basearch/
+    description: NGINX Controller Agent
+    gpgcheck: yes

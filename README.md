@@ -222,13 +222,14 @@ modules:
 
 # Install NGINX Amplify.
 # Use your NGINX Amplify API key.
+# Requires access to either the NGINX stub status or the NGINX Plus REST API.
 # Default is null.
 amplify_enable: false
 amplify_key: null
 
 # Install NGINX Controller.
 # Use your NGINX Controller API key and NGINX Controller API endpoint.
-# Requires NGINX Plus.
+# Requires NGINX Plus and write access to the NGINX Plus REST API.
 # Default is null.
 controller_enable: false
 controller_api_key: null
@@ -326,6 +327,8 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a 
     - role: nginxinc.nginx
   vars:
     type: plus
+    rest_api_enable: true
+    rest_api_write: true
     controller_enable: true
     controller_api_key: <API_KEY_HERE>
     controller_api_endpoint: https://<FQDN>/1.4

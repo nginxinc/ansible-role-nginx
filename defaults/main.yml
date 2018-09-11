@@ -32,6 +32,16 @@ nginx_repository:
 # Default is mainline.
 branch: mainline
 
+# Location of your NGINX Plus license in your local machine.
+# Default is the files folder within the NGINX Ansible role.
+license:
+  certificate: license/nginx-repo.crt
+  key: license/nginx-repo.key
+
+# Delete NGINX Plus license after installation for security purposes.
+# Default is true.
+delete_license: true
+
 # Install NGINX JavaScript, Perl, ModSecurity WAF (NGINX Plus only), GeoIP, Image-Filter, RTMP Media Streaming, and/or XSLT modules.
 # Default is false.
 modules:
@@ -50,11 +60,18 @@ amplify_enable: false
 amplify_key: null
 
 # Install NGINX Controller.
-# Use your NGINX Controller API key.
+# Use your NGINX Controller API key and NGINX Controller API endpoint.
+# Requires NGINX Plus.
 # Default is null.
 controller_enable: false
-controller_license: null
-controller_api_url: null
+controller_api_key: null
+controller_api_endpoint: null
+
+# Install NGINX Unit and NGINX Unit modules.
+# Use a list of supported NGINX Unit modules.
+# Default is false.
+unit_enable: false
+unit_modules: null
 
 # Enable NGINX status data.
 # Will enable 'stub_status' in NGINX Open Source and 'status' in NGINX Plus.
@@ -62,20 +79,11 @@ controller_api_url: null
 status_enable: false
 
 # Enable NGINX Plus REST API, write access to the REST API, and NGINX Plus dashboard.
+# Requires NGINX Plus.
 # Default is false.
 rest_api_enable: false
 rest_api_write: false
 rest_api_dashboard: false
-
-# Location of your NGINX Plus license in your local machine.
-# Default is the files folder within the NGINX Ansible role.
-license:
-  certificate: license/nginx-repo.crt
-  key: license/nginx-repo.key
-
-# Delete NGINX Plus license after installation for security purposes.
-# Default is true.
-delete_license: true
 
 # Enable uploading NGINX configuration files to your system.
 # Default for uploading files is false.
@@ -100,9 +108,3 @@ http_template_listen: 80
 http_template_server_name: localhost
 stream_template_enable: false
 stream_template_listen: 12345
-
-# Install NGINX Unit and NGINX Unit modules.
-# Use a list of supported NGINX Unit modules.
-# Default is false.
-unit_enable: false
-unit_modules: null

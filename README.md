@@ -17,7 +17,7 @@ Use `ansible-galaxy install nginxinc.nginx` to install the role on your system.
 
 It supports all platforms supported by [NGINX Open Source](https://nginx.org/en/linux_packages.html#mainline) and [NGINX Plus](https://www.nginx.com/products/technical-specs/):
 
-**NGINX Open Source:**
+**NGINX Open Source**
 
 ```yaml
 CentOS:
@@ -47,7 +47,7 @@ FreeBSD:
     - 11
 ```
 
-**NGINX Plus:**
+**NGINX Plus**
 
 ```yaml
 CentOS:
@@ -84,7 +84,52 @@ FreeBSD:
     - 11
 ```
 
-**NGINX Unit:**
+**NGINX Amplify**
+
+```yaml
+CentOS:
+  versions:
+    - 6
+    - 7
+RedHat:
+  versions:
+    - 6
+    - 7
+Debian:
+  versions:
+    - jessie
+    - stretch
+Ubuntu:
+  versions:
+    - trusty
+    - xenial
+    - artful
+    - bionic
+Amazon Linux:
+  versions:
+    - 2017.09
+```
+
+**NGINX Controller**
+
+```yaml
+CentOS:
+  versions:
+    - 7
+RedHat:
+  versions:
+    - 7
+Debian:
+  versions:
+    - jessie
+    - stretch
+Ubuntu:
+  versions:
+    - xenial
+    - artful
+```
+
+**NGINX Unit**
 
 ```yaml
 CentOS:
@@ -154,6 +199,16 @@ nginx_repository:
 # Default is mainline.
 branch: mainline
 
+# Location of your NGINX Plus license in your local machine.
+# Default is the files folder within the NGINX Ansible role.
+license:
+  certificate: license/nginx-repo.crt
+  key: license/nginx-repo.key
+
+# Delete NGINX Plus license after installation for security purposes.
+# Default is true.
+delete_license: true
+
 # Install NGINX JavaScript, Perl, ModSecurity WAF (NGINX Plus only), GeoIP, Image-Filter, RTMP Media Streaming, and/or XSLT modules.
 # Default is false.
 modules:
@@ -171,26 +226,31 @@ modules:
 amplify_enable: false
 amplify_key: null
 
+# Install NGINX Controller.
+# Use your NGINX Controller API key and NGINX Controller API endpoint.
+# Requires NGINX Plus.
+# Default is null.
+controller_enable: false
+controller_api_key: null
+controller_api_endpoint: null
+
+# Install NGINX Unit and NGINX Unit modules.
+# Use a list of supported NGINX Unit modules.
+# Default is false.
+unit_enable: false
+unit_modules: null
+
 # Enable NGINX status data.
 # Will enable 'stub_status' in NGINX Open Source and 'status' in NGINX Plus.
 # Default is false.
 status_enable: false
 
 # Enable NGINX Plus REST API, write access to the REST API, and NGINX Plus dashboard.
+# Requires NGINX Plus.
 # Default is false.
 rest_api_enable: false
 rest_api_write: false
 rest_api_dashboard: false
-
-# Location of your NGINX Plus license in your local machine.
-# Default is the files folder within the NGINX Ansible role.
-license:
-  certificate: license/nginx-repo.crt
-  key: license/nginx-repo.key
-
-# Delete NGINX Plus license after installation for security purposes.
-# Default is true.
-delete_license: true
 
 # Enable uploading NGINX configuration files to your system.
 # Default for uploading files is false.
@@ -215,12 +275,6 @@ http_template_listen: 80
 http_template_server_name: localhost
 stream_template_enable: false
 stream_template_listen: 12345
-
-# Install NGINX Unit and NGINX Unit modules.
-# Use a list of supported NGINX Unit modules.
-# Default is false.
-unit_enable: false
-unit_modules: null
 ```
 
 Dependencies
@@ -241,6 +295,16 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a 
     - role: nginxinc.nginx
 ```
 
+This is a sample playbook file for deploying the Ansible Galaxy NGINX role to a dynamic inventory containing the `nginx` tag.
+
+```yaml
+---
+- hosts: tag_nginx
+  remote_user: root
+  roles:
+    - role: nginxinc.nginx
+```
+
 This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a localhost and installing NGINX Plus.
 
 ```yaml
@@ -253,19 +317,23 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a 
     type: plus
 ```
 
-This is a sample playbook file for deploying the Ansible Galaxy NGINX role to a dynamic inventory containing the `nginx` tag.
+This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a localhost to install NGINX Plus and the NGINX Controller agent.
 
-```yml
----
-- hosts: tag_nginx
-  remote_user: root
+```yaml
+- hosts: localhost
+  become: true
   roles:
     - role: nginxinc.nginx
+  vars:
+    type: plus
+    controller_enable: true
+    controller_api_key: <API_KEY_HERE>
+    controller_api_endpoint: https://<FQDN>/1.4
 ```
 
 This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a localhost to install NGINX Unit and the PHP/Perl NGINX Unit language modules.
 
-```yml
+```yaml
 ---
 - hosts: localhost
   become: true

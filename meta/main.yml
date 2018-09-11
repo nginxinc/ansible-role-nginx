@@ -34,14 +34,18 @@ galaxy_info:
 
   galaxy_tags:
     - nginx
-    - amplify
-    - controller
+    - nginx-oss
     - oss
+    - nginx-plus
     - plus
+    - nginx-amplify
+    - amplify
+    - nginx-controller
+    - controller
+    - nginx-unit
+    - unit
     - web
     - server
-    - unit
     - development
-    - web
 
 dependencies: []

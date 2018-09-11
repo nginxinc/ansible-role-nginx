@@ -26,13 +26,13 @@
   lineinfile:
     dest: /etc/controller-agent/agent.conf
     regexp: api_key =.*
-    line: "api_key = {{ controller_license }}"
+    line: "api_key = {{ controller_api_key }}"
 
 - name: "(Setup: All OSs) Configure NGINX Controller Agent API URL"
   lineinfile:
     dest: /etc/controller-agent/agent.conf
     regexp: api_url =.*
-    line: "api_url = {{ controller_api_url }}"
+    line: "api_url = {{ controller_api_endpoint }}"
 
 - name: "(Setup: All OSs) Configure NGINX Controller Agent API Hostname"
   lineinfile:

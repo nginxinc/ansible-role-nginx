@@ -1,0 +1,5 @@
+---
+- name: "(Install: Debian/Ubuntu) Add NGINX Amplify Agent Repository"
+  apt_repository:
+    filename: nginx-amplify
+    repo: deb http://packages.amplify.nginx.com/{{ ansible_distribution|lower }}/ {{ ansible_distribution_release|lower }} amplify-agent

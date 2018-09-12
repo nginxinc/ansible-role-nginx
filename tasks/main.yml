@@ -34,7 +34,7 @@
   when: nginx_enable
 
 - import_tasks: amplify/install-amplify.yml
-  when: amplify_enable and amplify_key is defined and amplify_key
+  when: amplify_enable and amplify_api_key is defined and amplify_api_key
 
 - import_tasks: controller/install-controller.yml
   when: controller_enable and controller_api_key is defined and controller_api_key and controller_api_endpoint is defined and controller_api_endpoint

@@ -1,0 +1,5 @@
+---
+- name: "(Install: Debian/Ubuntu) Add NGINX Controller Agent Repository"
+  apt_repository:
+    filename: nginx-controller
+    repo: deb http://packages.nginx.org/controller/{{ ansible_distribution|lower }}/ {{ ansible_distribution_release|lower }} controller

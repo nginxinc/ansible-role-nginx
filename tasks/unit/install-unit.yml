@@ -23,4 +23,4 @@
   notify: "(Handler: FreeBSD) Start NGINX Unit"
 
 - import_tasks: install-modules.yml
-  when: unit_modules is defined and unit_modules
+  when: nginx_unit_modules is defined and nginx_unit_modules

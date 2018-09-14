@@ -5,4 +5,4 @@
   roles:
     - ansible-role-nginx
   vars:
-    branch: stable
+    nginx_branch: stable

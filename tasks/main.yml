@@ -11,33 +11,33 @@
   block:
 
     - import_tasks: opensource/install-oss.yml
-      when: type == "opensource"
+      when: nginx_type == "opensource"
 
     - import_tasks: plus/install-plus.yml
-      when: type == "plus"
+      when: nginx_type == "plus"
 
     - import_tasks: modules/install-modules.yml
       when: true in modules.values()
 
     - import_tasks: conf/push-config.yml
-      when: main_push_enable or http_push_enable or stream_push_enable
+      when: nginx_main_push_enable or nginx_http_push_enable or nginx_stream_push_enable
 
     - import_tasks: conf/template-config.yml
-      when: main_template_enable or http_template_enable or stream_template_enable
+      when: nginx_main_template_enable or nginx_http_template_enable or nginx_stream_template_enable
 
     - import_tasks: conf/setup-status.yml
-      when: status_enable
+      when: nginx_status_enable
 
     - import_tasks: conf/setup-rest-api.yml
-      when: rest_api_enable and type == "plus"
+      when: nginx_rest_api_enable and nginx_type == "plus"
 
   when: nginx_enable
 
 - import_tasks: amplify/install-amplify.yml
-  when: amplify_enable and amplify_api_key is defined and amplify_api_key
+  when: nginx_amplify_enable and nginx_amplify_api_key is defined and nginx_amplify_api_key
 
 - import_tasks: controller/install-controller.yml
-  when: controller_enable and controller_api_key is defined and controller_api_key and controller_api_endpoint is defined and controller_api_endpoint
+  when: nginx_controller_enable and nginx_controller_api_key is defined and nginx_controller_api_key and nginx_controller_api_endpoint is defined and nginx_controller_api_endpoint
 
 - import_tasks: unit/install-unit.yml
-  when: unit_enable
+  when: nginx_unit_enable

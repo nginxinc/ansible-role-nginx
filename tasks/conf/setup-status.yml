@@ -12,7 +12,7 @@
               deny all;
           }
       }
-  when: type == "opensource"
+  when: nginx_type == "opensource"
   notify: "(Handler: All OSs) Reload NGINX"
 
 - name: "(Setup: NGINX Plus) Enable NGINX Plus Status"
@@ -28,5 +28,5 @@
               deny all;
           }
       }
-  when: type == "plus"
+  when: nginx_type == "plus"
   notify: "(Handler: All OSs) Reload NGINX"

@@ -18,4 +18,4 @@
   when: modules.xslt | default(false)
 
 - import_tasks: install-waf.yml
-  when: modules.waf | default(false) and type == "plus"
+  when: modules.waf | default(false) and nginx_type == "plus"

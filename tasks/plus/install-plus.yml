@@ -20,4 +20,4 @@
   notify: "(Handler: All OSs) Start NGINX"
 
 - import_tasks: delete-license.yml
-  when: delete_license
+  when: nginx_delete_license

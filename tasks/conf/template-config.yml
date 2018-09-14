@@ -4,14 +4,14 @@
     src: nginx.conf.j2
     dest: /etc/nginx/nginx.conf
     backup: yes
-  when: main_template_enable
+  when: nginx_main_template_enable
   notify: "(Handler: All OSs) Reload NGINX"
 
 - name: "(Setup: All NGINX) Ensure NGINX HTTP Directory Exists"
   file:
     path: /etc/nginx/conf.d/http
     state: directory
-  when: http_template_enable
+  when: nginx_http_template_enable
 
 - name: "(Setup: All NGINX) Dynamically Generate NGINX HTTP Configuration Files"
   template:
@@ -20,14 +20,14 @@
     backup: yes
   with_fileglob:
     - "../templates/http/*.j2"
-  when: http_template_enable
+  when: nginx_http_template_enable
   notify: "(Handler: All OSs) Reload NGINX"
 
 - name: "(Setup: All NGINX) Ensure NGINX Stream Directory Exists"
   file:
     path: /etc/nginx/conf.d/stream
     state: directory
-  when: stream_template_enable
+  when: nginx_stream_template_enable
 
 - name: "(Setup: All NGINX) Dynamically Generate NGINX Stream Configuration Files"
   template:
@@ -36,5 +36,5 @@
     backup: yes
   with_fileglob:
     - "../templates/stream/*.j2"
-  when: stream_template_enable
+  when: nginx_stream_template_enable
   notify: "(Handler: All OSs) Reload NGINX"

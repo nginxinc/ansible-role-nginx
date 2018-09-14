@@ -3,13 +3,13 @@
   package:
     name: nginx-module-image-filter
     state: present
-  when: type == "opensource"
+  when: nginx_type == "opensource"
 
 - name: "(Install: All OSs) Install NGINX Plus Image Filter Module"
   package:
     name: nginx-plus-module-image-filter
     state: present
-  when: type == "plus"
+  when: nginx_type == "plus"
 
 - name: "(Setup: All NGINX) Load NGINX Image Filter Module"
   lineinfile:

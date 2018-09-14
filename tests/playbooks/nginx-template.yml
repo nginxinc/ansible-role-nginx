@@ -5,6 +5,6 @@
   roles:
     - ansible-role-nginx
   vars:
-    http_template_enable: true
-    http_template_keepalive_timeout: 70
-    http_template_listen: 82
+    nginx_http_template_enable: true
+    nginx_http_template_keepalive_timeout: 70
+    nginx_http_template_listen: 82

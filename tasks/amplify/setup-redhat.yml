@@ -1,0 +1,8 @@
+---
+- name: "(Install: CentOS/RedHat/Amazon Linux) Add NGINX Amplify Agent Repository"
+  yum_repository:
+    name: nginx-amplify
+    baseurl: http://packages.amplify.nginx.com/{{ (ansible_distribution == "Amazon") | ternary('amzn/', 'centos/') }}/$releasever/$basearch/
+    description: NGINX Amplify Agent
+    enabled: yes
+    gpgcheck: yes

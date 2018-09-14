@@ -58,7 +58,7 @@ modules:
 # Requires access to either the NGINX stub status or the NGINX Plus REST API.
 # Default is null.
 amplify_enable: false
-amplify_key: null
+amplify_api_key: null
 
 # Install NGINX Controller.
 # Use your NGINX Controller API key and NGINX Controller API endpoint.

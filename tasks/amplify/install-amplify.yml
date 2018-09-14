@@ -1,10 +1,24 @@
 ---
-- import_tasks: ../conf/setup-status.yml
+- import_tasks: setup-debian.yml
+  when: ansible_os_family == "Debian"
 
-- name: "(Install: All NGINX) Download NGINX Amplify Script"
-  get_url:
-    url: https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh
-    dest: /tmp/install.sh
+- import_tasks: setup-redhat.yml
+  when: ansible_os_family == "RedHat"
 
-- name: "(Install: All NGINX) Install NGINX Amplify"
-  shell: API_KEY='{{ amplify_key }}' sh /tmp/install.sh -y
+- name: "(Install: All OSs) Install NGINX Amplify Agent"
+  package:
+    name: nginx-amplify-agent
+    state: present
+
+- name: "(Setup: All OSs) Copy NGINX Configurator Agent Configuration Template"
+  copy:
+    remote_src: yes
+    src: /etc/amplify-agent/agent.configurator.conf.default
+    dest: /etc/amplify-agent/agent.configurator.conf
+
+- name: "(Setup: All OSs) Configure NGINX Amplify Agent API Key"
+  lineinfile:
+    dest: /etc/amplify-agent/agent.conf
+    regexp: api_key =.*
+    line: "api_key = {{ amplify_api_key }}"
+  notify: "(Handler: All OSs) Start NGINX Amplify Agent"

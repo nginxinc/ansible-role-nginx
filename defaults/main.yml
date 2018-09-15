@@ -6,45 +6,45 @@ nginx_enable: true
 # Specify which version of NGINX you want to install.
 # Options are 'opensource' or 'plus'.
 # Default is 'opensource'.
-type: opensource
+nginx_type: opensource
 
 # Specify repository origin for NGINX Open Source.
 # Options are 'nginx_repository' or 'os_repository'.
-# Only works if 'type' is set to 'opensource'.
+# Only works if 'nginx_type' is set to 'opensource'.
 # Default is nginx_repository.
-install_from: nginx_repository
+nginx_install_from: nginx_repository
 
 # Specify source repository for NGINX Open Source.
 # Only works if 'install_from' is set to 'nginx_repository'.
 # Defaults are the official NGINX repositories.
 nginx_repository:
   debian:
-    - deb https://nginx.org/packages/{{ (branch == 'mainline') | ternary('mainline/', '') }}{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} nginx
-    - deb-src https://nginx.org/packages/{{ (branch == 'mainline') | ternary('mainline/', '') }}{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} nginx
+    - deb https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} nginx
+    - deb-src https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} nginx
   redhat:
-    - https://nginx.org/packages/{{ (branch == 'mainline') | ternary('mainline/', '') }}{{ (ansible_distribution == "RedHat") | ternary('rhel/', 'centos/') }}{{ ansible_distribution_major_version|int }}/$basearch/
+    - https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}{{ (ansible_distribution == "RedHat") | ternary('rhel/', 'centos/') }}{{ ansible_distribution_major_version|int }}/$basearch/
   suse:
-    - https://nginx.org/packages/{{ (branch == 'mainline') | ternary('mainline/', '') }}sles/12
+    - https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}sles/12
 
 # Specify which branch of NGINX Open Source you want to install.
 # Options are 'mainline' or 'stable'.
 # Only works if 'install_from' is set to 'nginx_repository'.
 # Default is mainline.
-branch: mainline
+nginx_branch: mainline
 
 # Location of your NGINX Plus license in your local machine.
 # Default is the files folder within the NGINX Ansible role.
-license:
+nginx_license:
   certificate: license/nginx-repo.crt
   key: license/nginx-repo.key
 
 # Delete NGINX Plus license after installation for security purposes.
 # Default is true.
-delete_license: true
+nginx_delete_license: true
 
 # Install NGINX JavaScript, Perl, ModSecurity WAF (NGINX Plus only), GeoIP, Image-Filter, RTMP Media Streaming, and/or XSLT modules.
 # Default is false.
-modules:
+nginx_modules:
   njs: false
   perl: false
   waf: false
@@ -57,55 +57,55 @@ modules:
 # Use your NGINX Amplify API key.
 # Requires access to either the NGINX stub status or the NGINX Plus REST API.
 # Default is null.
-amplify_enable: false
-amplify_api_key: null
+nginx_amplify_enable: false
+nginx_amplify_api_key: null
 
 # Install NGINX Controller.
 # Use your NGINX Controller API key and NGINX Controller API endpoint.
 # Requires NGINX Plus and write access to the NGINX Plus REST API.
 # Default is null.
-controller_enable: false
-controller_api_key: null
-controller_api_endpoint: null
+nginx_controller_enable: false
+nginx_controller_api_key: null
+nginx_controller_api_endpoint: null
 
 # Install NGINX Unit and NGINX Unit modules.
 # Use a list of supported NGINX Unit modules.
 # Default is false.
-unit_enable: false
-unit_modules: null
+nginx_unit_enable: false
+nginx_unit_modules: null
 
 # Enable NGINX status data.
 # Will enable 'stub_status' in NGINX Open Source and 'status' in NGINX Plus.
 # Default is false.
-status_enable: false
+nginx_status_enable: false
 
 # Enable NGINX Plus REST API, write access to the REST API, and NGINX Plus dashboard.
 # Requires NGINX Plus.
 # Default is false.
-rest_api_enable: false
-rest_api_write: false
-rest_api_dashboard: false
+nginx_rest_api_enable: false
+nginx_rest_api_write: false
+nginx_rest_api_dashboard: false
 
 # Enable uploading NGINX configuration files to your system.
 # Default for uploading files is false.
 # Default location of files is the files folder within the NGINX Ansible role.
-main_push_enable: false
-main_push_location: conf/nginx.conf
-http_push_enable: false
-http_push_location: conf/http/*.conf
-stream_push_enable: false
-stream_push_location: conf/stream/*.conf
+nginx_main_push_enable: false
+nginx_main_push_location: conf/nginx.conf
+nginx_http_push_enable: false
+nginx_http_push_location: conf/http/*.conf
+nginx_stream_push_enable: false
+nginx_stream_push_location: conf/stream/*.conf
 
 # Configuration variables to create a templated NGINX configuration.
 # Defaults are the values found in a fresh NGINX installation.
-main_template_enable: false
-main_template_user: nginx
-main_template_worker_processes: auto
-main_template_error_level: warn
-main_template_worker_connections: 1024
-http_template_enable: false
-http_template_keepalive_timeout: 65
-http_template_listen: 80
-http_template_server_name: localhost
-stream_template_enable: false
-stream_template_listen: 12345
+nginx_main_template_enable: false
+nginx_main_template_user: nginx
+nginx_main_template_worker_processes: auto
+nginx_main_template_error_level: warn
+nginx_main_template_worker_connections: 1024
+nginx_http_template_enable: false
+nginx_http_template_keepalive_timeout: 65
+nginx_http_template_listen: 80
+nginx_http_template_server_name: localhost
+nginx_stream_template_enable: false
+nginx_stream_template_listen: 12345

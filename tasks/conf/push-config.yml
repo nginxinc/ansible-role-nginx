@@ -1,17 +1,17 @@
 ---
 - name: "(Setup: All NGINX) Upload NGINX Main Configuration File"
   copy:
-    src: "{{ main_push_location }}"
+    src: "{{ nginx_main_push_location }}"
     dest: /etc/nginx/nginx.conf
     backup: yes
   notify: "(Handler: All OSs) Reload NGINX"
-  when: main_push_enable
+  when: nginx_main_push_enable
 
 - name: "(Setup: All NGINX) Ensure NGINX HTTP Directory Exists"
   file:
     path: /etc/nginx/conf.d/http
     state: directory
-  when: http_push_enable
+  when: nginx_http_push_enable
 
 - name: "(Setup: All NGINX) Upload NGINX HTTP Configuration Files"
   copy:
@@ -19,15 +19,15 @@
     dest: /etc/nginx/conf.d/http
     backup: yes
   with_fileglob:
-    - "{{ http_push_location }}"
+    - "{{ nginx_http_push_location }}"
   notify: "(Handler: All OSs) Reload NGINX"
-  when: http_push_enable
+  when: nginx_http_push_enable
 
 - name: "(Setup: All NGINX) Ensure NGINX Stream Directory Exists"
   file:
     path: /etc/nginx/conf.d/stream
     state: directory
-  when: stream_push_enable
+  when: nginx_stream_push_enable
 
 - name: "(Setup: All NGINX) Upload NGINX Stream Configuration Files"
   copy:
@@ -35,6 +35,6 @@
     dest: /etc/nginx/conf.d/stream
     backup: yes
   with_fileglob:
-    - "{{ stream_push_location }}"
+    - "{{ nginx_stream_push_location }}"
   notify: "(Handler: All OSs) Reload NGINX"
-  when: stream_push_enable
+  when: nginx_stream_push_enable

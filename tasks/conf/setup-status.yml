@@ -1,7 +1,7 @@
 ---
 - name: "(Setup: NGINX Open Source) Enable NGINX Open Source Status"
   blockinfile:
-    path: "{{ (http_template_enable) | ternary('/etc/nginx/conf.d/http/stub_status.conf','/etc/nginx/conf.d/stub_status.conf') }}"
+    path: "{{ (nginx_http_template_enable) | ternary('/etc/nginx/conf.d/http/stub_status.conf','/etc/nginx/conf.d/stub_status.conf') }}"
     create: yes
     block: |
       server {
@@ -12,12 +12,12 @@
               deny all;
           }
       }
-  when: type == "opensource"
+  when: nginx_type == "opensource"
   notify: "(Handler: All OSs) Reload NGINX"
 
 - name: "(Setup: NGINX Plus) Enable NGINX Plus Status"
   blockinfile:
-    path: "{{ (http_template_enable) | ternary('/etc/nginx/conf.d/http/status.conf','/etc/nginx/conf.d/status.conf') }}"
+    path: "{{ (nginx_http_template_enable) | ternary('/etc/nginx/conf.d/http/status.conf','/etc/nginx/conf.d/status.conf') }}"
     create: yes
     block: |
       server {
@@ -28,5 +28,5 @@
               deny all;
           }
       }
-  when: type == "plus"
+  when: nginx_type == "plus"
   notify: "(Handler: All OSs) Reload NGINX"

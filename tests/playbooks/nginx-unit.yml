@@ -6,7 +6,7 @@
     - ansible-role-nginx
   vars:
     nginx_enable: false
-    unit_enable: true
-    unit_modules:
+    nginx_unit_enable: true
+    nginx_unit_modules:
       - unit-php
       - unit-perl

@@ -17,7 +17,7 @@
       when: nginx_type == "plus"
 
     - import_tasks: modules/install-modules.yml
-      when: true in modules.values()
+      when: true in nginx_modules.values()
 
     - import_tasks: conf/push-config.yml
       when: nginx_main_push_enable or nginx_http_push_enable or nginx_stream_push_enable

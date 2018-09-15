@@ -1,15 +1,15 @@
-user  {{ main_template_user }};
-worker_processes  {{ main_template_worker_processes }};
+user  {{ nginx_main_template_user }};
+worker_processes  {{ nginx_main_template_worker_processes }};
 
-error_log  /var/log/nginx/error.log {{ main_template_error_level }};
+error_log  /var/log/nginx/error.log {{ nginx_main_template_error_level }};
 pid        /var/run/nginx.pid;
 
 
 events {
-    worker_connections  {{ main_template_worker_connections }};
+    worker_connections  {{ nginx_main_template_worker_connections }};
 }
 
-{% if http_template_enable %}
+{% if nginx_http_template_enable %}
 http {
     include       /etc/nginx/mime.types;
     default_type  application/octet-stream;
@@ -23,7 +23,7 @@ http {
     sendfile        on;
     #tcp_nopush     on;
 
-    keepalive_timeout  {{ http_template_keepalive_timeout }};
+    keepalive_timeout  {{ nginx_http_template_keepalive_timeout }};
 
     #gzip  on;
 
@@ -31,7 +31,7 @@ http {
 }
 {% endif %}
 
-{% if stream_template_enable %}
+{% if nginx_stream_template_enable %}
 stream {
     include /etc/nginx/conf.d/stream/*.conf;
 }

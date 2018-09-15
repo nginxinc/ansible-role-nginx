@@ -1,7 +1,7 @@
 ---
 - name: "(Setup: All NGINX) Upload NGINX Main Configuration File"
   copy:
-    src: "{{ main_push_location }}"
+    src: "{{ nginx_main_push_location }}"
     dest: /etc/nginx/nginx.conf
     backup: yes
   notify: "(Handler: All OSs) Reload NGINX"
@@ -19,7 +19,7 @@
     dest: /etc/nginx/conf.d/http
     backup: yes
   with_fileglob:
-    - "{{ http_push_location }}"
+    - "{{ nginx_http_push_location }}"
   notify: "(Handler: All OSs) Reload NGINX"
   when: nginx_http_push_enable
 
@@ -35,6 +35,6 @@
     dest: /etc/nginx/conf.d/stream
     backup: yes
   with_fileglob:
-    - "{{ stream_push_location }}"
+    - "{{ nginx_stream_push_location }}"
   notify: "(Handler: All OSs) Reload NGINX"
   when: nginx_stream_push_enable

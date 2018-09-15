@@ -28,7 +28,7 @@
       when: ansible_os_family == "FreeBSD"
       notify: "(Handler: All OSs) Start NGINX"
 
-  when: install_from == "nginx_repository"
+  when: nginx_install_from == "nginx_repository"
 
 - name: "(Install: Debian/Ubuntu/CentOS/RedHat/FreeBSD) Install NGINX"
   package:

@@ -99,6 +99,7 @@ nginx_stream_push_location: conf/stream/*.conf
 # Configuration variables to create a templated NGINX configuration.
 # Defaults are the values found in a fresh NGINX installation.
 nginx_main_template_enable: false
+nginx_main_template_name: nginx.conf.j2
 nginx_main_template_user: nginx
 nginx_main_template_worker_processes: auto
 nginx_main_template_error_level: warn

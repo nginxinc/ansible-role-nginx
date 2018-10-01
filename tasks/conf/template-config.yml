@@ -1,7 +1,7 @@
 ---
 - name: "(Setup: All NGINX) Dynamically Generate NGINX Main Configuration File"
   template:
-    src: nginx.conf.j2
+    src: "{{ nginx_main_template_name }}"
     dest: /etc/nginx/nginx.conf
     backup: yes
   when: nginx_main_template_enable

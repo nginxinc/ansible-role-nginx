@@ -1,44 +1,64 @@
+{% if item.value.upstreams is defined %}
+{% for upstream in item.value.upstreams %}
+upstream {{ item.value.upstreams[upstream].name }} {
+    {{ item.value.upstreams[upstream].lb_method }};
+    zone {{ item.value.upstreams[upstream].zone_name }} {{ item.value.upstreams[upstream].zone_size }};
+{% for server in item.value.upstreams[upstream].servers %}
+    server {{ item.value.upstreams[upstream].servers[server].address }}:{{ item.value.upstreams[upstream].servers[server].port }} weight={{ item.value.upstreams[upstream].servers[server].weight|default("1") }};
+{% endfor %}
+{% if item.value.upstreams[upstream].sticky_cookie %}
+    sticky cookie srv_id expires=1h  path=/;
+{% endif %}
+}
+{% endfor %}
+{% endif %}
+
 server {
-    listen       {{ nginx_http_template_listen }};
-    server_name  {{ nginx_http_template_server_name }};
-
-    #charset koi8-r;
-    #access_log  /var/log/nginx/host.access.log  main;
-
+{% if item.value.ssl is defined %}
+    listen 443 ssl;
+    ssl_certificate /etc/ssl/certs/{{ item.value.ssl.cert }};
+    ssl_certificate_key /etc/ssl/private/{{ item.value.ssl.key }};
+{% else %}
+    listen {{ item.value.port }};
+{% endif %}
+    server_name {{ item.value.server_name }};
+{% if item.value.load_balancer is defined %}
     location / {
-        root   /usr/share/nginx/html;
-        index  index.html index.htm;
+        proxy_pass http://{{ item.value.load_balancer.proxy_pass }};
+{% if item.value.load_balancer.health_check_plus %}
+        health_check;
+{% endif %}
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
     }
-
-    #error_page  404              /404.html;
-
+{% endif %}
+{% if item.value.web_server is defined %}
+    location / {
+        root   {{ item.value.web_server.html_file_location }};
+        index  {{ item.value.web_server.html_file_name }};
+    }
+{% if item.value.web_server.http_demo_conf %}
+    sub_filter_once off;
+    sub_filter 'server_hostname' '$hostname';
+    sub_filter 'server_address' '$server_addr:$server_port';
+    sub_filter 'server_url' '$request_uri';
+    sub_filter 'remote_addr' '$remote_addr:$remote_port';
+    sub_filter 'server_date' '$time_local';
+    sub_filter 'client_browser' '$http_user_agent';
+    sub_filter 'request_id' '$request_id';
+    sub_filter 'nginx_version' '$nginx_version';
+    sub_filter 'document_root' '$document_root';
+    sub_filter 'proxied_for_ip' '$http_x_forwarded_for';
+{% endif %}
+{% endif %}
+{% if item.value.error_page is defined %}
     # redirect server error pages to the static page /50x.html
     #
     error_page   500 502 503 504  /50x.html;
     location = /50x.html {
-        root   /usr/share/nginx/html;
+        root   {{ item.value.error_page }};
     }
-
-    # proxy the PHP scripts to Apache listening on 127.0.0.1:80
-    #
-    #location ~ \.php$ {
-    #    proxy_pass   http://127.0.0.1;
-    #}
-
-    # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
-    #
-    #location ~ \.php$ {
-    #    root           html;
-    #    fastcgi_pass   127.0.0.1:9000;
-    #    fastcgi_index  index.php;
-    #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
-    #    include        fastcgi_params;
-    #}
-
-    # deny access to .htaccess files, if Apache's document root
-    # concurs with nginx's one
-    #
-    #location ~ /\.ht {
-    #    deny  all;
-    #}
+{% endif %}
 }

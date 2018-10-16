@@ -6,5 +6,15 @@
     - ansible-role-nginx
   vars:
     nginx_http_template_enable: true
-    nginx_http_template_keepalive_timeout: 70
-    nginx_http_template_listen: 82
+    nginx_http_template:
+      default:
+        template_file: http/default.conf.j2
+        conf_file_name: default.conf
+        conf_file_location: /etc/nginx/conf.d/
+        port: 80
+        server_name: localhost
+        error_page: /usr/share/nginx/html
+        web_server:
+          html_file_location: /usr/share/nginx/html
+          html_file_name: index.html
+          http_demo_conf: false

@@ -1,25 +1,39 @@
 ---
+- name: "(Setup: All NGINX) Ensure HTML Directory Exists"
+  file:
+    path: "{{ item.value.html_file_location }}"
+    state: directory
+  with_dict: "{{ nginx_html_demo_template }}"
+  when: nginx_html_demo_template_enable
+
+- name: "(Setup: All NGINX) Dynamically Generate HTML Files"
+  template:
+    src: "{{ item.value.template_file }}"
+    dest: "{{ item.value.html_file_location }}/{{ item.value.html_file_name }}"
+  with_dict: "{{ nginx_html_demo_template }}"
+  when: nginx_html_demo_template_enable
+
 - name: "(Setup: All NGINX) Dynamically Generate NGINX Main Configuration File"
   template:
-    src: nginx.conf.j2
-    dest: /etc/nginx/nginx.conf
+    src: "{{ nginx_main_template.template_file }}"
+    dest: "{{ nginx_main_template.conf_file_location }}/{{ nginx_main_template.conf_file_name }}"
     backup: yes
   when: nginx_main_template_enable
   notify: "(Handler: All OSs) Reload NGINX"
 
 - name: "(Setup: All NGINX) Ensure NGINX HTTP Directory Exists"
   file:
-    path: /etc/nginx/conf.d/http
+    path: "{{ item.value.conf_file_location }}"
     state: directory
+  with_dict: "{{ nginx_http_template }}"
   when: nginx_http_template_enable
 
 - name: "(Setup: All NGINX) Dynamically Generate NGINX HTTP Configuration Files"
   template:
-    src: "{{ item }}"
-    dest: /etc/nginx/conf.d/http/{{ item | basename | regex_replace('\.j2','') }}
+    src: "{{ item.value.template_file }}"
+    dest: "{{ item.value.conf_file_location }}/{{ item.value.conf_file_name }}"
     backup: yes
-  with_fileglob:
-    - "../templates/http/*.j2"
+  with_dict: "{{ nginx_http_template }}"
   when: nginx_http_template_enable
   notify: "(Handler: All OSs) Reload NGINX"
 

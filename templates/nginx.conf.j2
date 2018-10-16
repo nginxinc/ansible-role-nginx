@@ -1,15 +1,15 @@
-user  {{ nginx_main_template_user }};
-worker_processes  {{ nginx_main_template_worker_processes }};
+user  {{ nginx_main_template.user }};
+worker_processes  {{ nginx_main_template.worker_processes }};
 
-error_log  /var/log/nginx/error.log {{ nginx_main_template_error_level }};
+error_log  /var/log/nginx/error.log {{ nginx_main_template.error_level }};
 pid        /var/run/nginx.pid;
 
 
 events {
-    worker_connections  {{ nginx_main_template_worker_connections }};
+    worker_connections  {{ nginx_main_template.worker_connections }};
 }
 
-{% if nginx_http_template_enable %}
+{% if nginx_main_template.http_enable %}
 http {
     include       /etc/nginx/mime.types;
     default_type  application/octet-stream;
@@ -23,15 +23,24 @@ http {
     sendfile        on;
     #tcp_nopush     on;
 
-    keepalive_timeout  {{ nginx_http_template_keepalive_timeout }};
+    keepalive_timeout  {{ nginx_main_template.http_settings.keepalive_timeout }};
 
     #gzip  on;
-
-    include /etc/nginx/conf.d/http/*.conf;
+{% if nginx_main_template.http_settings.cache %}
+    proxy_cache_path /tmp/cache keys_zone=one:10m;
+{% endif %}
+{% if nginx_main_template.http_settings.rate_limit %}
+    limit_req_zone $binary_remote_addr zone=mylimit:10m rate=10r/s;
+{% endif %}
+{% if nginx_main_template.http_settings.keyval %}
+    keyval_zone zone={{nginx_main_template.http_settings.keyval.zone}}:32k state=one.keyval;
+    keyval $arg_text $text zone=one;
+{% endif %}
+    include /etc/nginx/conf.d/*.conf;
 }
 {% endif %}
 
-{% if nginx_stream_template_enable %}
+{% if nginx_main_template.stream_enable %}
 stream {
     include /etc/nginx/conf.d/stream/*.conf;
 }

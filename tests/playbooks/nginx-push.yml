@@ -5,7 +5,7 @@
   roles:
     - ansible-role-nginx
   vars:
-    nginx_main_push_enable: true
-    nginx_main_push_location: ../files/nginx.conf
-    nginx_http_push_enable: true
-    nginx_http_push_location: ../files/http/*.conf
+    nginx_main_upload_enable: true
+    nginx_main_upload_src: ../files/nginx.conf
+    nginx_http_upload_enable: true
+    nginx_http_upload_src: ../files/http/*.conf

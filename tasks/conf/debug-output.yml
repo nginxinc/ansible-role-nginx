@@ -1,0 +1,9 @@
+---
+- name: "(Setup: All OSs) Register NGINX configuration"
+  command: nginx -T
+  changed_when: false
+  register: nginx_configuration
+
+- name: "(Setup: All OSs) Print NGINX configuration"
+  debug:
+    var:  nginx_configuration.stdout_lines

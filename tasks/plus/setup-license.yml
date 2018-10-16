@@ -9,5 +9,5 @@
     src: "{{ item }}"
     dest: /etc/ssl/nginx
   with_items:
-    - "{{ license.certificate }}"
-    - "{{ license.key }}"
+    - "{{ nginx_license.certificate }}"
+    - "{{ nginx_license.key }}"

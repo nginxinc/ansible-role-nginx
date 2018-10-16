@@ -1,0 +1,81 @@
+---
+- name: "(Setup: All NGINX) Upload NGINX Main Configuration File"
+  copy:
+    src: "{{ nginx_main_upload_src }}"
+    dest: "{{ nginx_main_upload_dest }}"
+    backup: yes
+  notify: "(Handler: All OSs) Reload NGINX"
+  when: nginx_main_upload_enable
+
+- name: "(Setup: All NGINX) Ensure NGINX HTTP Directory Exists"
+  file:
+    path: "{{ nginx_http_upload_dest }}"
+    state: directory
+  when: nginx_http_upload_enable
+
+- name: "(Setup: All NGINX) Upload NGINX HTTP Configuration Files"
+  copy:
+    src: "{{ item }}"
+    dest: "{{ nginx_http_upload_dest }}"
+    backup: yes
+  with_fileglob: "{{ nginx_http_upload_src }}"
+  notify: "(Handler: All OSs) Reload NGINX"
+  when: nginx_http_upload_enable
+
+- name: "(Setup: All NGINX) Ensure NGINX Stream Directory Exists"
+  file:
+    path: "{{ nginx_stream_upload_dest }}"
+    state: directory
+  when: nginx_stream_upload_enable
+
+- name: "(Setup: All NGINX) Upload NGINX Stream Configuration Files"
+  copy:
+    src: "{{ item }}"
+    dest: "{{ nginx_stream_upload_dest }}"
+    backup: yes
+  with_fileglob: "{{ nginx_stream_upload_src }}"
+  notify: "(Handler: All OSs) Reload NGINX"
+  when: nginx_stream_upload_enable
+
+- name: "(Setup: All NGINX) Ensure NGINX HTML Directory Exists"
+  file:
+    path: "{{ nginx_html_upload_dest }}"
+    state: directory
+  when: nginx_html_upload_enable
+
+- name: "(Setup: All NGINX) Upload NGINX HTML Files"
+  copy:
+    src: "{{ item }}"
+    dest: "{{ nginx_html_upload_dest }}"
+    backup: yes
+  with_fileglob: "{{ nginx_html_upload_src }}"
+  notify: "(Handler: All OSs) Reload NGINX"
+  when: nginx_html_upload_enable
+
+- name: "(Setup: All NGINX) Ensure SSL Certificate Directory Exists"
+  file:
+    path: "{{ nginx_ssl_crt_upload_dest }}"
+    state: directory
+  when: nginx_ssl_upload_enable
+
+- name: "(Setup: All NGINX) Ensure SSL Key Directory Exists"
+  file:
+    path: "{{ nginx_ssl_key_upload_dest }}"
+    state: directory
+  when: nginx_ssl_upload_enable
+
+- name: "(Setup: All NGINX) Upload NGINX SSL Certificates"
+  copy:
+    src: "{{ item }}"
+    dest: "{{ nginx_ssl_crt_upload_dest }}"
+    backup: yes
+  with_fileglob: "{{ nginx_ssl_crt_upload_src }}"
+  when: nginx_ssl_upload_enable
+
+- name: "(Setup: All NGINX) Upload NGINX SSL Keys"
+  copy:
+    src: "{{ item }}"
+    dest: "{{ nginx_ssl_key_upload_dest }}"
+    backup: yes
+  with_fileglob: "{{ nginx_ssl_key_upload_src }}"
+  when: nginx_ssl_upload_enable

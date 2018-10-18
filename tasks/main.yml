@@ -4,7 +4,7 @@
 - import_tasks: keys/apt-key.yml
   when:
     - ansible_os_family == "Debian"
-    - nginx_install_from == "nginx_repository"
+    - nginx_install_from == "nginx_repository" or nginx_amplify_enable or nginx_controller_enable or nginx_unit_enable
 
 - import_tasks: keys/rpm-key.yml
   when:

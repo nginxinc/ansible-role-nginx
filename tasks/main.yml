@@ -2,10 +2,14 @@
 - import_tasks: prerequisites/install-prerequisites.yml
 
 - import_tasks: keys/apt-key.yml
-  when: ansible_os_family == "Debian"
+  when:
+    - ansible_os_family == "Debian"
+    - nginx_install_from == "nginx_repository" or nginx_amplify_enable or nginx_controller_enable or nginx_unit_enable
 
 - import_tasks: keys/rpm-key.yml
-  when: ansible_os_family == "RedHat" or ansible_os_family == "Suse"
+  when:
+    - ansible_os_family == "RedHat" or ansible_os_family == "Suse"
+    - nginx_install_from == "nginx_repository" or nginx_amplify_enable or nginx_controller_enable or nginx_unit_enable
 
 - name: "(Install: Debian/Ubuntu/CentOS/RedHat/FreeBSD) Install NGINX"
   block:

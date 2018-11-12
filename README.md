@@ -170,6 +170,9 @@ This role has multiple variables. The defaults for all these variables are the f
 # Default is true.
 nginx_enable: true
 
+# Print NGINX configuration file to terminal after executing playbook.
+nginx_debug_output: false
+
 # Specify which version of NGINX you want to install.
 # Options are 'opensource' or 'plus'.
 # Default is 'opensource'.
@@ -186,12 +189,12 @@ nginx_install_from: nginx_repository
 # Defaults are the official NGINX repositories.
 nginx_repository:
   debian:
-    - deb https://nginx.org/packages/{{ (branch == 'mainline') | ternary('mainline/', '') }}{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} nginx
-    - deb-src https://nginx.org/packages/{{ (branch == 'mainline') | ternary('mainline/', '') }}{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} nginx
+    - deb https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} nginx
+    - deb-src https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} nginx
   redhat:
-    - https://nginx.org/packages/{{ (branch == 'mainline') | ternary('mainline/', '') }}{{ (ansible_distribution == "RedHat") | ternary('rhel/', 'centos/') }}{{ ansible_distribution_major_version|int }}/$basearch/
+    - https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}{{ (ansible_distribution == "RedHat") | ternary('rhel/', 'centos/') }}{{ ansible_distribution_major_version|int }}/$basearch/
   suse:
-    - https://nginx.org/packages/{{ (branch == 'mainline') | ternary('mainline/', '') }}sles/12
+    - https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}sles/12
 
 # Specify which branch of NGINX Open Source you want to install.
 # Options are 'mainline' or 'stable'.
@@ -245,35 +248,110 @@ nginx_unit_modules: null
 # Will enable 'stub_status' in NGINX Open Source and 'status' in NGINX Plus.
 # Default is false.
 nginx_status_enable: false
+nginx_status_port: 8080
 
 # Enable NGINX Plus REST API, write access to the REST API, and NGINX Plus dashboard.
 # Requires NGINX Plus.
 # Default is false.
 nginx_rest_api_enable: false
+nginx_rest_api_location: /etc/nginx/conf.d/api.conf
+nginx_rest_api_port: 8080
 nginx_rest_api_write: false
 nginx_rest_api_dashboard: false
 
 # Enable uploading NGINX configuration files to your system.
 # Default for uploading files is false.
 # Default location of files is the files folder within the NGINX Ansible role.
-nginx_main_push_enable: false
-nginx_main_push_location: conf/nginx.conf
-nginx_http_push_enable: false
-nginx_http_push_location: conf/http/*.conf
-nginx_stream_push_enable: false
-nginx_stream_push_location: conf/stream/*.conf
+# Upload the main NGINX configuration file.
+nginx_main_upload_enable: false
+nginx_main_upload_src: conf/nginx.conf
+nginx_main_upload_dest: /etc/nginx
+# Upload HTTP NGINX configuration files.
+nginx_http_upload_enable: false
+nginx_http_upload_src: conf/http/*.conf
+nginx_http_upload_dest: /etc/nginx/conf.d
+# Upload Stream NGINX configuration files.
+nginx_stream_upload_enable: false
+nginx_stream_upload_src: conf/stream/*.conf
+nginx_stream_upload_dest: /etc/nginx/conf.d
+# Upload HTML files.
+nginx_html_upload_enable: false
+nginx_html_upload_src: www/*
+nginx_html_upload_dest: /usr/share/nginx/html
+# Upload SSL certificates and keys.
+nginx_ssl_upload_enable: false
+nginx_ssl_crt_upload_src: ssl/*.crt
+nginx_ssl_crt_upload_dest: /etc/ssl/certs/
+nginx_ssl_key_upload_src: ssl/*.key
+nginx_ssl_key_upload_dest: /etc/ssl/private/
 
-# Configuration variables to create a templated NGINX configuration.
+# Enable crating dynamic templated NGINX HTMK demo websites.
+nginx_html_demo_template_enable: false
+nginx_html_demo_template:
+  default:
+    template_file: www/index.html.j2
+    html_file_name: index.html
+    html_file_location: /usr/share/nginx/html
+    app_name: default
+
+# Enable creating dynamic templated NGINX configuration files.
 # Defaults are the values found in a fresh NGINX installation.
 nginx_main_template_enable: false
-nginx_main_template_user: nginx
-nginx_main_template_worker_processes: auto
-nginx_main_template_error_level: warn
-nginx_main_template_worker_connections: 1024
+nginx_main_template:
+  template_file: nginx.conf.j2
+  conf_file_name: nginx.conf
+  conf_file_location: /etc/nginx/
+  user: nginx
+  worker_processes: auto
+  error_level: warn
+  worker_connections: 1024
+  http_enable: true
+  http_settings:
+    keepalive_timeout: 65
+    cache: false
+    rate_limit: false
+    keyval: false
+  stream_enable: false
+
+# Enable creating dynamic templated NGINX HTTP configuration files.
+# Defaults will not produce a valid configuration. Instead they are meant to showcase
+# the options available for templating. Each key represents a new configuration file.
+# Comment out load_balancer or web_server depending on whether you wish to create a web server
+# or load balancer configuration file.
 nginx_http_template_enable: false
-nginx_http_template_keepalive_timeout: 65
-nginx_http_template_listen: 80
-nginx_http_template_server_name: localhost
+nginx_http_template:
+  default:
+    template_file: http/default.conf.j2
+    conf_file_name: default.conf
+    conf_file_location: /etc/nginx/conf.d/
+    port: 8081
+    server_name: localhost
+    error_page: /usr/share/nginx/html
+    ssl:
+      cert: ssl/default.crt
+      key: ssl/default.key
+    web_server:
+      html_file_location: /usr/share/nginx/html
+      html_file_name: index.html
+      http_demo_conf: false
+    load_balancer:
+      proxy_pass: backend
+      health_check_plus: false
+    upstreams:
+      upstream1:
+        name: backend
+        lb_method: least_conn
+        zone_name: backend
+        zone_size: 64k
+        sticky_cookie: false
+        servers:
+          server1:
+            address: localhost
+            port: 8081
+            weight: 1
+            health_check: max_fails=1 fail_timeout=10s
+
+# Enable creating dynamic templated NGINX stream configuration files.
 nginx_stream_template_enable: false
 nginx_stream_template_listen: 12345
 ```

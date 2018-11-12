@@ -1,6 +1,6 @@
 ---
 - set_fact: fallback_keyserver='hkp://p80.pool.sks-keyservers.net:80'
-  when: (ansible_distribution == 'Debian' and ansible_distribution_release == 'jessie') or
+  when: (ansible_distribution == 'Debian' and ansible_distribution_release in ['jessie', 'stretch']) or
         (ansible_distribution == 'Ubuntu' and ansible_distribution_release in ['trusty', 'xenial'])
 
 - name: "(Install: APT OSs) Add APT NGINX Signing Key"

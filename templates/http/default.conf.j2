@@ -39,10 +39,12 @@ server {
 {% endfor %}
 {% endif %}
 {% if item.value.web_server is defined %}
-    location / {
-        root   {{ item.value.web_server.html_file_location }};
-        index  {{ item.value.web_server.html_file_name }};
+{% for location in item.value.web_server.locations %}
+    location {{ item.value.web_server.locations[location].location }} {
+        root   {{ item.value.web_server.locations[location].html_file_location }};
+        index  {{ item.value.web_server.locations[location].html_file_name }};
     }
+{% endfor %}
 {% if item.value.web_server.http_demo_conf %}
     sub_filter_once off;
     sub_filter 'server_hostname' '$hostname';

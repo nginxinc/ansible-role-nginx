@@ -306,6 +306,73 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role to a 
     - role: nginxinc.nginx
 ```
 
+This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a localhost and installing the open source version of NGINX as a simple web server.
+
+```yaml
+---
+- hosts: localhost
+  become: true
+  roles:
+    - nginxinc.nginx
+  vars:
+    nginx_http_template_enable: true
+    nginx_http_template:
+    web_server:
+      locations:
+        default:
+          location: /
+          html_file_location: /usr/share/nginx/html
+          html_file_name: index.html
+ 
+```
+
+This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a localhost and installing the open source version of NGINX as a reverse proxy.
+
+```yaml
+---
+- hosts: localhost
+  become: true
+  roles:
+    - nginxinc.nginx
+  vars:
+    nginx_http_template_enable: true
+    nginx_http_template:
+    load_balancer:
+      locations:
+        frontend:
+          location: /
+          proxy_pass: frontend_servers
+        backend:
+          location: /backend
+          proxy_pass: backend_servers
+    upstreams:
+      upstream_1:
+        name: frontend_servers
+        lb_method: least_conn
+        zone_name: frontend
+        zone_size: 64k
+        sticky_cookie: false
+        servers:
+          frontend_server_1:
+            address: localhost
+            port: 80
+            weight: 1
+            health_check: max_fails=3 fail_timeout=5s
+      upstream_2:
+        name: backend_servers
+        lb_method: least_conn
+        zone_name: backend
+        zone_size: 64k
+        sticky_cookie: false
+        servers:
+          backend_server_1:
+            address: localhost
+            port: 8080
+            weight: 1
+            health_check: max_fails=3 fail_timeout=5s
+```
+
+
 This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a localhost and installing NGINX Plus.
 
 ```yaml

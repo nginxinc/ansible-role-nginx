@@ -338,7 +338,7 @@ nginx_http_template:
           html_file_name: index.html
       http_demo_conf: false
     load_balancer:
-      locations
+      locations:
           location1:
             location: /
             proxy_pass: backend

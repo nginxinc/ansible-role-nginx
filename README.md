@@ -331,12 +331,18 @@ nginx_http_template:
       cert: ssl/default.crt
       key: ssl/default.key
     web_server:
-      html_file_location: /usr/share/nginx/html
-      html_file_name: index.html
+      locations:
+        default:
+          location: /
+          html_file_location: /usr/share/nginx/html
+          html_file_name: index.html
       http_demo_conf: false
     load_balancer:
-      proxy_pass: backend
-      health_check_plus: false
+      locations:
+          location1:
+            location: /
+            proxy_pass: backend
+            health_check_plus: false
     upstreams:
       upstream1:
         name: backend
@@ -383,6 +389,79 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role to a 
   roles:
     - role: nginxinc.nginx
 ```
+
+This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a localhost and installing the open source version of NGINX as a simple web server.
+
+```yaml
+---
+- hosts: localhost
+  become: true
+  roles:
+    - ansible-role-nginx
+  vars:
+    nginx_http_template_enable: true
+    nginx_http_template:
+      default:
+        template_file: http/default.conf.j2
+        conf_file_name: default.conf
+        conf_file_location: /etc/nginx/conf.d/
+        port: 80
+        server_name: localhost
+        error_page: /usr/share/nginx/html
+        web_server:
+          locations:
+            default:
+              location: /
+              html_file_location: /usr/share/nginx/html
+              html_file_name: index.html
+```
+
+This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a localhost and installing the open source version of NGINX as a reverse proxy.
+
+```yaml
+---
+- hosts: localhost
+  become: true
+  roles:
+    - nginxinc.nginx
+  vars:
+    nginx_http_template_enable: true
+    nginx_http_template:
+    load_balancer:
+      locations:
+        frontend:
+          location: /
+          proxy_pass: frontend_servers
+        backend:
+          location: /backend
+          proxy_pass: backend_servers
+    upstreams:
+      upstream_1:
+        name: frontend_servers
+        lb_method: least_conn
+        zone_name: frontend
+        zone_size: 64k
+        sticky_cookie: false
+        servers:
+          frontend_server_1:
+            address: localhost
+            port: 80
+            weight: 1
+            health_check: max_fails=3 fail_timeout=5s
+      upstream_2:
+        name: backend_servers
+        lb_method: least_conn
+        zone_name: backend
+        zone_size: 64k
+        sticky_cookie: false
+        servers:
+          backend_server_1:
+            address: localhost
+            port: 8080
+            weight: 1
+            health_check: max_fails=3 fail_timeout=5s
+```
+
 
 This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a localhost and installing NGINX Plus.
 

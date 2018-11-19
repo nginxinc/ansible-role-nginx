@@ -164,11 +164,17 @@ nginx_http_template:
       cert: ssl/default.crt
       key: ssl/default.key
     web_server:
-      html_file_location: /usr/share/nginx/html
-      html_file_name: index.html
+      locations:
+        default:
+          location: /
+          html_file_location: /usr/share/nginx/html
+          html_file_name: index.html
       http_demo_conf: false
     load_balancer:
-      proxy_pass: backend
+      locations:
+        backend:
+          location: /
+          proxy_pass: backend
       health_check_plus: false
     upstreams:
       upstream1:

@@ -24,8 +24,9 @@ server {
 {% endif %}
     server_name {{ item.value.server_name }};
 {% if item.value.load_balancer is defined %}
-    location / {
-        proxy_pass http://{{ item.value.load_balancer.proxy_pass }};
+{% for location in item.value.load_balancer.locations %}
+    location {{ item.value.load_balancer.locations[location].location }} {
+        proxy_pass http://{{ item.value.load_balancer.locations[location].proxy_pass }};
 {% if item.value.load_balancer.health_check_plus %}
         health_check;
 {% endif %}
@@ -34,12 +35,16 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
     }
+
+{% endfor %}
 {% endif %}
 {% if item.value.web_server is defined %}
-    location / {
-        root   {{ item.value.web_server.html_file_location }};
-        index  {{ item.value.web_server.html_file_name }};
+{% for location in item.value.web_server.locations %}
+    location {{ item.value.web_server.locations[location].location }} {
+        root   {{ item.value.web_server.locations[location].html_file_location }};
+        index  {{ item.value.web_server.locations[location].html_file_name }};
     }
+{% endfor %}
 {% if item.value.web_server.http_demo_conf %}
     sub_filter_once off;
     sub_filter 'server_hostname' '$hostname';

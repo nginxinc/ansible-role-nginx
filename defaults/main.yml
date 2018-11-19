@@ -118,14 +118,14 @@ nginx_ssl_crt_upload_dest: /etc/ssl/certs/
 nginx_ssl_key_upload_src: ssl/*.key
 nginx_ssl_key_upload_dest: /etc/ssl/private/
 
-# Enable crating dynamic templated NGINX HTMK demo websites.
+# Enable creating dynamic templated NGINX HTML demo websites.
 nginx_html_demo_template_enable: false
 nginx_html_demo_template:
   default:
     template_file: www/index.html.j2
     html_file_name: index.html
     html_file_location: /usr/share/nginx/html
-    app_name: default
+    html_app_name: Default
 
 # Enable creating dynamic templated NGINX configuration files.
 # Defaults are the values found in a fresh NGINX installation.

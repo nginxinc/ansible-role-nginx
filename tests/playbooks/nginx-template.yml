@@ -15,6 +15,9 @@
         server_name: localhost
         error_page: /usr/share/nginx/html
         web_server:
-          html_file_location: /usr/share/nginx/html
-          html_file_name: index.html
+          locations:
+            default:
+              location: /
+              html_file_location: /usr/share/nginx/html
+              html_file_name: index.html
           http_demo_conf: false

@@ -20,5 +20,5 @@
               location: /
               html_file_location: /usr/share/nginx/html
               html_file_name: index.html
-              autoindex: true
+              autoindex: false
           http_demo_conf: false

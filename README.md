@@ -312,6 +312,7 @@ nginx_main_template:
     rate_limit: false
     keyval: false
   stream_enable: false
+  http_global_autoindex: false
 
 # Enable creating dynamic templated NGINX HTTP configuration files.
 # Defaults will not produce a valid configuration. Instead they are meant to showcase
@@ -327,6 +328,7 @@ nginx_http_template:
     port: 8081
     server_name: localhost
     error_page: /usr/share/nginx/html
+    autoindex: false
     ssl:
       cert: ssl/default.crt
       key: ssl/default.key
@@ -336,6 +338,7 @@ nginx_http_template:
           location: /
           html_file_location: /usr/share/nginx/html
           html_file_name: index.html
+          autoindex: false
       http_demo_conf: false
     load_balancer:
       locations:

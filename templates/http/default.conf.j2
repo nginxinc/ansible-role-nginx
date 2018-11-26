@@ -43,6 +43,9 @@ server {
     location {{ item.value.web_server.locations[location].location }} {
         root   {{ item.value.web_server.locations[location].html_file_location }};
         index  {{ item.value.web_server.locations[location].html_file_name }};
+{% if item.value.web_server.locations[location].autoindex %}
+        autoindex on;
+{% endif %}
     }
 {% endfor %}
 {% if item.value.web_server.http_demo_conf %}

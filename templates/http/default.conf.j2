@@ -17,8 +17,8 @@ upstream {{ item.value.upstreams[upstream].name }} {
 server {
 {% if item.value.ssl is defined %}
     listen 443 ssl;
-    ssl_certificate {{ nginx_ssl_crt_upload_dest }}/{{ item.value.ssl.cert }};
-    ssl_certificate_key {{ nginx_ssl_key_upload_dest }}/{{ item.value.ssl.key }};
+    ssl_certificate /etc/ssl/certs/{{ item.value.ssl.cert }};
+    ssl_certificate_key /etc/ssl/private/{{ item.value.ssl.key }};
 {% else %}
     listen {{ item.value.port }};
 {% endif %}

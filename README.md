@@ -411,12 +411,14 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a 
         port: 80
         server_name: localhost
         error_page: /usr/share/nginx/html
+        autoindex: false
         web_server:
           locations:
             default:
               location: /
               html_file_location: /usr/share/nginx/html
               html_file_name: index.html
+              autoindex: false
 ```
 
 This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a localhost and installing the open source version of NGINX as a reverse proxy.

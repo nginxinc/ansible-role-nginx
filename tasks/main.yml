@@ -4,12 +4,19 @@
 - import_tasks: keys/apt-key.yml
   when:
     - ansible_os_family == "Debian"
-    - nginx_install_from == "nginx_repository" or nginx_amplify_enable or nginx_controller_enable or nginx_unit_enable
+    - nginx_install_from == "nginx_repository"
+      or nginx_amplify_enable
+      or nginx_controller_enable
+      or nginx_unit_enable
 
 - import_tasks: keys/rpm-key.yml
   when:
-    - ansible_os_family == "RedHat" or ansible_os_family == "Suse"
-    - nginx_install_from == "nginx_repository" or nginx_amplify_enable or nginx_controller_enable or nginx_unit_enable
+    - ansible_os_family == "RedHat"
+      or ansible_os_family == "Suse"
+    - nginx_install_from == "nginx_repository"
+      or nginx_amplify_enable
+      or nginx_controller_enable
+      or nginx_unit_enable
 
 - name: "(Install: Debian/Ubuntu/CentOS/RedHat/FreeBSD) Install NGINX"
   block:
@@ -24,10 +31,16 @@
       when: true in nginx_modules.values()
 
     - import_tasks: conf/upload-config.yml
-      when: nginx_main_upload_enable or nginx_http_upload_enable or nginx_stream_upload_enable or nginx_html_upload_enable or nginx_ssl_upload_enable
+      when: nginx_main_upload_enable
+            or nginx_http_upload_enable
+            or nginx_stream_upload_enable
+            or nginx_html_upload_enable
+            or nginx_ssl_upload_enable
 
     - import_tasks: conf/template-config.yml
-      when: nginx_main_template_enable or nginx_http_template_enable or nginx_stream_template_enable
+      when: nginx_main_template_enable
+            or nginx_http_template_enable
+            or nginx_stream_template_enable
 
     - import_tasks: conf/setup-status.yml
       when: nginx_status_enable
@@ -41,10 +54,18 @@
   when: nginx_enable
 
 - import_tasks: amplify/install-amplify.yml
-  when: nginx_amplify_enable and nginx_amplify_api_key is defined and nginx_amplify_api_key
+  when:
+    - nginx_amplify_enable
+    - nginx_amplify_api_key is defined
+    - nginx_amplify_api_key
 
 - import_tasks: controller/install-controller.yml
-  when: nginx_controller_enable and nginx_controller_api_key is defined and nginx_controller_api_key and nginx_controller_api_endpoint is defined and nginx_controller_api_endpoint
+  when:
+    - nginx_controller_enable
+    - nginx_controller_api_key is defined
+    - nginx_controller_api_key
+    - nginx_controller_api_endpoint is defined
+    - nginx_controller_api_endpoint
 
 - import_tasks: unit/install-unit.yml
   when: nginx_unit_enable

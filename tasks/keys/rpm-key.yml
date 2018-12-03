@@ -1,4 +1,4 @@
 ---
 - name: "(Install: RPM OSs) Add RPM NGINX Signing Key"
   rpm_key:
-    key: "{{ 'http://nginx.org/keys/nginx_signing.key' | default('https://nginx.org/keys/nginx_signing.key') }}" 
+    key: "{{ 'http://nginx.org/keys/nginx_signing.key' | default('https://nginx.org/keys/nginx_signing.key') }}"

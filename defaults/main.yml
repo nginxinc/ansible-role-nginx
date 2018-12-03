@@ -125,7 +125,7 @@ nginx_html_demo_template:
     template_file: www/index.html.j2
     html_file_name: index.html
     html_file_location: /usr/share/nginx/html
-    html_app_name: Default
+    web_server_name: Default
 
 # Enable creating dynamic templated NGINX configuration files.
 # Defaults are the values found in a fresh NGINX installation.

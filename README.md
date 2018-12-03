@@ -4,7 +4,7 @@ Ansible NGINX Role
 [![Ansible Galaxy](https://img.shields.io/badge/galaxy-nginxinc.nginx-5bbdbf.svg)](https://galaxy.ansible.com/nginxinc/nginx)
 [![Build Status](https://travis-ci.org/nginxinc/ansible-role-nginx.svg?branch=master)](https://travis-ci.org/nginxinc/ansible-role-nginx)
 
-This role installs NGINX Open Source, NGINX Plus, or NGINX Unit on your target host.
+This role installs NGINX Open Source, NGINX Plus, the NGINX Amplify agent, the NGINX Controller agent, or NGINX Unit on your target host.
 
 **Note:** This role is still in active development. There may be unidentified issues and the role variables may change as development continues.
 
@@ -285,14 +285,14 @@ nginx_ssl_crt_upload_dest: /etc/ssl/certs/
 nginx_ssl_key_upload_src: ssl/*.key
 nginx_ssl_key_upload_dest: /etc/ssl/private/
 
-# Enable crating dynamic templated NGINX HTMK demo websites.
+# Enable creating dynamic templated NGINX HTML demo websites.
 nginx_html_demo_template_enable: false
 nginx_html_demo_template:
   default:
     template_file: www/index.html.j2
     html_file_name: index.html
     html_file_location: /usr/share/nginx/html
-    app_name: default
+    web_server_name: Default
 
 # Enable creating dynamic templated NGINX configuration files.
 # Defaults are the values found in a fresh NGINX installation.
@@ -342,10 +342,10 @@ nginx_http_template:
       http_demo_conf: false
     load_balancer:
       locations:
-          location1:
-            location: /
-            proxy_pass: backend
-            health_check_plus: false
+        backend:
+          location: /
+          proxy_pass: backend
+      health_check_plus: false
     upstreams:
       upstream1:
         name: backend
@@ -363,6 +363,7 @@ nginx_http_template:
 # Enable creating dynamic templated NGINX stream configuration files.
 nginx_stream_template_enable: false
 nginx_stream_template_listen: 12345
+
 ```
 
 Dependencies

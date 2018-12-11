@@ -364,6 +364,40 @@ nginx_http_template:
 nginx_stream_template_enable: false
 nginx_stream_template_listen: 12345
 
+# Enable creating dynamic templated NGINX Stream configuration files.
+# Defaults will not produce a valid configuration. Instead they are meant to showcase
+# the options available for templating. Each key represents a new configuration file.
+# Comment out network_stream or upstreams depending on whether you wish to create a web server
+# or load balancer configuration file.
+
+nginx_stream_template:
+  default:
+    template_file: stream/default.conf.j2
+    conf_file_name: default.conf
+    conf_file_location: /etc/nginx/conf.d/
+    network_stream:
+      streams:
+        default:
+          listen_address: 127.0.0.1
+          listen_port: 443
+          proxy_pass: backend
+          proxy_timeout: 3s
+          proxy_connect_timeout: 1s
+          proxy_protocol: false
+      health_check_plus: false
+    upstreams:
+      upstream1:
+        name: backend
+        lb_method: least_conn
+        zone_name: backend
+        zone_size: 64k
+        sticky_cookie: false
+        servers:
+          server1:
+            address: localhost
+            port: 8081
+            weight: 1
+            health_check: max_fails=1 fail_timeout=10s
 ```
 
 Dependencies

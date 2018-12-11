@@ -27,7 +27,7 @@ server {
 	proxy_timeout {{ item.value.network_stream.streams[stream].proxy_timeout }};
 	proxy_connect_timeout {{ item.value.network_stream.streams[stream].proxy_connect_timeout }};
 	proxy_protocol {{ item.value.network_stream.streams[stream].proxy_protocol }};
-{% if item.value.network_stream.streams[stream].health_check_plus %}
+{% if item.value.network_stream.streams.health_check_plus %}
 	health_check;
 {% endif %}
 }

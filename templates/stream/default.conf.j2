@@ -1,0 +1,35 @@
+{% if item.value.upstreams is defined %}
+{% for upstream in item.value.upstreams %}
+upstream {{ item.value.upstreams[upstream].name }} {
+    {{ item.value.upstreams[upstream].lb_method }};
+    zone {{ item.value.upstreams[upstream].zone_name }} {{ item.value.upstreams[upstream].zone_size }};
+{% for server in item.value.upstreams[upstream].servers %}
+    server {{ item.value.upstreams[upstream].servers[server].address }}:{{ item.value.upstreams[upstream].servers[server].port }} weight={{ item.value.upstreams[upstream].servers[server].weight|default("1") }} {{ item.value.upstreams[upstream].servers[server].health_check|default("") }};
+{% endfor %}
+{% if item.value.upstreams[upstream].sticky_cookie %}
+    sticky cookie srv_id expires=1h  path=/;
+{% endif %}
+}
+
+{% endfor %}
+{% endif %}
+
+
+{% if item.value.network_stream is defined %}
+{% for stream in item.value.network_stream.streams %}
+server {
+{% if item.value.network_stream.streams[stream].listen_address is defined %}
+	listen {{ item.value.network_stream.streams[stream].listen_address }}:{{ item.value.network_stream.streams[stream].listen_port }};
+{% else %}
+	listen {{ item.value.network_stream.streams[stream].listen_port }};
+{% endif %}
+	proxy_pass {{ item.value.network_stream.streams[stream].proxy_pass }};
+	proxy_timeout {{ item.value.network_stream.streams[stream].proxy_timeout }};
+	proxy_connect_timeout {{ item.value.network_stream.streams[stream].proxy_connect_timeout }};
+	proxy_protocol {{ item.value.network_stream.streams[stream].proxy_protocol }};
+{% if item.value.network_stream.streams[stream].health_check_plus %}
+	health_check;
+{% endif %}
+}
+{% endfor %}
+{% endif %}

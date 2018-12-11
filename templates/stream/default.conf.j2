@@ -18,8 +18,6 @@ upstream {{ item.value.upstreams[upstream].name }} {
 {% if item.value.network_stream is defined %}
 {% for stream in item.value.network_stream.streams %}
 server {
-{% if stream == 'default' %}
-
 {% if item.value.network_stream.streams[stream].listen_address is defined and item.value.network_stream.streams[stream].listen_port is defined %}
 	listen {{ item.value.network_stream.streams[stream].listen_address }}:{{ item.value.network_stream.streams[stream].listen_port }};
 {% elif item.value.network_stream.streams[stream].listen_port is defined %}
@@ -29,9 +27,8 @@ server {
 	proxy_timeout {{ item.value.network_stream.streams[stream].proxy_timeout }};
 	proxy_connect_timeout {{ item.value.network_stream.streams[stream].proxy_connect_timeout }};
 	proxy_protocol {{ item.value.network_stream.streams[stream].proxy_protocol }};
-{% if item.value.network_stream.streams.health_check_plus %}
+{% if item.value.network_stream.health_check_plus %}
 	health_check;
-{% endif %}
 {% endif %}
 }
 {% endfor %}

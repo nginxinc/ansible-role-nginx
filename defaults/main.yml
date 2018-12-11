@@ -201,7 +201,7 @@ nginx_stream_template:
   default:
     template_file: stream/default.conf.j2
     conf_file_name: default.conf
-    conf_file_location: /etc/nginx/conf.d/
+    conf_file_location: /etc/nginx/conf.d/stream/
     network_stream:
       streams:
         default:

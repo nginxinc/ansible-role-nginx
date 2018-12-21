@@ -1,4 +1,4 @@
 ---
 - name: "(Install: APT OSs) Add APT NGINX Signing Key"
   apt_key:
-    url: "{{ 'http://nginx.org/keys/nginx_signing.key' | default('https://nginx.org/keys/nginx_signing.key') }}"
+    url: "{{ nginx_signing_key | default('http://nginx.org/keys/nginx_signing.key') }}"

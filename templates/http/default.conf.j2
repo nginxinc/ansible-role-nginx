@@ -30,7 +30,7 @@ server {
 {% for location in item.value.load_balancer.locations %}
     location {{ item.value.load_balancer.locations[location].location }} {
         proxy_pass http://{{ item.value.load_balancer.locations[location].proxy_pass }};
-{% if item.value.load_balancer.health_check_plus %}
+{% if item.value.load_balancer.health_check_plus is defined and item.value.load_balancer.health_check_plus %}
         health_check;
 {% endif %}
         proxy_set_header Host $host;

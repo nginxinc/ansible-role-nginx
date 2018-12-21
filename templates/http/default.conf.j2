@@ -8,6 +8,8 @@ upstream {{ item.value.upstreams[upstream].name }} {
 {% endfor %}
 {% if item.value.upstreams[upstream].sticky_cookie %}
     sticky cookie srv_id expires=1h  path=/;
+# {{ ansible_managed }}
+
 {% endif %}
 }
 

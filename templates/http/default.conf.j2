@@ -23,7 +23,7 @@ server {
     listen {{ item.value.port }};
 {% endif %}
     server_name {{ item.value.server_name }};
-{% if item.value.autoindex %}
+{% if item.value.autoindex is defined and item.value.autoindex %}
     autoindex on;
 {% endif %}
 {% if item.value.load_balancer is defined %}

@@ -26,7 +26,7 @@ server {
 {% if item.value.autoindex %}
     autoindex on;
 {% endif %}
-{% if item.value.redirect is defined and item.value.redirect %}}
+{% if item.value.redirect is defined and item.value.redirect %}
     return 301 https://{{ item.value.server_name }}$request_uri;
 {% endif%}
 {% if item.value.load_balancer is defined %}

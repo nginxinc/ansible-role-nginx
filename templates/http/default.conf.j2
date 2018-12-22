@@ -28,7 +28,7 @@ server {
 {% endif %}
 {% if item.value.redirect is defined and item.value.redirect %}}
     return 301 https://{{ item.value.server_name }}$request_uri;
-{% endif%}}
+{% endif%}
 {% if item.value.load_balancer is defined %}
 {% for location in item.value.load_balancer.locations %}
     location {{ item.value.load_balancer.locations[location].location }} {

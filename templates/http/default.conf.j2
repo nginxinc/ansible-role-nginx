@@ -1,3 +1,5 @@
+# {{ ansible_managed }}
+
 {% if item.value.upstreams is defined %}
 {% for upstream in item.value.upstreams %}
 upstream {{ item.value.upstreams[upstream].name }} {

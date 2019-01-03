@@ -328,6 +328,7 @@ nginx_http_template:
     port: 8081
     server_name: localhost
     error_page: /usr/share/nginx/html
+    redirect: false
     autoindex: false
     ssl:
       cert: ssl/default.crt

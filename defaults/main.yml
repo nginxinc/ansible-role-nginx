@@ -19,7 +19,7 @@ nginx_install_from: nginx_repository
 
 # Choose where to fetch the NGINX signing key from.
 # Default is the official NGINX signing key host.
-nginx_signing_key: https://nginx.org/keys/nginx_signing.key
+nginx_signing_key: http://nginx.org/keys/nginx_signing.key
 
 # Specify source repository for NGINX Open Source.
 # Only works if 'install_from' is set to 'nginx_repository'.

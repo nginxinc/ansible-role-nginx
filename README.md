@@ -184,6 +184,10 @@ nginx_type: opensource
 # Default is nginx_repository.
 nginx_install_from: nginx_repository
 
+# Choose where to fetch the NGINX signing key from.
+# Default is the official NGINX signing key host.
+nginx_signing_key: https://nginx.org/keys/nginx_signing.key
+
 # Specify source repository for NGINX Open Source.
 # Only works if 'install_from' is set to 'nginx_repository'.
 # Defaults are the official NGINX repositories.
@@ -364,7 +368,6 @@ nginx_http_template:
 # Enable creating dynamic templated NGINX stream configuration files.
 nginx_stream_template_enable: false
 nginx_stream_template_listen: 12345
-
 ```
 
 Dependencies

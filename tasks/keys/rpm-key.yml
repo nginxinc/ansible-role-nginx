@@ -1,4 +1,8 @@
 ---
+- name: "(Install: RPM OSs) Set RPM NGINX Signing Key URL"
+  set_fact:
+    keysite: "{{ nginx_signing_key | default('http://nginx.org/keys/nginx_signing.key') }}"
+
 - name: "(Install: RPM OSs) Add RPM NGINX Signing Key"
   rpm_key:
-    key: "{{ 'http://nginx.org/keys/nginx_signing.key' | default('https://nginx.org/keys/nginx_signing.key') }}"
+    key: "{{ keysite | default('https://nginx.org/keys/nginx_signing.key') }}"

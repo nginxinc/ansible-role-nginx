@@ -102,15 +102,15 @@ nginx_rest_api_dashboard: false
 # Upload the main NGINX configuration file.
 nginx_main_upload_enable: false
 nginx_main_upload_src: conf/nginx.conf
-nginx_main_upload_dest: /etc/nginx/nginx.conf
+nginx_main_upload_dest: /etc/nginx/
 # Upload HTTP NGINX configuration files.
 nginx_http_upload_enable: false
 nginx_http_upload_src: conf/http/*.conf
-nginx_http_upload_dest: /etc/nginx/conf.d/*.conf
+nginx_http_upload_dest: /etc/nginx/conf.d/
 # Upload Stream NGINX configuration files.
 nginx_stream_upload_enable: false
 nginx_stream_upload_src: conf/stream/*.conf
-nginx_stream_upload_dest: /etc/nginx/conf.d/*.conf
+nginx_stream_upload_dest: /etc/nginx/conf.d/
 # Upload HTML files.
 nginx_html_upload_enable: false
 nginx_html_upload_src: www/*
@@ -118,9 +118,9 @@ nginx_html_upload_dest: /usr/share/nginx/html
 # Upload SSL certificates and keys.
 nginx_ssl_upload_enable: false
 nginx_ssl_crt_upload_src: ssl/*.crt
-nginx_ssl_crt_upload_dest: /etc/ssl/certs/*.crt
+nginx_ssl_crt_upload_dest: /etc/ssl/certs/
 nginx_ssl_key_upload_src: ssl/*.key
-nginx_ssl_key_upload_dest: /etc/ssl/private/*.key
+nginx_ssl_key_upload_dest: /etc/ssl/private/
 
 # Enable creating dynamic templated NGINX HTML demo websites.
 nginx_html_demo_template_enable: false

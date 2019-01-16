@@ -3,8 +3,10 @@
   command: portsnap fetch --interactive
   args:
     creates: /var/db/portsnap/INDEX
+  when: nginx_freebsd_install_method|lower == 'ports'
 
 - name: "(Install: FreeBSD) Extract Ports"
   command: portsnap extract
   args:
     creates: /usr/ports
+  when: nginx_freebsd_install_method|lower == 'ports'

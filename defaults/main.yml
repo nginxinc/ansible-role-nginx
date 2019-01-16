@@ -39,6 +39,10 @@ nginx_repository:
 # Default is mainline.
 nginx_branch: mainline
 
+# Specify method to install NGINX in FreeBSD.
+# Options are 'ports' or 'packages'
+nginx_freebsd_install_method: ports
+
 # Location of your NGINX Plus license in your local machine.
 # Default is the files folder within the NGINX Ansible role.
 nginx_license:

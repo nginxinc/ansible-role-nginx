@@ -15,24 +15,24 @@
       when: ansible_os_family == "FreeBSD"
 
     - name: "(Install: Debian/Ubuntu/CentOS/RedHat) Install NGINX"
-      package:
-        name: nginx
-        state: present
+      import_tasks: install-linux.yml
       when: ansible_os_family != "FreeBSD"
-      notify: "(Handler: All OSs) Start NGINX"
 
     - name: "(Install: FreeBSD) Install NGINX"
-      portinstall:
-        name: nginx
-        state: present
+      import_tasks: install-freebsd.yml
       when: ansible_os_family == "FreeBSD"
-      notify: "(Handler: All OSs) Start NGINX"
 
   when: nginx_install_from == "nginx_repository"
 
 - name: "(Install: Debian/Ubuntu/CentOS/RedHat/FreeBSD) Install NGINX"
-  package:
-    name: nginx
-    state: present
+  block:
+
+    - name: "(Install: Debian/Ubuntu/CentOS/RedHat) Install NGINX"
+      import_tasks: install-linux.yml
+      when: ansible_os_family != "FreeBSD"
+
+    - name: "(Install: FreeBSD) Install NGINX"
+      import_tasks: install-freebsd.yml
+      when: ansible_os_family == "FreeBSD"
+
   when: nginx_install_from == "os_repository"
-  notify: "(Handler: All OSs) Start NGINX"

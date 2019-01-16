@@ -1,0 +1,7 @@
+---
+- name: "(Install: Debian/Ubuntu/CentOS/RedHat) Install NGINX"
+  package:
+    name: nginx
+    state: present
+  when: ansible_os_family != "FreeBSD"
+  notify: "(Handler: All OSs) Start NGINX"

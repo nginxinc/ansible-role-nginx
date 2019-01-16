@@ -1,0 +1,15 @@
+---
+- name: "(Install: FreeBSD) Install NGINX ports"
+  portinstall:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ nginx_freebsd_packages }}"
+  notify: "(Handler: All OSs) Start NGINX"
+  when: nginx_freebsd_install_method|lower == 'ports'
+
+- name: "(Install: FreeBSD) Install NGINX packages"
+  pkgng: 
+    name: "{{ nginx_freebsd_packages }}"
+    state: present
+  notify: "(Handler: All OSs) Start NGINX"
+  when: nginx_freebsd_install_method|lower == 'packages'

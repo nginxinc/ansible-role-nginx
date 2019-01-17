@@ -3,6 +3,10 @@
   portinstall:
     name: "{{ nginx_freebsd_package }}"
     state: present
+  register: result
+  retries: "{{ nginx_install_retries }}"
+  until: result is succeeded
+  delay: "{{ nginx_install_delay }}"
   notify: "(Handler: All OSs) Start NGINX"
   when: nginx_freebsd_install_method|lower == 'ports'
 
@@ -10,6 +14,10 @@
   pkgng:
     name: "{{ nginx_freebsd_package }}"
     state: present
+  register: result
+  retries: "{{ nginx_install_retries }}"
+  until: result is succeeded
+  delay: "{{ nginx_install_delay }}"
   notify: "(Handler: All OSs) Start NGINX"
   when: nginx_freebsd_install_method|lower == 'packages'
 
@@ -17,6 +25,10 @@
   portinstall:
     name: "{{ item }}"
     state: present
+  register: result
+  retries: "{{ nginx_install_retries }}"
+  until: result is succeeded
+  delay: "{{ nginx_install_delay }}"
   loop: "{{ nginx_freebsd_extra_packages }}"
   notify: "(Handler: All OSs) Start NGINX"
   when: nginx_freebsd_install_method|lower == 'ports'
@@ -25,5 +37,9 @@
   pkgng: 
     name: "{{ nginx_freebsd_extra_packages }}"
     state: present
+  register: result
+  retries: "{{ nginx_install_retries }}"
+  until: result is succeeded
+  delay: "{{ nginx_install_delay }}"
   notify: "(Handler: All OSs) Start NGINX"
   when: nginx_freebsd_install_method|lower == 'packages'

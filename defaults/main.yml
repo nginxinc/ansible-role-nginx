@@ -39,6 +39,12 @@ nginx_repository:
 # Default is mainline.
 nginx_branch: mainline
 
+# Specify how many time to retry failed installation.
+nginx_install_retries: 5
+
+# Specify how many seconds to wait before next attempt to install packages.
+nginx_install_delay: 2
+
 # Specify method to install NGINX in FreeBSD.
 # Options are 'ports' or 'packages'
 nginx_freebsd_install_method: ports
@@ -51,7 +57,7 @@ nginx_freebsd_supported_packages:
   - www/nginx-lite
   - www/nginx-naxsi
 
-# Specify FreeBSD packages to install.
+# Specify FreeBSD package to install.
 nginx_freebsd_package: www/nginx
 
 # Specify FreeBSD extra packages to install.

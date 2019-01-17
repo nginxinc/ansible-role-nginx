@@ -1,0 +1,40 @@
+---
+- name: "(Install: FreeBSD) Fail when unsupported package shall be installed."
+  fail:
+    msg: |
+      {{ nginx_freebsd_package }} shall be installed.
+      This package is not supported by this role.
+      Chose NGINX package from the list of supported packages
+      [ {{ nginx_freebsd_supported_packages }} ].
+      End of play.
+  when: nginx_freebsd_package not in nginx_freebsd_supported_packages
+
+- name: "(Install: FreeBSD) Check dependencies"
+  shell: whereis -sq nginx | cut -d "/" -f 4-
+  register: result
+
+- name: "(Install: FreeBSD) Debug"
+  debug:
+    var: result
+  when: nginx_debug_output
+
+- name: "(Install: FreeBSD) Fail when unsupported package is installed."
+  fail:
+    msg: |
+      {{ result.stdout }} is installed.
+      This package is not supported by this role.
+      Deinstall {{ result.stdout }} before installing {{ nginx_freebsd_package }}.
+      End of play.
+  when:
+    - result.stdout|length > 0
+    - result.stdout not in nginx_freebsd_supported_packages
+
+- name: "(Install: FreeBSD) Fail when other NGINX package is installed."
+  fail:
+    msg: |
+      {{ result.stdout }} is installed.
+      Deinstall {{ result.stdout }} before installing {{ nginx_freebsd_package }}.
+      End of play.
+  when:
+    - result.stdout|length > 0
+    - result.stdout != nginx_freebsd_package

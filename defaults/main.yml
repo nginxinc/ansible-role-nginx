@@ -43,9 +43,19 @@ nginx_branch: mainline
 # Options are 'ports' or 'packages'
 nginx_freebsd_install_method: ports
 
-# Specify FreeBSD packages to install.
-nginx_freebsd_packages:
+# Specify FreeBSD NGINX packages that are supported by this role.
+nginx_freebsd_supported_packages:
   - www/nginx
+  - www/nginx-devel
+  - www/nginx-full
+  - www/nginx-lite
+  - www/nginx-naxsi
+
+# Specify FreeBSD packages to install.
+nginx_freebsd_package: www/nginx
+
+# Specify FreeBSD extra packages to install.
+nginx_freebsd_extra_packages: []
 
 # Location of your NGINX Plus license in your local machine.
 # Default is the files folder within the NGINX Ansible role.

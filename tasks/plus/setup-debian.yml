@@ -1,19 +1,19 @@
 ---
 - name: "(Install: Debian/Ubuntu) Add NGINX Plus Repository"
   apt_repository:
-    repo: deb https://plus-pkgs.nginx.com/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} nginx-plus
+    repo: "deb https://plus-pkgs.nginx.com/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} nginx-plus"
     filename: nginx-plus
     update_cache: no
 
 - name: "(Install: Debian/Ubuntu) Verify NGINX Plus License"
   blockinfile:
-    path: /etc/apt/apt.conf.d/90nginx
+    path: "{{ nginx_conf_dir }}/apt/apt.conf.d/90nginx"
     create: yes
     block: |
       Acquire::https::plus-pkgs.nginx.com::Verify-Peer "true";
       Acquire::https::plus-pkgs.nginx.com::Verify-Host "true";
-      Acquire::https::plus-pkgs.nginx.com::SslCert     "/etc/ssl/nginx/nginx-repo.crt";
-      Acquire::https::plus-pkgs.nginx.com::SslKey      "/etc/ssl/nginx/nginx-repo.key";
+      Acquire::https::plus-pkgs.nginx.com::SslCert     "{{ nginx_conf_dir }}/ssl/nginx/nginx-repo.crt";
+      Acquire::https::plus-pkgs.nginx.com::SslKey      "{{ nginx_conf_dir }}/ssl/nginx/nginx-repo.key";
 
 - name: "(Install: Debian/Ubuntu) Update APT Cache"
   apt:

@@ -6,7 +6,7 @@
 
 - name: "(Setup: NGINX Plus) Load NGINX Plus WAF Module"
   lineinfile:
-    path: /etc/nginx/nginx.conf
+    path: "{{ nginx_conf_dir }}/nginx/nginx.conf"
     insertbefore: BOF
     line: load_module modules/ngx_http_modsecurity_module.so;
   notify: "(Handler: All OSs) Reload NGINX"

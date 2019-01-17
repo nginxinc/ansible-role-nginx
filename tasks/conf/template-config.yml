@@ -39,14 +39,14 @@
 
 - name: "(Setup: All NGINX) Ensure NGINX Stream Directory Exists"
   file:
-    path: /etc/nginx/conf.d/stream
+    path: "{{ nginx_conf_dir }}/nginx/conf.d/stream"
     state: directory
   when: nginx_stream_template_enable
 
 - name: "(Setup: All NGINX) Dynamically Generate NGINX Stream Configuration Files"
   template:
     src: "{{ item }}"
-    dest: /etc/nginx/conf.d/stream/{{ item | basename | regex_replace('\.j2','') }}
+    dest: "{{ nginx_conf_dir }}/nginx/conf.d/stream/{{ item | basename | regex_replace('\\.j2','') }}"
     backup: yes
   with_fileglob:
     - "../templates/stream/*.j2"

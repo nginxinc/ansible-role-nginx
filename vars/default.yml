@@ -1,1 +1,2 @@
 ---
+nginx_conf_dir: /etc

@@ -13,7 +13,7 @@
 
 - name: "(Setup: All NGINX) Load NGINX XSLT Module"
   lineinfile:
-    path: /etc/nginx/nginx.conf
+    path: "{{ nginx_conf_dir }}/nginx/nginx.conf"
     insertbefore: BOF
     line: load_module modules/ngx_http_xslt_filter_module.so;
   notify: "(Handler: All OSs) Reload NGINX"

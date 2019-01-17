@@ -1,13 +1,13 @@
 ---
 - name: "(All OSs) Create SSL Directory"
   file:
-    path: /etc/ssl/nginx
+    path: "{{ nginx_conf_dir }}/ssl/nginx"
     state: directory
 
 - name: "(All OSs) Copy NGINX Plus Certificate and License Key"
   copy:
     src: "{{ item }}"
-    dest: /etc/ssl/nginx
+    dest: "{{ nginx_conf_dir }}/ssl/nginx"
   with_items:
     - "{{ nginx_license.certificate }}"
     - "{{ nginx_license.key }}"

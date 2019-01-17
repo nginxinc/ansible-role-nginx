@@ -13,7 +13,7 @@ events {
 
 {% if nginx_main_template.http_enable %}
 http {
-    include       /etc/nginx/mime.types;
+    include       {{ nginx_conf_dir }}/nginx/mime.types;
     default_type  application/octet-stream;
 
     log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
@@ -41,12 +41,12 @@ http {
 {% if nginx_main_template.http_global_autoindex %}
     autoindex on;
 {% endif %}
-    include /etc/nginx/conf.d/*.conf;
+    include {{ nginx_conf_dir }}/nginx/conf.d/*.conf;
 }
 {% endif %}
 
 {% if nginx_main_template.stream_enable %}
 stream {
-    include /etc/nginx/conf.d/stream/*.conf;
+    include {{ nginx_conf_dir }}/nginx/conf.d/stream/*.conf;
 }
 {% endif %}

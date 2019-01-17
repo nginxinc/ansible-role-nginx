@@ -13,12 +13,12 @@
 - name: "(Setup: All OSs) Copy NGINX Configurator Agent Configuration Template"
   copy:
     remote_src: yes
-    src: /etc/amplify-agent/agent.configurator.conf.default
-    dest: /etc/amplify-agent/agent.configurator.conf
+    src: "{{ nginx_conf_dir }}/amplify-agent/agent.configurator.conf.default"
+    dest: "{{ nginx_conf_dir }}/amplify-agent/agent.configurator.conf"
 
 - name: "(Setup: All OSs) Configure NGINX Amplify Agent API Key"
   lineinfile:
-    dest: /etc/amplify-agent/agent.conf
+    dest: "{{ nginx_conf_dir }}/amplify-agent/agent.conf"
     regexp: api_key =.*
     line: "api_key = {{ amplify_api_key }}"
   notify: "(Handler: All OSs) Start NGINX Amplify Agent"

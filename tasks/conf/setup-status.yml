@@ -1,7 +1,7 @@
 ---
 - name: "(Setup: NGINX Open Source) Enable NGINX Open Source Status"
   blockinfile:
-    path: "{{ (nginx_http_template_enable) | ternary('/etc/nginx/conf.d/http/stub_status.conf','/etc/nginx/conf.d/stub_status.conf') }}"
+    path: "{{ (nginx_http_template_enable) | ternary('{{ nginx_conf_dir }}/nginx/conf.d/http/stub_status.conf','{{ nginx_conf_dir }}/nginx/conf.d/stub_status.conf') }}"
     create: yes
     block: |
       server {
@@ -17,7 +17,7 @@
 
 - name: "(Setup: NGINX Plus) Enable NGINX Plus Status"
   blockinfile:
-    path: "{{ (nginx_http_template_enable) | ternary('/etc/nginx/conf.d/http/status.conf','/etc/nginx/conf.d/status.conf') }}"
+    path: "{{ (nginx_http_template_enable) | ternary('{{ nginx_conf_dir }}/nginx/conf.d/http/status.conf','{{ nginx_conf_dir }}/nginx/conf.d/status.conf') }}"
     create: yes
     block: |
       server {

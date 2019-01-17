@@ -13,7 +13,7 @@
 
 - name: "(Setup: All NGINX) Load NGINX GeoIP Module"
   blockinfile:
-    path: /etc/nginx/nginx.conf
+    path: "{{ nginx_conf_dir }}/nginx/nginx.conf"
     insertbefore: BOF
     block: |
       load_module modules/ngx_http_geoip_module.so;

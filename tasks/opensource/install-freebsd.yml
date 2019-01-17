@@ -36,7 +36,7 @@
   notify: "(Handler: All OSs) Start NGINX"
   when: nginx_freebsd_install_method|lower == 'ports'
 
-- name: "(Install: FreeBSD) Install NGINX packages"
+- name: "(Install: FreeBSD) Install NGINX extra packages"
   pkgng:
     name: "{{ nginx_freebsd_extra_packages }}"
     state: present

@@ -31,3 +31,14 @@
     name: unitd
     state: started
     enabled: yes
+
+- name: "(Handler: All OSs) Stop NGINX"
+  service:
+    name: nginx
+    state: stopped
+
+- name: "(Handler: All OSs) Stop and Disable NGINX"
+  service:
+    name: nginx
+    state: stopped
+    enabled: no

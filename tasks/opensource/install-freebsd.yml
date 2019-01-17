@@ -1,4 +1,6 @@
 ---
+
+# Install NGINX package
 - name: "(Install: FreeBSD) Install NGINX port"
   portinstall:
     name: "{{ nginx_freebsd_package }}"
@@ -21,6 +23,7 @@
   notify: "(Handler: All OSs) Start NGINX"
   when: nginx_freebsd_install_method|lower == 'packages'
 
+# Install NGINX extra packages
 - name: "(Install: FreeBSD) Install NGINX extra ports"
   portinstall:
     name: "{{ item }}"
@@ -43,3 +46,32 @@
   delay: "{{ nginx_install_delay }}"
   notify: "(Handler: All OSs) Start NGINX"
   when: nginx_freebsd_install_method|lower == 'packages'
+
+# Configure RC
+- name: "(Install: FreeBSD) Enable and start nginx."
+  lineinfile:
+    dest: /etc/rc.conf
+    regexp: "^nginx_enable"
+    line: "nginx_enable=\"YES\""
+    backup: "{{ nginx_conf_backup }}"
+  notify: "(Handler: All OSs) Start NGINX"
+  when: nginx_enable
+
+- name: "(Install: FreeBSD) Disable and stop nginx."
+  lineinfile:
+    dest: /etc/rc.conf
+    regexp: "^nginx_enable"
+    line: "nginx_enable=\"NO\""
+    backup: "{{ nginx_conf_backup }}"
+  notify: "(Handler: All OSs) Stop and Disable NGINX"
+  when: not nginx_enable
+
+- name: "(Install: FreeBSD) variables in rc.conf"
+  lineinfile:
+    dest: /etc/rc.conf
+    regexp: "^{{ item.key }}"
+    line: "{{ item.key }}={{ item.val }}"
+    backup: "{{ nginx_conf_backup }}"
+  loop: "{{ nginx_freebsd_rcconf }}"
+  notify: "(Handler: All OSs) Reload NGINX"
+  when: nginx_enable

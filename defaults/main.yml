@@ -45,6 +45,10 @@ nginx_install_retries: 5
 # Specify how many seconds to wait before next attempt to install packages.
 nginx_install_delay: 2
 
+# Create a backup file including the timestamp information so you can
+# get the original file back if you somehow clobbered it incorrectly.
+nginx_conf_backup: no
+
 # Specify method to install NGINX in FreeBSD.
 # Options are 'ports' or 'packages'
 nginx_freebsd_install_method: ports
@@ -62,6 +66,9 @@ nginx_freebsd_package: www/nginx
 
 # Specify FreeBSD extra packages to install.
 nginx_freebsd_extra_packages: []
+
+# Specify FreeBSD rc.conf variables.
+nginx_freebsd_rcconf: []
 
 # Location of your NGINX Plus license in your local machine.
 # Default is the files folder within the NGINX Ansible role.

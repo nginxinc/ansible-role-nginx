@@ -34,7 +34,7 @@
   when: nginx_freebsd_install_method|lower == 'ports'
 
 - name: "(Install: FreeBSD) Install NGINX packages"
-  pkgng: 
+  pkgng:
     name: "{{ nginx_freebsd_extra_packages }}"
     state: present
   register: result

@@ -11,6 +11,7 @@
 
 - name: "(Install: FreeBSD) Check dependencies"
   shell: whereis -sq nginx | cut -d "/" -f 4-
+  changed_when: false
   register: result
 
 - name: "(Install: FreeBSD) Debug"

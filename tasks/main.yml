@@ -1,4 +1,7 @@
 ---
+- import_tasks: vars.yml
+  tags: [nginx_vars, always]
+
 - import_tasks: prerequisites/install-prerequisites.yml
   tags: nginx_prerequisites
 

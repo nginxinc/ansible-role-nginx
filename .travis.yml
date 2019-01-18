@@ -39,15 +39,15 @@ matrix:
     - env:
         distribution: centos
         version: 7
+        playbook: push
+    - env:
+        distribution: centos
+        version: 7
         playbook: template
     - env:
         distribution: centos
         version: 7
         playbook: stable
-    - env:
-        distribution: centos
-        version: 7
-        playbook: push
     - env:
         distribution: centos
         version: 7
@@ -63,15 +63,15 @@ matrix:
     - env:
         distribution: debian
         version: jessie
+        playbook: push
+    - env:
+        distribution: debian
+        version: jessie
         playbook: template
     - env:
         distribution: debian
         version: jessie
         playbook: stable
-    - env:
-        distribution: debian
-        version: jessie
-        playbook: push
     - env:
         distribution: debian
         version: jessie
@@ -87,15 +87,15 @@ matrix:
     - env:
         distribution: debian
         version: stretch
+        playbook: push
+    - env:
+        distribution: debian
+        version: stretch
         playbook: template
     - env:
         distribution: debian
         version: stretch
         playbook: stable
-    - env:
-        distribution: debian
-        version: stretch
-        playbook: push
     - env:
         distribution: debian
         version: stretch
@@ -111,15 +111,15 @@ matrix:
     - env:
         distribution: ubuntu
         version: trusty
+        playbook: push
+    - env:
+        distribution: ubuntu
+        version: trusty
         playbook: template
     - env:
         distribution: ubuntu
         version: trusty
         playbook: stable
-    - env:
-        distribution: ubuntu
-        version: trusty
-        playbook: push
     - env:
         distribution: ubuntu
         version: xenial
@@ -131,15 +131,15 @@ matrix:
     - env:
         distribution: ubuntu
         version: xenial
+        playbook: push
+    - env:
+        distribution: ubuntu
+        version: xenial
         playbook: template
     - env:
         distribution: ubuntu
         version: xenial
         playbook: stable
-    - env:
-        distribution: ubuntu
-        version: xenial
-        playbook: push
     - env:
         distribution: ubuntu
         version: xenial

@@ -11,6 +11,10 @@ matrix:
     - env:
         distribution: centos
         version: 6
+        playbook: modules
+    - env:
+        distribution: centos
+        version: 6
         playbook: push
     - env:
         distribution: centos
@@ -28,6 +32,10 @@ matrix:
         distribution: centos
         version: 7
         playbook: basic
+    - env:
+        distribution: centos
+        version: 7
+        playbook: modules
     - env:
         distribution: centos
         version: 7
@@ -48,6 +56,10 @@ matrix:
         distribution: debian
         version: jessie
         playbook: basic
+    - env:
+        distribution: debian
+        version: jessie
+        playbook: modules
     - env:
         distribution: debian
         version: jessie
@@ -68,6 +80,10 @@ matrix:
         distribution: debian
         version: stretch
         playbook: basic
+    - env:
+        distribution: debian
+        version: stretch
+        playbook: modules
     - env:
         distribution: debian
         version: stretch
@@ -88,6 +104,10 @@ matrix:
         distribution: ubuntu
         version: trusty
         playbook: basic
+    - env:
+        distribution: ubuntu
+        version: trusty
+        playbook: modules
     - env:
         distribution: ubuntu
         version: trusty
@@ -104,6 +124,10 @@ matrix:
         distribution: ubuntu
         version: xenial
         playbook: basic
+    - env:
+        distribution: ubuntu
+        version: xenial
+        playbook: modules
     - env:
         distribution: ubuntu
         version: xenial
@@ -124,6 +148,10 @@ matrix:
         distribution: ubuntu
         version: artful
         playbook: basic
+    - env:
+        distribution: ubuntu
+        version: artful
+        playbook: modules
     - env:
         distribution: ubuntu
         version: artful
@@ -144,6 +172,10 @@ matrix:
         distribution: ubuntu
         version: bionic
         playbook: basic
+    - env:
+        distribution: ubuntu
+        version: bionic
+        playbook: modules
     - env:
         distribution: ubuntu
         version: bionic

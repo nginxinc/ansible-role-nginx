@@ -1,2 +1,4 @@
 ---
 nginx_conf_dir: /usr/local/etc
+nginx_user: www
+nginx_html_file_location: /usr/local/www/nginx-dist

@@ -1,4 +1,4 @@
 ---
 nginx_conf_dir: /etc
-nginx_user: nginx
+nginx_user: www-data
 nginx_html_file_location: /usr/share/nginx/html

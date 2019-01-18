@@ -6,10 +6,10 @@
     - ansible-role-nginx
   vars:
     nginx_modules:
-      njs: false
+      njs: true
       perl: true
       waf: false
-      geoip: false
-      image_filter: false
-      rtmp: false
-      xslt: false
+      geoip: true
+      image_filter: true
+      rtmp: true
+      xslt: true

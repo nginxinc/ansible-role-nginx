@@ -401,6 +401,17 @@ nginx_stream_template_enable: false
 nginx_stream_template_listen: 12345
 ```
 
+OS Specific Variables
+---------------------
+
+Default values of some variables depend on the OS. When the role
+starts OS is automatically detected and these variables are
+loaded. You might want to review tasks/vars.yml to learn what
+variables will be used by your distribution. Variables are loaded with
+*include_vars* and can be overridden by couple of options listed in
+the Ansible documentation [Variable
+precedence](https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable).
+
 Dependencies
 ------------
 

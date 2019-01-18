@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  become: true
+  remote_user: root
+  roles:
+    - ansible-role-nginx
+  vars:
+    nginx_modules:
+      njs: false
+      perl: true
+      waf: false
+      geoip: false
+      image_filter: false
+      rtmp: false
+      xslt: false

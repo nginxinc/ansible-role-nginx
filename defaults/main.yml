@@ -154,8 +154,6 @@ nginx_main_template:
 # Enable creating dynamic templated NGINX HTTP configuration files.
 # Defaults will not produce a valid configuration. Instead they are meant to showcase
 # the options available for templating. Each key represents a new configuration file.
-# Comment out load_balancer or web_server depending on whether you wish to create a web server
-# or load balancer configuration file.
 nginx_http_template_enable: false
 nginx_http_template:
   default:

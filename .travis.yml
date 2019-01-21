@@ -2,124 +2,196 @@
 sudo: required
 services:
   - docker
-env:
-  - distribution: centos
-    version: 6
-    playbook: basic
-  - distribution: centos
-    version: 6
-    playbook: push
-  - distribution: centos
-    version: 6
-    playbook: stable
-  - distribution: centos
-    version: 6
-    playbook: template
-  - distribution: centos
-    version: 6
-    playbook: unit
-  - distribution: centos
-    version: 7
-    playbook: basic
-  - distribution: centos
-    version: 7
-    playbook: template
-  - distribution: centos
-    version: 7
-    playbook: stable
-  - distribution: centos
-    version: 7
-    playbook: push
-  - distribution: centos
-    version: 7
-    playbook: unit
-  - distribution: debian
-    version: jessie
-    playbook: basic
-  - distribution: debian
-    version: jessie
-    playbook: template
-  - distribution: debian
-    version: jessie
-    playbook: stable
-  - distribution: debian
-    version: jessie
-    playbook: push
-  - distribution: debian
-    version: jessie
-    playbook: unit
-  - distribution: debian
-    version: stretch
-    playbook: basic
-  - distribution: debian
-    version: stretch
-    playbook: template
-  - distribution: debian
-    version: stretch
-    playbook: stable
-  - distribution: debian
-    version: stretch
-    playbook: push
-  - distribution: debian
-    version: stretch
-    playbook: unit
-  - distribution: ubuntu
-    version: trusty
-    playbook: basic
-  - distribution: ubuntu
-    version: trusty
-    playbook: template
-  - distribution: ubuntu
-    version: trusty
-    playbook: stable
-  - distribution: ubuntu
-    version: trusty
-    playbook: push
-  - distribution: ubuntu
-    version: xenial
-    playbook: basic
-  - distribution: ubuntu
-    version: xenial
-    playbook: template
-  - distribution: ubuntu
-    version: xenial
-    playbook: stable
-  - distribution: ubuntu
-    version: xenial
-    playbook: push
-  - distribution: ubuntu
-    version: xenial
-    playbook: unit
-  - distribution: ubuntu
-    version: artful
-    playbook: basic
-  - distribution: ubuntu
-    version: artful
-    playbook: push
-  - distribution: ubuntu
-    version: artful
-    playbook: stable
-  - distribution: ubuntu
-    version: artful
-    playbook: template
-  - distribution: ubuntu
-    version: artful
-    playbook: unit
-  - distribution: ubuntu
-    version: bionic
-    playbook: basic
-  - distribution: ubuntu
-    version: bionic
-    playbook: push
-  - distribution: ubuntu
-    version: bionic
-    playbook: stable
-  - distribution: ubuntu
-    version: bionic
-    playbook: template
-  - distribution: ubuntu
-    version: bionic
-    playbook: unit
+matrix:
+  include:
+    - env:
+        distribution: centos
+        version: 6
+        playbook: basic
+    - env:
+        distribution: centos
+        version: 6
+        playbook: modules
+    - env:
+        distribution: centos
+        version: 6
+        playbook: push
+    - env:
+        distribution: centos
+        version: 6
+        playbook: stable
+    - env:
+        distribution: centos
+        version: 6
+        playbook: template
+    - env:
+        distribution: centos
+        version: 6
+        playbook: unit
+    - env:
+        distribution: centos
+        version: 7
+        playbook: basic
+    - env:
+        distribution: centos
+        version: 7
+        playbook: modules
+    - env:
+        distribution: centos
+        version: 7
+        playbook: push
+    - env:
+        distribution: centos
+        version: 7
+        playbook: template
+    - env:
+        distribution: centos
+        version: 7
+        playbook: stable
+    - env:
+        distribution: centos
+        version: 7
+        playbook: unit
+    - env:
+        distribution: debian
+        version: jessie
+        playbook: basic
+    - env:
+        distribution: debian
+        version: jessie
+        playbook: modules
+    - env:
+        distribution: debian
+        version: jessie
+        playbook: push
+    - env:
+        distribution: debian
+        version: jessie
+        playbook: template
+    - env:
+        distribution: debian
+        version: jessie
+        playbook: stable
+    - env:
+        distribution: debian
+        version: jessie
+        playbook: unit
+    - env:
+        distribution: debian
+        version: stretch
+        playbook: basic
+    - env:
+        distribution: debian
+        version: stretch
+        playbook: modules
+    - env:
+        distribution: debian
+        version: stretch
+        playbook: push
+    - env:
+        distribution: debian
+        version: stretch
+        playbook: template
+    - env:
+        distribution: debian
+        version: stretch
+        playbook: stable
+    - env:
+        distribution: debian
+        version: stretch
+        playbook: unit
+    - env:
+        distribution: ubuntu
+        version: trusty
+        playbook: basic
+    - env:
+        distribution: ubuntu
+        version: trusty
+        playbook: modules
+    - env:
+        distribution: ubuntu
+        version: trusty
+        playbook: push
+    - env:
+        distribution: ubuntu
+        version: trusty
+        playbook: template
+    - env:
+        distribution: ubuntu
+        version: trusty
+        playbook: stable
+    - env:
+        distribution: ubuntu
+        version: xenial
+        playbook: basic
+    - env:
+        distribution: ubuntu
+        version: xenial
+        playbook: modules
+    - env:
+        distribution: ubuntu
+        version: xenial
+        playbook: push
+    - env:
+        distribution: ubuntu
+        version: xenial
+        playbook: template
+    - env:
+        distribution: ubuntu
+        version: xenial
+        playbook: stable
+    - env:
+        distribution: ubuntu
+        version: xenial
+        playbook: unit
+    - env:
+        distribution: ubuntu
+        version: artful
+        playbook: basic
+    - env:
+        distribution: ubuntu
+        version: artful
+        playbook: modules
+    - env:
+        distribution: ubuntu
+        version: artful
+        playbook: push
+    - env:
+        distribution: ubuntu
+        version: artful
+        playbook: stable
+    - env:
+        distribution: ubuntu
+        version: artful
+        playbook: template
+    - env:
+        distribution: ubuntu
+        version: artful
+        playbook: unit
+    - env:
+        distribution: ubuntu
+        version: bionic
+        playbook: basic
+    - env:
+        distribution: ubuntu
+        version: bionic
+        playbook: modules
+    - env:
+        distribution: ubuntu
+        version: bionic
+        playbook: push
+    - env:
+        distribution: ubuntu
+        version: bionic
+        playbook: stable
+    - env:
+        distribution: ubuntu
+        version: bionic
+        playbook: template
+    - env:
+        distribution: ubuntu
+        version: bionic
+        playbook: unit
 before_install:
   - 'sudo docker pull ${distribution}:${version}'
   - 'sudo docker build --no-cache --rm --file=tests/dockerfiles/Dockerfile.${distribution}-${version} --tag=${distribution}-${version}:ansible tests'

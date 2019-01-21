@@ -7,11 +7,51 @@
   vars:
     nginx_http_template_enable: true
     nginx_http_template:
-      default:
+      app:
         template_file: http/default.conf.j2
         conf_file_name: default.conf
         conf_file_location: /etc/nginx/conf.d/
         port: 80
+        server_name: localhost
+        error_page: /usr/share/nginx/html
+        reverse_proxy:
+          locations:
+            frontend:
+              location: /
+              proxy_pass: http://frontend_servers/
+            backend:
+              location: /backend
+              proxy_pass: http://backend_servers/
+        upstreams:
+          upstream_1:
+            name: frontend_servers
+            lb_method: least_conn
+            zone_name: frontend
+            zone_size: 64k
+            sticky_cookie: false
+            servers:
+              frontend_server_1:
+                address: localhost
+                port: 8081
+                weight: 1
+                health_check: max_fails=3 fail_timeout=5s
+          upstream_2:
+            name: backend_servers
+            lb_method: least_conn
+            zone_name: backend
+            zone_size: 64k
+            sticky_cookie: false
+            servers:
+              backend_server_1:
+                address: localhost
+                port: 8082
+                weight: 1
+                health_check: max_fails=3 fail_timeout=5s
+      frontend:
+        template_file: http/default.conf.j2
+        conf_file_name: frontend_default.conf
+        conf_file_location: /etc/nginx/conf.d/
+        port: 8081
         server_name: localhost
         error_page: /usr/share/nginx/html
         autoindex: false
@@ -20,6 +60,34 @@
             default:
               location: /
               html_file_location: /usr/share/nginx/html
-              html_file_name: index.html
+              html_file_name: frontend_index.html
               autoindex: false
-          http_demo_conf: false
+          http_demo_conf: true
+      backend:
+        template_file: http/default.conf.j2
+        conf_file_name: backend_default.conf
+        conf_file_location: /etc/nginx/conf.d/
+        port: 8082
+        server_name: localhost
+        error_page: /usr/share/nginx/html
+        autoindex: false
+        web_server:
+          locations:
+            default:
+              location: /
+              html_file_location: /usr/share/nginx/html
+              html_file_name: backend_index.html
+              autoindex: false
+          http_demo_conf: true
+    nginx_html_demo_template_enable: true
+    nginx_html_demo_template:
+      frontend:
+        template_file: www/index.html.j2
+        html_file_name: frontend_index.html
+        html_file_location: /usr/share/nginx/html
+        web_server_name: Frontend
+      backend:
+        template_file: www/index.html.j2
+        html_file_name: backend_index.html
+        html_file_location: /usr/share/nginx/html
+        web_server_name: Backend

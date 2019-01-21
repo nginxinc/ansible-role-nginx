@@ -9,8 +9,9 @@
       End of play.
   when: nginx_freebsd_package not in nginx_freebsd_supported_packages
 
-- name: "(Install: FreeBSD) Check dependencies"
+- name: "(Install: FreeBSD) Check installed packages."
   shell: whereis -sq nginx | cut -d "/" -f 4-
+  check_mode: no
   changed_when: false
   register: result
 

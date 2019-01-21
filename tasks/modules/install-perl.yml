@@ -15,5 +15,5 @@
   lineinfile:
     path: /etc/nginx/nginx.conf
     insertbefore: BOF
-    line: load_module modules/ngx_http_perl.so;
+    line: load_module modules/ngx_http_perl_module.so;
   notify: "(Handler: All OSs) Reload NGINX"

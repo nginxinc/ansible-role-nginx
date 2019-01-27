@@ -360,16 +360,12 @@ nginx_http_template:
             weight: 1
             health_check: max_fails=1 fail_timeout=10s
 
-# Enable creating dynamic templated NGINX stream configuration files.
-nginx_stream_template_enable: false
-nginx_stream_template_listen: 12345
-
 # Enable creating dynamic templated NGINX Stream configuration files.
 # Defaults will not produce a valid configuration. Instead they are meant to showcase
 # the options available for templating. Each key represents a new configuration file.
 # Comment out network_stream or upstreams depending on whether you wish to create a web server
 # or load balancer configuration file.
-
+nginx_stream_template_enable: false
 nginx_stream_template:
   default:
     template_file: stream/default.conf.j2

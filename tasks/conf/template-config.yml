@@ -39,8 +39,9 @@
 
 - name: "(Setup: All NGINX) Ensure NGINX Stream Directory Exists"
   file:
-    path: /etc/nginx/conf.d/stream
+    path: "{{ item.value.conf_file_location }}"
     state: directory
+  with_dict: "{{ nginx_stream_template }}"
   when: nginx_stream_template_enable
 
 - name: "(Setup: All NGINX) Dynamically Generate NGINX Stream Configuration Files"

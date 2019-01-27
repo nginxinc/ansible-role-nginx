@@ -1,12 +1,14 @@
 {% if item.value.upstreams is defined %}
 {% for upstream in item.value.upstreams %}
 upstream {{ item.value.upstreams[upstream].name }} {
+{% if item.value.upstreams[upstream].lb_method is defined %}
     {{ item.value.upstreams[upstream].lb_method }};
+{% endif %}
     zone {{ item.value.upstreams[upstream].zone_name }} {{ item.value.upstreams[upstream].zone_size }};
 {% for server in item.value.upstreams[upstream].servers %}
     server {{ item.value.upstreams[upstream].servers[server].address }}:{{ item.value.upstreams[upstream].servers[server].port }} weight={{ item.value.upstreams[upstream].servers[server].weight|default("1") }} {{ item.value.upstreams[upstream].servers[server].health_check|default("") }};
 {% endfor %}
-{% if item.value.upstreams[upstream].sticky_cookie %}
+{% if item.value.upstreams[upstream].sticky_cookie is defined %}
     sticky cookie srv_id expires=1h  path=/;
 {% endif %}
 }

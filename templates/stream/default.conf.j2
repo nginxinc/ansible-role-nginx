@@ -8,7 +8,7 @@ upstream {{ item.value.upstreams[upstream].name }} {
 {% for server in item.value.upstreams[upstream].servers %}
     server {{ item.value.upstreams[upstream].servers[server].address }}:{{ item.value.upstreams[upstream].servers[server].port }} weight={{ item.value.upstreams[upstream].servers[server].weight|default("1") }} {{ item.value.upstreams[upstream].servers[server].health_check|default("") }};
 {% endfor %}
-{% if item.value.upstreams[upstream].sticky_cookie is defined %}
+{% if item.value.upstreams[upstream].sticky_cookie %}
     sticky cookie srv_id expires=1h  path=/;
 {% endif %}
 }

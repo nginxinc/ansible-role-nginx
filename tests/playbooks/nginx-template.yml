@@ -28,7 +28,7 @@
             keys_zone:
               name: one
               size: 10m
-            use_temp_path: on
+            use_temp_path: "on"
           proxy_temp_path:
             path: /var/cache/nginx/proxy
           proxy_cach_use_stale:

@@ -22,6 +22,9 @@
             backend:
               location: /backend
               proxy_pass: http://backend_servers/
+        proxy_ignore_headers:
+          - Expires
+          - Cache-Control
         proxy_cache:
           proxy_cache_path:
             path: /var/cache/nginx

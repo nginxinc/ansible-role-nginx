@@ -16,15 +16,19 @@ upstream {{ item.value.upstreams[upstream].name }} {
 {% endfor %}
 {% endif %}
 
-{% if item.value.proxy_cache is defined %}
-proxy_cache_path  {{ item.value.proxy_cache.proxy_cache_path.path }} 
-                  keys_zone={{ item.value.proxy_cache.proxy_cache_path.keys_zone.name }}:{{ item.value.proxy_cache.proxy_cache_path.keys_zone.size }}
-{% if item.value.proxy_cache.proxy_cache_path.use_temp_path is defined %}
-                  use_temp_path={{ item.value.proxy_cache.proxy_cache_path.use_temp_path }};
+{% if item.value.proxy_ignore_headers is defined %}
+proxy_ignore_headers {{ item.value.proxy_ignore_headers | join(" ") }};
 {% endif %}
-proxy_cache_use_stale {{ item.value.proxy_cache.proxy_cache_use_stale | default("off") | join(" ") }};
+
+{% if item.value.proxy_cache is defined %}
+proxy_cache_path {{ item.value.proxy_cache.proxy_cache_path.path }}
+                 keys_zone={{ item.value.proxy_cache.proxy_cache_path.keys_zone.name | default("one") }}:{{ item.value.proxy_cache.proxy_cache_path.keys_zone.size | default("10m") }}
+                 use_temp_path={{ item.value.proxy_cache.proxy_cache_path.use_temp_path | default("on") }};
 {% if (item.value.proxy_cache.proxy_cache_path.use_temp_path is not defined) or (item.value.proxy_cache.proxy_cache_path.use_temp_path == "on") %}
 proxy_temp_path {{ item.value.proxy_cache.proxy_temp_path.path }} {{ item.value.proxy_cache.proxy_temp_path.level1 | default("") }} {{ item.value.proxy_cache.proxy_temp_path.level2 | default("") }} {{ item.value.proxy_cache.proxy_temp_path.level3 | default("") }};
+{% endif %}
+{% if item.value.proxy_cache.proxy_cache_use_stale is defined %}
+proxy_cache_use_stale {{ item.value.proxy_cache.proxy_cache_use_stale | join(" ") }};
 {% endif %}
 {% endif %}
 

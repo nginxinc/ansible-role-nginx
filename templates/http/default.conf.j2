@@ -24,7 +24,7 @@ proxy_cache_path  {{ item.value.proxy_cache.proxy_cache_path.path }}
 {% endif %}
 proxy_cache_use_stale {{ item.value.proxy_cache.proxy_cache_use_stale | default("off") | join(" ") }};
 {% if (item.value.proxy_cache.proxy_cache_path.use_temp_path is not defined) or (item.value.proxy_cache.proxy_cache_path.use_temp_path == "on") %}
-proxy_temp_path {{ item.value.proxy_cache.proxy_temp_path.path }} {{ item.value.proxy_cache.proxy_temp_path.level1 | default("") }} {{ item.value.proxy_cache.proxy_temp_path.level2 | default("") }} {{ item.value.proxy_cache.proxy_temp_path.level3 | default("") }}
+proxy_temp_path {{ item.value.proxy_cache.proxy_temp_path.path }} {{ item.value.proxy_cache.proxy_temp_path.level1 | default("") }} {{ item.value.proxy_cache.proxy_temp_path.level2 | default("") }} {{ item.value.proxy_cache.proxy_temp_path.level3 | default("") }};
 {% endif %}
 {% endif %}
 

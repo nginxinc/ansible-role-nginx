@@ -31,7 +31,7 @@
             use_temp_path: "on"
           proxy_temp_path:
             path: /var/cache/nginx/proxy
-          proxy_cach_use_stale:
+          proxy_cache_use_stale:
             - error
             - timeout
             - invalid_header

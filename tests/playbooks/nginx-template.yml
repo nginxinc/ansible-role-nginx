@@ -25,7 +25,6 @@
         proxy_ignore_headers:
           - Expires
           - Cache-Control
-        proxy_cache_enable: true
         proxy_cache:
           proxy_cache_path:
             path: /var/cache/nginx

@@ -182,6 +182,15 @@ nginx_http_template:
           location: /
           proxy_pass: http://backend
       health_check_plus: false
+    proxy_cache_enable: false
+    proxy_cache:
+      proxy_cache_path:
+        path: /var/cache/nginx
+        keys_zone:
+          name: one
+          size: 10m
+      proxy_temp_path:
+        path: /var/cache/nginx/proxy
     upstreams:
       upstream1:
         name: backend

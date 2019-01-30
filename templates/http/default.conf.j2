@@ -20,7 +20,7 @@ upstream {{ item.value.upstreams[upstream].name }} {
 proxy_ignore_headers {{ item.value.proxy_ignore_headers | join(" ") }};
 {% endif %}
 
-{% if item.value.proxy_cache is defined %}
+{% if item.value.proxy_cache_enable == true %}
 proxy_cache_path {{ item.value.proxy_cache.proxy_cache_path.path }}
                  keys_zone={{ item.value.proxy_cache.proxy_cache_path.keys_zone.name | default("one") }}:{{ item.value.proxy_cache.proxy_cache_path.keys_zone.size | default("10m") }}
                  use_temp_path={{ item.value.proxy_cache.proxy_cache_path.use_temp_path | default("on") }};

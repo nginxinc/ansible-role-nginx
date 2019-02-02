@@ -30,7 +30,11 @@ server {
 	proxy_pass {{ item.value.network_stream.streams[stream].proxy_pass }};
 	proxy_timeout {{ item.value.network_stream.streams[stream].proxy_timeout }};
 	proxy_connect_timeout {{ item.value.network_stream.streams[stream].proxy_connect_timeout }};
-	proxy_protocol {{ item.value.network_stream.streams[stream].proxy_protocol }};
+{% if item.value.network_stream.streams[stream].proxy_protocol %}
+	proxy_protocol on;
+{% else %}
+	proxy_protocol off;
+{% endif %}
 {% if item.value.network_stream.health_check_plus %}
 	health_check;
 {% endif %}

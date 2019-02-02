@@ -5,7 +5,7 @@
   roles:
     - ansible-role-nginx
   vars:
-    nginx_stream_template_enable: false
+    nginx_stream_template_enable: true
     nginx_stream_template:
       default:
         template_file: stream/default.conf.j2

@@ -23,9 +23,17 @@ upstream {{ item.value.upstreams[upstream].name }} {
 {% for stream in item.value.network_stream.streams %}
 server {
 {% if item.value.network_stream.streams[stream].listen_address is defined and item.value.network_stream.streams[stream].listen_port is defined %}
+{% if item.value.network_stream.streams[stream].udp_enable %}
+	listen {{ item.value.network_stream.streams[stream].listen_address }}:{{ item.value.network_stream.streams[stream].listen_port }} udp;
+{% else %}
 	listen {{ item.value.network_stream.streams[stream].listen_address }}:{{ item.value.network_stream.streams[stream].listen_port }};
+{% endif %}
 {% elif item.value.network_stream.streams[stream].listen_port is defined %}
+{% if item.value.network_stream.streams[stream].udp_enable %}
+	listen {{ item.value.network_stream.streams[stream].listen_port }} udp;
+{% else %}
 	listen {{ item.value.network_stream.streams[stream].listen_port }};
+{% endif %}
 {% endif %}
 	proxy_pass {{ item.value.network_stream.streams[stream].proxy_pass }};
 	proxy_timeout {{ item.value.network_stream.streams[stream].proxy_timeout }};

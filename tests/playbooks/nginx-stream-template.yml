@@ -33,6 +33,7 @@
             default:
               listen_address: 127.0.0.1
               listen_port: 80
+              udp_enable: false
               proxy_pass: backend
               proxy_timeout: 3s
               proxy_connect_timeout: 1s

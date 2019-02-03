@@ -17,6 +17,9 @@ env:
     playbook: template
   - distribution: centos
     version: 6
+    playbook: stream-template
+  - distribution: centos
+    version: 6
     playbook: unit
   - distribution: centos
     version: 7
@@ -24,6 +27,9 @@ env:
   - distribution: centos
     version: 7
     playbook: template
+  - distribution: centos
+    version: 7
+    playbook: stream-template
   - distribution: centos
     version: 7
     playbook: stable
@@ -41,6 +47,9 @@ env:
     playbook: template
   - distribution: debian
     version: jessie
+    playbook: stream-template
+  - distribution: debian
+    version: jessie
     playbook: stable
   - distribution: debian
     version: jessie
@@ -54,6 +63,9 @@ env:
   - distribution: debian
     version: stretch
     playbook: template
+  - distribution: debian
+    version: stretch
+    playbook: stream-template
   - distribution: debian
     version: stretch
     playbook: stable
@@ -71,6 +83,9 @@ env:
     playbook: template
   - distribution: ubuntu
     version: trusty
+    playbook: stream-template
+  - distribution: ubuntu
+    version: trusty
     playbook: stable
   - distribution: ubuntu
     version: trusty
@@ -83,6 +98,9 @@ env:
     playbook: template
   - distribution: ubuntu
     version: xenial
+    playbook: stream-template
+  - distribution: ubuntu
+    version: xenial
     playbook: stable
   - distribution: ubuntu
     version: xenial
@@ -104,6 +122,9 @@ env:
     playbook: template
   - distribution: ubuntu
     version: artful
+    playbook: stream-template
+  - distribution: ubuntu
+    version: artful
     playbook: unit
   - distribution: ubuntu
     version: bionic
@@ -117,6 +138,9 @@ env:
   - distribution: ubuntu
     version: bionic
     playbook: template
+  - distribution: ubuntu
+    version: bionic
+    playbook: stream-template
   - distribution: ubuntu
     version: bionic
     playbook: unit

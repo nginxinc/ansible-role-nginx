@@ -1,15 +1,8 @@
 ---
-- name: "(Install: All OSs) Install NGINX Open Source RTMP Module"
-  package:
-    name: nginx-module-rtmp
-    state: present
-  when: nginx_type == "opensource"
-
 - name: "(Install: All OSs) Install NGINX Plus RTMP Module"
   package:
     name: nginx-plus-module-rtmp
     state: present
-  when: nginx_type == "plus"
 
 - name: "(Setup: All NGINX) Load NGINX RTMP Module"
   lineinfile:

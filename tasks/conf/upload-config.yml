@@ -68,6 +68,8 @@
   copy:
     src: "{{ item }}"
     dest: "{{ nginx_ssl_crt_upload_dest }}"
+    mode: 0640
+    decrypt: yes
     backup: yes
   with_fileglob: "{{ nginx_ssl_crt_upload_src }}"
   when: nginx_ssl_upload_enable
@@ -76,6 +78,8 @@
   copy:
     src: "{{ item }}"
     dest: "{{ nginx_ssl_key_upload_dest }}"
+    mode: 0640
+    decrypt: yes
     backup: yes
   with_fileglob: "{{ nginx_ssl_key_upload_src }}"
   when: nginx_ssl_upload_enable

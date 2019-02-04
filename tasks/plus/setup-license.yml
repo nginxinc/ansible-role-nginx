@@ -8,6 +8,7 @@
   copy:
     src: "{{ item }}"
     dest: /etc/ssl/nginx
+    decrypt: yes
   with_items:
     - "{{ nginx_license.certificate }}"
     - "{{ nginx_license.key }}"

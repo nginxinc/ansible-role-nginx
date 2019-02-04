@@ -184,6 +184,10 @@ nginx_type: opensource
 # Default is nginx_repository.
 nginx_install_from: nginx_repository
 
+# Choose where to fetch the NGINX signing key from.
+# Default is the official NGINX signing key host.
+nginx_signing_key: https://nginx.org/keys/nginx_signing.key
+
 # Specify source repository for NGINX Open Source.
 # Only works if 'install_from' is set to 'nginx_repository'.
 # Defaults are the official NGINX repositories.
@@ -317,7 +321,7 @@ nginx_main_template:
 # Enable creating dynamic templated NGINX HTTP configuration files.
 # Defaults will not produce a valid configuration. Instead they are meant to showcase
 # the options available for templating. Each key represents a new configuration file.
-# Comment out load_balancer or web_server depending on whether you wish to create a web server
+# Comment out reverse_proxy or web_server depending on whether you wish to create a web server
 # or load balancer configuration file.
 nginx_http_template_enable: false
 nginx_http_template:
@@ -328,6 +332,7 @@ nginx_http_template:
     port: 8081
     server_name: localhost
     error_page: /usr/share/nginx/html
+    https_redirect: false
     autoindex: false
     ssl:
       cert: ssl/default.crt
@@ -340,11 +345,11 @@ nginx_http_template:
           html_file_name: index.html
           autoindex: false
       http_demo_conf: false
-    load_balancer:
+    reverse_proxy:
       locations:
         backend:
           location: /
-          proxy_pass: backend
+          proxy_pass: http://backend
       health_check_plus: false
     upstreams:
       upstream1:
@@ -430,7 +435,7 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a 
 - hosts: localhost
   become: true
   roles:
-    - ansible-role-nginx
+    - role: nginxinc.nginx
   vars:
     nginx_http_template_enable: true
     nginx_http_template:
@@ -449,6 +454,7 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a 
               html_file_location: /usr/share/nginx/html
               html_file_name: index.html
               autoindex: false
+          http_demo_conf: false
 ```
 
 This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a localhost and installing the open source version of NGINX as a reverse proxy.
@@ -458,43 +464,51 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a 
 - hosts: localhost
   become: true
   roles:
-    - nginxinc.nginx
+    - role: nginxinc.nginx
   vars:
     nginx_http_template_enable: true
     nginx_http_template:
-    load_balancer:
-      locations:
-        frontend:
-          location: /
-          proxy_pass: frontend_servers
-        backend:
-          location: /backend
-          proxy_pass: backend_servers
-    upstreams:
-      upstream_1:
-        name: frontend_servers
-        lb_method: least_conn
-        zone_name: frontend
-        zone_size: 64k
-        sticky_cookie: false
-        servers:
-          frontend_server_1:
-            address: localhost
-            port: 80
-            weight: 1
-            health_check: max_fails=3 fail_timeout=5s
-      upstream_2:
-        name: backend_servers
-        lb_method: least_conn
-        zone_name: backend
-        zone_size: 64k
-        sticky_cookie: false
-        servers:
-          backend_server_1:
-            address: localhost
-            port: 8080
-            weight: 1
-            health_check: max_fails=3 fail_timeout=5s
+      default:
+        template_file: http/default.conf.j2
+        conf_file_name: default.conf
+        conf_file_location: /etc/nginx/conf.d/
+        port: 80
+        server_name: localhost
+        error_page: /usr/share/nginx/html
+        autoindex: false
+        reverse_proxy:
+          locations:
+            frontend:
+              location: /
+              proxy_pass: http://frontend_servers
+            backend:
+              location: /backend
+              proxy_pass: http://backend_servers
+        upstreams:
+          upstream_1:
+            name: frontend_servers
+            lb_method: least_conn
+            zone_name: frontend
+            zone_size: 64k
+            sticky_cookie: false
+            servers:
+              frontend_server_1:
+                address: localhost
+                port: 80
+                weight: 1
+                health_check: max_fails=3 fail_timeout=5s
+          upstream_2:
+            name: backend_servers
+            lb_method: least_conn
+            zone_name: backend
+            zone_size: 64k
+            sticky_cookie: false
+            servers:
+              backend_server_1:
+                address: localhost
+                port: 8080
+                weight: 1
+                health_check: max_fails=3 fail_timeout=5s
 ```
 
 

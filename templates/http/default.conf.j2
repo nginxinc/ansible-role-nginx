@@ -73,7 +73,7 @@ server {
 {% endif %}
 {% endif %}
 
-{% if item.value.reverse_proxy.health_check_plus %}
+{% if (item.value.reverse_proxy.health_check_plus is defined) and item.value.reverse_proxy.health_check_plus %}
         health_check;
 {% endif %}
 

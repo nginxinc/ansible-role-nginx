@@ -24,7 +24,7 @@
                 size: 5m
               levels: "1:2"
               max_size: 5g
-              innactive: 30m
+              inactive: 30m
               use_temp_path: "on"
             backend:
               path: /var/cache/nginx/proxy/backend
@@ -33,7 +33,7 @@
                 size: 10m
               levels: "1:2"
               max_size: 10g
-              innactive: 60m
+              inactive: 60m
               use_temp_path: "on"
           proxy_temp_path:
             path: /var/cache/nginx/proxy/temp

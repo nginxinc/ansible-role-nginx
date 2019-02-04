@@ -20,7 +20,7 @@ upstream {{ item.value.upstreams[upstream].name }} {
 {% for proxy_cache_path_item in item.value.reverse_proxy.proxy_cache_path %}
 proxy_cache_path {{ item.value.reverse_proxy.proxy_cache_path[proxy_cache_path_item].path }} keys_zone={{ item.value.reverse_proxy.proxy_cache_path[proxy_cache_path_item].keys_zone.name }}:{{ item.value.reverse_proxy.proxy_cache_path[proxy_cache_path_item].keys_zone.size }}
                  levels={{ item.value.reverse_proxy.proxy_cache_path[proxy_cache_path_item].levels }} max_size={{ item.value.reverse_proxy.proxy_cache_path[proxy_cache_path_item].max_size }}
-                 innactive={{ item.value.reverse_proxy.proxy_cache_path[proxy_cache_path_item].innactive }} use_temp_path={{ item.value.reverse_proxy.proxy_cache_path[proxy_cache_path_item].use_temp_path }};
+                 inactive={{ item.value.reverse_proxy.proxy_cache_path[proxy_cache_path_item].inactive }} use_temp_path={{ item.value.reverse_proxy.proxy_cache_path[proxy_cache_path_item].use_temp_path }};
 {% endfor %}
 
 {% if item.value.reverse_proxy.proxy_temp_path is defined %}

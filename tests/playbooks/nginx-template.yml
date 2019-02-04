@@ -15,32 +15,55 @@
         server_name: localhost
         error_page: /usr/share/nginx/html
         reverse_proxy:
+          proxy_cache_enable: true
+          proxy_cache_path:
+            frontend:
+              path: /var/cache/nginx/proxy/frontend
+              keys_zone:
+                name: frontend
+                size: 5m
+              levels: "1:2"
+              max_size: 5g
+              innactive: 30m
+              use_temp_path: "on"
+            backend:
+              path: /var/cache/nginx/proxy/backend
+              keys_zone:
+                name: backend
+                size: 10m
+              levels: "1:2"
+              max_size: 10g
+              innactive: 60m
+              use_temp_path: "on"
+          proxy_temp_path: /var/cache/nginx/proxy/temp
+          proxy_cache_use_stale:
+            - error
+            - timeout
+          proxy_ignore_headers:
+            - Expires
           locations:
             frontend:
               location: /
               proxy_pass: http://frontend_servers/
+              proxy_cache: frontend
+              proxy_temp_path: /var/cache/nginx/proxy/frontend/temp
+              proxy_cache_use_stale:
+                - http_403
+                - http_404
+              proxy_ignore_headers:
+                - Vary
+                - Cache-Controls
             backend:
               location: /backend
               proxy_pass: http://backend_servers/
-        proxy_ignore_headers:
-          - Expires
-          - Cache-Control
-        proxy_cache:
-          proxy_cache_path:
-            path: /var/cache/nginx
-            keys_zone:
-              name: one
-              size: 10m
-            use_temp_path: "on"
-          proxy_temp_path:
-            path: /var/cache/nginx/proxy
-          proxy_cache_use_stale:
-            - error
-            - timeout
-            - invalid_header
-            - http_502
+              proxy_cache: backend
+              proxy_temp_path: /var/cache/nginx/proxy/backend/temp
+              proxy_cache_use_stale:
+                - http_500
+                - http_502
+                - http_503
         upstreams:
-          upstream_1:
+          frontend_upstream:
             name: frontend_servers
             lb_method: least_conn
             zone_name: frontend
@@ -52,7 +75,7 @@
                 port: 8081
                 weight: 1
                 health_check: max_fails=3 fail_timeout=5s
-          upstream_2:
+          backend_upstream:
             name: backend_servers
             lb_method: least_conn
             zone_name: backend

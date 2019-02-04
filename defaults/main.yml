@@ -177,6 +177,7 @@ nginx_http_template:
           autoindex: false
       http_demo_conf: false
     reverse_proxy:
+      proxy_cache_enable: false
       locations:
         backend:
           location: /

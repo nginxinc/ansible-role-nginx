@@ -35,7 +35,8 @@
               max_size: 10g
               innactive: 60m
               use_temp_path: "on"
-          proxy_temp_path: /var/cache/nginx/proxy/temp
+          proxy_temp_path:
+            path: /var/cache/nginx/proxy/temp
           proxy_cache_use_stale:
             - error
             - timeout
@@ -46,7 +47,8 @@
               location: /
               proxy_pass: http://frontend_servers/
               proxy_cache: frontend
-              proxy_temp_path: /var/cache/nginx/proxy/frontend/temp
+              proxy_temp_path:
+                path: /var/cache/nginx/proxy/frontend/temp
               proxy_cache_use_stale:
                 - http_403
                 - http_404
@@ -57,7 +59,8 @@
               location: /backend
               proxy_pass: http://backend_servers/
               proxy_cache: backend
-              proxy_temp_path: /var/cache/nginx/proxy/backend/temp
+              proxy_temp_path:
+                path: /var/cache/nginx/proxy/backend/temp
               proxy_cache_use_stale:
                 - http_500
                 - http_502

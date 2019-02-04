@@ -15,6 +15,7 @@ upstream {{ item.value.upstreams[upstream].name }} {
 {% endfor %}
 {% endif %}
 
+{% if item.value.reverse_proxy is defined %}
 {% if item.value.reverse_proxy.proxy_cache_enable %}
 {% for proxy_cache_path_item in item.value.reverse_proxy.proxy_cache_path %}
 proxy_cache_path {{ proxy_cache_path_item.path }} keys_zone={{ proxy_cache_path_item.keys_zone.name }}:{{ proxy_cache_path_item.keys_zone.size }} levels={{ proxy_cache_path_item.levels }}
@@ -31,6 +32,7 @@ proxy_cache_use_stale {{ item.value.reverse_proxy.proxy_cache_use_stale | join("
 
 {% if item.value.reverse_proxy.proxy_ignore_headers is defined %}
 proxy_ignore_headers {{ item.value.reverse_proxy.proxy_ignore_headers | join(" ") }};
+{% endif %}
 {% endif %}
 {% endif %}
 
@@ -54,7 +56,7 @@ server {
 {% for location in item.value.reverse_proxy.locations %}
     location {{ item.value.reverse_proxy.locations[location].location }} {
         proxy_pass {{ item.value.reverse_proxy.locations[location].proxy_pass }};
-        
+
 {% if item.value.reverse_proxy.proxy_cache_enable %}
 {% if item.value.reverse_proxy.locations[location].proxy_cache is defined %}
         proxy_cache {{ item.value.reverse_proxy.locations[location].proxy_cache }};

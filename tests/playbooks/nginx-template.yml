@@ -20,7 +20,7 @@
             frontend:
               path: /var/cache/nginx/proxy/frontend
               keys_zone:
-                name: frontend
+                name: frontend_proxy_cache
                 size: 5m
               levels: "1:2"
               max_size: 5g
@@ -29,7 +29,7 @@
             backend:
               path: /var/cache/nginx/proxy/backend
               keys_zone:
-                name: backend
+                name: backend_proxy_cache
                 size: 10m
               levels: "1:2"
               max_size: 10g
@@ -69,7 +69,7 @@
           frontend_upstream:
             name: frontend_servers
             lb_method: least_conn
-            zone_name: frontend
+            zone_name: frontend_mem_zone
             zone_size: 64k
             sticky_cookie: false
             servers:
@@ -81,7 +81,7 @@
           backend_upstream:
             name: backend_servers
             lb_method: least_conn
-            zone_name: backend
+            zone_name: backend_mem_zone
             zone_size: 64k
             sticky_cookie: false
             servers:

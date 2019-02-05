@@ -195,7 +195,7 @@ nginx_http_template:
       upstream1:
         name: backend
         lb_method: least_conn
-        zone_name: backend
+        zone_name: backend_mem_zone
         zone_size: 64k
         sticky_cookie: false
         servers:

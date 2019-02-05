@@ -37,16 +37,16 @@
     - "{{ item.0.reverse_proxy.proxy_cache_path }}"
   when:
     - nginx_http_template_enable
-    - item.0.reverse_proxy_enable
+    - "{{ item.0.reverse_proxy_enable }}"
 
 - name: "(Setup: All NGINX) Ensure NGINX Proxy Cache Temp Directories Exists"
   file:
-    path: "item.reverse_proxy.proxy_temp_path.path"
+    path: "item.value.reverse_proxy.proxy_temp_path.path"
     state: directory
   with_dict: "{{ nginx_http_template }}"
   when:
     - nginx_http_template_enable
-    - item.reverse_proxy_enable
+    - item.value.reverse_proxy_enable
 
 - name: "(Setup: All NGINX) Dynamically Generate NGINX HTTP Configuration Files"
   template:

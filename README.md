@@ -365,7 +365,7 @@ nginx_http_template:
             weight: 1
             health_check: max_fails=1 fail_timeout=10s
 
-# Enable creating dynamic templated NGINX Stream configuration files.
+# Enable creating dynamic templated NGINX stream configuration files.
 # Defaults will not produce a valid configuration. Instead they are meant to showcase
 # the options available for templating. Each key represents a new configuration file.
 nginx_stream_template_enable: false
@@ -373,18 +373,17 @@ nginx_stream_template:
   default:
     template_file: stream/default.conf.j2
     conf_file_name: default.conf
-    conf_file_location: /etc/nginx/conf.d/
-    network_stream:
-      streams:
-        default:
-          listen_address: 127.0.0.1
-          listen_port: 443
-          udp_enable: false
-          proxy_pass: backend
-          proxy_timeout: 3s
-          proxy_connect_timeout: 1s
-          proxy_protocol: false
-      health_check_plus: false
+    conf_file_location: /etc/nginx/conf.d/stream/
+    network_streams:
+      default:
+        listen_address: localhost
+        listen_port: 80
+        udp_enable: false
+        proxy_pass: backend
+        proxy_timeout: 3s
+        proxy_connect_timeout: 1s
+        proxy_protocol: false
+        health_check_plus: false
     upstreams:
       upstream1:
         name: backend
@@ -395,7 +394,7 @@ nginx_stream_template:
         servers:
           server1:
             address: localhost
-            port: 8081
+            port: 8080
             weight: 1
             health_check: max_fails=1 fail_timeout=10s
 ```

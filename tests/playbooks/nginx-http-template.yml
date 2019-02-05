@@ -23,7 +23,7 @@
               location: /backend
               proxy_pass: http://backend_servers/
         upstreams:
-          upstream_1:
+          frontend_upstream:
             name: frontend_servers
             lb_method: least_conn
             zone_name: frontend
@@ -35,7 +35,7 @@
                 port: 8081
                 weight: 1
                 health_check: max_fails=3 fail_timeout=5s
-          upstream_2:
+          backend_upstream:
             name: backend_servers
             lb_method: least_conn
             zone_name: backend
@@ -57,7 +57,7 @@
         autoindex: false
         web_server:
           locations:
-            default:
+            frontend_site:
               location: /
               html_file_location: /usr/share/nginx/html
               html_file_name: frontend_index.html
@@ -73,7 +73,7 @@
         autoindex: false
         web_server:
           locations:
-            default:
+            backend_site:
               location: /
               html_file_location: /usr/share/nginx/html
               html_file_name: backend_index.html

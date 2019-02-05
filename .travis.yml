@@ -11,6 +11,10 @@ matrix:
     - env:
         distribution: centos
         version: 6
+        playbook: http-template
+    - env:
+        distribution: centos
+        version: 6
         playbook: modules
     - env:
         distribution: centos
@@ -27,15 +31,15 @@ matrix:
     - env:
         distribution: centos
         version: 6
-        playbook: template
-    - env:
-        distribution: centos
-        version: 6
         playbook: unit
     - env:
         distribution: centos
         version: 7
         playbook: basic
+    - env:
+        distribution: centos
+        version: 7
+        playbook: http-template
     - env:
         distribution: centos
         version: 7
@@ -52,10 +56,6 @@ matrix:
         distribution: centos
         version: 7
         playbook: stream-template
-    - env:
-        distribution: centos
-        version: 7
-        playbook: template
     - env:
         distribution: centos
         version: 7
@@ -67,6 +67,10 @@ matrix:
     - env:
         distribution: debian
         version: jessie
+        playbook: http-template
+    - env:
+        distribution: debian
+        version: jessie
         playbook: modules
     - env:
         distribution: debian
@@ -80,10 +84,6 @@ matrix:
         distribution: debian
         version: jessie
         playbook: stream-template
-    - env:
-        distribution: debian
-        version: jessie
-        playbook: template
     - env:
         distribution: debian
         version: jessie
@@ -95,6 +95,10 @@ matrix:
     - env:
         distribution: debian
         version: stretch
+        playbook: http-template
+    - env:
+        distribution: debian
+        version: stretch
         playbook: modules
     - env:
         distribution: debian
@@ -108,10 +112,6 @@ matrix:
         distribution: debian
         version: stretch
         playbook: stream-template
-    - env:
-        distribution: debian
-        version: stretch
-        playbook: template
     - env:
         distribution: debian
         version: stretch
@@ -123,6 +123,10 @@ matrix:
     - env:
         distribution: ubuntu
         version: trusty
+        playbook: http-template
+    - env:
+        distribution: ubuntu
+        version: trusty
         playbook: modules
     - env:
         distribution: ubuntu
@@ -136,10 +140,6 @@ matrix:
         distribution: ubuntu
         version: trusty
         playbook: stream-template
-    - env:
-        distribution: ubuntu
-        version: trusty
-        playbook: template
     - env:
         distribution: ubuntu
         version: xenial
@@ -147,6 +147,10 @@ matrix:
     - env:
         distribution: ubuntu
         version: xenial
+        playbook: http-template
+    - env:
+        distribution: ubuntu
+        version: xenial
         playbook: modules
     - env:
         distribution: ubuntu
@@ -160,10 +164,6 @@ matrix:
         distribution: ubuntu
         version: xenial
         playbook: stream-template
-    - env:
-        distribution: ubuntu
-        version: xenial
-        playbook: template
     - env:
         distribution: ubuntu
         version: xenial
@@ -175,6 +175,10 @@ matrix:
     - env:
         distribution: ubuntu
         version: artful
+        playbook: http-template
+    - env:
+        distribution: ubuntu
+        version: artful
         playbook: modules
     - env:
         distribution: ubuntu
@@ -188,10 +192,6 @@ matrix:
         distribution: ubuntu
         version: artful
         playbook: stream-template
-    - env:
-        distribution: ubuntu
-        version: artful
-        playbook: template
     - env:
         distribution: ubuntu
         version: artful
@@ -203,6 +203,10 @@ matrix:
     - env:
         distribution: ubuntu
         version: bionic
+        playbook: http-template
+    - env:
+        distribution: ubuntu
+        version: bionic
         playbook: modules
     - env:
         distribution: ubuntu
@@ -216,10 +220,6 @@ matrix:
         distribution: ubuntu
         version: bionic
         playbook: stream-template
-    - env:
-        distribution: ubuntu
-        version: bionic
-        playbook: template
     - env:
         distribution: ubuntu
         version: bionic

@@ -1,3 +1,4 @@
+# {{ ansible_managed }}
 {% if item.value.upstreams is defined %}
 {% for upstream in item.value.upstreams %}
 upstream {{ item.value.upstreams[upstream].name }} {
@@ -14,37 +15,35 @@ upstream {{ item.value.upstreams[upstream].name }} {
 {% endif %}
 {% endif %}
 }
-
 {% endfor %}
 {% endif %}
 
-
-{% if item.value.network_stream is defined %}
-{% for stream in item.value.network_stream.streams %}
+{% if item.value.network_streams is defined %}
+{% for stream in item.value.network_streams %}
 server {
-{% if item.value.network_stream.streams[stream].listen_address is defined and item.value.network_stream.streams[stream].listen_port is defined %}
-{% if item.value.network_stream.streams[stream].udp_enable %}
-	listen {{ item.value.network_stream.streams[stream].listen_address }}:{{ item.value.network_stream.streams[stream].listen_port }} udp;
+{% if item.value.network_streams[stream].listen_address is defined and item.value.network_streams[stream].listen_port is defined %}
+{% if item.value.network_streams[stream].udp_enable %}
+    listen {{ item.value.network_streams[stream].listen_address }}:{{ item.value.network_streams[stream].listen_port }} udp;
 {% else %}
-	listen {{ item.value.network_stream.streams[stream].listen_address }}:{{ item.value.network_stream.streams[stream].listen_port }};
+    listen {{ item.value.network_streams[stream].listen_address }}:{{ item.value.network_streams[stream].listen_port }};
 {% endif %}
-{% elif item.value.network_stream.streams[stream].listen_port is defined %}
-{% if item.value.network_stream.streams[stream].udp_enable %}
-	listen {{ item.value.network_stream.streams[stream].listen_port }} udp;
+{% elif item.value.network_streams[stream].listen_port is defined %}
+{% if item.value.network_streams[stream].udp_enable %}
+    listen {{ item.value.network_streams[stream].listen_port }} udp;
 {% else %}
-	listen {{ item.value.network_stream.streams[stream].listen_port }};
+    listen {{ item.value.network_streams[stream].listen_port }};
 {% endif %}
 {% endif %}
-	proxy_pass {{ item.value.network_stream.streams[stream].proxy_pass }};
-	proxy_timeout {{ item.value.network_stream.streams[stream].proxy_timeout }};
-	proxy_connect_timeout {{ item.value.network_stream.streams[stream].proxy_connect_timeout }};
-{% if item.value.network_stream.streams[stream].proxy_protocol %}
-	proxy_protocol on;
+    proxy_pass {{ item.value.network_streams[stream].proxy_pass }};
+    proxy_timeout {{ item.value.network_streams[stream].proxy_timeout }};
+    proxy_connect_timeout {{ item.value.network_streams[stream].proxy_connect_timeout }};
+{% if item.value.network_streams[stream].proxy_protocol %}
+    proxy_protocol on;
 {% else %}
-	proxy_protocol off;
+    proxy_protocol off;
 {% endif %}
-{% if item.value.network_stream.health_check_plus %}
-	health_check;
+{% if item.value.network_streams[stream].health_check_plus %}
+    health_check;
 {% endif %}
 }
 {% endfor %}

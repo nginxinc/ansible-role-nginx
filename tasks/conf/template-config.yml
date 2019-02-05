@@ -30,14 +30,14 @@
 
 - name: "(Setup: All NGINX) Ensure NGINX Proxy Cache Directories Exists"
   file:
-    path: "{{ item[1].path }}"
+    path: "{{ item.1.path }}"
     state: directory
   with_nested:
     - "{{ nginx_http_template }}"
-    - "{{ item[0].reverse_proxy.proxy_cache_path }}"
+    - "{{ item.0.reverse_proxy.proxy_cache_path }}"
   when:
     - nginx_http_template_enable
-    - item[0].reverse_proxy_enable
+    - item.0.reverse_proxy_enable
 
 - name: "(Setup: All NGINX) Ensure NGINX Proxy Cache Temp Directories Exists"
   file:

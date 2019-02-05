@@ -54,7 +54,7 @@
                 - http_404
               proxy_ignore_headers:
                 - Vary
-                - Cache-Controls
+                - Cache-Control
             backend:
               location: /backend
               proxy_pass: http://backend_servers/

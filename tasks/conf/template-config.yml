@@ -30,12 +30,13 @@
 
 - name: "(Setup: All NGINX) Ensure NGINX Proxy Cache Directories Exists"
   file:
-    path: "{{ item.1.path }}"
+    path: "{{ item.2.path }}"
     state: directory
     owner: "{{ nginx_main_template.user }}"
   with_subelements:
     - "{{ nginx_http_template }}"
-    - reverse_proxy.proxy_cache_path
+    - reverse_proxy
+    - "{{ proxy_cache_path | list }}"
     - skip_missing: true
   when:
     - nginx_http_template_enable

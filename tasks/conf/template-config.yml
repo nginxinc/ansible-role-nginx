@@ -40,6 +40,7 @@
     - skip_missing: true
   when:
     - nginx_http_template_enable
+    - item.1.proxy_cache_enable
 
 - name: "(Setup: All NGINX) Dynamically Generate NGINX HTTP Configuration Files"
   template:

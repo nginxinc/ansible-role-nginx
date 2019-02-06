@@ -33,11 +33,10 @@
     path: "{{ item.2.path }}"
     state: directory
     owner: "{{ nginx_main_template.user }}"
-  with_subelements:
+  with_nested:
     - "{{ nginx_http_template }}"
-    - "{{ reverse_proxy | list }}"
-    - "{{ reverse_proxy.proxy_cache_path | list }}"
-    - skip_missing: true
+    - "{{ item.0.reverse_proxy }}"
+    - "{{ item.1.proxy_cache_path }}"
   when:
     - nginx_http_template_enable
     - item.0.reverse_proxy_enable

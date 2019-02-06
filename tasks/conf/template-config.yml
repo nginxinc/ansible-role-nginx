@@ -35,7 +35,7 @@
     owner: "{{ nginx_main_template.user }}"
   with_subelements:
     - "{{ nginx_http_template }}"
-    - "{{ reverse_proxy.proxy_cache_path | list }}"
+    - reverse_proxy.proxy_cache_path
     - skip_missing: true
   when:
     - nginx_http_template_enable

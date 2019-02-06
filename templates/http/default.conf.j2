@@ -12,7 +12,6 @@ upstream {{ item.value.upstreams[upstream].name }} {
     sticky cookie srv_id expires=1h  path=/;
 {% endif %}
 }
-
 {% endfor %}
 {% endif %}
 

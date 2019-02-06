@@ -1,0 +1,50 @@
+# {{ ansible_managed }}
+{% if item.value.upstreams is defined %}
+{% for upstream in item.value.upstreams %}
+upstream {{ item.value.upstreams[upstream].name }} {
+{% if item.value.upstreams[upstream].lb_method is defined %}
+    {{ item.value.upstreams[upstream].lb_method }};
+{% endif %}
+    zone {{ item.value.upstreams[upstream].zone_name }} {{ item.value.upstreams[upstream].zone_size }};
+{% for server in item.value.upstreams[upstream].servers %}
+    server {{ item.value.upstreams[upstream].servers[server].address }}:{{ item.value.upstreams[upstream].servers[server].port }} weight={{ item.value.upstreams[upstream].servers[server].weight|default("1") }} {{ item.value.upstreams[upstream].servers[server].health_check|default("") }};
+{% endfor %}
+{% if item.value.upstreams[upstream].sticky_cookie is defined %}
+{% if item.value.upstreams[upstream].sticky_cookie %}
+    sticky cookie srv_id expires=1h  path=/;
+{% endif %}
+{% endif %}
+}
+{% endfor %}
+{% endif %}
+
+{% if item.value.network_streams is defined %}
+{% for stream in item.value.network_streams %}
+server {
+{% if item.value.network_streams[stream].listen_address is defined and item.value.network_streams[stream].listen_port is defined %}
+{% if item.value.network_streams[stream].udp_enable %}
+    listen {{ item.value.network_streams[stream].listen_address }}:{{ item.value.network_streams[stream].listen_port }} udp;
+{% else %}
+    listen {{ item.value.network_streams[stream].listen_address }}:{{ item.value.network_streams[stream].listen_port }};
+{% endif %}
+{% elif item.value.network_streams[stream].listen_port is defined %}
+{% if item.value.network_streams[stream].udp_enable %}
+    listen {{ item.value.network_streams[stream].listen_port }} udp;
+{% else %}
+    listen {{ item.value.network_streams[stream].listen_port }};
+{% endif %}
+{% endif %}
+    proxy_pass {{ item.value.network_streams[stream].proxy_pass }};
+    proxy_timeout {{ item.value.network_streams[stream].proxy_timeout }};
+    proxy_connect_timeout {{ item.value.network_streams[stream].proxy_connect_timeout }};
+{% if item.value.network_streams[stream].proxy_protocol %}
+    proxy_protocol on;
+{% else %}
+    proxy_protocol off;
+{% endif %}
+{% if item.value.network_streams[stream].health_check_plus %}
+    health_check;
+{% endif %}
+}
+{% endfor %}
+{% endif %}

@@ -36,6 +36,26 @@ server {
 {% for location in item.value.reverse_proxy.locations %}
     location {{ item.value.reverse_proxy.locations[location].location }} {
         proxy_pass {{ item.value.reverse_proxy.locations[location].proxy_pass }};
+{% if item.value.reverse_proxy.locations[location].proxy_ssl is defined %}
+        proxy_ssl_certificate {{ item.value.reverse_proxy.locations[location].proxy_ssl.cert }};
+        proxy_ssl_certificate_key {{ item.value.reverse_proxy.locations[location].proxy_ssl.key }};
+        proxy_ssl_protocols {{ item.value.reverse_proxy.locations[location].proxy_ssl.protocols }};
+        proxy_ssl_ciphers {{ item.value.reverse_proxy.locations[location].proxy_ssl.ciphers }};
+{% if item.value.reverse_proxy.locations[location].proxy_ssl.trusted_cert is defined %}
+        proxy_ssl_trusted_certificate {{ item.value.reverse_proxy.locations[location].proxy_ssl.trusted_cert }};
+{% endif %}
+{% if item.value.reverse_proxy.locations[location].proxy_ssl.verify %}
+        proxy_ssl_verify on;
+{% else %}
+        proxy_ssl_verify off;
+{% endif %}
+        proxy_ssl_verify_depth {{ }};
+{% if item.value.reverse_proxy.locations[location].proxy_ssl.session_reuse %}
+        proxy_ssl_session_reuse on;
+{% else %}
+        proxy_ssl_session_reuse off;
+{% endif %}
+{% endif %}
 {% if item.value.reverse_proxy.health_check_plus is defined and item.value.reverse_proxy.health_check_plus %}
         health_check;
 {% endif %}

@@ -42,6 +42,27 @@ server {
 {% else %}
     proxy_protocol off;
 {% endif %}
+{% if item.value.network_streams[stream].proxy_ssl is defined %}
+    proxy_ssl on;
+    proxy_ssl_certificate {{ item.value.network_streams[stream].proxy_ssl.cert }};
+    proxy_ssl_certificate_key {{ item.value.network_streams[stream].proxy_ssl.key }};
+    proxy_ssl_protocols {{ item.value.network_streams[stream].proxy_ssl.protocols }};
+    proxy_ssl_ciphers {{ item.value.network_streams[stream].proxy_ssl.ciphers }};
+{% if item.value.network_streams[stream].proxy_ssl.trusted_cert is defined %}
+    proxy_ssl_trusted_certificate {{ item.value.network_streams[stream].proxy_ssl.trusted_cert }};
+{% endif %}
+{% if item.value.network_streams[stream].proxy_ssl.verify %}
+    proxy_ssl_verify on;
+{% else %}
+    proxy_ssl_verify off;
+{% endif %}
+    proxy_ssl_verify_depth {{ item.value.network_streams[stream].proxy_ssl.verify_depth }};
+{% if item.value.network_streams[stream].proxy_ssl.session_reuse %}
+    proxy_ssl_session_reuse on;
+{% else %}
+    proxy_ssl_session_reuse off;
+{% endif %}
+{% endif %}
 {% if item.value.network_streams[stream].health_check_plus %}
     health_check;
 {% endif %}

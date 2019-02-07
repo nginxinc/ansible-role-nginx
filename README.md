@@ -337,6 +337,8 @@ nginx_http_template:
     ssl:
       cert: ssl/default.crt
       key: ssl/default.key
+      protocols: TLSv1 TLSv1.1 TLSv1.2
+      ciphers: HIGH:!aNULL:!MD5
     web_server:
       locations:
         default:
@@ -350,6 +352,15 @@ nginx_http_template:
         backend:
           location: /
           proxy_pass: http://backend
+          proxy_ssl:
+            cert: ssl/proxy_default.crt
+            key: ssl/proxy_default.key
+            protocols: TLSv1 TLSv1.1 TLSv1.2
+            ciphers: HIGH:!aNULL:!MD5
+            trusted_cert: ssl/proxy_ca_cert.crt
+            verify: true
+            verify_depth: 2
+            session_reuse: true
       health_check_plus: false
     upstreams:
       upstream1:

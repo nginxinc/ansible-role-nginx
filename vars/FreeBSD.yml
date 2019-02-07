@@ -1,4 +1,3 @@
 ---
 nginx_conf_dir: /usr/local/etc
 nginx_user: www
-

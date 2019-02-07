@@ -36,7 +36,6 @@
   with_subelements:
     - "{{ nginx_http_template }}"
     - reverse_proxy.proxy_cache_path
-    - 
   when:
     - nginx_http_template_enable
 #    - (item.0.reverse_proxy_enable is defined) and item.0.reverse_proxy_enable

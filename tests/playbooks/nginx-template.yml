@@ -18,8 +18,7 @@
         reverse_proxy:
           proxy_cache_enable: true
           proxy_cache_path:
-            frontend:
-              path: /var/cache/nginx/proxy/frontend
+            - path: /var/cache/nginx/proxy/frontend
               keys_zone:
                 name: frontend_proxy_cache
                 size: 5m
@@ -27,8 +26,7 @@
               max_size: 5g
               inactive: 30m
               use_temp_path: "on"
-            backend:
-              path: /var/cache/nginx/proxy/backend
+            - path: /var/cache/nginx/proxy/backend
               keys_zone:
                 name: backend_proxy_cache
                 size: 10m

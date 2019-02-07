@@ -339,6 +339,8 @@ nginx_http_template:
       key: ssl/default.key
       protocols: TLSv1 TLSv1.1 TLSv1.2
       ciphers: HIGH:!aNULL:!MD5
+      session_cache: none
+      session_timeout: 5m
     web_server:
       locations:
         default:
@@ -357,9 +359,9 @@ nginx_http_template:
             key: ssl/proxy_default.key
             protocols: TLSv1 TLSv1.1 TLSv1.2
             ciphers: HIGH:!aNULL:!MD5
-            trusted_cert: ssl/proxy_ca_cert.crt
-            verify: true
-            verify_depth: 2
+            trusted_cert: ssl/proxy_ca.crt
+            verify: false
+            verify_depth: 1
             session_reuse: true
       health_check_plus: false
     upstreams:
@@ -394,6 +396,15 @@ nginx_stream_template:
         proxy_timeout: 3s
         proxy_connect_timeout: 1s
         proxy_protocol: false
+        proxy_ssl:
+          cert: ssl/proxy_default.crt
+          key: ssl/proxy_default.key
+          protocols: TLSv1 TLSv1.1 TLSv1.2
+          ciphers: HIGH:!aNULL:!MD5
+          trusted_cert: ssl/proxy_ca.crt
+          verify: false
+          verify_depth: 1
+          session_reuse: true
         health_check_plus: false
     upstreams:
       upstream1:

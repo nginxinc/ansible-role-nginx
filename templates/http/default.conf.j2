@@ -20,6 +20,8 @@ server {
     listen {{ item.value.port }} ssl;
     ssl_certificate {{ item.value.ssl.cert }};
     ssl_certificate_key {{ item.value.ssl.key }};
+    ssl_protocols {{ item.value.ssl.protocols }};
+    ssl_ciphers {{ item.value.ssl.ciphers }};
 {% else %}
     listen {{ item.value.port }};
 {% endif %}

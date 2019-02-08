@@ -5,6 +5,7 @@
   roles:
     - ansible-role-nginx
   vars:
+    nginx_debug_output: true
     nginx_http_template_enable: true
     nginx_http_template:
       app:

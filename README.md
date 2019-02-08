@@ -350,6 +350,7 @@ nginx_http_template:
         backend:
           location: /
           proxy_pass: http://backend
+          websocket: false
       health_check_plus: false
     upstreams:
       upstream1:

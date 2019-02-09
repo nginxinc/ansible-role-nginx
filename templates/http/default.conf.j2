@@ -33,6 +33,12 @@ server {
 {% if item.value.reverse_proxy is defined %}
 {% for location in item.value.reverse_proxy.locations %}
     location {{ item.value.reverse_proxy.locations[location].location }} {
+{% if item.value.reverse_proxy.locations[location].auth_basic is defined %}
+        auth_basic "{{ item.value.reverse_proxy.locations[location].auth_basic }}";
+{% endif %}
+{% if item.value.reverse_proxy.locations[location].auth_basic_file is defined %}
+        auth_basic_user_file {{ item.value.reverse_proxy.locations[location].auth_basic_file }};
+{% endif %}
         proxy_pass {{ item.value.reverse_proxy.locations[location].proxy_pass }};
 {% if item.value.reverse_proxy.health_check_plus is defined and item.value.reverse_proxy.health_check_plus %}
         health_check;
@@ -56,6 +62,12 @@ server {
         index  {{ item.value.web_server.locations[location].html_file_name }};
 {% if item.value.web_server.locations[location].autoindex %}
         autoindex on;
+{% endif %}
+{% if item.value.web_server.locations[location].auth_basic is defined %}
+        auth_basic "{{ item.value.web_server.locations[location].auth_basic }}";
+{% endif %}
+{% if item.value.web_server.locations[location].auth_basic_file is defined %}
+        auth_basic_user_file {{ item.value.web_server.locations[location].auth_basic_file }};
 {% endif %}
     }
 {% endfor %}

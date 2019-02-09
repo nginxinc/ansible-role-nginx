@@ -344,6 +344,8 @@ nginx_http_template:
           html_file_location: /usr/share/nginx/html
           html_file_name: index.html
           autoindex: false
+          auth_basic: null
+          auth_basic_file: null
       http_demo_conf: false
     reverse_proxy:
       locations:
@@ -351,6 +353,8 @@ nginx_http_template:
           location: /
           proxy_pass: http://backend
           websocket: false
+          auth_basic: null
+          auth_basic_file: null
       health_check_plus: false
     upstreams:
       upstream1:

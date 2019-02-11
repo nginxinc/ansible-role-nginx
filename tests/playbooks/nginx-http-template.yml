@@ -109,7 +109,7 @@
         autoindex: false
         web_server:
           locations:
-            default:
+            frontend_site:
               location: /
               html_file_location: /usr/share/nginx/html
               html_file_name: frontend_index.html
@@ -125,7 +125,7 @@
         autoindex: false
         web_server:
           locations:
-            default:
+            backend_site:
               location: /
               html_file_location: /usr/share/nginx/html
               html_file_name: backend_index.html

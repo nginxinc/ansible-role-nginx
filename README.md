@@ -350,6 +350,7 @@ nginx_http_template:
         backend:
           location: /
           proxy_pass: http://backend
+          websocket: false
       health_check_plus: false
     proxy_cache_enable: false
     proxy_cache:
@@ -375,8 +376,37 @@ nginx_http_template:
             health_check: max_fails=1 fail_timeout=10s
 
 # Enable creating dynamic templated NGINX stream configuration files.
+# Defaults will not produce a valid configuration. Instead they are meant to showcase
+# the options available for templating. Each key represents a new configuration file.
 nginx_stream_template_enable: false
-nginx_stream_template_listen: 12345
+nginx_stream_template:
+  default:
+    template_file: stream/default.conf.j2
+    conf_file_name: default.conf
+    conf_file_location: /etc/nginx/conf.d/stream/
+    network_streams:
+      default:
+        listen_address: localhost
+        listen_port: 80
+        udp_enable: false
+        proxy_pass: backend
+        proxy_timeout: 3s
+        proxy_connect_timeout: 1s
+        proxy_protocol: false
+        health_check_plus: false
+    upstreams:
+      upstream1:
+        name: backend
+        lb_method: least_conn
+        zone_name: backend
+        zone_size: 64k
+        sticky_cookie: false
+        servers:
+          server1:
+            address: localhost
+            port: 8080
+            weight: 1
+            health_check: max_fails=1 fail_timeout=10s
 ```
 
 Dependencies
@@ -414,11 +444,14 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a 
 - hosts: localhost
   become: true
   roles:
-    - ansible-role-nginx
+    - role: nginxinc.nginx
   vars:
     nginx_http_template_enable: true
     nginx_http_template:
       default:
+        template_file: http/default.conf.j2
+        conf_file_name: default.conf
+        conf_file_location: /etc/nginx/conf.d/
         port: 80
         server_name: localhost
         error_page: /usr/share/nginx/html
@@ -429,6 +462,8 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a 
               location: /
               html_file_location: /usr/share/nginx/html
               html_file_name: index.html
+              autoindex: false
+          http_demo_conf: false
 ```
 
 This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a localhost and installing the open source version of NGINX as a reverse proxy.
@@ -438,11 +473,18 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a 
 - hosts: localhost
   become: true
   roles:
-    - nginxinc.nginx
+    - role: nginxinc.nginx
   vars:
     nginx_http_template_enable: true
     nginx_http_template:
       default:
+        template_file: http/default.conf.j2
+        conf_file_name: default.conf
+        conf_file_location: /etc/nginx/conf.d/
+        port: 80
+        server_name: localhost
+        error_page: /usr/share/nginx/html
+        autoindex: false
         reverse_proxy:
           locations:
             frontend:

@@ -66,7 +66,7 @@ server {
 {% if item.value.web_server.locations[location].auth_basic is defined and item.value.web_server.locations[location].auth_basic %}
         auth_basic "{{ item.value.web_server.locations[location].auth_basic }}";
 {% endif %}
-{% if item.value.web_server.locations[location].auth_basic_file is defined item.value.web_server.locations[location].auth_basic_file %}
+{% if item.value.web_server.locations[location].auth_basic_file is defined and item.value.web_server.locations[location].auth_basic_file %}
         auth_basic_user_file {{ item.value.web_server.locations[location].auth_basic_file }};
 {% endif %}
     }

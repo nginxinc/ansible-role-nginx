@@ -48,6 +48,11 @@ server {
 {% if item.value.reverse_proxy.locations[location].proxy_ssl.trusted_cert is defined %}
         proxy_ssl_trusted_certificate {{ item.value.reverse_proxy.locations[location].proxy_ssl.trusted_cert }};
 {% endif %}
+{% if item.value.reverse_proxy.locations[location].proxy_ssl.server_name %}
+        proxy_ssl_server_name on;
+{% else %}
+        proxy_ssl_server_name off;
+{% endif %}
         proxy_ssl_protocols {{ item.value.reverse_proxy.locations[location].proxy_ssl.protocols }};
         proxy_ssl_ciphers {{ item.value.reverse_proxy.locations[location].proxy_ssl.ciphers }};
 {% if item.value.reverse_proxy.locations[location].proxy_ssl.verify %}

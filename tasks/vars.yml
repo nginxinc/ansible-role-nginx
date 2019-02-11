@@ -1,5 +1,5 @@
 ---
-- name: "vars for {{ ansible_os_family }} {{ ansible_distribution }} {{ ansible_distribution_release }}"
+- name: "(Setup: All OSs) Set variables for {{ ansible_os_family }} {{ ansible_distribution }} {{ ansible_distribution_release }}"
   include_vars: "{{ item }}"
   with_first_found:
     - files:

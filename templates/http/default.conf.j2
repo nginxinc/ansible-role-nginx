@@ -16,7 +16,7 @@ upstream {{ item.value.upstreams[upstream].name }} {
 {% endif %}
 
 {% if item.value.reverse_proxy is defined %}
-{% if item.value.reverse_proxy.proxy_cache is defined %}
+{% if item.value.reverse_proxy.proxy_cache_path is defined %}
 {% for proxy_cache_path in item.value.reverse_proxy.proxy_cache_path %}
 proxy_cache_path {{ proxy_cache_path.path }} keys_zone={{ proxy_cache_path.keys_zone.name }}:{{ proxy_cache_path.keys_zone.size }}
                  levels={{ proxy_cache_path.levels }} max_size={{ proxy_cache_path.max_size }}

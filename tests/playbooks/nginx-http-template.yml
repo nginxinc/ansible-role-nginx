@@ -15,9 +15,7 @@
         port: 80
         server_name: localhost
         error_page: /usr/share/nginx/html
-        reverse_proxy_enable: true
         reverse_proxy:
-          proxy_cache_enable: true
           proxy_cache_path:
             - path: /var/cache/nginx/proxy/frontend
               keys_zone:

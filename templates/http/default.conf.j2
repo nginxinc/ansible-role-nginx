@@ -39,8 +39,12 @@ server {
     location {{ item.value.reverse_proxy.locations[location].location }} {
         proxy_pass {{ item.value.reverse_proxy.locations[location].proxy_pass }};
 {% if item.value.reverse_proxy.locations[location].proxy_ssl is defined %}
+{% if item.value.reverse_proxy.locations[location].proxy_ssl.cert is defined %}
         proxy_ssl_certificate {{ item.value.reverse_proxy.locations[location].proxy_ssl.cert }};
+{% endif %}
+{% if item.value.reverse_proxy.locations[location].proxy_ssl.key is defined %}
         proxy_ssl_certificate_key {{ item.value.reverse_proxy.locations[location].proxy_ssl.key }};
+{% endif %}
 {% if item.value.reverse_proxy.locations[location].proxy_ssl.trusted_cert is defined %}
         proxy_ssl_trusted_certificate {{ item.value.reverse_proxy.locations[location].proxy_ssl.trusted_cert }};
 {% endif %}

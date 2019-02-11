@@ -357,6 +357,14 @@ nginx_http_template:
           use_temp_path: true
       proxy_temp_path:
         path: /var/cache/nginx/proxy/temp
+      proxy_cache_lock: true
+      proxy_cache_min_uses: 5
+      proxy_cache_revalidate: true
+      proxy_cache_use_stale:
+        - error
+        - timeout
+      proxy_ignore_headers:
+        - Expires
       locations:
         backend:
           location: /

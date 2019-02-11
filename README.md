@@ -357,9 +357,10 @@ nginx_http_template:
           proxy_ssl:
             cert: ssl/proxy_default.crt
             key: ssl/proxy_default.key
+            trusted_cert: ssl/proxy_ca.crt
+            server_name: false
             protocols: TLSv1 TLSv1.1 TLSv1.2
             ciphers: HIGH:!aNULL:!MD5
-            trusted_cert: ssl/proxy_ca.crt
             verify: false
             verify_depth: 1
             session_reuse: true
@@ -399,6 +400,7 @@ nginx_stream_template:
         proxy_ssl:
           cert: ssl/proxy_default.crt
           key: ssl/proxy_default.key
+          server_name: false
           protocols: TLSv1 TLSv1.1 TLSv1.2
           ciphers: HIGH:!aNULL:!MD5
           trusted_cert: ssl/proxy_ca.crt

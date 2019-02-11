@@ -37,8 +37,7 @@
     - "{{ nginx_http_template }}"
     - reverse_proxy.proxy_cache_path
     - skip_missing: true
-  when:
-    - nginx_http_template_enable
+  when: nginx_http_template_enable
 
 - name: "(Setup: All NGINX) Dynamically Generate NGINX HTTP Configuration Files"
   template:

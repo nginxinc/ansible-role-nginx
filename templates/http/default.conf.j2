@@ -68,7 +68,6 @@ server {
     location {{ item.value.reverse_proxy.locations[location].location }} {
         proxy_pass {{ item.value.reverse_proxy.locations[location].proxy_pass }};
 
-{% if item.value.reverse_proxy.proxy_cache is defined %}
 {% if item.value.reverse_proxy.locations[location].proxy_cache is defined %}
         proxy_cache {{ item.value.reverse_proxy.locations[location].proxy_cache }};
 {% endif %}
@@ -92,7 +91,6 @@ server {
 {% endif %}
 {% if item.value.reverse_proxy.locations[location].proxy_ignore_headers is defined %}
         proxy_ignore_headers {{ item.value.reverse_proxy.locations[location].proxy_ignore_headers | join(" ") }};
-{% endif %}
 {% endif %}
 {% if (item.value.reverse_proxy.health_check_plus is defined) and item.value.reverse_proxy.health_check_plus %}
         health_check;

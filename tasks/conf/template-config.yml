@@ -39,8 +39,6 @@
     - skip_missing: true
   when:
     - nginx_http_template_enable
-    - (item.0.reverse_proxy_enable is defined) and item.0.reverse_proxy_enable
-    - (item.0.reverse_proxy.proxy_cache_enable is defined) and item.0.reverse_proxy.proxy_cache_enable
 
 - name: "(Setup: All NGINX) Dynamically Generate NGINX HTTP Configuration Files"
   template:

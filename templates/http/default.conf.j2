@@ -85,8 +85,8 @@ server {
         auth_basic_user_file {{ item.value.reverse_proxy.locations[location].auth_basic_file }};
 {% endif %}
         proxy_pass {{ item.value.reverse_proxy.locations[location].proxy_pass }};
-
 {% if item.value.reverse_proxy.locations[location].proxy_ssl is defined %}
+
 {% if item.value.reverse_proxy.locations[location].proxy_ssl.cert is defined %}
         proxy_ssl_certificate {{ item.value.reverse_proxy.locations[location].proxy_ssl.cert }};
 {% endif %}

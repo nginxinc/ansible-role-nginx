@@ -118,7 +118,6 @@ server {
         proxy_ssl_session_reuse {{ item.value.reverse_proxy.locations[location].proxy_ssl.session_reuse | ternary("on", "off") }};
 {% endif %}
 {% endif %}
-
 {% if item.value.reverse_proxy.locations[location].proxy_cache is defined %}
         proxy_cache {{ item.value.reverse_proxy.locations[location].proxy_cache }};
 {% endif %}

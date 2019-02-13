@@ -44,23 +44,35 @@ server {
 {% endif %}
 {% if item.value.network_streams[stream].proxy_ssl is defined %}
     proxy_ssl on;
+{% if item.value.network_streams[stream].proxy_ssl.cert is defined %}
     proxy_ssl_certificate {{ item.value.network_streams[stream].proxy_ssl.cert }};
+{% endif %}
+{% if item.value.network_streams[stream].proxy_ssl.key is defined %}
     proxy_ssl_certificate_key {{ item.value.network_streams[stream].proxy_ssl.key }};
+{% endif %}
+{% if item.value.network_streams[stream].proxy_ssl.server_name is defined %}
+    proxy_ssl_server_name {{ item.value.network_streams[stream].proxy_ssl.server_name | ternary("on", "off") }};
+{% endif %}
+{% if item.value.network_streams[stream].proxy_ssl.name is defined %}
+    proxy_ssl_name {{ item.value.network_streams[stream].proxy_ssl.name }};
+{% endif %}
+{% if item.value.network_streams[stream].proxy_ssl.protocols is defined %}
     proxy_ssl_protocols {{ item.value.network_streams[stream].proxy_ssl.protocols }};
+{% endif %}
+{% if item.value.network_streams[stream].proxy_ssl.ciphers is defined %}
     proxy_ssl_ciphers {{ item.value.network_streams[stream].proxy_ssl.ciphers }};
+{% endif %}
 {% if item.value.network_streams[stream].proxy_ssl.trusted_cert is defined %}
     proxy_ssl_trusted_certificate {{ item.value.network_streams[stream].proxy_ssl.trusted_cert }};
 {% endif %}
-{% if item.value.network_streams[stream].proxy_ssl.verify %}
-    proxy_ssl_verify on;
-{% else %}
-    proxy_ssl_verify off;
+{% if item.value.network_streams[stream].proxy_ssl.verify is defined %}
+    proxy_ssl_verify {{ item.value.network_streams[stream].proxy_ssl.verify | ternary("on", "off") }};
 {% endif %}
+{% if item.value.network_streams[stream].proxy_ssl.verify_depth is defined %}
     proxy_ssl_verify_depth {{ item.value.network_streams[stream].proxy_ssl.verify_depth }};
-{% if item.value.network_streams[stream].proxy_ssl.session_reuse %}
-    proxy_ssl_session_reuse on;
-{% else %}
-    proxy_ssl_session_reuse off;
+{% endif %}
+{% if item.value.network_streams[stream].proxy_ssl.session_reuse is defined %}
+    proxy_ssl_session_reuse {{ item.value.network_streams[stream].proxy_ssl.session_reuse | ternary("on", "off") }};
 {% endif %}
 {% endif %}
 {% if item.value.network_streams[stream].health_check_plus %}

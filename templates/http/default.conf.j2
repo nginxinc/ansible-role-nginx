@@ -20,10 +20,18 @@ server {
     listen {{ item.value.port }} ssl;
     ssl_certificate {{ item.value.ssl.cert }};
     ssl_certificate_key {{ item.value.ssl.key }};
+{% if item.value.ssl.protocols is defined %}
     ssl_protocols {{ item.value.ssl.protocols }};
+{% endif %}
+{% if item.value.ssl.ciphers is defined %}
     ssl_ciphers {{ item.value.ssl.ciphers }};
+{% endif %}
+{% if item.value.ssl.session_cache is defined %}
     ssl_session_cache {{ item.value.ssl.session_cache }};
+{% endif %}
+{% if item.value.ssl.session_timeout is defined %}
     ssl_session_timeout {{ item.value.ssl.session_timeout }};
+{% endif %}
 {% else %}
     listen {{ item.value.port }};
 {% endif %}
@@ -50,6 +58,9 @@ server {
 {% endif %}
 {% if item.value.reverse_proxy.locations[location].proxy_ssl.server_name is defined %}
         proxy_ssl_server_name {{ item.value.reverse_proxy.locations[location].proxy_ssl.server_name | ternary("on", "off") }};
+{% endif %}
+{% if item.value.reverse_proxy.locations[location].proxy_ssl.name is defined %}
+        proxy_ssl_name {{ item.value.reverse_proxy.locations[location].proxy_ssl.name }};
 {% endif %}
 {% if item.value.reverse_proxy.locations[location].proxy_ssl.protocols is defined %}
         proxy_ssl_protocols {{ item.value.reverse_proxy.locations[location].proxy_ssl.protocols }};

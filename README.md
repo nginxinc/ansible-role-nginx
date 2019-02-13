@@ -348,8 +348,29 @@ nginx_http_template:
           html_file_location: /usr/share/nginx/html
           html_file_name: index.html
           autoindex: false
+          auth_basic: null
+          auth_basic_file: null
       http_demo_conf: false
     reverse_proxy:
+      proxy_cache_path:
+        - path: /var/cache/nginx/proxy/backend
+          keys_zone:
+            name: backend_proxy_cache
+            size: 10m
+          levels: "1:2"
+          max_size: 10g
+          inactive: 60m
+          use_temp_path: true
+      proxy_temp_path:
+        path: /var/cache/nginx/proxy/temp
+      proxy_cache_lock: true
+      proxy_cache_min_uses: 5
+      proxy_cache_revalidate: true
+      proxy_cache_use_stale:
+        - error
+        - timeout
+      proxy_ignore_headers:
+        - Expires
       locations:
         backend:
           location: /
@@ -365,7 +386,31 @@ nginx_http_template:
             verify: false
             verify_depth: 1
             session_reuse: true
+          proxy_cache: frontend_proxy_cache
+          proxy_temp_path:
+            path: /var/cache/nginx/proxy/backend/temp
+          proxy_cache_lock: false
+          proxy_cache_min_uses: 3
+          proxy_cache_revalidate: false
+          proxy_cache_use_stale:
+            - http_403
+            - http_404
+          proxy_ignore_headers:
+            - Vary
+            - Cache-Control
+          websocket: false
+          auth_basic: null
+          auth_basic_file: null
       health_check_plus: false
+    proxy_cache_enable: false
+    proxy_cache:
+      proxy_cache_path:
+        path: /var/cache/nginx
+        keys_zone:
+          name: one
+          size: 10m
+      proxy_temp_path:
+        path: /var/cache/nginx/proxy
     upstreams:
       upstream1:
         name: backend

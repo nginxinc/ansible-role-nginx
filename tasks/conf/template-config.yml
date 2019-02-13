@@ -28,6 +28,17 @@
   with_dict: "{{ nginx_http_template }}"
   when: nginx_http_template_enable
 
+- name: "(Setup: All NGINX) Ensure NGINX Proxy Cache Directories Exists"
+  file:
+    path: "{{ item.1.path }}"
+    state: directory
+    owner: "{{ nginx_main_template.user }}"
+  with_subelements:
+    - "{{ nginx_http_template }}"
+    - reverse_proxy.proxy_cache_path
+    - skip_missing: true
+  when: nginx_http_template_enable
+
 - name: "(Setup: All NGINX) Dynamically Generate NGINX HTTP Configuration Files"
   template:
     src: "{{ item.value.template_file }}"

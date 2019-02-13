@@ -5,6 +5,7 @@
   roles:
     - ansible-role-nginx
   vars:
+    nginx_debug_output: true
     nginx_http_template_enable: true
     nginx_http_template:
       app:
@@ -15,18 +16,67 @@
         server_name: localhost
         error_page: /usr/share/nginx/html
         reverse_proxy:
+          proxy_cache_path:
+            - path: /var/cache/nginx/proxy/frontend
+              keys_zone:
+                name: frontend_proxy_cache
+                size: 5m
+              levels: "1:2"
+              max_size: 5g
+              inactive: 30m
+              use_temp_path: true
+            - path: /var/cache/nginx/proxy/backend
+              keys_zone:
+                name: backend_proxy_cache
+                size: 10m
+              levels: "1:2"
+              max_size: 10g
+              inactive: 60m
+              use_temp_path: true
+          proxy_temp_path:
+            path: /var/cache/nginx/proxy/temp
+          proxy_cache_lock: true
+          proxy_cache_min_uses: 5
+          proxy_cache_revalidate: true
+          proxy_cache_use_stale:
+            - error
+            - timeout
+          proxy_ignore_headers:
+            - Expires
           locations:
             frontend:
               location: /
               proxy_pass: http://frontend_servers/
+              proxy_cache: frontend_proxy_cache
+              proxy_temp_path:
+                path: /var/cache/nginx/proxy/frontend/temp
+              proxy_cache_lock: false
+              proxy_cache_min_uses: 3
+              proxy_cache_revalidate: false
+              proxy_cache_use_stale:
+                - http_403
+                - http_404
+              proxy_ignore_headers:
+                - Vary
+                - Cache-Control
             backend:
               location: /backend
               proxy_pass: http://backend_servers/
+              proxy_cache: backend_proxy_cache
+              proxy_temp_path:
+                path: /var/cache/nginx/proxy/backend/temp
+              proxy_cache_lock: true
+              proxy_cache_min_uses: 2
+              proxy_cache_revalidate: true
+              proxy_cache_use_stale:
+                - http_500
+                - http_502
+                - http_503
         upstreams:
           frontend_upstream:
             name: frontend_servers
             lb_method: least_conn
-            zone_name: frontend
+            zone_name: frontend_mem_zone
             zone_size: 64k
             sticky_cookie: false
             servers:
@@ -38,7 +88,7 @@
           backend_upstream:
             name: backend_servers
             lb_method: least_conn
-            zone_name: backend
+            zone_name: backend_mem_zone
             zone_size: 64k
             sticky_cookie: false
             servers:

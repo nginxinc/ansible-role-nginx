@@ -59,6 +59,7 @@
               proxy_ignore_headers:
                 - Vary
                 - Cache-Control
+              proxy_redirect: "off"
             backend:
               location: /backend
               proxy_pass: http://backend_servers/

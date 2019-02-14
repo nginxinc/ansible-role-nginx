@@ -163,6 +163,7 @@ nginx_http_template:
     port: 8081
     server_name: localhost
     error_page: /usr/share/nginx/html
+    root: /usr/share/nginx/html
     https_redirect: false
     autoindex: false
     ssl:

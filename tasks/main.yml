@@ -27,6 +27,9 @@
     - import_tasks: plus/install-plus.yml
       when: nginx_type == "plus"
 
+    - import_tasks: conf/cleanup-config.yml
+      when: nginx_cleanup_config
+
     - import_tasks: modules/install-modules.yml
       when: true in nginx_modules.values()
 

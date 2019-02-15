@@ -81,20 +81,12 @@ nginx_controller_api_endpoint: null
 nginx_unit_enable: false
 nginx_unit_modules: null
 
-# Enable NGINX status data.
-# Will enable 'stub_status' in NGINX Open Source and 'status' in NGINX Plus.
+# Remove previously existing NGINX configuration files.
+# Use a list of paths you wish to remove.
 # Default is false.
-nginx_status_enable: false
-nginx_status_port: 8080
-
-# Enable NGINX Plus REST API, write access to the REST API, and NGINX Plus dashboard.
-# Requires NGINX Plus.
-# Default is false.
-nginx_rest_api_enable: false
-nginx_rest_api_location: /etc/nginx/conf.d/api.conf
-nginx_rest_api_port: 8080
-nginx_rest_api_write: false
-nginx_rest_api_dashboard: false
+nginx_cleanup_config: false
+nginx_cleanup_config_path:
+  - /etc/nginx/conf.d
 
 # Enable uploading NGINX configuration files to your system.
 # Default for uploading files is false.
@@ -240,6 +232,21 @@ nginx_http_template:
             port: 8081
             weight: 1
             health_check: max_fails=1 fail_timeout=10s
+
+# Enable NGINX status data.
+# Will enable 'stub_status' in NGINX Open Source and 'status' in NGINX Plus.
+# Default is false.
+nginx_status_enable: false
+nginx_status_port: 8080
+
+# Enable NGINX Plus REST API, write access to the REST API, and NGINX Plus dashboard.
+# Requires NGINX Plus.
+# Default is false.
+nginx_rest_api_enable: false
+nginx_rest_api_location: /etc/nginx/conf.d/api.conf
+nginx_rest_api_port: 8080
+nginx_rest_api_write: false
+nginx_rest_api_dashboard: false
 
 # Enable creating dynamic templated NGINX stream configuration files.
 # Defaults will not produce a valid configuration. Instead they are meant to showcase

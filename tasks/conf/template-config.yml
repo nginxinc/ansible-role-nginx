@@ -10,6 +10,7 @@
   template:
     src: "{{ item.value.template_file }}"
     dest: "{{ item.value.html_file_location }}/{{ item.value.html_file_name }}"
+    backup: yes
   with_dict: "{{ nginx_html_demo_template }}"
   when: nginx_html_demo_template_enable
 

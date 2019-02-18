@@ -59,7 +59,7 @@
               proxy_ignore_headers:
                 - Vary
                 - Cache-Control
-              proxy_redirect: "off"
+              proxy_redirect: false
             backend:
               location: /backend
               proxy_pass: http://backend_servers/
@@ -73,6 +73,7 @@
                 - http_500
                 - http_502
                 - http_503
+              proxy_redirect: default
         upstreams:
           frontend_upstream:
             name: frontend_servers

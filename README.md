@@ -374,7 +374,7 @@ nginx_http_template:
           proxy_ignore_headers:
             - Vary
             - Cache-Control
-          proxy_redirect: "off"
+          proxy_redirect: false
           websocket: false
           auth_basic: null
           auth_basic_file: null

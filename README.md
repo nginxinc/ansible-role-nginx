@@ -186,7 +186,7 @@ nginx_install_from: nginx_repository
 
 # Choose where to fetch the NGINX signing key from.
 # Default is the official NGINX signing key host.
-nginx_signing_key: https://nginx.org/keys/nginx_signing.key
+nginx_signing_key: http://nginx.org/keys/nginx_signing.key
 
 # Specify source repository for NGINX Open Source.
 # Only works if 'install_from' is set to 'nginx_repository'.
@@ -248,20 +248,12 @@ nginx_controller_api_endpoint: null
 nginx_unit_enable: false
 nginx_unit_modules: null
 
-# Enable NGINX status data.
-# Will enable 'stub_status' in NGINX Open Source and 'status' in NGINX Plus.
+# Remove previously existing NGINX configuration files.
+# Use a list of paths you wish to remove.
 # Default is false.
-nginx_status_enable: false
-nginx_status_port: 8080
-
-# Enable NGINX Plus REST API, write access to the REST API, and NGINX Plus dashboard.
-# Requires NGINX Plus.
-# Default is false.
-nginx_rest_api_enable: false
-nginx_rest_api_location: /etc/nginx/conf.d/api.conf
-nginx_rest_api_port: 8080
-nginx_rest_api_write: false
-nginx_rest_api_dashboard: false
+nginx_cleanup_config: false
+nginx_cleanup_config_path:
+  - /etc/nginx/conf.d
 
 # Enable uploading NGINX configuration files to your system.
 # Default for uploading files is false.
@@ -269,15 +261,15 @@ nginx_rest_api_dashboard: false
 # Upload the main NGINX configuration file.
 nginx_main_upload_enable: false
 nginx_main_upload_src: conf/nginx.conf
-nginx_main_upload_dest: /etc/nginx
+nginx_main_upload_dest: /etc/nginx/
 # Upload HTTP NGINX configuration files.
 nginx_http_upload_enable: false
 nginx_http_upload_src: conf/http/*.conf
-nginx_http_upload_dest: /etc/nginx/conf.d
+nginx_http_upload_dest: /etc/nginx/conf.d/
 # Upload Stream NGINX configuration files.
 nginx_stream_upload_enable: false
 nginx_stream_upload_src: conf/stream/*.conf
-nginx_stream_upload_dest: /etc/nginx/conf.d
+nginx_stream_upload_dest: /etc/nginx/conf.d/
 # Upload HTML files.
 nginx_html_upload_enable: false
 nginx_html_upload_src: www/*
@@ -321,8 +313,6 @@ nginx_main_template:
 # Enable creating dynamic templated NGINX HTTP configuration files.
 # Defaults will not produce a valid configuration. Instead they are meant to showcase
 # the options available for templating. Each key represents a new configuration file.
-# Comment out reverse_proxy or web_server depending on whether you wish to create a web server
-# or load balancer configuration file.
 nginx_http_template_enable: false
 nginx_http_template:
   default:
@@ -332,11 +322,12 @@ nginx_http_template:
     port: 8081
     server_name: localhost
     error_page: /usr/share/nginx/html
+    root: /usr/share/nginx/html
     https_redirect: false
     autoindex: false
     ssl:
-      cert: ssl/default.crt
-      key: ssl/default.key
+      cert: /etc/ssl/certs/default.crt
+      key: /etc/ssl/private/default.key
     web_server:
       locations:
         default:
@@ -388,7 +379,6 @@ nginx_http_template:
           auth_basic: null
           auth_basic_file: null
       health_check_plus: false
-    proxy_cache_enable: false
     proxy_cache:
       proxy_cache_path:
         path: /var/cache/nginx
@@ -401,7 +391,7 @@ nginx_http_template:
       upstream1:
         name: backend
         lb_method: least_conn
-        zone_name: backend
+        zone_name: backend_mem_zone
         zone_size: 64k
         sticky_cookie: false
         servers:
@@ -410,6 +400,21 @@ nginx_http_template:
             port: 8081
             weight: 1
             health_check: max_fails=1 fail_timeout=10s
+
+# Enable NGINX status data.
+# Will enable 'stub_status' in NGINX Open Source and 'status' in NGINX Plus.
+# Default is false.
+nginx_status_enable: false
+nginx_status_port: 8080
+
+# Enable NGINX Plus REST API, write access to the REST API, and NGINX Plus dashboard.
+# Requires NGINX Plus.
+# Default is false.
+nginx_rest_api_enable: false
+nginx_rest_api_location: /etc/nginx/conf.d/api.conf
+nginx_rest_api_port: 8080
+nginx_rest_api_write: false
+nginx_rest_api_dashboard: false
 
 # Enable creating dynamic templated NGINX stream configuration files.
 # Defaults will not produce a valid configuration. Instead they are meant to showcase

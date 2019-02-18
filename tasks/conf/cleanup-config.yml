@@ -1,0 +1,7 @@
+---
+- name: "(Setup: All OSs) Remove NGINX configuration files"
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - "{{ nginx_cleanup_config_path }}"

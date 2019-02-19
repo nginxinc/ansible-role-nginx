@@ -1,8 +1,14 @@
 ---
+- name: "(Install: APT OSs) Set Default APT NGINX Signing Key URL"
+  set_fact:
+    default_keysite: >-
+      {{ (ansible_distribution_release == 'trusty')
+      | ternary('http://nginx.org/keys/nginx_signing.key', 'https://nginx.org/keys/nginx_signing.key') }}
+
 - name: "(Install: APT OSs) Set APT NGINX Signing Key URL"
   set_fact:
-    keysite: "{{ nginx_signing_key | default('http://nginx.org/keys/nginx_signing.key') }}"
+    keysite: "{{ nginx_signing_key | default(default_keysite) }}"
 
 - name: "(Install: APT OSs) Add APT NGINX Signing Key"
   apt_key:
-    url: "{{ keysite | default('https://nginx.org/keys/nginx_signing.key') }}"
+    url: "{{ keysite }}"

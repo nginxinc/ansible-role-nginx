@@ -207,11 +207,11 @@ nginx_http_template:
           location: /
           proxy_pass: http://backend
           proxy_ssl:
-            cert: ssl/proxy_default.crt
-            key: ssl/proxy_default.key
+            cert: /etc/ssl/certs/proxy_default.crt
+            key: /etc/ssl/private/proxy_default.key
+            trusted_cert: /etc/ssl/certs/proxy_ca.crt
             protocols: TLSv1 TLSv1.1 TLSv1.2
             ciphers: HIGH:!aNULL:!MD5
-            trusted_cert: ssl/proxy_ca.crt
             verify: false
             verify_depth: 1
             session_reuse: true

@@ -5,6 +5,7 @@
   roles:
     - ansible-role-nginx
   vars:
+    nginx_debug_output: true
     nginx_main_template_enable: true
     nginx_main_template:
       template_file: nginx.conf.j2

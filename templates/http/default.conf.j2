@@ -52,6 +52,18 @@ server {
     listen {{ item.value.port }} ssl;
     ssl_certificate {{ item.value.ssl.cert }};
     ssl_certificate_key {{ item.value.ssl.key }};
+{% if item.value.ssl.protocols is defined %}
+    ssl_protocols {{ item.value.ssl.protocols }};
+{% endif %}
+{% if item.value.ssl.ciphers is defined %}
+    ssl_ciphers {{ item.value.ssl.ciphers }};
+{% endif %}
+{% if item.value.ssl.session_cache is defined %}
+    ssl_session_cache {{ item.value.ssl.session_cache }};
+{% endif %}
+{% if item.value.ssl.session_timeout is defined %}
+    ssl_session_timeout {{ item.value.ssl.session_timeout }};
+{% endif %}
 {% else %}
     listen {{ item.value.port }};
 {% endif %}
@@ -75,6 +87,39 @@ server {
         auth_basic_user_file {{ item.value.reverse_proxy.locations[location].auth_basic_file }};
 {% endif %}
         proxy_pass {{ item.value.reverse_proxy.locations[location].proxy_pass }};
+{% if item.value.reverse_proxy.locations[location].proxy_ssl is defined %}
+
+{% if item.value.reverse_proxy.locations[location].proxy_ssl.cert is defined %}
+        proxy_ssl_certificate {{ item.value.reverse_proxy.locations[location].proxy_ssl.cert }};
+{% endif %}
+{% if item.value.reverse_proxy.locations[location].proxy_ssl.key is defined %}
+        proxy_ssl_certificate_key {{ item.value.reverse_proxy.locations[location].proxy_ssl.key }};
+{% endif %}
+{% if item.value.reverse_proxy.locations[location].proxy_ssl.trusted_cert is defined %}
+        proxy_ssl_trusted_certificate {{ item.value.reverse_proxy.locations[location].proxy_ssl.trusted_cert }};
+{% endif %}
+{% if item.value.reverse_proxy.locations[location].proxy_ssl.server_name is defined %}
+        proxy_ssl_server_name {{ item.value.reverse_proxy.locations[location].proxy_ssl.server_name | ternary("on", "off") }};
+{% endif %}
+{% if item.value.reverse_proxy.locations[location].proxy_ssl.name is defined %}
+        proxy_ssl_name {{ item.value.reverse_proxy.locations[location].proxy_ssl.name }};
+{% endif %}
+{% if item.value.reverse_proxy.locations[location].proxy_ssl.protocols is defined %}
+        proxy_ssl_protocols {{ item.value.reverse_proxy.locations[location].proxy_ssl.protocols }};
+{% endif %}
+{% if item.value.reverse_proxy.locations[location].proxy_ssl.ciphers is defined %}
+        proxy_ssl_ciphers {{ item.value.reverse_proxy.locations[location].proxy_ssl.ciphers }};
+{% endif %}
+{% if item.value.reverse_proxy.locations[location].proxy_ssl.verify is defined %}
+        proxy_ssl_verify {{ item.value.reverse_proxy.locations[location].proxy_ssl.verify | ternary("on", "off") }};
+{% endif %}
+{% if item.value.reverse_proxy.locations[location].proxy_ssl.verify_depth is defined %}
+        proxy_ssl_verify_depth {{ item.value.reverse_proxy.locations[location].proxy_ssl.verify_depth }};
+{% endif %}
+{% if item.value.reverse_proxy.locations[location].proxy_ssl.session_reuse is defined %}
+        proxy_ssl_session_reuse {{ item.value.reverse_proxy.locations[location].proxy_ssl.session_reuse | ternary("on", "off") }};
+{% endif %}
+{% endif %}
 {% if item.value.reverse_proxy.locations[location].proxy_redirect is defined %}
         proxy_redirect {{ item.value.reverse_proxy.locations[location].proxy_redirect | ternary(item.value.reverse_proxy.locations[location].proxy_redirect, "off") }};
 {% endif %}

@@ -328,6 +328,10 @@ nginx_http_template:
     ssl:
       cert: /etc/ssl/certs/default.crt
       key: /etc/ssl/private/default.key
+      protocols: TLSv1 TLSv1.1 TLSv1.2
+      ciphers: HIGH:!aNULL:!MD5
+      session_cache: none
+      session_timeout: 5m
     web_server:
       locations:
         default:
@@ -362,6 +366,17 @@ nginx_http_template:
         backend:
           location: /
           proxy_pass: http://backend
+          proxy_ssl:
+            cert: /etc/ssl/certs/proxy_default.crt
+            key: /etc/ssl/private/proxy_default.key
+            trusted_cert: /etc/ssl/certs/proxy_ca.crt
+            server_name: false
+            name: server_name
+            protocols: TLSv1 TLSv1.1 TLSv1.2
+            ciphers: HIGH:!aNULL:!MD5
+            verify: false
+            verify_depth: 1
+            session_reuse: true
           proxy_cache: frontend_proxy_cache
           proxy_temp_path:
             path: /var/cache/nginx/proxy/backend/temp
@@ -434,6 +449,17 @@ nginx_stream_template:
         proxy_timeout: 3s
         proxy_connect_timeout: 1s
         proxy_protocol: false
+        proxy_ssl:
+          cert: /etc/ssl/certs/proxy_default.crt
+          key: /etc/ssl/private/proxy_default.key
+          trusted_cert: /etc/ssl/certs/proxy_ca.crt
+          server_name: false
+          name: server_name
+          protocols: TLSv1 TLSv1.1 TLSv1.2
+          ciphers: HIGH:!aNULL:!MD5
+          verify: false
+          verify_depth: 1
+          session_reuse: true
         health_check_plus: false
     upstreams:
       upstream1:

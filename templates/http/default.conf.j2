@@ -1,4 +1,4 @@
-# {{ ansible_managed }}
+{{ ansible_managed | comment }}
 
 {% if item.value.upstreams is defined %}
 {% for upstream in item.value.upstreams %}

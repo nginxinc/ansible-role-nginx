@@ -1,4 +1,4 @@
-# {{ ansible_managed }}
+{{ ansible_managed | comment }}
 
 user  {{ nginx_main_template.user }};
 worker_processes  {{ nginx_main_template.worker_processes }};

@@ -44,12 +44,10 @@
       when: nginx_main_template_enable
             or nginx_http_template_enable
             or nginx_stream_template_enable
+            or nginx_rest_api_enable
 
     - import_tasks: conf/setup-status.yml
       when: nginx_status_enable
-
-    - import_tasks: conf/setup-rest-api.yml
-      when: nginx_rest_api_enable
 
     - import_tasks: conf/debug-output.yml
       when: nginx_debug_output

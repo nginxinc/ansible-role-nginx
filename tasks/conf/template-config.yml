@@ -64,3 +64,11 @@
   with_dict: "{{ nginx_stream_template }}"
   when: nginx_stream_template_enable
   notify: "(Handler: All OSs) Reload NGINX"
+
+- name: "(Setup: All NGINX) Dynamically Generate NGINX API Configuration File"
+  template:
+    src: "{{ nginx_rest_api_src }}"
+    dest: "{{ nginx_rest_api_location }}"
+    backup: yes
+  notify: "(Handler: All OSs) Reload NGINX"
+  when: nginx_rest_api_enable

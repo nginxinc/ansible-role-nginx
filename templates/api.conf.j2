@@ -1,0 +1,17 @@
+{{ ansible_managed | comment }}
+
+server {
+    listen {{ nginx_rest_api_port }};
+    location /api {
+{% if nginx_rest_api_write %}
+        api write=on;
+{% else %}
+        api;
+{% endif %}
+    }
+{% if nginx_rest_api_dashboard %}
+    location = /dashboard.html {
+        root /usr/share/nginx/html;
+    }
+{% endif %}
+}

@@ -365,7 +365,9 @@ nginx_http_template:
       locations:
         backend:
           location: /
+          proxy_connect_timeout: 300
           proxy_pass: http://backend
+          proxy_read_timeout: 300
           proxy_ssl:
             cert: /etc/ssl/certs/proxy_default.crt
             key: /etc/ssl/private/proxy_default.key

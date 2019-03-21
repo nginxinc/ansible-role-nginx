@@ -170,6 +170,10 @@ This role has multiple variables. The defaults for all these variables are the f
 # Default is true.
 nginx_enable: true
 
+# Start NGINX service.
+# Default is true.
+nginx_start: true
+
 # Print NGINX configuration file to terminal after executing playbook.
 nginx_debug_output: false
 

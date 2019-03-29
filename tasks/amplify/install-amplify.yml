@@ -13,8 +13,8 @@
 - name: "(Setup: All OSs) Copy NGINX Configurator Agent Configuration Template"
   copy:
     remote_src: yes
-    src: /etc/amplify-agent/agent.configurator.conf.default
-    dest: /etc/amplify-agent/agent.configurator.conf
+    src: /etc/amplify-agent/agent.conf.default
+    dest: /etc/amplify-agent/agent.conf
 
 - name: "(Setup: All OSs) Configure NGINX Amplify Agent API Key"
   lineinfile:

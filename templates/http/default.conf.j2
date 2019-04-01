@@ -52,7 +52,9 @@ server {
     listen {{ item.value.port }} ssl;
     ssl_certificate {{ item.value.ssl.cert }};
     ssl_certificate_key {{ item.value.ssl.key }};
-{% if 'dhparam' in item.value.ssl %}    ssl_dhparam {{ item.value.ssl.dhparam }};{% endif %}
+{% if item.value.ssl.dhparam is defined %}
+    ssl_dhparam {{ item.value.ssl.dhparam }};
+{% endif %}
 {% if item.value.ssl.protocols is defined %}
     ssl_protocols {{ item.value.ssl.protocols }};
 {% endif %}

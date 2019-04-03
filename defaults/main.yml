@@ -238,6 +238,7 @@ nginx_http_template:
           websocket: false
           auth_basic: null
           auth_basic_file: null
+          try_files: $uri $uri/index.html $uri.html =404
       health_check_plus: false
     proxy_cache:
       proxy_cache_path:

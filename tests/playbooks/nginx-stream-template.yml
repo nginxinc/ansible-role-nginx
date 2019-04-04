@@ -32,7 +32,7 @@
         network_streams:
           app:
             listen_address: localhost
-            listen_port: 80
+            listen_port: 81
             udp_enable: false
             proxy_pass: backend
             proxy_timeout: 3s

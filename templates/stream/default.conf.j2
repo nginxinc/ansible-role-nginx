@@ -22,10 +22,18 @@ upstream {{ item.value.upstreams[upstream].name }} {
 {% for stream in item.value.network_streams %}
 server {
 {% if item.value.network_streams[stream].listen_address is defined and item.value.network_streams[stream].listen_port is defined %}
+{% if item.value.network_streams[stream].listen_address == 'localhost' %}
+{% if item.value.network_streams[stream].udp_enable %}
+    listen {{ item.value.network_streams[stream].listen_port }} udp;
+{% else %}
+    listen {{ item.value.network_streams[stream].listen_port }};
+{% endif %}
+{% else %}
 {% if item.value.network_streams[stream].udp_enable %}
     listen {{ item.value.network_streams[stream].listen_address }}:{{ item.value.network_streams[stream].listen_port }} udp;
 {% else %}
     listen {{ item.value.network_streams[stream].listen_address }}:{{ item.value.network_streams[stream].listen_port }};
+{% endif %}
 {% endif %}
 {% elif item.value.network_streams[stream].listen_port is defined %}
 {% if item.value.network_streams[stream].udp_enable %}

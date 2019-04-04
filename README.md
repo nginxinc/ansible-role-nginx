@@ -376,6 +376,7 @@ nginx_http_template:
             cert: /etc/ssl/certs/proxy_default.crt
             key: /etc/ssl/private/proxy_default.key
             trusted_cert: /etc/ssl/certs/proxy_ca.crt
+            dhparam: /etc/ssl/private/dh_param.pem
             server_name: false
             name: server_name
             protocols: TLSv1 TLSv1.1 TLSv1.2

@@ -77,6 +77,9 @@ server {
 {% if item.value.autoindex is defined and item.value.autoindex %}
     autoindex on;
 {% endif %}
+{% if item.value.try_files is defined %}
+    try_files {{ item.value.try_files }};
+{% endif %}
 {% if item.value.reverse_proxy is defined %}
 {% for location in item.value.reverse_proxy.locations %}
     location {{ item.value.reverse_proxy.locations[location].location }} {
@@ -92,6 +95,9 @@ server {
         proxy_pass {{ item.value.reverse_proxy.locations[location].proxy_pass }};
 {% if item.value.reverse_proxy.locations[location].proxy_read_timeout is defined and item.value.reverse_proxy.locations[location].proxy_read_timeout %}
         proxy_read_timeout {{ item.value.reverse_proxy.locations[location].proxy_read_timeout }};
+{% endif %}
+{% if item.value.reverse_proxy.locations[location].try_files is defined %}
+        try_files {{ item.value.reverse_proxy.locations[location].try_files }};
 {% endif %}
 {% if item.value.reverse_proxy.locations[location].proxy_ssl is defined %}
 
@@ -176,6 +182,9 @@ server {
         index  {{ item.value.web_server.locations[location].html_file_name }};
 {% if item.value.web_server.locations[location].autoindex %}
         autoindex on;
+{% endif %}
+{% if item.value.web_server.locations[location].try_files is defined %}
+        try_files {{ item.value.web_server.locations[location].try_files }};
 {% endif %}
 {% if item.value.web_server.locations[location].auth_basic is defined and item.value.web_server.locations[location].auth_basic %}
         auth_basic "{{ item.value.web_server.locations[location].auth_basic }}";

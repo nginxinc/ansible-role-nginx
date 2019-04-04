@@ -78,7 +78,7 @@ server {
     autoindex on;
 {% endif %}
 {% if item.value.try_files is defined %}
-        try_files {{ item.value.try_files }};
+    try_files {{ item.value.try_files }};
 {% endif %}
 {% if item.value.reverse_proxy is defined %}
 {% for location in item.value.reverse_proxy.locations %}

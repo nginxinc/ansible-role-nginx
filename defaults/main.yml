@@ -171,7 +171,7 @@ nginx_http_template:
     root: /usr/share/nginx/html
     https_redirect: false
     autoindex: false
-    try_files: $uri $uri/index.html $uri.html =404
+    #try_files: $uri $uri/index.html $uri.html =404
     ssl:
       cert: /etc/ssl/certs/default.crt
       key: /etc/ssl/private/default.key
@@ -188,7 +188,7 @@ nginx_http_template:
           autoindex: false
           auth_basic: null
           auth_basic_file: null
-          try_files: $uri $uri/index.html $uri.html =404
+          #try_files: $uri $uri/index.html $uri.html =404
       http_demo_conf: false
     reverse_proxy:
       proxy_cache_path:
@@ -240,7 +240,7 @@ nginx_http_template:
           websocket: false
           auth_basic: null
           auth_basic_file: null
-          try_files: $uri $uri/index.html $uri.html =404
+          #try_files: $uri $uri/index.html $uri.html =404
       health_check_plus: false
     proxy_cache:
       proxy_cache_path:

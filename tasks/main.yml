@@ -58,7 +58,7 @@
   when:
     - nginx_amplify_enable
     - nginx_amplify_api_key is defined
-    - nginx_amplify_api_key
+    - nginx_amplify_api_key | length > 0
 
 - import_tasks: controller/install-controller.yml
   when:

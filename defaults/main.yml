@@ -175,6 +175,7 @@ nginx_http_template:
     ssl:
       cert: /etc/ssl/certs/default.crt
       key: /etc/ssl/private/default.key
+      dhparam: /etc/ssl/private/dh_param.pem
       protocols: TLSv1 TLSv1.1 TLSv1.2
       ciphers: HIGH:!aNULL:!MD5
       session_cache: none

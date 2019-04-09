@@ -193,7 +193,7 @@ nginx_install_from: nginx_repository
 nginx_signing_key: http://nginx.org/keys/nginx_signing.key
 
 # Specify source repository for NGINX Open Source.
-# Only works if 'install_from' is set to 'nginx_repository'.
+# Only works if 'nginx_install_from' is set to 'nginx_repository'.
 # Defaults are the official NGINX repositories.
 nginx_repository:
   debian:
@@ -206,7 +206,7 @@ nginx_repository:
 
 # Specify which branch of NGINX Open Source you want to install.
 # Options are 'mainline' or 'stable'.
-# Only works if 'install_from' is set to 'nginx_repository'.
+# Only works if 'nginx_install_from' is set to 'nginx_repository'.
 # Default is mainline.
 nginx_branch: mainline
 

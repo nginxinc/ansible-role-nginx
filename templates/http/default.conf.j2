@@ -46,6 +46,9 @@ proxy_temp_path {{ item.value.reverse_proxy.proxy_temp_path.path }} {{ item.valu
 {% endif %}
 {% endif %}
 {% endif %}
+{% if item.value.auth_request_http is defined %}
+auth_request {{ item.value.auth_request_http }};
+{% endif %}
 
 server {
 {% if item.value.ssl is defined %}
@@ -83,9 +86,19 @@ server {
 {% if item.value.try_files is defined %}
     try_files {{ item.value.try_files }};
 {% endif %}
+{% if item.value.auth_request is defined %}
+    auth_request {{ item.value.auth_request }};
+{% endif %}
+
 {% if item.value.reverse_proxy is defined %}
 {% for location in item.value.reverse_proxy.locations %}
     location {{ item.value.reverse_proxy.locations[location].location }} {
+{% if item.value.reverse_proxy.locations[location].internal is sameas true %}
+        internal;
+{% endif %}
+{% if item.value.reverse_proxy.locations[location].auth_request is defined %}
+        auth_request {{ item.value.reverse_proxy.locations[location].auth_request }};
+{% end if %}
 {% if item.value.reverse_proxy.locations[location].auth_basic is defined and item.value.reverse_proxy.locations[location].auth_basic %}
         auth_basic "{{ item.value.reverse_proxy.locations[location].auth_basic }}";
 {% endif %}
@@ -99,6 +112,18 @@ server {
 {% if item.value.reverse_proxy.locations[location].proxy_read_timeout is defined and item.value.reverse_proxy.locations[location].proxy_read_timeout %}
         proxy_read_timeout {{ item.value.reverse_proxy.locations[location].proxy_read_timeout }};
 {% endif %}
+{% if item.value.reverse_proxy.location[location].proxy_pass is defined and item.value.reverse_proxy.locations[location].proxy_pass_request_body %}
+        proxy_pass_request_body {{ item.value.reverse_proxy.locations[location].proxy_pass_request_body }};
+{% endif %}
+{% if item.value.reverse_proxy.location[location].proxy_pass is defined and item.value.reverse_proxy.locations[location].proxy_store %}
+        proxy_store {{ item.value.reverse_proxy.locations[location].proxy_store | ternary("on", "off") }};
+{% endif %}
+{% if item.value.reverse_proxy.location[location].proxy_store is defined and item.value.reverse_proxy.locations[location].proxy_store_access %}
+        proxy_store_access {{ item.value.reverse_proxy.locations[location].proxy_store_access }};
+{% endif %}
+{% for name in item.value.reverse_proxy.locations[location].proxy_set_header %}
+        proxy_set_header {{ item.value.reverse_proxy.locations[location].proxy_set_header[name].name }} { {{ item.value.reverse_proxy.locations[location].proxy_set_header[name].value }} };
+{% endfor %}
 {% if item.value.reverse_proxy.locations[location].try_files is defined %}
         try_files {{ item.value.reverse_proxy.locations[location].try_files }};
 {% endif %}
@@ -195,6 +220,9 @@ server {
 {% if item.value.web_server.locations[location].auth_basic_file is defined and item.value.web_server.locations[location].auth_basic_file %}
         auth_basic_user_file {{ item.value.web_server.locations[location].auth_basic_file }};
 {% endif %}
+{% if item.value.web_server.locations[location].auth_request is defined %}
+        auth_request {{ item.value.web_server.locations[location].auth_request }};
+{% end if %}
     }
 {% endfor %}
 {% if item.value.web_server.http_demo_conf %}

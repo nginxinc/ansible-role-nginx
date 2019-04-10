@@ -313,6 +313,7 @@ nginx_main_template:
     keyval: false
   stream_enable: false
   http_global_autoindex: false
+  #auth_request_httpß: /auth
 
 # Enable creating dynamic templated NGINX HTTP configuration files.
 # Defaults will not produce a valid configuration. Instead they are meant to showcase
@@ -329,6 +330,7 @@ nginx_http_template:
     root: /usr/share/nginx/html
     https_redirect: false
     autoindex: false
+    #auth_request: /auth
     ssl:
       cert: /etc/ssl/certs/default.crt
       key: /etc/ssl/private/default.key
@@ -345,6 +347,7 @@ nginx_http_template:
           autoindex: false
           auth_basic: null
           auth_basic_file: null
+          #auth_req: /auth
       http_demo_conf: false
     reverse_proxy:
       proxy_cache_path:
@@ -371,6 +374,17 @@ nginx_http_template:
           location: /
           proxy_connect_timeout: null
           proxy_pass: http://backend
+          #proxy_pass_request_body: off
+          #proxy_set_header:
+            #header1:
+              #name: Content-Length
+              #value: ""
+            #header2:
+              #name: X-Original-URI
+              #value: $request_uri
+          #internal: false
+          #proxy_store: off
+          #proxy_store_acccess: user:rw
           proxy_read_timeout: null
           proxy_ssl:
             cert: /etc/ssl/certs/proxy_default.crt
@@ -400,6 +414,7 @@ nginx_http_template:
           websocket: false
           auth_basic: null
           auth_basic_file: null
+          #auth_req: /auth
       health_check_plus: false
     proxy_cache:
       proxy_cache_path:

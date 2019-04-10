@@ -72,7 +72,6 @@ nginx_modules:
   image_filter: false
   rtmp: false
   xslt: false
-  http_auth_request: false
 
 # Install NGINX Amplify.
 # Use your NGINX Amplify API key.

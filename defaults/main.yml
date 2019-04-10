@@ -193,6 +193,10 @@ nginx_http_template:
           auth_basic_file: null
           try_files: $uri $uri/index.html $uri.html =404
           #auth_request: /auth
+          #returns:
+            #return302:
+              #code: 302
+              #url: https://sso.somehost.local/?url=https://$http_host$request_uri
       http_demo_conf: false
     reverse_proxy:
       proxy_cache_path:

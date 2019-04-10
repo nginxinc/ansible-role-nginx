@@ -214,6 +214,16 @@ server {
 {% if item.value.web_server.locations[location].try_files is defined %}
         try_files {{ item.value.web_server.locations[location].try_files }};
 {% endif %}
+{% if item.value.web_server.locations[location].returns %}
+{% for code in item.value.web_server.locations[location].returns %} {
+{% if item.value.web_server.locations[location].returns[code] is defined %}
+        return {{ item.value.web_server.locations[location].returns[code].code }} {{ item.value.web_server.locations[location].returns[code].url }};
+{% else %}
+        return {{ item.value.web_server.locations[location].returns[code].url }};
+{% endif %}
+}
+{% endfor %}
+{% endif %}
 {% if item.value.web_server.locations[location].auth_basic is defined and item.value.web_server.locations[location].auth_basic %}
         auth_basic "{{ item.value.web_server.locations[location].auth_basic }}";
 {% endif %}

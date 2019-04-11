@@ -106,13 +106,12 @@ server {
         auth_basic_user_file {{ item.value.reverse_proxy.locations[location].auth_basic_file }};
 {% endif %}
 {% if item.value.reverse_proxy.locations[location].returns is defined %}
-{% for code in item.value.reverse_proxy.locations[location].returns %} {
+{% for code in item.value.reverse_proxy.locations[location].returns %}
 {% if item.value.reverse_proxy.locations[location].returns[code] is defined %}
         return {{ item.value.reverse_proxy.locations[location].returns[code].code }} {{ item.value.reverse_proxy.locations[location].returns[code].url }};
 {% else %}
         return {{ item.value.reverse_proxy.locations[location].returns[code].url }};
 {% endif %}
-}
 {% endfor %}
 {% endif %}
 {% if item.value.reverse_proxy.locations[location].proxy_connect_timeout is defined and item.value.reverse_proxy.locations[location].proxy_connect_timeout %}
@@ -132,9 +131,8 @@ server {
         proxy_store_access {{ item.value.reverse_proxy.locations[location].proxy_store_access }};
 {% endif %}
 {% if item.value.reverse_proxy.locations[location].proxy_set_header is defined %}
-{% for header in item.value.reverse_proxy.locations[location].proxy_set_header %} {
+{% for header in item.value.reverse_proxy.locations[location].proxy_set_header %}
         proxy_set_header {{ item.value.reverse_proxy.locations[location].proxy_set_header[header].name }} {{ item.value.reverse_proxy.locations[location].proxy_set_header[header].value }};
-}
 {% endfor %}
 {% endif %}
 {% if item.value.reverse_proxy.locations[location].try_files is defined %}
@@ -220,13 +218,12 @@ server {
         try_files {{ item.value.web_server.locations[location].try_files }};
 {% endif %}
 {% if item.value.web_server.locations[location].returns is defined %}
-{% for code in item.value.web_server.locations[location].returns %} {
+{% for code in item.value.web_server.locations[location].returns %}
 {% if item.value.web_server.locations[location].returns[code] is defined %}
         return {{ item.value.web_server.locations[location].returns[code].code }} {{ item.value.web_server.locations[location].returns[code].url }};
 {% else %}
         return {{ item.value.web_server.locations[location].returns[code].url }};
 {% endif %}
-}
 {% endfor %}
 {% endif %}
 {% if item.value.web_server.locations[location].auth_basic is defined and item.value.web_server.locations[location].auth_basic %}

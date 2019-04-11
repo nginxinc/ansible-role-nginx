@@ -98,7 +98,7 @@ server {
 {% endif %}
 {% if item.value.reverse_proxy.locations[location].auth_request is defined %}
         auth_request {{ item.value.reverse_proxy.locations[location].auth_request }};
-{% end if %}
+{% endif %}
 {% if item.value.reverse_proxy.locations[location].auth_basic is defined and item.value.reverse_proxy.locations[location].auth_basic %}
         auth_basic "{{ item.value.reverse_proxy.locations[location].auth_basic }}";
 {% endif %}
@@ -242,7 +242,7 @@ server {
 {% endif %}
 {% if item.value.web_server.locations[location].auth_request is defined %}
         auth_request {{ item.value.web_server.locations[location].auth_request }};
-{% end if %}
+{% endif %}
     }
 {% endfor %}
 {% if item.value.web_server.http_demo_conf %}

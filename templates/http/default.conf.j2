@@ -132,8 +132,9 @@ server {
         proxy_store_access {{ item.value.reverse_proxy.locations[location].proxy_store_access }};
 {% endif %}
 {% if item.value.reverse_proxy.locations[location].proxy_set_header is defined %}
-{% for name in item.value.reverse_proxy.locations[location].proxy_set_header %}
-        proxy_set_header {{ item.value.reverse_proxy.locations[location].proxy_set_header[name].name }} { {{ item.value.reverse_proxy.locations[location].proxy_set_header[name].value }} };
+{% for name in item.value.reverse_proxy.locations[location].proxy_set_header %} {
+        proxy_set_header {{ item.value.reverse_proxy.locations[location].proxy_set_header[name].name }} {{ item.value.reverse_proxy.locations[location].proxy_set_header[name].value }};
+}
 {% endfor %}
 {% endif %}
 {% if item.value.reverse_proxy.locations[location].try_files is defined %}

@@ -224,13 +224,28 @@ nginx_http_template:
           proxy_connect_timeout: null
           proxy_pass: http://backend
           #proxy_pass_request_body: off
-          #proxy_set_header:
-            #header1:
-              #name: Content-Length
-              #value: ""
-            #header2:
-              #name: X-Original-URI
-              #value: $request_uri
+          proxy_set_header:
+            header_host:
+              name: Host
+              value: $host
+            header_x_real_ip:
+              name: X-Real-IP
+              value: $remote_addr
+            header_x_forwarded_for:
+              name: X-Forwarded-For
+              value: $proxy_add_x_forwarded_for
+            header_x_forwarded_proto:
+              name: X-Forwarded-Proto
+              value: $scheme
+            #header_upgrade:
+              #name: Upgrade
+              #value: $http_upgrade
+            #header_connection:
+              #name: Connection
+              #value: "Upgrade"
+            #header_random:
+              #name: RandomName
+              #value: RandomValue
           #internal: false
           #proxy_store: off
           #proxy_store_acccess: user:rw

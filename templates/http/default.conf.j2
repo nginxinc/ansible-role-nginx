@@ -105,7 +105,7 @@ server {
 {% if item.value.reverse_proxy.locations[location].auth_basic_file is defined and item.value.reverse_proxy.locations[location].auth_basic_file %}
         auth_basic_user_file {{ item.value.reverse_proxy.locations[location].auth_basic_file }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].returns %}
+{% if item.value.reverse_proxy.locations[location].returns is defined %}
 {% for code in item.value.reverse_proxy.locations[location].returns %} {
 {% if item.value.reverse_proxy.locations[location].returns[code] is defined %}
         return {{ item.value.reverse_proxy.locations[location].returns[code].code }} {{ item.value.reverse_proxy.locations[location].returns[code].url }};
@@ -201,14 +201,6 @@ server {
         health_check;
 {% endif %}
 
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-{% if item.value.reverse_proxy.locations[location].websocket is defined and item.value.reverse_proxy.locations[location].websocket %}
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "Upgrade";
-{% endif %}
     }
 {% endfor %}
 {% endif %}
@@ -224,7 +216,7 @@ server {
 {% if item.value.web_server.locations[location].try_files is defined %}
         try_files {{ item.value.web_server.locations[location].try_files }};
 {% endif %}
-{% if item.value.web_server.locations[location].returns %}
+{% if item.value.web_server.locations[location].returns is defined %}
 {% for code in item.value.web_server.locations[location].returns %} {
 {% if item.value.web_server.locations[location].returns[code] is defined %}
         return {{ item.value.web_server.locations[location].returns[code].code }} {{ item.value.web_server.locations[location].returns[code].url }};

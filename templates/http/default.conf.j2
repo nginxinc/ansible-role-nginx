@@ -122,13 +122,13 @@ server {
 {% if item.value.reverse_proxy.locations[location].proxy_read_timeout is defined and item.value.reverse_proxy.locations[location].proxy_read_timeout %}
         proxy_read_timeout {{ item.value.reverse_proxy.locations[location].proxy_read_timeout }};
 {% endif %}
-{% if item.value.reverse_proxy.location[location].proxy_pass is defined and item.value.reverse_proxy.locations[location].proxy_pass_request_body %}
+{% if item.value.reverse_proxy.locations[location].proxy_pass is defined and item.value.reverse_proxy.locations[location].proxy_pass_request_body %}
         proxy_pass_request_body {{ item.value.reverse_proxy.locations[location].proxy_pass_request_body }};
 {% endif %}
-{% if item.value.reverse_proxy.location[location].proxy_pass is defined and item.value.reverse_proxy.locations[location].proxy_store %}
+{% if item.value.reverse_proxy.locations[location].proxy_pass is defined and item.value.reverse_proxy.locations[location].proxy_store %}
         proxy_store {{ item.value.reverse_proxy.locations[location].proxy_store | ternary("on", "off") }};
 {% endif %}
-{% if item.value.reverse_proxy.location[location].proxy_store is defined and item.value.reverse_proxy.locations[location].proxy_store_access %}
+{% if item.value.reverse_proxy.locations[location].proxy_store is defined and item.value.reverse_proxy.locations[location].proxy_store_access %}
         proxy_store_access {{ item.value.reverse_proxy.locations[location].proxy_store_access }};
 {% endif %}
 {% for name in item.value.reverse_proxy.locations[location].proxy_set_header %}

@@ -155,7 +155,7 @@ nginx_main_template:
     keyval: false
   stream_enable: false
   http_global_autoindex: false
-  #auth_request_httpß: /auth
+  #auth_request_http: /auth
 
 # Enable creating dynamic templated NGINX HTTP configuration files.
 # Defaults will not produce a valid configuration. Instead they are meant to showcase

@@ -60,6 +60,19 @@
                 - Vary
                 - Cache-Control
               proxy_redirect: false
+              proxy_set_header:
+                header_host:
+                  name: Host
+                  value: $host
+                header_x_real_ip:
+                  name: X-Real-IP
+                  value: $remote_addr
+                header_x_forwarded_for:
+                  name: X-Forwarded-For
+                  value: $proxy_add_x_forwarded_for
+                header_x_forwarded_proto:
+                  name: X-Forwarded-Proto
+                  value: $scheme
             backend:
               location: /backend
               proxy_pass: http://backend_servers/
@@ -74,6 +87,19 @@
                 - http_502
                 - http_503
               proxy_redirect: default
+              proxy_set_header:
+                header_host:
+                  name: Host
+                  value: $host
+                header_x_real_ip:
+                  name: X-Real-IP
+                  value: $remote_addr
+                header_x_forwarded_for:
+                  name: X-Forwarded-For
+                  value: $proxy_add_x_forwarded_for
+                header_x_forwarded_proto:
+                  name: X-Forwarded-Proto
+                  value: $scheme
         upstreams:
           frontend_upstream:
             name: frontend_servers

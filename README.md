@@ -313,6 +313,7 @@ nginx_main_template:
     keyval: false
   stream_enable: false
   http_global_autoindex: false
+  #auth_request_http: /auth
 
 # Enable creating dynamic templated NGINX HTTP configuration files.
 # Defaults will not produce a valid configuration. Instead they are meant to showcase
@@ -329,6 +330,7 @@ nginx_http_template:
     root: /usr/share/nginx/html
     https_redirect: false
     autoindex: false
+    #auth_request: /auth
     ssl:
       cert: /etc/ssl/certs/default.crt
       key: /etc/ssl/private/default.key
@@ -345,6 +347,11 @@ nginx_http_template:
           autoindex: false
           auth_basic: null
           auth_basic_file: null
+          #auth_req: /auth
+          #returns:
+            #return302:
+              #code: 302
+              #url: https://sso.somehost.local/?url=https://$http_host$request_uri
       http_demo_conf: false
     reverse_proxy:
       proxy_cache_path:
@@ -371,6 +378,32 @@ nginx_http_template:
           location: /
           proxy_connect_timeout: null
           proxy_pass: http://backend
+          #proxy_pass_request_body: off
+          proxy_set_header:
+            header_host:
+              name: Host
+              value: $host
+            header_x_real_ip:
+              name: X-Real-IP
+              value: $remote_addr
+            header_x_forwarded_for:
+              name: X-Forwarded-For
+              value: $proxy_add_x_forwarded_for
+            header_x_forwarded_proto:
+              name: X-Forwarded-Proto
+              value: $scheme
+            #header_upgrade:
+              #name: Upgrade
+              #value: $http_upgrade
+            #header_connection:
+              #name: Connection
+              #value: "Upgrade"
+            #header_random:
+              #name: RandomName
+              #value: RandomValue
+          #internal: false
+          #proxy_store: off
+          #proxy_store_acccess: user:rw
           proxy_read_timeout: null
           proxy_ssl:
             cert: /etc/ssl/certs/proxy_default.crt
@@ -400,6 +433,11 @@ nginx_http_template:
           websocket: false
           auth_basic: null
           auth_basic_file: null
+          #auth_req: /auth
+          #returns:
+            #return302:
+              #code: 302
+              #url: https://sso.somehost.local/?url=https://$http_host$request_uri
       health_check_plus: false
     proxy_cache:
       proxy_cache_path:

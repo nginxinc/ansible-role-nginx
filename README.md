@@ -330,6 +330,8 @@ nginx_http_template:
     root: /usr/share/nginx/html
     https_redirect: false
     autoindex: false
+    auth_basic: null
+    auth_basic_file: null
     #auth_request: /auth
     ssl:
       cert: /etc/ssl/certs/default.crt

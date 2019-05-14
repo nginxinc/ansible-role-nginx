@@ -75,10 +75,10 @@ server {
 {% endif %}
     server_name {{ item.value.server_name }};
 {% if item.value.auth_basic is defined and item.value.auth_basic %}
-        auth_basic "{{ item.value.auth_basic }}";
+    auth_basic "{{ item.value.auth_basic }}";
 {% endif %}
 {% if item.value.auth_basic_file is defined and item.value.auth_basic_file %}
-        auth_basic_user_file {{ item.value.auth_basic_file }};
+    auth_basic_user_file {{ item.value.auth_basic_file }};
 {% endif %}
 {% if item.value.root is defined and item.value.root %}
     root {{ item.value.root }};

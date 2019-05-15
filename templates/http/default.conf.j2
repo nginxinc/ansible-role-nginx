@@ -224,6 +224,9 @@ server {
 {% if item.value.web_server.locations[location].autoindex is defined and item.value.web_server.locations[location].autoindex %}
         autoindex on;
 {% endif %}
+{% if item.value.web_server.locations[location].alias is defined and item.value.web_server.locations[location].alias %}
+        alias {{ item.value.web_server.locations[location].alias }};
+{% endif %}
 {% if item.value.web_server.locations[location].include is defined and item.value.web_server.locations[location].include %}
         include {{ item.value.web_server.locations[location].include }};
 {% endif %}

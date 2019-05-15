@@ -218,8 +218,14 @@ server {
 {% if item.value.web_server.locations[location].https_redirect is defined and item.value.web_server.locations[location].https_redirect %}
         return 301 https://{{ item.value.server_name }}$request_uri;
 {% endif %}
-{% if item.value.web_server.locations[location].autoindex %}
+{% if item.value.web_server.locations[location].autoindex is defined and item.value.web_server.locations[location].autoindex %}
         autoindex on;
+{% endif %}
+{% if item.value.web_server.locations[location].include is defined and item.value.web_server.locations[location].include %}
+        include {{ item.value.web_server.locations[location].include }};
+{% endif %}
+{% if item.value.web_server.locations[location].fastcgi_pass is defined and item.value.web_server.locations[location].fastcgi_pass %}
+        include {{ item.value.web_server.locations[location].fastcgi_pass }};
 {% endif %}
 {% if item.value.web_server.locations[location].try_files is defined %}
         try_files {{ item.value.web_server.locations[location].try_files }};

@@ -225,7 +225,7 @@ server {
         include {{ item.value.web_server.locations[location].include }};
 {% endif %}
 {% if item.value.web_server.locations[location].fastcgi_pass is defined and item.value.web_server.locations[location].fastcgi_pass %}
-        include {{ item.value.web_server.locations[location].fastcgi_pass }};
+        fastcgi_pass {{ item.value.web_server.locations[location].fastcgi_pass }};
 {% endif %}
 {% if item.value.web_server.locations[location].try_files is defined %}
         try_files {{ item.value.web_server.locations[location].try_files }};

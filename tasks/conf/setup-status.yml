@@ -5,7 +5,7 @@
     create: yes
     block: |
       server {
-          listen 127.0.0.1:{{ nginx_status_port }};
+          listen 127.0.0.1:{{ nginx_status_port | default('8080') }};
           location /nginx_status {
               stub_status on;
               allow 127.0.0.1;
@@ -21,7 +21,7 @@
     create: yes
     block: |
       server {
-          listen 127.0.0.1:{{ nginx_status_port }};
+          listen 127.0.0.1:{{ nginx_status_port | default('8080') }};
           location /status {
               status;
               allow 127.0.0.1;

@@ -313,7 +313,7 @@ nginx_status_port: 8080
 # Requires NGINX Plus.
 # Default is false.
 nginx_rest_api_enable: false
-nginx_rest_api_src: api.conf.j2
+nginx_rest_api_src: http/api.conf.j2
 nginx_rest_api_location: /etc/nginx/conf.d/api.conf
 nginx_rest_api_port: 8080
 nginx_rest_api_write: false

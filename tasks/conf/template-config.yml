@@ -1,39 +1,45 @@
 ---
 - name: "(Setup: All NGINX) Ensure HTML Directory Exists"
   file:
-    path: "{{ item.value.html_file_location }}"
+    path: "{{ item.value.html_file_location | default('/usr/share/nginx/html') }}"
     state: directory
   with_dict: "{{ nginx_html_demo_template }}"
   when: nginx_html_demo_template_enable
 
 - name: "(Setup: All NGINX) Dynamically Generate HTML Files"
   template:
-    src: "{{ item.value.template_file }}"
-    dest: "{{ item.value.html_file_location }}/{{ item.value.html_file_name }}"
+    src: "{{ item.value.template_file | default('www/index.html.j2') }}"
+    dest: "{{ item.value.html_file_location | default('/usr/share/nginx/html') }}/{{ item.value.html_file_name | default('index.html') }}"
     backup: yes
   with_dict: "{{ nginx_html_demo_template }}"
   when: nginx_html_demo_template_enable
 
+- name: "(Setup: All NGINX) Ensure NGINX Main Directory Exists"
+  file:
+    path: "{{ nginx_main_template.conf_file_location | default('/etc/nginx') }}"
+    state: directory
+  when: nginx_main_template_enable
+
 - name: "(Setup: All NGINX) Dynamically Generate NGINX Main Configuration File"
   template:
-    src: "{{ nginx_main_template.template_file }}"
-    dest: "{{ nginx_main_template.conf_file_location }}/{{ nginx_main_template.conf_file_name }}"
+    src: "{{ nginx_main_template.template_file | default('nginx.conf.j2') }}"
+    dest: "{{ nginx_main_template.conf_file_location | default('/etc/nginx') }}/{{ nginx_main_template.conf_file_name | default('nginx.conf') }}"
     backup: yes
   when: nginx_main_template_enable
   notify: "(Handler: All OSs) Reload NGINX"
 
 - name: "(Setup: All NGINX) Ensure NGINX HTTP Directory Exists"
   file:
-    path: "{{ item.value.conf_file_location }}"
+    path: "{{ item.value.conf_file_location | default('/etc/nginx/conf.d/') }}"
     state: directory
   with_dict: "{{ nginx_http_template }}"
   when: nginx_http_template_enable
 
-- name: "(Setup: All NGINX) Ensure NGINX Proxy Cache Directories Exists"
+- name: "(Setup: All NGINX) Ensure NGINX Proxy Cache Directories Exist"
   file:
     path: "{{ item.1.path }}"
     state: directory
-    owner: "{{ nginx_main_template.user }}"
+    owner: "{{ nginx_main_template.user | default('nginx') }}"
   with_subelements:
     - "{{ nginx_http_template }}"
     - reverse_proxy.proxy_cache_path
@@ -42,33 +48,33 @@
 
 - name: "(Setup: All NGINX) Dynamically Generate NGINX HTTP Configuration Files"
   template:
-    src: "{{ item.value.template_file }}"
-    dest: "{{ item.value.conf_file_location }}/{{ item.value.conf_file_name }}"
+    src: "{{ item.value.template_file | default('http/default.conf.j2') }}"
+    dest: "{{ item.value.conf_file_location | default('/etc/nginx/conf.d/') }}/{{ item.value.conf_file_name | default('default.conf') }}"
     backup: yes
   with_dict: "{{ nginx_http_template }}"
   when: nginx_http_template_enable
   notify: "(Handler: All OSs) Reload NGINX"
 
+- name: "(Setup: All NGINX) Dynamically Generate NGINX API Configuration File"
+  template:
+    src: "{{ nginx_rest_api_src | default('http/api.conf.j2') }}"
+    dest: "{{ nginx_rest_api_location | default('/etc/nginx/conf.d/api.conf') }}"
+    backup: yes
+  notify: "(Handler: All OSs) Reload NGINX"
+  when: nginx_rest_api_enable
+
 - name: "(Setup: All NGINX) Ensure NGINX Stream Directory Exists"
   file:
-    path: "{{ item.value.conf_file_location }}"
+    path: "{{ item.value.conf_file_location | default('/etc/nginx/conf.d/stream/') }}"
     state: directory
   with_dict: "{{ nginx_stream_template }}"
   when: nginx_stream_template_enable
 
 - name: "(Setup: All NGINX) Dynamically Generate NGINX Stream Configuration Files"
   template:
-    src: "{{ item.value.template_file }}"
-    dest: "{{ item.value.conf_file_location }}/{{ item.value.conf_file_name }}"
+    src: "{{ item.value.template_file | default('stream/default.conf.j2') }}"
+    dest: "{{ item.value.conf_file_location | default('/etc/nginx/conf.d/stream/') }}/{{ item.value.conf_file_name | default('default.conf') }}"
     backup: yes
   with_dict: "{{ nginx_stream_template }}"
   when: nginx_stream_template_enable
   notify: "(Handler: All OSs) Reload NGINX"
-
-- name: "(Setup: All NGINX) Dynamically Generate NGINX API Configuration File"
-  template:
-    src: "{{ nginx_rest_api_src }}"
-    dest: "{{ nginx_rest_api_location }}"
-    backup: yes
-  notify: "(Handler: All OSs) Reload NGINX"
-  when: nginx_rest_api_enable

@@ -7,4 +7,4 @@
 - name: "(Install: SUSE) Add NGINX Plus Repository"
   zypper_repository:
     name: nginx-plus
-    repo: https://plus-pkgs.nginx.com/sles/12?ssl_clientcert=/etc/ssl/nginx/nginx-repo-bundle.crt&ssl_verify=host
+    repo: "https://plus-pkgs.nginx.com/sles/{{ ansible_distribution_major_version }}?ssl_clientcert=/etc/ssl/nginx/nginx-repo-bundle.crt&ssl_verify=host"

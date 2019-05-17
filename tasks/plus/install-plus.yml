@@ -13,6 +13,9 @@
 - import_tasks: setup-freebsd.yml
   when: ansible_os_family == "FreeBSD"
 
+- import_tasks: setup-alpine.yml
+  when: ansible_os_family == "Alpine"
+
 - name: "(Install: All OSs) Install NGINX Plus"
   package:
     name: nginx-plus
@@ -20,4 +23,4 @@
   notify: "(Handler: All OSs) Start NGINX"
 
 - import_tasks: delete-license.yml
-  when: nginx_delete_license
+  when: nginx_delete_license | bool

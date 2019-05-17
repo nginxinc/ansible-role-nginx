@@ -84,7 +84,6 @@ server {
 {% if item.value.autoindex is defined and item.value.autoindex %}
     autoindex on;
 {% endif %}
-<<<<<<< Updated upstream
 {% if item.value.try_files is defined %}
     try_files {{ item.value.try_files }};
 {% endif %}
@@ -92,11 +91,7 @@ server {
     auth_request {{ item.value.auth_request }};
 {% endif %}
 
-{% if item.value.reverse_proxy is defined %}
-=======
-
 {% if item.value.reverse_proxy is defined and item.value.reverse_proxy %}
->>>>>>> Stashed changes
 {% for location in item.value.reverse_proxy.locations %}
     location {{ item.value.reverse_proxy.locations[location].location }} {
 {% if item.value.reverse_proxy.locations[location].internal is sameas true %}
@@ -124,7 +119,6 @@ server {
         proxy_connect_timeout {{ item.value.reverse_proxy.locations[location].proxy_connect_timeout }};
 {% endif %}
         proxy_pass {{ item.value.reverse_proxy.locations[location].proxy_pass }};
-<<<<<<< Updated upstream
 {% if item.value.reverse_proxy.locations[location].proxy_read_timeout is defined and item.value.reverse_proxy.locations[location].proxy_read_timeout %}
         proxy_read_timeout {{ item.value.reverse_proxy.locations[location].proxy_read_timeout }};
 {% endif %}
@@ -145,11 +139,8 @@ server {
 {% if item.value.reverse_proxy.locations[location].try_files is defined %}
         try_files {{ item.value.reverse_proxy.locations[location].try_files }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].proxy_ssl is defined %}
 
-=======
 {% if item.value.reverse_proxy.locations[location].proxy_ssl is defined and item.value.reverse_proxy.locations[location].proxy_ssl %}
->>>>>>> Stashed changes
 {% if item.value.reverse_proxy.locations[location].proxy_ssl.cert is defined %}
         proxy_ssl_certificate {{ item.value.reverse_proxy.locations[location].proxy_ssl.cert }};
 {% endif %}

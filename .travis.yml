@@ -170,34 +170,6 @@ matrix:
         playbook: unit
     - env:
         distribution: ubuntu
-        version: artful
-        playbook: basic
-    - env:
-        distribution: ubuntu
-        version: artful
-        playbook: http-template
-    - env:
-        distribution: ubuntu
-        version: artful
-        playbook: modules
-    - env:
-        distribution: ubuntu
-        version: artful
-        playbook: push
-    - env:
-        distribution: ubuntu
-        version: artful
-        playbook: stable
-    - env:
-        distribution: ubuntu
-        version: artful
-        playbook: stream-template
-    - env:
-        distribution: ubuntu
-        version: artful
-        playbook: unit
-    - env:
-        distribution: ubuntu
         version: bionic
         playbook: basic
     - env:

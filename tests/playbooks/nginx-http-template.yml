@@ -153,6 +153,7 @@
           locations:
             backend_site:
               location: /
+              alias: /usr/share/
               html_file_location: /usr/share/nginx/html
               html_file_name: backend_index.html
               autoindex: false

@@ -342,6 +342,7 @@ nginx_http_template:
       locations:
         default:
           location: /
+          index: index index.php index.html index.htm index.nginx-debian.html #This includes index.php as well
           html_file_location: /usr/share/nginx/html
           html_file_name: index.html
           autoindex: false
@@ -352,6 +353,17 @@ nginx_http_template:
             #return302:
               #code: 302
               #url: https://sso.somehost.local/?url=https://$http_host$request_uri
+
+        php:  #Sample for PHP or other Preprocessors
+          location: ~ \.php$ 
+          include: snippets/fastcgi-php.conf
+          fastcgi_pass: unix:/run/php/php7.0-fpm.sock
+
+        webshare: #Sample for a website to show the files you have in 'alias'
+          location: /webshare
+          alias: /usr/share/files/pishare/
+          autoindex: true
+
       http_demo_conf: false
     reverse_proxy:
       proxy_cache_path:

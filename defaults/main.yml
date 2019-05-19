@@ -172,6 +172,8 @@ nginx_http_template:
     root: /usr/share/nginx/html
     https_redirect: false
     autoindex: false
+    auth_basic: null
+    auth_basic_user_file: null
     try_files: $uri $uri/index.html $uri.html =404
     #auth_request: /auth
     ssl:

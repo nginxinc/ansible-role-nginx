@@ -156,6 +156,7 @@
               alias: /usr/share/
               html_file_location: /usr/share/nginx/html
               html_file_name: backend_index.html
+              https_redirect: false
               autoindex: false
           http_demo_conf: true
     nginx_html_demo_template_enable: true

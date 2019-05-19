@@ -190,7 +190,6 @@ nginx_http_template:
           html_file_location: /usr/share/nginx/html
           html_file_name: index.html
           autoindex: false
-          https_redirect: false
           auth_basic: null
           auth_basic_file: null
           try_files: $uri $uri/index.html $uri.html =404

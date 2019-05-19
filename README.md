@@ -361,7 +361,7 @@ nginx_http_template:
 
         webshare: #Sample for a website to show the files you have in 'alias'
           location: /webshare
-          alias: /usr/share/files/pishare/
+          alias: /usr/share/files/webshare/
           autoindex: true
 
       http_demo_conf: false

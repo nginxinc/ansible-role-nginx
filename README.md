@@ -331,7 +331,7 @@ nginx_http_template:
     https_redirect: false
     autoindex: false
     auth_basic: null
-    auth_basic_file: null
+    auth_basic_user_file: null
     #auth_request: /auth
     ssl:
       cert: /etc/ssl/certs/default.crt
@@ -348,7 +348,7 @@ nginx_http_template:
           html_file_name: index.html
           autoindex: false
           auth_basic: null
-          auth_basic_file: null
+          auth_basic_user_file: null
           #auth_req: /auth
           #returns:
             #return302:
@@ -434,7 +434,7 @@ nginx_http_template:
           proxy_redirect: false
           websocket: false
           auth_basic: null
-          auth_basic_file: null
+          auth_basic_user_file: null
           #auth_req: /auth
           #returns:
             #return302:

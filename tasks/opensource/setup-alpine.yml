@@ -1,0 +1,6 @@
+---
+- name: "(Install: Alpine Linux) Add NGINX Plus Repository"
+  lineinfile:
+    path: /etc/apk/repositories
+    insertafter: EOF
+    line: "{{ nginx_repository.alpine }}"

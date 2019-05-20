@@ -2,7 +2,7 @@
 - name: "(Install: CentOS/RedHat/Oracle Linux) Add NGINX Plus Repository"
   yum_repository:
     name: nginx-plus
-    baseurl: https://plus-pkgs.nginx.com/{{ (ansible_distribution == "RedHat") | ternary('rhel/', 'centos/') }}/{{ (ansible_distribution_version|float < 7.4) | ternary(ansible_distribution_major_version|int, 7.4) }}/$basearch/
+    baseurl: https://plus-pkgs.nginx.com/centos/{{ (ansible_distribution_version | float >= 7.4 and ansible_distribution_version | float < 8.0) | ternary(ansible_distribution_major_version | int, 7.4) }}/$basearch/
     description: NGINX Plus Repository
     sslclientcert: /etc/ssl/nginx/nginx-repo.crt
     sslclientkey: /etc/ssl/nginx/nginx-repo.key
@@ -13,7 +13,7 @@
 - name: "(Install: Amazon Linux) Add NGINX Plus Repository"
   yum_repository:
     name: nginx-plus
-    baseurl: https://plus-pkgs.nginx.com/amzn{{ (ansible_distribution_version == "2") | ternary('2', '') }}/$releasever/$basearch
+    baseurl: https://plus-pkgs.nginx.com/amzn{{ (ansible_distribution_major_version == "2") | ternary('2', '') }}/$releasever/$basearch
     description: NGINX Plus Repository
     sslclientcert: /etc/ssl/nginx/nginx-repo.crt
     sslclientkey: /etc/ssl/nginx/nginx-repo.key

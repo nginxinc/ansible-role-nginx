@@ -1,5 +1,5 @@
 ---
 - name: "(Install: SUSE) Add NGINX Repository"
   zypper_repository:
-    name: nginx
+    name: "nginx-{{ nginx_branch }}"
     repo: "{{ nginx_repository.suse }}"

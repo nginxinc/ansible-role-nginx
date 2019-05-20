@@ -10,27 +10,32 @@ galaxy_info:
   min_ansible_version: 2.4.0.0
 
   platforms:
-  - name: Debian
-    versions:
-      - jessie
-      - stretch
-  - name: Ubuntu
-    versions:
-      - trusty
-      - xenial
-      - artful
-      - bionic
-  - name: EL
-    versions:
-      - 6
-      - 7
-  - name: SLES
-    versions:
-      - 12
-  - name: FreeBSD
-    versions:
-      - 10.4
-      - 11.2
+    - name: Alpine
+      versions:
+        - all
+    - name: Amazon Linux
+        - candidate
+    - name: Debian
+      versions:
+        - jessie
+        - stretch
+    - name: EL
+      versions:
+        - 6
+        - 7
+    - name: FreeBSD
+      versions:
+        - 11.2
+        - 12.0
+    - name: Ubuntu
+      versions:
+        - trusty
+        - xenial
+        - bionic
+    - name: SLES
+      versions:
+        - 12
+        - 15
 
   galaxy_tags:
     - nginx

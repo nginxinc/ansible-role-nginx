@@ -172,6 +172,8 @@ nginx_http_template:
     root: /usr/share/nginx/html
     https_redirect: false
     autoindex: false
+    auth_basic: null
+    auth_basic_user_file: null
     try_files: $uri $uri/index.html $uri.html =404
     #auth_request: /auth
     ssl:
@@ -190,7 +192,7 @@ nginx_http_template:
           html_file_name: index.html
           autoindex: false
           auth_basic: null
-          auth_basic_file: null
+          auth_basic_user_file: null
           try_files: $uri $uri/index.html $uri.html =404
           #auth_request: /auth
           #returns:
@@ -273,7 +275,7 @@ nginx_http_template:
             - Cache-Control
           websocket: false
           auth_basic: null
-          auth_basic_file: null
+          auth_basic_user_file: null
           try_files: $uri $uri/index.html $uri.html =404
           #auth_req: /auth
           #returns:

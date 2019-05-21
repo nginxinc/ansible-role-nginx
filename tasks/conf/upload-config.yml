@@ -1,22 +1,28 @@
 ---
+- name: "(Setup: All NGINX) Ensure NGINX Main Directory Exists"
+  file:
+    path: "{{ nginx_main_upload_dest | default('/etc/nginx/') }}"
+    state: directory
+  when: nginx_main_upload_enable
+
 - name: "(Setup: All NGINX) Upload NGINX Main Configuration File"
   copy:
-    src: "{{ nginx_main_upload_src }}"
-    dest: "{{ nginx_main_upload_dest }}"
+    src: "{{ nginx_main_upload_src | default('conf/nginx.conf') }}"
+    dest: "{{ nginx_main_upload_dest | default('/etc/nginx/') }}"
     backup: yes
   notify: "(Handler: All OSs) Reload NGINX"
   when: nginx_main_upload_enable
 
 - name: "(Setup: All NGINX) Ensure NGINX HTTP Directory Exists"
   file:
-    path: "{{ nginx_http_upload_dest }}"
+    path: "{{ nginx_http_upload_dest | default('/etc/nginx/conf.d/') }}"
     state: directory
   when: nginx_http_upload_enable
 
 - name: "(Setup: All NGINX) Upload NGINX HTTP Configuration Files"
   copy:
     src: "{{ item }}"
-    dest: "{{ nginx_http_upload_dest }}"
+    dest: "{{ nginx_http_upload_dest | default('/etc/nginx/conf.d/') }}"
     backup: yes
   with_fileglob: "{{ nginx_http_upload_src }}"
   notify: "(Handler: All OSs) Reload NGINX"
@@ -24,14 +30,14 @@
 
 - name: "(Setup: All NGINX) Ensure NGINX Stream Directory Exists"
   file:
-    path: "{{ nginx_stream_upload_dest }}"
+    path: "{{ nginx_stream_upload_dest | default('/etc/nginx/conf.d/') }}"
     state: directory
   when: nginx_stream_upload_enable
 
 - name: "(Setup: All NGINX) Upload NGINX Stream Configuration Files"
   copy:
     src: "{{ item }}"
-    dest: "{{ nginx_stream_upload_dest }}"
+    dest: "{{ nginx_stream_upload_dest | default('/etc/nginx/conf.d/') }}"
     backup: yes
   with_fileglob: "{{ nginx_stream_upload_src }}"
   notify: "(Handler: All OSs) Reload NGINX"
@@ -39,14 +45,14 @@
 
 - name: "(Setup: All NGINX) Ensure NGINX HTML Directory Exists"
   file:
-    path: "{{ nginx_html_upload_dest }}"
+    path: "{{ nginx_html_upload_dest | default('/usr/share/nginx/html') }}"
     state: directory
   when: nginx_html_upload_enable
 
 - name: "(Setup: All NGINX) Upload NGINX HTML Files"
   copy:
     src: "{{ item }}"
-    dest: "{{ nginx_html_upload_dest }}"
+    dest: "{{ nginx_html_upload_dest | default('/usr/share/nginx/html') }}"
     backup: yes
   with_fileglob: "{{ nginx_html_upload_src }}"
   notify: "(Handler: All OSs) Reload NGINX"
@@ -54,20 +60,20 @@
 
 - name: "(Setup: All NGINX) Ensure SSL Certificate Directory Exists"
   file:
-    path: "{{ nginx_ssl_crt_upload_dest }}"
+    path: "{{ nginx_ssl_crt_upload_dest | default('/etc/ssl/certs/') }}"
     state: directory
   when: nginx_ssl_upload_enable
 
 - name: "(Setup: All NGINX) Ensure SSL Key Directory Exists"
   file:
-    path: "{{ nginx_ssl_key_upload_dest }}"
+    path: "{{ nginx_ssl_key_upload_dest | default('/etc/ssl/private/') }}"
     state: directory
   when: nginx_ssl_upload_enable
 
 - name: "(Setup: All NGINX) Upload NGINX SSL Certificates"
   copy:
     src: "{{ item }}"
-    dest: "{{ nginx_ssl_crt_upload_dest }}"
+    dest: "{{ nginx_ssl_crt_upload_dest | default('/etc/ssl/certs/') }}"
     mode: 0640
     decrypt: yes
     backup: yes
@@ -77,7 +83,7 @@
 - name: "(Setup: All NGINX) Upload NGINX SSL Keys"
   copy:
     src: "{{ item }}"
-    dest: "{{ nginx_ssl_key_upload_dest }}"
+    dest: "{{ nginx_ssl_key_upload_dest | default('/etc/ssl/private/') }}"
     mode: 0640
     decrypt: yes
     backup: yes

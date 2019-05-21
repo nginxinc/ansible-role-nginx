@@ -1,7 +1,7 @@
 ---
 - name: "(Install: Debian/Ubuntu) Add NGINX Plus Repository"
   apt_repository:
-    repo: deb https://plus-pkgs.nginx.com/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} nginx-plus
+    repo: deb https://plus-pkgs.nginx.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} nginx-plus
     filename: nginx-plus
     update_cache: no
 

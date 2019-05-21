@@ -1,6 +1,6 @@
 {{ ansible_managed | comment }}
 
-{% if item.value.upstreams is defined %}
+{% if item.value.upstreams is defined and item.value.upstreams %}
 {% for upstream in item.value.upstreams %}
 upstream {{ item.value.upstreams[upstream].name }} {
     {{ item.value.upstreams[upstream].lb_method }};
@@ -15,33 +15,32 @@ upstream {{ item.value.upstreams[upstream].name }} {
 {% endfor %}
 {% endif %}
 
-{% if item.value.reverse_proxy is defined %}
-{% if item.value.reverse_proxy.proxy_cache_path is defined %}
+{% if item.value.reverse_proxy is defined and item.value.reverse_proxy %}
+{% if item.value.reverse_proxy.proxy_cache_path is defined and item.value.reverse_proxy.proxy_cache_path %}
 {% for proxy_cache_path in item.value.reverse_proxy.proxy_cache_path %}
 proxy_cache_path {{ proxy_cache_path.path }} keys_zone={{ proxy_cache_path.keys_zone.name }}:{{ proxy_cache_path.keys_zone.size }}
                  levels={{ proxy_cache_path.levels }} max_size={{ proxy_cache_path.max_size }}
                  inactive={{ proxy_cache_path.inactive }} use_temp_path={{ proxy_cache_path.use_temp_path | ternary("on", "off") }};
 {% endfor %}
-
-{% if item.value.reverse_proxy.proxy_cache_background_update is defined %}
+{% if item.value.reverse_proxy.proxy_cache_background_update is defined and item.value.reverse_proxy.proxy_cache_background_update%}
 proxy_cache_background_update {{ item.value.reverse_proxy.proxy_cache_background_update | ternary("on", "off") }};
 {% endif %}
-{% if item.value.reverse_proxy.proxy_cache_lock is defined %}
+{% if item.value.reverse_proxy.proxy_cache_lock is defined and item.value.reverse_proxy.proxy_cache_lock %}
 proxy_cache_lock {{ item.value.reverse_proxy.proxy_cache_lock | ternary("on", "off") }};
 {% endif %}
-{% if item.value.reverse_proxy.proxy_cache_min_uses is defined %}
+{% if item.value.reverse_proxy.proxy_cache_min_uses is defined and item.value.reverse_proxy.proxy_cache_min_uses %}
 proxy_cache_min_uses {{ item.value.reverse_proxy.proxy_cache_min_uses }};
 {% endif %}
-{% if item.value.reverse_proxy.proxy_cache_revalidate is defined %}
+{% if item.value.reverse_proxy.proxy_cache_revalidate is defined and item.value.reverse_proxy.proxy_cache_revalidate %}
 proxy_cache_revalidate {{ item.value.reverse_proxy.proxy_cache_revalidate | ternary("on", "off") }};
 {% endif %}
-{% if item.value.reverse_proxy.proxy_cache_use_stale is defined %}
+{% if item.value.reverse_proxy.proxy_cache_use_stale is defined and item.value.reverse_proxy.proxy_cache_use_stale %}
 proxy_cache_use_stale {{ item.value.reverse_proxy.proxy_cache_use_stale | join(" ") }};
 {% endif %}
-{% if item.value.reverse_proxy.proxy_ignore_headers is defined %}
+{% if item.value.reverse_proxy.proxy_ignore_headers is defined and item.value.reverse_proxy.proxy_ignore_headers %}
 proxy_ignore_headers {{ item.value.reverse_proxy.proxy_ignore_headers | join(" ") }};
 {% endif %}
-{% if item.value.reverse_proxy.proxy_temp_path is defined %}
+{% if item.value.reverse_proxy.proxy_temp_path is defined and item.value.reverse_proxy.proxy_temp_path.path %}
 proxy_temp_path {{ item.value.reverse_proxy.proxy_temp_path.path }} {{ item.value.reverse_proxy.proxy_temp_path.level_1 | default("") }} {{ item.value.reverse_proxy.proxy_temp_path.level_2 | default("") }} {{ item.value.reverse_proxy.proxy_temp_path.level_3 | default("") }};
 {% endif %}
 {% endif %}
@@ -51,29 +50,29 @@ auth_request {{ item.value.auth_request_http }};
 {% endif %}
 
 server {
-{% if item.value.ssl is defined %}
+{% if item.value.ssl is defined and item.value.ssl %}
     listen {{ item.value.port }} ssl;
     ssl_certificate {{ item.value.ssl.cert }};
     ssl_certificate_key {{ item.value.ssl.key }};
 {% if item.value.ssl.dhparam is defined %}
     ssl_dhparam {{ item.value.ssl.dhparam }};
 {% endif %}
-{% if item.value.ssl.protocols is defined %}
+{% if item.value.ssl.protocols is defined and item.value.ssl.protocols %}
     ssl_protocols {{ item.value.ssl.protocols }};
 {% endif %}
-{% if item.value.ssl.ciphers is defined %}
+{% if item.value.ssl.ciphers is defined and item.value.ssl.ciphers %}
     ssl_ciphers {{ item.value.ssl.ciphers }};
 {% endif %}
-{% if item.value.ssl.session_cache is defined %}
+{% if item.value.ssl.session_cache is defined and item.value.ssl.session_cache %}
     ssl_session_cache {{ item.value.ssl.session_cache }};
 {% endif %}
-{% if item.value.ssl.session_timeout is defined %}
+{% if item.value.ssl.session_timeout is defined and item.value.ssl.session_timeout %}
     ssl_session_timeout {{ item.value.ssl.session_timeout }};
 {% endif %}
 {% else %}
     listen {{ item.value.port }};
 {% endif %}
-    server_name {{ item.value.server_name }};
+    server_name {{ item.value.server_name | default('localhost') }};
 {% if item.value.auth_basic is defined and item.value.auth_basic %}
     auth_basic "{{ item.value.auth_basic }}";
 {% endif %}
@@ -96,7 +95,7 @@ server {
     auth_request {{ item.value.auth_request }};
 {% endif %}
 
-{% if item.value.reverse_proxy is defined %}
+{% if item.value.reverse_proxy is defined and item.value.reverse_proxy %}
 {% for location in item.value.reverse_proxy.locations %}
     location {{ item.value.reverse_proxy.locations[location].location }} {
 {% if item.value.reverse_proxy.locations[location].internal is sameas true %}
@@ -144,8 +143,8 @@ server {
 {% if item.value.reverse_proxy.locations[location].try_files is defined %}
         try_files {{ item.value.reverse_proxy.locations[location].try_files }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].proxy_ssl is defined %}
 
+{% if item.value.reverse_proxy.locations[location].proxy_ssl is defined and item.value.reverse_proxy.locations[location].proxy_ssl %}
 {% if item.value.reverse_proxy.locations[location].proxy_ssl.cert is defined %}
         proxy_ssl_certificate {{ item.value.reverse_proxy.locations[location].proxy_ssl.cert }};
 {% endif %}

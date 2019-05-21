@@ -4,7 +4,7 @@
 nginx_enable: true
 
 # Start NGINX service.
-# Default is true
+# Default is true.
 nginx_start: true
 
 # Print NGINX configuration file to terminal after executing playbook.

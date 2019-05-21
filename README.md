@@ -86,10 +86,10 @@ RedHat:
     - 6.5+
     - 7.4+
     - 8
-    SUSE/SLES:
-      versions:
-        - 12
-        - 15
+SUSE/SLES:
+  versions:
+    - 12
+    - 15
 Ubuntu:
   versions:
     - trusty
@@ -115,7 +115,7 @@ Ubuntu:
   versions:
     - trusty
     - xenial
-        - bionic
+    - bionic
 RedHat:
   versions:
     - 6
@@ -211,23 +211,33 @@ nginx_install_from: nginx_repository
 
 # Choose where to fetch the NGINX signing key from.
 # Default is the official NGINX signing key host.
-nginx_signing_key: http://nginx.org/keys/nginx_signing.key
+# nginx_signing_key: http://nginx.org/keys/nginx_signing.key
 
 # Specify source repository for NGINX Open Source.
-# Only works if 'nginx_install_from' is set to 'nginx_repository'.
+# Only works if 'install_from' is set to 'nginx_repository'.
 # Defaults are the official NGINX repositories.
 nginx_repository:
+  alpine: >-
+      https://nginx.org/packages/{{ (nginx_branch == 'mainline')
+      | ternary('mainline/', '') }}alpine/v{{ ansible_distribution_version | regex_search('^[0-9]+\\.[0-9]+') }}/main
   debian:
-    - deb https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} nginx
-    - deb-src https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} nginx
-  redhat:
-    - https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}{{ (ansible_distribution == "RedHat") | ternary('rhel/', 'centos/') }}{{ ansible_distribution_major_version|int }}/$basearch/
-  suse:
-    - https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}sles/12
+    - >-
+      deb https://nginx.org/packages/{{ (nginx_branch == 'mainline')
+      | ternary('mainline/', '') }}{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} nginx
+    - >-
+      deb-src https://nginx.org/packages/{{ (nginx_branch == 'mainline')
+      | ternary('mainline/', '') }}{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} nginx
+  redhat: >-
+      https://nginx.org/packages/{{ (nginx_branch == 'mainline')
+      | ternary('mainline/', '') }}{{ (ansible_distribution == "RedHat")
+      | ternary('rhel', 'centos') }}/{{ ansible_distribution_major_version }}/$basearch/
+  suse: >-
+      https://nginx.org/packages/{{ (nginx_branch == 'mainline')
+      | ternary('mainline/', '') }}sles/{{ ansible_distribution_major_version }}
 
 # Specify which branch of NGINX Open Source you want to install.
 # Options are 'mainline' or 'stable'.
-# Only works if 'nginx_install_from' is set to 'nginx_repository'.
+# Only works if 'install_from' is set to 'nginx_repository'.
 # Default is mainline.
 nginx_branch: mainline
 
@@ -353,10 +363,12 @@ nginx_http_template:
     autoindex: false
     auth_basic: null
     auth_basic_user_file: null
+    try_files: $uri $uri/index.html $uri.html =404
     #auth_request: /auth
     ssl:
       cert: /etc/ssl/certs/default.crt
       key: /etc/ssl/private/default.key
+      dhparam: /etc/ssl/private/dh_param.pem
       protocols: TLSv1 TLSv1.1 TLSv1.2
       ciphers: HIGH:!aNULL:!MD5
       session_cache: none
@@ -370,7 +382,8 @@ nginx_http_template:
           autoindex: false
           auth_basic: null
           auth_basic_user_file: null
-          #auth_req: /auth
+          try_files: $uri $uri/index.html $uri.html =404
+          #auth_request: /auth
           #returns:
             #return302:
               #code: 302
@@ -432,9 +445,6 @@ nginx_http_template:
             cert: /etc/ssl/certs/proxy_default.crt
             key: /etc/ssl/private/proxy_default.key
             trusted_cert: /etc/ssl/certs/proxy_ca.crt
-            dhparam: /etc/ssl/private/dh_param.pem
-            server_name: false
-            name: server_name
             protocols: TLSv1 TLSv1.1 TLSv1.2
             ciphers: HIGH:!aNULL:!MD5
             verify: false
@@ -452,10 +462,10 @@ nginx_http_template:
           proxy_ignore_headers:
             - Vary
             - Cache-Control
-          proxy_redirect: false
           websocket: false
           auth_basic: null
           auth_basic_user_file: null
+          try_files: $uri $uri/index.html $uri.html =404
           #auth_req: /auth
           #returns:
             #return302:
@@ -522,8 +532,6 @@ nginx_stream_template:
           cert: /etc/ssl/certs/proxy_default.crt
           key: /etc/ssl/private/proxy_default.key
           trusted_cert: /etc/ssl/certs/proxy_ca.crt
-          server_name: false
-          name: server_name
           protocols: TLSv1 TLSv1.1 TLSv1.2
           ciphers: HIGH:!aNULL:!MD5
           verify: false
@@ -713,6 +721,8 @@ License
 Author Information
 ------------------
 
-Alessandro Fael Garcia
+[Alessandro Fael Garcia](https://github.com/alessfg)
 
-[NGINX Inc](https://www.nginx.com/)
+[Grzegorz Dzien](https://github.com/gdzien)
+
+&copy; [NGINX, Inc.](https://www.nginx.com/) 2018 - 2019

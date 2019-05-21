@@ -20,14 +20,19 @@ It supports all platforms supported by [NGINX Open Source](https://nginx.org/en/
 **NGINX Open Source**
 
 ```yaml
+Alpine:
+  versions:
+    - 3.8
+    - 3.9
 CentOS:
   versions:
     - 6
-    - 7
+    - 7.4+
 RedHat:
   versions:
     - 6
-    - 7
+    - 7.4+
+    - 8
 Debian:
   versions:
     - jessie
@@ -36,62 +41,69 @@ Ubuntu:
   versions:
     - trusty
     - xenial
-    - artful
     - bionic
 SUSE/SLES:
   versions:
     - 12
+    - 15
 FreeBSD:
   versions:
-    - 10
-    - 11
+    - 11.2+
+    - 12
 ```
 
 **NGINX Plus**
 
 ```yaml
+Alpine:
+  versions:
+    - 3.8
+    - 3.9
+Amazon Linux:
+  versions:
+    - 2018.03
+Amazon Linux 2:
+  versions:
+    - LTS
 CentOS:
   versions:
-    - 6
-    - 7
-RedHat:
-  versions:
-    - 6
-    - 7
+    - 6.5+
+    - 7.4+
 Debian:
   versions:
     - jessie
     - stretch
+FreeBSD:
+  versions:
+    - 11.2+
+    - 12
+Oracle Linux:
+  versions:
+    - 6.5+
+    - 7.4+
+RedHat:
+  versions:
+    - 6.5+
+    - 7.4+
+    - 8
+    SUSE/SLES:
+      versions:
+        - 12
+        - 15
 Ubuntu:
   versions:
     - trusty
     - xenial
-    - artful
     - bionic
-Oracle Linux:
-  versions:
-    - 6.5
-    - 7
-Amazon Linux:
-  versions:
-    - 2018.03
-SUSE/SLES:
-  versions:
-    - 12
-FreeBSD:
-  versions:
-    - 10
-    - 11
 ```
 
 **NGINX Amplify**
 
 ```yaml
-CentOS:
+Amazon Linux:
   versions:
-    - 6
-    - 7
-RedHat:
+    - 2017.09
+CentOS:
   versions:
     - 6
     - 7
@@ -103,21 +115,25 @@ Ubuntu:
   versions:
     - trusty
     - xenial
-    - artful
-    - bionic
-Amazon Linux:
+        - bionic
+RedHat:
   versions:
-    - 2017.09
+    - 6
+    - 7
 ```
 
 **NGINX Controller**
 
 ```yaml
+Amazon Linux:
+  versions:
+    - 2017.09
+Amazon Linux 2:
+  versions:
+    - LTS
 CentOS:
   versions:
-    - 7
-RedHat:
-  versions:
+    - 6
     - 7
 Debian:
   versions:
@@ -126,7 +142,11 @@ Debian:
 Ubuntu:
   versions:
     - xenial
-    - artful
+    - bionic
+RedHat:
+  versions:
+    - 6
+    - 7
 ```
 
 **NGINX Unit**
@@ -147,11 +167,12 @@ Debian:
 Ubuntu:
   versions:
     - xenial
-    - artful
     - bionic
 Amazon Linux:
   versions:
     - 2018.03
+Amazon Linux 2:
+  versions:
     - 2
 FreeBSD:
   versions:
@@ -330,6 +351,8 @@ nginx_http_template:
     root: /usr/share/nginx/html
     https_redirect: false
     autoindex: false
+    auth_basic: null
+    auth_basic_user_file: null
     #auth_request: /auth
     ssl:
       cert: /etc/ssl/certs/default.crt
@@ -346,7 +369,7 @@ nginx_http_template:
           html_file_name: index.html
           autoindex: false
           auth_basic: null
-          auth_basic_file: null
+          auth_basic_user_file: null
           #auth_req: /auth
           #returns:
             #return302:
@@ -432,7 +455,7 @@ nginx_http_template:
           proxy_redirect: false
           websocket: false
           auth_basic: null
-          auth_basic_file: null
+          auth_basic_user_file: null
           #auth_req: /auth
           #returns:
             #return302:

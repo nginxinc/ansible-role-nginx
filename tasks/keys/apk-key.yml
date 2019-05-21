@@ -1,0 +1,5 @@
+---
+- name: "(Install: APK OSs) Download NGINX Signing Key"
+  get_url:
+    url: https://nginx.org/keys/nginx_signing.rsa.pub
+    dest: /etc/apk/keys/nginx_signing.rsa.pub

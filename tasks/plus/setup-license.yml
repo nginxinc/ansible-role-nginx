@@ -1,14 +1,41 @@
 ---
-- name: "(All OSs) Create SSL Directory"
-  file:
-    path: /etc/ssl/nginx
-    state: directory
+- name: "(All OSs) Setup NGINX Plus License"
+  block:
 
-- name: "(All OSs) Copy NGINX Plus Certificate and License Key"
-  copy:
-    src: "{{ item }}"
-    dest: /etc/ssl/nginx
-    decrypt: yes
-  with_items:
-    - "{{ nginx_license.certificate }}"
-    - "{{ nginx_license.key }}"
+    - name: "(All OSs) Create SSL Directory"
+      file:
+        path: /etc/ssl/nginx
+        state: directory
+
+    - name: "(All OSs) Copy NGINX Plus Certificate and License Key"
+      copy:
+        src: "{{ item }}"
+        dest: /etc/ssl/nginx
+        decrypt: yes
+      with_items:
+        - "{{ nginx_license.certificate }}"
+        - "{{ nginx_license.key }}"
+
+  when: ansible_distribution != "Alpine"
+
+- name: "(Alpine Linux) Setup NGINX Plus License"
+  block:
+
+    - name: "(Alpine Linux) Create APK Directory"
+      file:
+        path: /etc/apk
+        state: directory
+
+    - name: "(Alpine Linux) Copy NGINX Plus Key"
+      copy:
+        src: "{{ nginx_license.key }}"
+        dest: /etc/apk/cert.key
+        decrypt: yes
+
+    - name: "(Alpine Linux) Copy NGINX Plus Certificate"
+      copy:
+        src: "{{ nginx_license.certificate }}"
+        dest: /etc/apk/cert.pem
+        decrypt: yes
+
+  when: ansible_distribution == "Alpine"

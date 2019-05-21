@@ -29,22 +29,23 @@ nginx_install_from: nginx_repository
 # Only works if 'install_from' is set to 'nginx_repository'.
 # Defaults are the official NGINX repositories.
 nginx_repository:
+  alpine: >-
+      https://nginx.org/packages/{{ (nginx_branch == 'mainline')
+      | ternary('mainline/', '') }}alpine/v{{ ansible_distribution_version | regex_search('^[0-9]+\\.[0-9]+') }}/main
   debian:
     - >-
       deb https://nginx.org/packages/{{ (nginx_branch == 'mainline')
-      | ternary('mainline/', '') }}{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} nginx
+      | ternary('mainline/', '') }}{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} nginx
     - >-
       deb-src https://nginx.org/packages/{{ (nginx_branch == 'mainline')
-      | ternary('mainline/', '') }}{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} nginx
-  redhat:
-    - >-
+      | ternary('mainline/', '') }}{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} nginx
+  redhat: >-
       https://nginx.org/packages/{{ (nginx_branch == 'mainline')
       | ternary('mainline/', '') }}{{ (ansible_distribution == "RedHat")
-      | ternary('rhel/', 'centos/') }}{{ ansible_distribution_major_version|int }}/$basearch/
-  suse:
-    - >-
+      | ternary('rhel', 'centos') }}/{{ ansible_distribution_major_version }}/$basearch/
+  suse: >-
       https://nginx.org/packages/{{ (nginx_branch == 'mainline')
-      | ternary('mainline/', '') }}sles/12
+      | ternary('mainline/', '') }}sles/{{ ansible_distribution_major_version }}
 
 # Specify which branch of NGINX Open Source you want to install.
 # Options are 'mainline' or 'stable'.
@@ -172,6 +173,8 @@ nginx_http_template:
     root: /usr/share/nginx/html
     https_redirect: false
     autoindex: false
+    auth_basic: null
+    auth_basic_user_file: null
     try_files: $uri $uri/index.html $uri.html =404
     #auth_request: /auth
     ssl:
@@ -190,7 +193,7 @@ nginx_http_template:
           html_file_name: index.html
           autoindex: false
           auth_basic: null
-          auth_basic_file: null
+          auth_basic_user_file: null
           try_files: $uri $uri/index.html $uri.html =404
           #auth_request: /auth
           #returns:
@@ -273,7 +276,7 @@ nginx_http_template:
             - Cache-Control
           websocket: false
           auth_basic: null
-          auth_basic_file: null
+          auth_basic_user_file: null
           try_files: $uri $uri/index.html $uri.html =404
           #auth_req: /auth
           #returns:

@@ -169,3 +169,4 @@
         html_file_name: backend_index.html
         html_file_location: /usr/share/nginx/html
         web_server_name: Backend
+    nginx_rest_api_enable: true

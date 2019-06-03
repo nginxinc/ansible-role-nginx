@@ -135,6 +135,16 @@ server {
 {% if item.value.reverse_proxy.locations[location].proxy_store_access is defined %}
         proxy_store_access {{ item.value.reverse_proxy.locations[location].proxy_store_access }};
 {% endif %}
+{% if item.value.reverse_proxy.locations[location].allows is defined %}
+{% for allow in item.value.reverse_proxy.locations[location].allows %}
+        allow {{ allow }};
+{% endfor %}
+{% endif %}
+{% if item.value.reverse_proxy.locations[location].denies is defined %}
+{% for deny in item.value.reverse_proxy.locations[location].denies %}
+        deny {{ deny }};
+{% endfor %}
+{% endif %}
 {% if item.value.reverse_proxy.locations[location].proxy_set_header is defined %}
 {% for header in item.value.reverse_proxy.locations[location].proxy_set_header %}
         proxy_set_header {{ item.value.reverse_proxy.locations[location].proxy_set_header[header].name }} {{ item.value.reverse_proxy.locations[location].proxy_set_header[header].value }};

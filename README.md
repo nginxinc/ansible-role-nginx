@@ -462,7 +462,9 @@ nginx_http_template:
           proxy_ignore_headers:
             - Vary
             - Cache-Control
-          websocket: false
+          websocket:
+            enabled: false
+            proxy_http_version: 1.0
           auth_basic: null
           auth_basic_user_file: null
           try_files: $uri $uri/index.html $uri.html =404

@@ -365,6 +365,15 @@ nginx_http_template:
     auth_basic_user_file: null
     try_files: $uri $uri/index.html $uri.html =404
     #auth_request: /auth
+    add_headers:
+      strict_transport_security:
+        name: Strict-Transport-Security
+        value: max-age=15768000; includeSubDomains
+        always: true
+      #header_n:
+        #name: Header-X
+        #value: Value-X
+        #always: false
     ssl:
       cert: /etc/ssl/certs/default.crt
       key: /etc/ssl/private/default.key
@@ -377,6 +386,15 @@ nginx_http_template:
       locations:
         default:
           location: /
+          add_headers:
+            strict_transport_security:
+              name: Strict-Transport-Security
+              value: max-age=15768000; includeSubDomains
+              always: true
+            #header_n:
+              #name: Header-X
+              #value: Value-X
+              #always: false
           html_file_location: /usr/share/nginx/html
           html_file_name: index.html
           autoindex: false
@@ -412,6 +430,15 @@ nginx_http_template:
       locations:
         backend:
           location: /
+          add_headers:
+            strict_transport_security:
+              name: Strict-Transport-Security
+              value: max-age=15768000; includeSubDomains
+              always: true
+            #header_n:
+              #name: Header-X
+              #value: Value-X
+              #always: false
           proxy_connect_timeout: null
           proxy_pass: http://backend
           #proxy_pass_request_body: off

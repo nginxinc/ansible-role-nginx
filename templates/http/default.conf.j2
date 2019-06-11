@@ -88,7 +88,7 @@ server {
     root {{ item.value.root }};
 {% endif %}
 {% if item.value.https_redirect is defined and item.value.https_redirect %}
-    return 301 https://{{ item.value.server_name }}$request_uri;
+    return 301 https://{% if item.value.server_name == "_" %}$host{% else %}{{ item.value.server_name }}{% endif %}$request_uri;
 {% endif %}
 {% if item.value.autoindex is defined and item.value.autoindex %}
     autoindex on;

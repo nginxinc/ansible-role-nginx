@@ -185,6 +185,7 @@ nginx_http_template:
       ciphers: HIGH:!aNULL:!MD5
       session_cache: none
       session_timeout: 5m
+      disable_session_tickets: false
     web_server:
       locations:
         default:

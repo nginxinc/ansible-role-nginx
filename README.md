@@ -365,6 +365,7 @@ nginx_http_template:
     auth_basic_user_file: null
     try_files: $uri $uri/index.html $uri.html =404
     #auth_request: /auth
+    proxy_hide_headers: [] # A list of headers which shouldn't be passed to the application
     ssl:
       cert: /etc/ssl/certs/default.crt
       key: /etc/ssl/private/default.key
@@ -377,6 +378,7 @@ nginx_http_template:
       locations:
         default:
           location: /
+          proxy_hide_headers: [] # A list of headers which shouldn't be passed to the application
           html_file_location: /usr/share/nginx/html
           html_file_name: index.html
           autoindex: false
@@ -412,6 +414,7 @@ nginx_http_template:
       locations:
         backend:
           location: /
+          proxy_hide_headers: [] # A list of headers which shouldn't be passed to the application
           proxy_connect_timeout: null
           proxy_pass: http://backend
           #proxy_pass_request_body: off

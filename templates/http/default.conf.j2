@@ -54,6 +54,9 @@ server {
     listen {{ item.value.port }} ssl;
     ssl_certificate {{ item.value.ssl.cert }};
     ssl_certificate_key {{ item.value.ssl.key }};
+{% if item.value.ssl.trusted_cert is defined %}
+    ssl_trusted_certificate {{ item.value.ssl.trusted_cert }};
+{% endif %}
 {% if item.value.ssl.dhparam is defined %}
     ssl_dhparam {{ item.value.ssl.dhparam }};
 {% endif %}
@@ -68,6 +71,12 @@ server {
 {% endif %}
 {% if item.value.ssl.session_timeout is defined and item.value.ssl.session_timeout %}
     ssl_session_timeout {{ item.value.ssl.session_timeout }};
+{% endif %}
+{% if item.value.ssl.stapling is defined and item.value.ssl.stapling %}
+    ssl_stapling on;
+{% endif %}
+{% if item.value.ssl.stapling_verify is defined and item.value.ssl.stapling_verify %}
+    ssl_stapling_verify on;
 {% endif %}
 {% else %}
     listen {{ item.value.port }};

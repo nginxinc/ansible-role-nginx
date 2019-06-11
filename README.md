@@ -373,6 +373,9 @@ nginx_http_template:
       ciphers: HIGH:!aNULL:!MD5
       session_cache: none
       session_timeout: 5m
+      trusted_cert: /etc/ssl/certs/root_CA_cert_plus_intermediates.crt
+      stapling: true
+      stapling_verify: true
     web_server:
       locations:
         default:

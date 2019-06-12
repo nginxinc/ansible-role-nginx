@@ -167,7 +167,11 @@ nginx_http_template:
     template_file: http/default.conf.j2
     conf_file_name: default.conf
     conf_file_location: /etc/nginx/conf.d/
-    port: 8081
+    listen:
+      port: 8081
+      opts: []
+      ipv4: true
+      ipv6: false
     server_name: localhost
     error_page: /usr/share/nginx/html
     root: /usr/share/nginx/html

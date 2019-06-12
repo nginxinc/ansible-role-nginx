@@ -12,7 +12,12 @@
         template_file: http/default.conf.j2
         conf_file_name: default.conf
         conf_file_location: /etc/nginx/conf.d/
-        port: 80
+        listen:
+          port: 80
+          opts:
+            - default_server
+          ipv4: true
+          ipv6: true
         server_name: localhost
         error_page: /usr/share/nginx/html
         reverse_proxy:
@@ -129,7 +134,11 @@
         template_file: http/default.conf.j2
         conf_file_name: frontend_default.conf
         conf_file_location: /etc/nginx/conf.d/
-        port: 8081
+        listen:
+          port: 8081
+          opts: []
+          ipv4: false
+          ipv6: true
         server_name: localhost
         error_page: /usr/share/nginx/html
         autoindex: false
@@ -145,7 +154,11 @@
         template_file: http/default.conf.j2
         conf_file_name: backend_default.conf
         conf_file_location: /etc/nginx/conf.d/
-        port: 8082
+        listen:
+          port: 8082
+          opts: []
+          ipv4: true
+          ipv6: false
         server_name: localhost
         error_page: /usr/share/nginx/html
         autoindex: false

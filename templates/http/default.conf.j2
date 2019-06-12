@@ -51,7 +51,12 @@ auth_request {{ item.value.auth_request_http }};
 
 server {
 {% if item.value.ssl is defined and item.value.ssl %}
-    listen {{ item.value.port }} ssl;
+{% if ( item.value.listen.ipv4 is defined and item.value.listen.ipv4 ) or ( item.value.listen.ipv4 is not defined ) %}
+    listen {{ item.value.listen.port }} ssl{% if item.value.listen.opts is defined and item.value.listen.opts|length %} {{ item.value.listen.opts|join(" ") }}{% endif %};
+{% endif %}
+{% if item.value.listen.ipv6 is defined and item.value.listen.ipv6 %}
+    listen [::]:{{ item.value.listen.port }} ipv6only=on ssl{% if item.value.listen.opts is defined and item.value.listen.opts|length %} {{ item.value.listen.opts|join(" ") }}{% endif %};
+{% endif %}
     ssl_certificate {{ item.value.ssl.cert }};
     ssl_certificate_key {{ item.value.ssl.key }};
 {% if item.value.ssl.dhparam is defined %}
@@ -70,7 +75,12 @@ server {
     ssl_session_timeout {{ item.value.ssl.session_timeout }};
 {% endif %}
 {% else %}
-    listen {{ item.value.port }};
+{% if ( item.value.listen.ipv4 is defined and item.value.listen.ipv4 ) or ( item.value.listen.ipv4 is not defined ) %}
+    listen {{ item.value.listen.port }}{% if item.value.listen.opts is defined and item.value.listen.opts|length %} {{ item.value.listen.opts|join(" ") }}{% endif %};
+{% endif %}
+{% if item.value.listen.ipv6 is defined and item.value.listen.ipv6 %}
+    listen [::]:{{ item.value.listen.port }} ipv6only=on{% if item.value.listen.opts is defined and item.value.listen.opts|length %} {{ item.value.listen.opts|join(" ") }}{% endif %};
+{% endif %}
 {% endif %}
     server_name {{ item.value.server_name | default('localhost') }};
 {% if item.value.auth_basic is defined and item.value.auth_basic %}

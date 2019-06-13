@@ -203,6 +203,9 @@ server {
 {% if item.value.reverse_proxy.locations[location].proxy_ignore_headers is defined %}
         proxy_ignore_headers {{ item.value.reverse_proxy.locations[location].proxy_ignore_headers | join(" ") }};
 {% endif %}
+{% if item.value.reverse_proxy.locations[location].proxy_buffering is defined %}
+        proxy_buffering {{ item.value.reverse_proxy.locations[location].proxy_buffering | ternary("on", "off") }};
+{% endif %}
 {% if (item.value.reverse_proxy.health_check_plus is defined) and item.value.reverse_proxy.health_check_plus %}
         health_check;
 {% endif %}

@@ -73,6 +73,7 @@
                 header_x_forwarded_proto:
                   name: X-Forwarded-Proto
                   value: $scheme
+              proxy_buffering: false
             backend:
               location: /backend
               proxy_pass: http://backend_servers/

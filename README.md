@@ -370,7 +370,7 @@ nginx_http_template:
         name: Strict-Transport-Security
         value: max-age=15768000; includeSubDomains
         always: true
-      #header_n:
+      #header_name:
         #name: Header-X
         #value: Value-X
         #always: false
@@ -391,7 +391,7 @@ nginx_http_template:
               name: Strict-Transport-Security
               value: max-age=15768000; includeSubDomains
               always: true
-            #header_n:
+            #header_name:
               #name: Header-X
               #value: Value-X
               #always: false
@@ -435,7 +435,7 @@ nginx_http_template:
               name: Strict-Transport-Security
               value: max-age=15768000; includeSubDomains
               always: true
-            #header_n:
+            #header_name:
               #name: Header-X
               #value: Value-X
               #always: false

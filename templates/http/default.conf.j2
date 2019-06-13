@@ -256,10 +256,10 @@ server {
     sub_filter 'proxied_for_ip' '$http_x_forwarded_for';
 {% endif %}
 {% endif %}
-{% if item.value.return is defined %}
-{% for location in item.value.return.locations %}
-    location {{ item.value.return.locations[location].location }} {
-        return {{ item.value.return.locations[location].code }}{% if item.value.return.locations[location].value is defined %} {{ item.value.return.locations[location].value }}{% endif %};
+{% if item.value.returns is defined %}
+{% for return in item.value.returns %}
+    location {{ item.value.returns[return].location }} {
+        return {{ item.value.returns[return].code }}{% if item.value.returns[return].value is defined %} {{ item.value.returns[return].value }}{% endif %};
     }
 {% endfor %}
 {% endif %}

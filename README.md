@@ -462,6 +462,9 @@ nginx_http_template:
           proxy_ignore_headers:
             - Vary
             - Cache-Control
+          proxy_cookie_path:
+            path: /web/
+            replacement: /
           websocket: false
           auth_basic: null
           auth_basic_user_file: null

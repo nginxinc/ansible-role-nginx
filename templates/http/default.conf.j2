@@ -54,7 +54,7 @@ server {
     listen {{ item.value.listen.port }}{% if item.value.ssl is defined and item.value.ssl %} ssl{% endif %}{% if item.value.listen.opts is defined and item.value.listen.opts|length %} {{ item.value.listen.opts|join(" ") }}{% endif %};
 {% endif %}
 {% if item.value.listen.ipv6 is defined and item.value.listen.ipv6 %}
-    listen [::]:{{ item.value.listen.port }} ipv6only=on{% if item.value.ssl is defined and item.value.ssl %} ssl{% endif %}{% if item.value.listen.opts is defined and item.value.listen.opts|length %} {{ item.value.listen.opts|join(" ") }}{% endif %};
+    listen [::]:{{ item.value.listen.port }}{% if item.value.ssl is defined and item.value.ssl %} ssl{% endif %}{% if item.value.listen.opts is defined and item.value.listen.opts|length %} {{ item.value.listen.opts|join(" ") }}{% endif %};
 {% endif %}
 {% if item.value.ssl is defined and item.value.ssl %}
     ssl_certificate {{ item.value.ssl.cert }};

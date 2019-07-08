@@ -1,0 +1,31 @@
+---
+dependency:
+  name: shell
+  command: pip3 install --user python-nginx
+driver:
+  name: docker
+lint:
+  name: yamllint
+platforms:
+  - name: centos-6
+    image: centos:6
+  - name: centos-7
+    image: centos:7
+  - name: debian-jessie
+    image: debian:jessie
+  - name: debian-stretch
+    image: debian:stretch
+  - name: ubuntu-trusty
+    image: ubuntu:trusty
+  - name: ubuntu-xenial
+    image: ubuntu:xenial
+  - name: ubuntu-bionic
+    image: ubuntu:bionic
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+verifier:
+  name: testinfra
+  lint:
+    name: flake8

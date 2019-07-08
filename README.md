@@ -371,6 +371,7 @@ nginx_http_template:
     #auth_request_set:
       #name: $auth_user
       #value: $upstream_http_x_user
+    client_max_body_size: 1m
     add_headers:
       strict_transport_security:
         name: Strict-Transport-Security
@@ -415,6 +416,7 @@ nginx_http_template:
           #auth_request_set:
             #name: $auth_user
             #value: $upstream_http_x_user
+          client_max_body_size: 1m
           #returns:
             #return302:
               #code: 302

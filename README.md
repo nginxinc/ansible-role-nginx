@@ -380,6 +380,7 @@ nginx_http_template:
       dhparam: /etc/ssl/private/dh_param.pem
       protocols: TLSv1 TLSv1.1 TLSv1.2
       ciphers: HIGH:!aNULL:!MD5
+      prefer_server_ciphers: true
       session_cache: none
       session_timeout: 5m
       trusted_cert: /etc/ssl/certs/root_CA_cert_plus_intermediates.crt

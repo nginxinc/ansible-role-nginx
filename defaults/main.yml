@@ -305,6 +305,7 @@ nginx_http_template:
           proxy_ignore_headers:
             - Vary
             - Cache-Control
+          proxy_http_version: 1.0
           websocket: false
           auth_basic: null
           auth_basic_user_file: null

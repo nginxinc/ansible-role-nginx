@@ -161,6 +161,13 @@ server {
 {% for header in item.value.reverse_proxy.locations[location].proxy_set_header %}
         proxy_set_header {{ item.value.reverse_proxy.locations[location].proxy_set_header[header].name }} {{ item.value.reverse_proxy.locations[location].proxy_set_header[header].value }};
 {% endfor %}
+{% if item.value.reverse_proxy.locations[location].proxy_http_version is defined %}
+        proxy_http_version {{ item.value.reverse_proxy.locations[location].proxy_http_version }};
+{% endif %}
+{% if item.value.reverse_proxy.locations[location].websocket is defined and item.value.reverse_proxy.locations[location].websocket %}
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+{% endif %}
 {% endif %}
 {% if item.value.reverse_proxy.locations[location].try_files is defined %}
         try_files {{ item.value.reverse_proxy.locations[location].try_files }};

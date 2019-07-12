@@ -54,6 +54,9 @@ server {
     listen {{ item.value.port }} ssl;
     ssl_certificate {{ item.value.ssl.cert }};
     ssl_certificate_key {{ item.value.ssl.key }};
+{% if item.value.ssl.trusted_cert is defined %}
+    ssl_trusted_certificate {{ item.value.ssl.trusted_cert }};
+{% endif %}
 {% if item.value.ssl.dhparam is defined %}
     ssl_dhparam {{ item.value.ssl.dhparam }};
 {% endif %}
@@ -63,11 +66,20 @@ server {
 {% if item.value.ssl.ciphers is defined and item.value.ssl.ciphers %}
     ssl_ciphers {{ item.value.ssl.ciphers }};
 {% endif %}
+{% if item.value.ssl.prefer_server_ciphers is defined and item.value.ssl.prefer_server_ciphers %}
+    ssl_prefer_server_ciphers on;
+{% endif %}
 {% if item.value.ssl.session_cache is defined and item.value.ssl.session_cache %}
     ssl_session_cache {{ item.value.ssl.session_cache }};
 {% endif %}
 {% if item.value.ssl.session_timeout is defined and item.value.ssl.session_timeout %}
     ssl_session_timeout {{ item.value.ssl.session_timeout }};
+{% endif %}
+{% if item.value.ssl.stapling is defined and item.value.ssl.stapling %}
+    ssl_stapling on;
+{% endif %}
+{% if item.value.ssl.stapling_verify is defined and item.value.ssl.stapling_verify %}
+    ssl_stapling_verify on;
 {% endif %}
 {% else %}
     listen {{ item.value.port }};
@@ -76,6 +88,11 @@ server {
 {% if item.value.proxy_hide_headers is defined %}
 {% for header in item.value.proxy_hide_headers %}
     proxy_hide_header {{ header }};
+{% endfor %}
+{% endif %}
+{% if item.value.add_headers is defined %}
+{% for header in item.value.add_headers %}
+    add_header {{ item.value.add_headers[header].name }} "{{ item.value.add_headers[header].value }}"{% if item.value.add_headers[header].always is defined and item.value.add_headers[header].always %} always{% endif %};
 {% endfor %}
 {% endif %}
 {% if item.value.auth_basic is defined and item.value.auth_basic %}
@@ -109,6 +126,11 @@ server {
 {% if item.value.reverse_proxy.locations[location].proxy_hide_headers is defined %}
 {% for header in item.value.reverse_proxy.locations[location].proxy_hide_headers %}
         proxy_hide_header {{ header }};
+{% endfor %}
+{% endif %}
+{% if item.value.reverse_proxy.locations[location].add_headers is defined %}
+{% for header in item.value.reverse_proxy.locations[location].add_headers %}
+        add_header {{ item.value.reverse_proxy.locations[location].add_headers[header].name }} "{{ item.value.reverse_proxy.locations[location].add_headers[header].value }}"{% if item.value.reverse_proxy.locations[location].add_headers[header].always is defined and item.value.reverse_proxy.locations[location].add_headers[header].always %} always{% endif %};
 {% endfor %}
 {% endif %}
 {% if item.value.reverse_proxy.locations[location].auth_request is defined %}
@@ -149,6 +171,13 @@ server {
 {% for header in item.value.reverse_proxy.locations[location].proxy_set_header %}
         proxy_set_header {{ item.value.reverse_proxy.locations[location].proxy_set_header[header].name }} {{ item.value.reverse_proxy.locations[location].proxy_set_header[header].value }};
 {% endfor %}
+{% if item.value.reverse_proxy.locations[location].proxy_http_version is defined %}
+        proxy_http_version {{ item.value.reverse_proxy.locations[location].proxy_http_version }};
+{% endif %}
+{% if item.value.reverse_proxy.locations[location].websocket is defined and item.value.reverse_proxy.locations[location].websocket %}
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+{% endif %}
 {% endif %}
 {% if item.value.reverse_proxy.locations[location].try_files is defined %}
         try_files {{ item.value.reverse_proxy.locations[location].try_files }};
@@ -235,6 +264,11 @@ server {
 {% if item.value.web_server.locations[location].proxy_hide_headers is defined %}
 {% for header in item.value.web_server.locations[location].proxy_hide_headers %}
         proxy_hide_header {{ header }};
+{% endfor %}
+{% endif %}
+{% if item.value.web_server.locations[location].add_headers is defined %}
+{% for header in item.value.web_server.locations[location].add_headers %}
+        add_header {{ item.value.web_server.locations[location].add_headers[header].name }} "{{ item.value.web_server.locations[location].add_headers[header].value }}"{% if item.value.web_server.locations[location].add_headers[header].always is defined and item.value.web_server.locations[location].add_headers[header].always %} always{% endif %};
 {% endfor %}
 {% endif %}
 {% if item.value.web_server.locations[location].returns is defined %}

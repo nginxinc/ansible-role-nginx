@@ -17,6 +17,11 @@
         error_page: /usr/share/nginx/html
         proxy_hide_headers:
           - X-Powered-By
+        add_headers:
+          strict_transport_security:
+            name: Strict-Transport-Security
+            value: max-age=15768000; includeSubDomains
+            always: true
         reverse_proxy:
           proxy_cache_path:
             - path: /var/cache/nginx/proxy/frontend
@@ -50,6 +55,15 @@
               location: /
               proxy_hide_headers:
                 - X-Powered-By
+              add_headers:
+                strict_transport_security:
+                  name: Strict-Transport-Security
+                  value: max-age=15768000; includeSubDomains
+                  always: true
+                another_header:
+                  name: Fancy-New-Header-To-Test
+                  value: testing=true
+                  always: false
               proxy_pass: http://frontend_servers/
               proxy_cache: frontend_proxy_cache
               proxy_temp_path:

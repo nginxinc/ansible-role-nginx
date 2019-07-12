@@ -366,19 +366,41 @@ nginx_http_template:
     try_files: $uri $uri/index.html $uri.html =404
     #auth_request: /auth
     proxy_hide_headers: [] # A list of headers which shouldn't be passed to the application
+    add_headers:
+      strict_transport_security:
+        name: Strict-Transport-Security
+        value: max-age=15768000; includeSubDomains
+        always: true
+      #header_name:
+        #name: Header-X
+        #value: Value-X
+        #always: false
     ssl:
       cert: /etc/ssl/certs/default.crt
       key: /etc/ssl/private/default.key
       dhparam: /etc/ssl/private/dh_param.pem
       protocols: TLSv1 TLSv1.1 TLSv1.2
       ciphers: HIGH:!aNULL:!MD5
+      prefer_server_ciphers: true
       session_cache: none
       session_timeout: 5m
+      trusted_cert: /etc/ssl/certs/root_CA_cert_plus_intermediates.crt
+      stapling: true
+      stapling_verify: true
     web_server:
       locations:
         default:
           location: /
           proxy_hide_headers: [] # A list of headers which shouldn't be passed to the application
+          add_headers:
+            strict_transport_security:
+              name: Strict-Transport-Security
+              value: max-age=15768000; includeSubDomains
+              always: true
+            #header_name:
+              #name: Header-X
+              #value: Value-X
+              #always: false
           html_file_location: /usr/share/nginx/html
           html_file_name: index.html
           autoindex: false
@@ -415,6 +437,15 @@ nginx_http_template:
         backend:
           location: /
           proxy_hide_headers: [] # A list of headers which shouldn't be passed to the application
+          add_headers:
+            strict_transport_security:
+              name: Strict-Transport-Security
+              value: max-age=15768000; includeSubDomains
+              always: true
+            #header_name:
+              #name: Header-X
+              #value: Value-X
+              #always: false
           proxy_connect_timeout: null
           proxy_pass: http://backend
           #proxy_pass_request_body: off
@@ -465,6 +496,7 @@ nginx_http_template:
           proxy_ignore_headers:
             - Vary
             - Cache-Control
+          proxy_http_version: 1.0
           websocket: false
           auth_basic: null
           auth_basic_user_file: null

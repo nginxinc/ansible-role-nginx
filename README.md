@@ -345,6 +345,9 @@ nginx_main_template:
   stream_enable: false
   http_global_autoindex: false
   #auth_request_http: /auth
+  #auth_request_set_http:
+    #name: $auth_user
+    #value: $upstream_http_x_user
 
 # Enable creating dynamic templated NGINX HTTP configuration files.
 # Defaults will not produce a valid configuration. Instead they are meant to showcase
@@ -365,6 +368,9 @@ nginx_http_template:
     auth_basic_user_file: null
     try_files: $uri $uri/index.html $uri.html =404
     #auth_request: /auth
+    #auth_request_set:
+      #name: $auth_user
+      #value: $upstream_http_x_user
     proxy_hide_headers: [] # A list of headers which shouldn't be passed to the application
     add_headers:
       strict_transport_security:
@@ -408,6 +414,9 @@ nginx_http_template:
           auth_basic_user_file: null
           try_files: $uri $uri/index.html $uri.html =404
           #auth_request: /auth
+          #auth_request_set:
+            #name: $auth_user
+            #value: $upstream_http_x_user
           #returns:
             #return302:
               #code: 302
@@ -501,7 +510,10 @@ nginx_http_template:
           auth_basic: null
           auth_basic_user_file: null
           try_files: $uri $uri/index.html $uri.html =404
-          #auth_req: /auth
+          #auth_request: /auth
+          #auth_request_set:
+            #name: $auth_user
+            #value: $upstream_http_x_user
           #returns:
             #return302:
               #code: 302

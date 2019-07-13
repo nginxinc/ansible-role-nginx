@@ -48,6 +48,9 @@ proxy_temp_path {{ item.value.reverse_proxy.proxy_temp_path.path }} {{ item.valu
 {% if item.value.auth_request_http is defined %}
 auth_request {{ item.value.auth_request_http }};
 {% endif %}
+{% if item.value.auth_request_set_http is defined %}
+auth_request_set {{ item.value.auth_request_set_http.name }} {{ item.value.auth_request_set_http.value }};
+{% endif %}
 
 server {
 {% if item.value.ssl is defined and item.value.ssl %}
@@ -116,6 +119,9 @@ server {
 {% if item.value.auth_request is defined %}
     auth_request {{ item.value.auth_request }};
 {% endif %}
+{% if item.value.auth_request_set is defined %}
+    auth_request_set {{ item.value.auth_request_set.name }} {{ item.value.auth_request_set.value }};
+{% endif %}
 
 {% if item.value.reverse_proxy is defined and item.value.reverse_proxy %}
 {% for location in item.value.reverse_proxy.locations %}
@@ -135,6 +141,9 @@ server {
 {% endif %}
 {% if item.value.reverse_proxy.locations[location].auth_request is defined %}
         auth_request {{ item.value.reverse_proxy.locations[location].auth_request }};
+{% endif %}
+{% if item.value.reverse_proxy.locations[location].auth_request_set is defined %}
+        auth_request_set {{ item.value.reverse_proxy.locations[location].auth_request_set.name }} {{ item.value.reverse_proxy.locations[location].auth_request_set.value }};
 {% endif %}
 {% if item.value.reverse_proxy.locations[location].auth_basic is defined and item.value.reverse_proxy.locations[location].auth_basic %}
         auth_basic "{{ item.value.reverse_proxy.locations[location].auth_basic }}";
@@ -289,6 +298,10 @@ server {
 {% if item.value.web_server.locations[location].auth_request is defined %}
         auth_request {{ item.value.web_server.locations[location].auth_request }};
 {% endif %}
+{% if item.value.web_server.locations[location].auth_request_set is defined %}
+        auth_request_set {{ item.value.web_server.locations[location].auth_request_set.name }} {{ item.value.web_server.locations[location].auth_request_set.value }};
+{% endif %}
+
     }
 {% endfor %}
 {% if item.value.web_server.http_demo_conf %}

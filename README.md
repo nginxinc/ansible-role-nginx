@@ -372,6 +372,7 @@ nginx_http_template:
       #name: $auth_user
       #value: $upstream_http_x_user
     client_max_body_size: 1m
+    proxy_hide_headers: [] # A list of headers which shouldn't be passed to the application
     add_headers:
       strict_transport_security:
         name: Strict-Transport-Security
@@ -390,6 +391,7 @@ nginx_http_template:
       prefer_server_ciphers: true
       session_cache: none
       session_timeout: 5m
+      disable_session_tickets: false
       trusted_cert: /etc/ssl/certs/root_CA_cert_plus_intermediates.crt
       stapling: true
       stapling_verify: true
@@ -397,6 +399,7 @@ nginx_http_template:
       locations:
         default:
           location: /
+          proxy_hide_headers: [] # A list of headers which shouldn't be passed to the application
           add_headers:
             strict_transport_security:
               name: Strict-Transport-Security
@@ -445,6 +448,7 @@ nginx_http_template:
       locations:
         backend:
           location: /
+          proxy_hide_headers: [] # A list of headers which shouldn't be passed to the application
           add_headers:
             strict_transport_security:
               name: Strict-Transport-Security
@@ -504,6 +508,10 @@ nginx_http_template:
           proxy_ignore_headers:
             - Vary
             - Cache-Control
+          proxy_cookie_path:
+            path: /web/
+            replacement: /
+          proxy_buffering: false
           proxy_http_version: 1.0
           websocket: false
           auth_basic: null

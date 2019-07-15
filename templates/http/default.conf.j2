@@ -246,6 +246,7 @@ server {
 {% endif %}
 {% if item.value.reverse_proxy.locations[location].proxy_cookie_path is defined %}
         proxy_cookie_path {{ item.value.reverse_proxy.locations[location].proxy_cookie_path.path }} {{ item.value.reverse_proxy.locations[location].proxy_cookie_path.replacement }};
+{% endif %}
 {% if item.value.reverse_proxy.locations[location].proxy_buffering is defined %}
         proxy_buffering {{ item.value.reverse_proxy.locations[location].proxy_buffering | ternary("on", "off") }};
 {% endif %}

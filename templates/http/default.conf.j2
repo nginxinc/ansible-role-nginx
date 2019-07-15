@@ -78,6 +78,9 @@ server {
 {% if item.value.ssl.session_timeout is defined and item.value.ssl.session_timeout %}
     ssl_session_timeout {{ item.value.ssl.session_timeout }};
 {% endif %}
+{% if item.value.ssl.disable_session_tickets is defined and item.value.ssl.disable_session_tickets %}
+    ssl_session_tickets off;
+{% endif %}
 {% if item.value.ssl.stapling is defined and item.value.ssl.stapling %}
     ssl_stapling on;
 {% endif %}

@@ -506,6 +506,9 @@ nginx_http_template:
           proxy_ignore_headers:
             - Vary
             - Cache-Control
+          proxy_cookie_path:
+            path: /web/
+            replacement: /
           proxy_buffering: false
           proxy_http_version: 1.0
           websocket: false

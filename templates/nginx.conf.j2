@@ -38,7 +38,7 @@ http {
     keyval_zone zone={{nginx_main_template.http_settings.keyval.zone}}:32k state=one.keyval;
     keyval $arg_text $text zone=one;
 {% endif %}
-{% if nginx_main_template.http_global_autoindex %}
+{% if nginx_main_template.http_global_autoindex | default(false) %}
     autoindex on;
 {% endif %}
     include /etc/nginx/conf.d/*.conf;

@@ -271,9 +271,13 @@ server {
 {% if item.value.web_server is defined %}
 {% for location in item.value.web_server.locations %}
     location {{ item.value.web_server.locations[location].location }} {
+{% if item.value.web_server.locations[location].html_file_location is defined %}
         root   {{ item.value.web_server.locations[location].html_file_location }};
+{% endif %}
+{% if item.value.web_server.locations[location].html_file_name is defined %}
         index  {{ item.value.web_server.locations[location].html_file_name }};
-{% if item.value.web_server.locations[location].autoindex %}
+{% endif %}
+{% if item.value.web_server.locations[location].autoindex | default(false) %}
         autoindex on;
 {% endif %}
 {% if item.value.web_server.locations[location].try_files is defined %}

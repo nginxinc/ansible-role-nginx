@@ -15,6 +15,8 @@
         port: 80
         server_name: localhost
         error_page: /usr/share/nginx/html
+        proxy_hide_headers:
+          - X-Powered-By
         add_headers:
           strict_transport_security:
             name: Strict-Transport-Security
@@ -51,6 +53,8 @@
           locations:
             frontend:
               location: /
+              proxy_hide_headers:
+                - X-Powered-By
               add_headers:
                 strict_transport_security:
                   name: Strict-Transport-Security
@@ -152,6 +156,8 @@
           locations:
             frontend_site:
               location: /
+              proxy_hide_headers:
+                - X-Powered-By
               html_file_location: /usr/share/nginx/html
               html_file_name: frontend_index.html
               autoindex: false

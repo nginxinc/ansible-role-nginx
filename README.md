@@ -371,6 +371,7 @@ nginx_http_template:
     #auth_request_set:
       #name: $auth_user
       #value: $upstream_http_x_user
+    proxy_hide_headers: [] # A list of headers which shouldn't be passed to the application
     add_headers:
       strict_transport_security:
         name: Strict-Transport-Security
@@ -397,6 +398,7 @@ nginx_http_template:
       locations:
         default:
           location: /
+          proxy_hide_headers: [] # A list of headers which shouldn't be passed to the application
           add_headers:
             strict_transport_security:
               name: Strict-Transport-Security
@@ -444,6 +446,7 @@ nginx_http_template:
       locations:
         backend:
           location: /
+          proxy_hide_headers: [] # A list of headers which shouldn't be passed to the application
           add_headers:
             strict_transport_security:
               name: Strict-Transport-Security

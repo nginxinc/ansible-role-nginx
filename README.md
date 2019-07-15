@@ -371,6 +371,7 @@ nginx_http_template:
     #auth_request_set:
       #name: $auth_user
       #value: $upstream_http_x_user
+    client_max_body_size: 1m
     proxy_hide_headers: [] # A list of headers which shouldn't be passed to the application
     add_headers:
       strict_transport_security:
@@ -418,6 +419,7 @@ nginx_http_template:
           #auth_request_set:
             #name: $auth_user
             #value: $upstream_http_x_user
+          client_max_body_size: 1m
           #returns:
             #return302:
               #code: 302

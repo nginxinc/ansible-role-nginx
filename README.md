@@ -360,6 +360,7 @@ nginx_http_template:
     conf_file_location: /etc/nginx/conf.d/
     port: 8081
     server_name: localhost
+    include_files: []
     error_page: /usr/share/nginx/html
     root: /usr/share/nginx/html
     https_redirect: false
@@ -399,6 +400,7 @@ nginx_http_template:
       locations:
         default:
           location: /
+          include_files: []
           proxy_hide_headers: [] # A list of headers which shouldn't be passed to the application
           add_headers:
             strict_transport_security:
@@ -448,6 +450,7 @@ nginx_http_template:
       locations:
         backend:
           location: /
+          include_files: []
           proxy_hide_headers: [] # A list of headers which shouldn't be passed to the application
           add_headers:
             strict_transport_security:

@@ -550,6 +550,14 @@ nginx_http_template:
             port: 8081
             weight: 1
             health_check: max_fails=1 fail_timeout=10s
+    returns:
+      return301:
+        location: /
+        code: 301
+        value: http://$host$request_uri
+      return404:
+        location: /setup
+        code: 404
 
 # Enable NGINX status data.
 # Will enable 'stub_status' in NGINX Open Source and 'status' in NGINX Plus.

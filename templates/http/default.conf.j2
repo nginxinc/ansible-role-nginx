@@ -91,6 +91,11 @@ server {
     listen {{ item.value.port }};
 {% endif %}
     server_name {{ item.value.server_name | default('localhost') }};
+{% if item.value.include_files is defined and item.value.include_files | length %}
+{% for file in item.value.include_files %}
+    include "{{ file }}";
+{% endfor %}
+{% endif %}
 {% if item.value.proxy_hide_headers is defined %}
 {% for header in item.value.proxy_hide_headers %}
     proxy_hide_header {{ header }};
@@ -134,6 +139,11 @@ server {
     location {{ item.value.reverse_proxy.locations[location].location }} {
 {% if item.value.reverse_proxy.locations[location].internal is sameas true %}
         internal;
+{% endif %}
+{% if item.value.reverse_proxy.locations[location].include_files is defined and item.value.reverse_proxy.locations[location].include_files | length %}
+{% for file in item.value.reverse_proxy.locations[location].include_files %}
+        include "{{ file }}";
+{% endfor %}
 {% endif %}
 {% if item.value.reverse_proxy.locations[location].proxy_hide_headers is defined %}
 {% for header in item.value.reverse_proxy.locations[location].proxy_hide_headers %}
@@ -288,6 +298,11 @@ server {
 {% endif %}
 {% if item.value.web_server.locations[location].try_files is defined %}
         try_files {{ item.value.web_server.locations[location].try_files }};
+{% endif %}
+{% if item.value.web_server.locations[location].include_files is defined and item.value.web_server.locations[location].include_files | length %}
+{% for file in item.value.web_server.locations[location].include_files %}
+        include "{{ file }}";
+{% endfor %}
 {% endif %}
 {% if item.value.web_server.locations[location].proxy_hide_headers is defined %}
 {% for header in item.value.web_server.locations[location].proxy_hide_headers %}

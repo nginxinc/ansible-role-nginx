@@ -581,6 +581,7 @@ nginx_stream_template:
         listen_address: localhost
         listen_port: 80
         udp_enable: false
+        include_files: []
         proxy_pass: backend
         proxy_timeout: 3s
         proxy_connect_timeout: 1s

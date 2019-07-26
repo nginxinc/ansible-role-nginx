@@ -20,6 +20,13 @@
               - default_server
         server_name: localhost
         error_page: /usr/share/nginx/html
+        proxy_hide_headers:
+          - X-Powered-By
+        add_headers:
+          strict_transport_security:
+            name: Strict-Transport-Security
+            value: max-age=15768000; includeSubDomains
+            always: true
         reverse_proxy:
           proxy_cache_path:
             - path: /var/cache/nginx/proxy/frontend
@@ -51,6 +58,17 @@
           locations:
             frontend:
               location: /
+              proxy_hide_headers:
+                - X-Powered-By
+              add_headers:
+                strict_transport_security:
+                  name: Strict-Transport-Security
+                  value: max-age=15768000; includeSubDomains
+                  always: true
+                another_header:
+                  name: Fancy-New-Header-To-Test
+                  value: testing=true
+                  always: false
               proxy_pass: http://frontend_servers/
               proxy_cache: frontend_proxy_cache
               proxy_temp_path:
@@ -78,6 +96,7 @@
                 header_x_forwarded_proto:
                   name: X-Forwarded-Proto
                   value: $scheme
+              proxy_buffering: false
             backend:
               location: /backend
               proxy_pass: http://backend_servers/
@@ -105,6 +124,9 @@
                 header_x_forwarded_proto:
                   name: X-Forwarded-Proto
                   value: $scheme
+              proxy_cookie_path:
+                path: /web/
+                replacement: /
         upstreams:
           frontend_upstream:
             name: frontend_servers
@@ -130,6 +152,11 @@
                 port: 8082
                 weight: 1
                 health_check: max_fails=3 fail_timeout=5s
+        returns:
+          return301:
+            location: ^~ /old-path
+            code: 301
+            value: http://$host/new-path
       frontend:
         template_file: http/default.conf.j2
         conf_file_name: frontend_default.conf
@@ -146,6 +173,8 @@
           locations:
             frontend_site:
               location: /
+              proxy_hide_headers:
+                - X-Powered-By
               html_file_location: /usr/share/nginx/html
               html_file_name: frontend_index.html
               autoindex: false

@@ -172,7 +172,7 @@ nginx_http_template:
     conf_file_location: /etc/nginx/conf.d/
     listen:
       listen_localhost:
-        ip: localhost
+        ip: localhost # Wrap in square brackets for IPv6 addresses
         port: 8081
         opts: [] # Listen opts like http2 which will be added (ssl is automatically added if you specify 'ssl:').
     server_name: localhost

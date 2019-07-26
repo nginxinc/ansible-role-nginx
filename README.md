@@ -356,10 +356,10 @@ nginx_http_template:
     conf_file_name: default.conf
     conf_file_location: /etc/nginx/conf.d/
     listen:
-      port: 8081
-      opts: [] # Listen opts like http2 which will be added (ssl is automatically added if you specify 'ssl:').
-      ipv4: true
-      ipv6: false
+      listen_localhost:
+        ip: localhost
+        port: 8081
+        opts: [] # Listen opts like http2 which will be added (ssl is automatically added if you specify 'ssl:').
     server_name: localhost
     error_page: /usr/share/nginx/html
     root: /usr/share/nginx/html

@@ -13,11 +13,11 @@
         conf_file_name: default.conf
         conf_file_location: /etc/nginx/conf.d/
         listen:
-          port: 80
-          opts:
-            - default_server
-          ipv4: true
-          ipv6: true
+          listen_localhost:
+            ip: localhost
+            port: 80
+            opts:
+              - default_server
         server_name: localhost
         error_page: /usr/share/nginx/html
         reverse_proxy:
@@ -135,10 +135,10 @@
         conf_file_name: frontend_default.conf
         conf_file_location: /etc/nginx/conf.d/
         listen:
-          port: 8081
-          opts: []
-          ipv4: false
-          ipv6: true
+          listen_localhost:
+            ip: localhost
+            port: 8081
+            opts: []
         server_name: localhost
         error_page: /usr/share/nginx/html
         autoindex: false
@@ -155,10 +155,10 @@
         conf_file_name: backend_default.conf
         conf_file_location: /etc/nginx/conf.d/
         listen:
-          port: 8082
-          opts: []
-          ipv4: true
-          ipv6: false
+          listen_localhost:
+            ip: localhost
+            port: 8082
+            opts: []
         server_name: localhost
         error_page: /usr/share/nginx/html
         autoindex: false

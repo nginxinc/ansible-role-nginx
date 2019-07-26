@@ -180,6 +180,9 @@ server {
         proxy_connect_timeout {{ item.value.reverse_proxy.locations[location].proxy_connect_timeout }};
 {% endif %}
         proxy_pass {{ item.value.reverse_proxy.locations[location].proxy_pass }};
+{% if item.value.reverse_proxy.locations[location].rewrite is defined %}
+        rewrite {{ item.value.reverse_proxy.locations[location].rewrite }};
+{% endif %}
 {% if item.value.reverse_proxy.locations[location].proxy_read_timeout is defined and item.value.reverse_proxy.locations[location].proxy_read_timeout %}
         proxy_read_timeout {{ item.value.reverse_proxy.locations[location].proxy_read_timeout }};
 {% endif %}

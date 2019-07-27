@@ -90,6 +90,7 @@ server {
 {% if item.value.ssl.stapling_verify is defined and item.value.ssl.stapling_verify %}
     ssl_stapling_verify on;
 {% endif %}
+{% endif %}
 {% if item.value.include_files is defined and item.value.include_files | length %}
 {% for file in item.value.include_files %}
     include "{{ file }}";

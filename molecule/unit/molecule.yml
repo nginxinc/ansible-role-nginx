@@ -9,7 +9,7 @@ platforms:
   - name: centos-6
     image: centos:6
   - name: centos-7
-    image: centos:7
+    image: centos/systemd
   - name: debian-jessie
     image: debian:jessie
   - name: debian-stretch

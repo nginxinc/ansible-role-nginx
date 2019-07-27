@@ -6,6 +6,7 @@ import testinfra.utils.ansible_runner
 testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
     os.environ['MOLECULE_INVENTORY_FILE']).get_hosts('all')
 
+
 def test_generated_files(host):
     assert host.file('/etc/nginx/conf.d/default.conf').exists
     assert host.file('/etc/nginx/conf.d/frontend_default.conf').exists
@@ -19,6 +20,7 @@ def test_default_server(host):
     assert len(lf) == 1
     lb = c.server.filter('Location', '/backend')
     assert len(lb) == 1
+
 
 def test_client_max_body_size(host):
     f = host.file('/etc/nginx/conf.d/default.conf')

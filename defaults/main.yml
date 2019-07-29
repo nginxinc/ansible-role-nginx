@@ -170,7 +170,11 @@ nginx_http_template:
     template_file: http/default.conf.j2
     conf_file_name: default.conf
     conf_file_location: /etc/nginx/conf.d/
-    port: 8081
+    listen:
+      listen_localhost:
+        ip: localhost # Wrap in square brackets for IPv6 addresses
+        port: 8081
+        opts: [] # Listen opts like http2 which will be added (ssl is automatically added if you specify 'ssl:').
     server_name: localhost
     include_files: []
     error_page: /usr/share/nginx/html

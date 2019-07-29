@@ -25,6 +25,6 @@ def test_hosts_file(host):
 
 
 def test_endpoint(host):
-    command = """curl http://localhost/"""
+    command = """curl -I http://localhost/"""
     cmd = host.run(command)
     assert '200 OK' in cmd.stdout

@@ -345,6 +345,9 @@ nginx_main_template:
   stream_enable: false
   http_global_autoindex: false
   #auth_request_http: /auth
+  #auth_request_set_http:
+    #name: $auth_user
+    #value: $upstream_http_x_user
 
 # Enable creating dynamic templated NGINX HTTP configuration files.
 # Defaults will not produce a valid configuration. Instead they are meant to showcase
@@ -355,8 +358,13 @@ nginx_http_template:
     template_file: http/default.conf.j2
     conf_file_name: default.conf
     conf_file_location: /etc/nginx/conf.d/
-    port: 8081
+    listen:
+      listen_localhost:
+        ip: localhost # Wrap in square brackets for IPv6 addresses
+        port: 8081
+        opts: [] # Listen opts like http2 which will be added (ssl is automatically added if you specify 'ssl:').
     server_name: localhost
+    include_files: []
     error_page: /usr/share/nginx/html
     root: /usr/share/nginx/html
     https_redirect: false
@@ -365,6 +373,11 @@ nginx_http_template:
     auth_basic_user_file: null
     try_files: $uri $uri/index.html $uri.html =404
     #auth_request: /auth
+    #auth_request_set:
+      #name: $auth_user
+      #value: $upstream_http_x_user
+    client_max_body_size: 1m
+    proxy_hide_headers: [] # A list of headers which shouldn't be passed to the application
     add_headers:
       strict_transport_security:
         name: Strict-Transport-Security
@@ -380,12 +393,19 @@ nginx_http_template:
       dhparam: /etc/ssl/private/dh_param.pem
       protocols: TLSv1 TLSv1.1 TLSv1.2
       ciphers: HIGH:!aNULL:!MD5
+      prefer_server_ciphers: true
       session_cache: none
       session_timeout: 5m
+      disable_session_tickets: false
+      trusted_cert: /etc/ssl/certs/root_CA_cert_plus_intermediates.crt
+      stapling: true
+      stapling_verify: true
     web_server:
       locations:
         default:
           location: /
+          include_files: []
+          proxy_hide_headers: [] # A list of headers which shouldn't be passed to the application
           add_headers:
             strict_transport_security:
               name: Strict-Transport-Security
@@ -402,6 +422,10 @@ nginx_http_template:
           auth_basic_user_file: null
           try_files: $uri $uri/index.html $uri.html =404
           #auth_request: /auth
+          #auth_request_set:
+            #name: $auth_user
+            #value: $upstream_http_x_user
+          client_max_body_size: 1m
           #returns:
             #return302:
               #code: 302
@@ -430,6 +454,8 @@ nginx_http_template:
       locations:
         backend:
           location: /
+          include_files: []
+          proxy_hide_headers: [] # A list of headers which shouldn't be passed to the application
           add_headers:
             strict_transport_security:
               name: Strict-Transport-Security
@@ -441,6 +467,7 @@ nginx_http_template:
               #always: false
           proxy_connect_timeout: null
           proxy_pass: http://backend
+          #rewrite: /foo(.*) /$1 break
           #proxy_pass_request_body: off
           proxy_set_header:
             header_host:
@@ -489,11 +516,19 @@ nginx_http_template:
           proxy_ignore_headers:
             - Vary
             - Cache-Control
+          proxy_cookie_path:
+            path: /web/
+            replacement: /
+          proxy_buffering: false
+          proxy_http_version: 1.0
           websocket: false
           auth_basic: null
           auth_basic_user_file: null
           try_files: $uri $uri/index.html $uri.html =404
-          #auth_req: /auth
+          #auth_request: /auth
+          #auth_request_set:
+            #name: $auth_user
+            #value: $upstream_http_x_user
           #returns:
             #return302:
               #code: 302
@@ -520,6 +555,14 @@ nginx_http_template:
             port: 8081
             weight: 1
             health_check: max_fails=1 fail_timeout=10s
+    returns:
+      return301:
+        location: /
+        code: 301
+        value: http://$host$request_uri
+      return404:
+        location: /setup
+        code: 404
 
 # Enable NGINX status data.
 # Will enable 'stub_status' in NGINX Open Source and 'status' in NGINX Plus.
@@ -551,6 +594,7 @@ nginx_stream_template:
         listen_address: localhost
         listen_port: 80
         udp_enable: false
+        include_files: []
         proxy_pass: backend
         proxy_timeout: 3s
         proxy_connect_timeout: 1s

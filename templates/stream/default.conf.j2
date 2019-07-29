@@ -43,6 +43,11 @@ server {
     listen {{ item.value.network_streams[stream].listen_port }};
 {% endif %}
 {% endif %}
+{% if item.value.network_streams[stream].include_files is defined and item.value.network_streams[stream].include_files | length %}
+{% for file in item.value.network_streams[stream].include_files %}
+    include "{{ file }}";
+{% endfor %}
+{% endif %}
     proxy_pass {{ item.value.network_streams[stream].proxy_pass }};
     proxy_timeout {{ item.value.network_streams[stream].proxy_timeout }};
     proxy_connect_timeout {{ item.value.network_streams[stream].proxy_connect_timeout }};

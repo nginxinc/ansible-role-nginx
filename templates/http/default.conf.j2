@@ -54,7 +54,7 @@ auth_request_set {{ item.value.auth_request_set_http.name }} {{ item.value.auth_
 
 server {
 {% for listen in item.value.listen %}
-    listen {{ item.value.listen[listen].ip }}:{{ item.value.listen[listen].port }}{% if item.value.ssl is defined and item.value.ssl %} ssl{% endif %}{% if item.value.listen[listen].opts is defined and item.value.listen[listen].opts | length %} {{ item.value.listen[listen].opts | join(" ") }}{% endif %};
+    listen {% item.value.listen[listen].ip is defined and item.value.listen[listen].ip | length %}{{ item.value.listen[listen].ip }}:{% endif %}{{ item.value.listen[listen].port }}{% if item.value.ssl is defined and item.value.ssl %} ssl{% endif %}{% if item.value.listen[listen].opts is defined and item.value.listen[listen].opts | length %} {{ item.value.listen[listen].opts | join(" ") }}{% endif %};
 {% endfor %}
     server_name {{ item.value.server_name | default('localhost') }};
 {% if item.value.ssl is defined and item.value.ssl %}

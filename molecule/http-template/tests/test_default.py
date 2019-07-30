@@ -28,7 +28,7 @@ def test_client_max_body_size(host):
     vs = c.server.filter('Key', 'client_max_body_size')
     assert len(vs) == 1
     assert vs[0].value == '512k'
-    l = c.server.filter('Location', '/')
-    vl = l[0].filter('Key', 'client_max_body_size')
+    lc = c.server.filter('Location', '/')
+    vl = lc[0].filter('Key', 'client_max_body_size')
     assert len(vl) == 1
     assert vl[0].value == '5m'

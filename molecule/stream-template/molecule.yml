@@ -18,8 +18,6 @@ platforms:
     image: debian:jessie
   - name: debian-stretch
     image: debian:stretch
-  - name: ubuntu-trusty
-    image: ubuntu:trusty
   - name: ubuntu-xenial
     image: ubuntu:xenial
   - name: ubuntu-bionic

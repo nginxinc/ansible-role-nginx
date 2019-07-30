@@ -11,10 +11,17 @@
         template_file: http/default.conf.j2
         conf_file_name: default.conf
         conf_file_location: /etc/nginx/conf.d/
-        port: 80
+        listen:
+          listen_localhost:
+            ip: 0.0.0.0
+            port: 80
+            opts:
+              - default_server
         server_name: localhost
         error_page: /usr/share/nginx/html
         client_max_body_size: 512k
+        proxy_hide_headers:
+          - X-Powered-By
         add_headers:
           strict_transport_security:
             name: Strict-Transport-Security
@@ -51,6 +58,8 @@
           locations:
             frontend:
               location: /
+              proxy_hide_headers:
+                - X-Powered-By
               add_headers:
                 strict_transport_security:
                   name: Strict-Transport-Security
@@ -87,6 +96,7 @@
                 header_x_forwarded_proto:
                   name: X-Forwarded-Proto
                   value: $scheme
+              proxy_buffering: false
               client_max_body_size: 5m
             backend:
               location: /backend
@@ -115,6 +125,9 @@
                 header_x_forwarded_proto:
                   name: X-Forwarded-Proto
                   value: $scheme
+              proxy_cookie_path:
+                path: /web/
+                replacement: /
         upstreams:
           frontend_upstream:
             name: frontend_servers
@@ -124,7 +137,7 @@
             sticky_cookie: false
             servers:
               frontend_server_1:
-                address: localhost
+                address: 0.0.0.0
                 port: 8081
                 weight: 1
                 health_check: max_fails=3 fail_timeout=5s
@@ -136,6 +149,15 @@
             sticky_cookie: false
             servers:
               backend_server_1:
+                address: 0.0.0.0
+                port: 8082
+                weight: 1
+                health_check: max_fails=3 fail_timeout=5s
+        returns:
+          return301:
+            location: ^~ /old-path
+            code: 301
+            value: http://$host/new-path
                 address: localhost
                 port: 8082
                 weight: 1
@@ -144,7 +166,10 @@
         template_file: http/default.conf.j2
         conf_file_name: frontend_default.conf
         conf_file_location: /etc/nginx/conf.d/
-        port: 8081
+        listen:
+          listen_localhost:
+            port: 8081
+            opts: []
         server_name: localhost
         error_page: /usr/share/nginx/html
         autoindex: false
@@ -152,6 +177,8 @@
           locations:
             frontend_site:
               location: /
+              proxy_hide_headers:
+                - X-Powered-By
               html_file_location: /usr/share/nginx/html
               html_file_name: frontend_index.html
               autoindex: false
@@ -160,7 +187,10 @@
         template_file: http/default.conf.j2
         conf_file_name: backend_default.conf
         conf_file_location: /etc/nginx/conf.d/
-        port: 8082
+        listen:
+          listen_localhost:
+            port: 8082
+            opts: []
         server_name: localhost
         error_page: /usr/share/nginx/html
         autoindex: false

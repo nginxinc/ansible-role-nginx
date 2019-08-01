@@ -1,5 +1,0 @@
----
-- name: "(All OSs) Delete NGINX Plus License"
-  file:
-    path: /etc/ssl/nginx
-    state: absent

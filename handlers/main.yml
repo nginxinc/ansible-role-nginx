@@ -36,3 +36,9 @@
         enabled: yes
 
   when: nginx_start | bool
+
+- name: "(Handler: All OSs) Delete NGINX plus license"
+  file:
+    path: /etc/ssl/nginx
+    state: absent
+  when: nginx_delete_license | bool

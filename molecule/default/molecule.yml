@@ -1,6 +1,4 @@
 ---
-dependency:
-  name: galaxy
 driver:
   name: docker
 lint:

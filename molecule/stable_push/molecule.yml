@@ -1,4 +1,7 @@
 ---
+dependency:
+  name: shell
+  command: pip install python-nginx
 driver:
   name: docker
 lint:

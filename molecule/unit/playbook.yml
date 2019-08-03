@@ -1,9 +1,8 @@
 ---
-- hosts: localhost
-  become: true
-  remote_user: root
+- name: Converge
+  hosts: all
   roles:
-    - ansible-role-nginx
+    - role: ansible-role-nginx
   vars:
     nginx_enable: false
     nginx_unit_enable: true

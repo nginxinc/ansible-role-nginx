@@ -33,9 +33,6 @@
     - import_tasks: conf/cleanup-config.yml
       when: nginx_cleanup_config | bool
 
-    - import_tasks: modules/install-modules.yml
-      when: true in nginx_modules.values()
-
     - import_tasks: conf/upload-config.yml
       when: nginx_main_upload_enable
             or nginx_http_upload_enable
@@ -51,6 +48,9 @@
 
     - import_tasks: conf/setup-status.yml
       when: nginx_status_enable | bool
+
+    - import_tasks: modules/install-modules.yml
+      when: true in nginx_modules.values()
 
     - import_tasks: conf/debug-output.yml
       when: nginx_debug_output | bool

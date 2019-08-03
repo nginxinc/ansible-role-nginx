@@ -1,0 +1,13 @@
+extends: default
+
+rules:
+  braces:
+    max-spaces-inside: 1
+    level: error
+  brackets:
+    max-spaces-inside: 1
+    level: error
+  comments: disable
+  comments-indentation: disable
+  line-length: disable
+  truthy: disable

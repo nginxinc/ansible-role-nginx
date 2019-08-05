@@ -281,6 +281,10 @@ nginx_http_template:
           proxy_pass: http://backend
           #rewrite: /foo(.*) /$1 break
           #proxy_pass_request_body: off
+          #allows:
+          # - 192.168.1.0/24
+          #denies:
+          # - all
           proxy_set_header:
             header_host:
               name: Host

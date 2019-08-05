@@ -227,6 +227,10 @@ nginx_http_template:
           proxy_connect_timeout: null
           proxy_pass: http://backend
           #proxy_pass_request_body: off
+          #allows:
+          # - 192.168.1.0/24
+          #denies:
+          # - all
           proxy_set_header:
             header_host:
               name: Host

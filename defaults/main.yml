@@ -146,6 +146,7 @@ nginx_main_template:
   conf_file_location: /etc/nginx/
   user: nginx
   worker_processes: auto
+  worker_rlimit_nofile: undefined # Used when a number is given
   error_level: warn
   worker_connections: 1024
   http_enable: true

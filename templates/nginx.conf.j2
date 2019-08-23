@@ -34,7 +34,7 @@ load_module modules/ngx_http_modsecurity_module.so;
 user  {{ nginx_main_template.user }};
 worker_processes  {{ nginx_main_template.worker_processes }};
 
-{% if nginx_main_template.worker_rlimit_nofile is defined and nginx_main_template.worker_rlimit_nofile != "undefined" %}
+{% if nginx_main_template.worker_rlimit_nofile is defined %}
 worker_rlimit_nofile {{ nginx_main_template.worker_rlimit_nofile }};
 {% endif %}
 

@@ -38,12 +38,23 @@ worker_processes  {{ nginx_main_template.worker_processes }};
 worker_rlimit_nofile {{ nginx_main_template.worker_rlimit_nofile }};
 {% endif %}
 
+{% if nginx_main_template.custom_options is defined and nginx_main_template.custom_options | length %}
+{% for inline_option in nginx_main_template.custom_options %}
+{{ inline_option }};
+{% endfor %}
+{% endif %}
+
 error_log  {{ nginx_main_template.error_log.location }} {{ nginx_main_template.error_log.level }};
 pid        /var/run/nginx.pid;
 
 
 events {
     worker_connections  {{ nginx_main_template.worker_connections }};
+{% if nginx_main_template.events_custom_options is defined and nginx_main_template.events_custom_options | length %}
+{% for inline_option in nginx_main_template.events_custom_options %}
+    {{ inline_option }};
+{% endfor %}
+{% endif %}
 }
 
 {% if nginx_main_template.http_enable %}
@@ -78,12 +89,22 @@ http {
 {% if nginx_main_template.http_global_autoindex | default(false) %}
     autoindex on;
 {% endif %}
+{% if nginx_main_template.http_custom_options is defined and nginx_main_template.http_custom_options | length %}
+{% for inline_option in nginx_main_template.http_custom_options %}
+    {{ inline_option }};
+{% endfor %}
+{% endif %}
     include /etc/nginx/conf.d/*.conf;
 }
 {% endif %}
 
 {% if nginx_main_template.stream_enable %}
 stream {
+{% if nginx_main_template.stream_custom_options is defined and nginx_main_template.stream_custom_options | length %}
+{% for inline_option in nginx_main_template.stream_custom_options %}
+    {{ inline_option }};
+{% endfor %}
+{% endif %}
     include /etc/nginx/conf.d/stream/*.conf;
 }
 {% endif %}

@@ -1,0 +1,38 @@
+---
+- hosts: localhost
+  become: true
+  remote_user: root
+  roles:
+    - ansible-role-nginx
+  vars:
+    nginx_debug_output: true
+    nginx_http_template_enable: true
+      default:
+        template_file: http/default.conf.j2
+        conf_file_name: default.conf
+        conf_file_location: /etc/nginx/conf.d/
+        listen:
+          listen_localhost:
+            port: 80
+        server_name: localhost
+        error_page: /usr/share/nginx/html
+        autoindex: false
+        web_server:
+          locations:
+            default:
+              location: /
+              html_file_location: /usr/share/nginx/html
+              html_file_name: index.html
+              autoindex: false
+            php-fpm:
+              location: ~ \.php$
+              html_file_location: /usr/share/nginx/html
+              autoindex: false
+              custom_options:
+              - fastcgi_split_path_info ^(.+\.php)(/.+)$
+              - fastcgi_pass unix:/run/php/php7.2-fpm.sock
+              - fastcgi_index index.php
+              - include fastcgi_params
+              - fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name
+          http_demo_conf: false
+

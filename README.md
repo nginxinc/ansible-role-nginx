@@ -37,9 +37,9 @@ Debian:
   versions:
     - jessie
     - stretch
+    - buster
 Ubuntu:
   versions:
-    - trusty
     - xenial
     - bionic
 SUSE/SLES:
@@ -73,6 +73,7 @@ Debian:
   versions:
     - jessie
     - stretch
+    - buster
 FreeBSD:
   versions:
     - 11.2+
@@ -92,7 +93,6 @@ SUSE/SLES:
     - 15
 Ubuntu:
   versions:
-    - trusty
     - xenial
     - bionic
 ```
@@ -164,6 +164,7 @@ Debian:
   versions:
     - jessie
     - stretch
+    - buster
 Ubuntu:
   versions:
     - xenial
@@ -334,6 +335,7 @@ nginx_main_template:
   conf_file_location: /etc/nginx/
   user: nginx
   worker_processes: auto
+  #worker_rlimit_nofile: 1024
   error_log:
     location: /var/log/nginx/error.log
     level: warn

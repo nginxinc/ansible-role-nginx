@@ -13,13 +13,14 @@ galaxy_info:
     - name: Alpine
       versions:
         - all
-    - name: Amazon Linux
+    - name: Amazon
       versions:
-        - candidate
+        - Candidate
     - name: Debian
       versions:
         - jessie
         - stretch
+        - buster
     - name: EL
       versions:
         - 6
@@ -30,7 +31,6 @@ galaxy_info:
         - 12.0
     - name: Ubuntu
       versions:
-        - trusty
         - xenial
         - bionic
     - name: SLES

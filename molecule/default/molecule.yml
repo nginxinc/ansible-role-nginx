@@ -16,6 +16,8 @@ platforms:
     image: debian:jessie
   - name: debian-stretch
     image: debian:stretch
+  - name: debian-buster
+    image: debian:buster
   - name: ubuntu-xenial
     image: ubuntu:xenial
   - name: ubuntu-bionic

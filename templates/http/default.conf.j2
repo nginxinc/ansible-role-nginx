@@ -380,4 +380,14 @@ server {
         root   {{ item.value.error_page }};
     }
 {% endif %}
+
+{% if item.value.access_log is defined %}
+{% for access_log in item.value.access_log %}
+    access_log  {{ access_log.location }}  {{ access_log.name }};
+{% endfor %}
+{% endif %}
+{% if item.value.error_log is defined %}
+    error_log {{ item.value.error_log.location }} {{ item.value.error_log.level }};
+{% endif %}
+
 }

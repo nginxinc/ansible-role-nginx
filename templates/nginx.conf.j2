@@ -38,7 +38,7 @@ worker_processes  {{ nginx_main_template.worker_processes }};
 worker_rlimit_nofile {{ nginx_main_template.worker_rlimit_nofile }};
 {% endif %}
 
-error_log  /var/log/nginx/error.log {{ nginx_main_template.error_level }};
+error_log  {{ nginx_main_template.error_log.location }} {{ nginx_main_template.error_log.level }};
 pid        /var/run/nginx.pid;
 
 
@@ -51,11 +51,13 @@ http {
     include       /etc/nginx/mime.types;
     default_type  application/octet-stream;
 
-    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
-                      '$status $body_bytes_sent "$http_referer" '
-                      '"$http_user_agent" "$http_x_forwarded_for"';
+{% for access_log in nginx_main_template.http_settings.access_log_format %}
+    log_format  {{ access_log.name }}  {{ access_log.format }};
+{% endfor %}
 
-    access_log  /var/log/nginx/access.log  main;
+{% for access_log in nginx_main_template.http_settings.access_log_location %}
+    access_log  {{ access_log.location }}  {{ access_log.name }};
+{% endfor %}
 
     sendfile        on;
     #tcp_nopush     on;

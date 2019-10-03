@@ -21,6 +21,3 @@
     name: nginx-plus
     state: present
   notify: "(Handler: All OSs) Start NGINX"
-
-- import_tasks: delete-license.yml
-  when: nginx_delete_license | bool

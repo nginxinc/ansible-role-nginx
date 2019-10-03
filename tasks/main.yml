@@ -55,6 +55,9 @@
     - import_tasks: conf/debug-output.yml
       when: nginx_debug_output | bool
 
+    - import_tasks: plus/delete-license.yml
+      when: nginx_type == "plus" and nginx_delete_license
+
   when: nginx_enable | bool
 
 - import_tasks: amplify/install-amplify.yml

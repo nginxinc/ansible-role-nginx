@@ -36,4 +36,3 @@
     name: unitd
     state: started
     enabled: yes
-  when: nginx_start | bool

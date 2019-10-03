@@ -15,7 +15,6 @@
       with_items:
         - "{{ nginx_license.certificate }}"
         - "{{ nginx_license.key }}"
-      changed_when: true
 
   when: ansible_distribution != "Alpine"
 
@@ -32,13 +31,11 @@
         src: "{{ nginx_license.key }}"
         dest: /etc/apk/cert.key
         decrypt: yes
-      changed_when: true
 
     - name: "(Alpine Linux) Copy NGINX Plus Certificate"
       copy:
         src: "{{ nginx_license.certificate }}"
         dest: /etc/apk/cert.pem
         decrypt: yes
-      changed_when: true
 
   when: ansible_distribution == "Alpine"

@@ -31,12 +31,6 @@
     state: started
     enabled: yes
 
-- name: "(Handler: All OSs) Delete NGINX plus license"
-  file:
-    path: /etc/ssl/nginx
-    state: absent
-  when: nginx_delete_license | bool
-
 - name: "(Handler: FreeBSD) Start NGINX Unit"
   service:
     name: unitd

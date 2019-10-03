@@ -16,7 +16,6 @@
         - "{{ nginx_license.certificate }}"
         - "{{ nginx_license.key }}"
       changed_when: true
-      notify: "(Handler: All OSs) Delete NGINX plus license"
 
   when: ansible_distribution != "Alpine"
 
@@ -34,7 +33,6 @@
         dest: /etc/apk/cert.key
         decrypt: yes
       changed_when: true
-      notify: "(Handler: All OSs) Delete NGINX plus license"
 
     - name: "(Alpine Linux) Copy NGINX Plus Certificate"
       copy:
@@ -42,6 +40,5 @@
         dest: /etc/apk/cert.pem
         decrypt: yes
       changed_when: true
-      notify: "(Handler: All OSs) Delete NGINX plus license"
 
   when: ansible_distribution == "Alpine"

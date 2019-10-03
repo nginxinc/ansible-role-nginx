@@ -3,7 +3,7 @@
   yum_repository:
     name: nginx-plus
     baseurl: >-
-      https://plus-pkgs.nginx.com/centos/{{ (ansible_distribution_version | float >= 7.4 and ansible_distribution_version | float < 8.0) 
+      https://plus-pkgs.nginx.com/centos/{{ (ansible_distribution_version | float >= 7.4 and ansible_distribution_version | float < 8.0)
       | ternary(ansible_distribution_major_version | int, 7.4) }}/$basearch/
     description: NGINX Plus Repository
     sslclientcert: /etc/ssl/nginx/nginx-repo.crt

@@ -1,8 +1,0 @@
----
-- hosts: localhost
-  become: true
-  remote_user: root
-  roles:
-    - ansible-role-nginx
-  vars:
-    nginx_branch: stable

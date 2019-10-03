@@ -13,32 +13,33 @@
         name: nginx
         state: reloaded
 
-    - name: "(Handler: All OSs) Start NGINX Amplify Agent"
-      service:
-        name: amplify-agent
-        state: started
-
-    - name: "(Handler: All OSs) Start NGINX Controller Agent"
-      service:
-        name: controller-agent
-        state: started
-
-    - name: "(Handler: Debian/Ubuntu/CentOS/RedHat) Start NGINX Unit"
-      service:
-        name: unit
-        state: started
-        enabled: yes
-
-    - name: "(Handler: FreeBSD) Start NGINX Unit"
-      service:
-        name: unitd
-        state: started
-        enabled: yes
-
   when: nginx_start | bool
+
+- name: "(Handler: All OSs) Start NGINX Amplify Agent"
+  service:
+    name: amplify-agent
+    state: started
+
+- name: "(Handler: All OSs) Start NGINX Controller Agent"
+  service:
+    name: controller-agent
+    state: started
+
+- name: "(Handler: Debian/Ubuntu/CentOS/RedHat) Start NGINX Unit"
+  service:
+    name: unit
+    state: started
+    enabled: yes
 
 - name: "(Handler: All OSs) Delete NGINX plus license"
   file:
     path: /etc/ssl/nginx
     state: absent
   when: nginx_delete_license | bool
+
+- name: "(Handler: FreeBSD) Start NGINX Unit"
+  service:
+    name: unitd
+    state: started
+    enabled: yes
+  when: nginx_start | bool

@@ -37,9 +37,9 @@ Debian:
   versions:
     - jessie
     - stretch
+    - buster
 Ubuntu:
   versions:
-    - trusty
     - xenial
     - bionic
 SUSE/SLES:
@@ -73,6 +73,7 @@ Debian:
   versions:
     - jessie
     - stretch
+    - buster
 FreeBSD:
   versions:
     - 11.2+
@@ -92,7 +93,6 @@ SUSE/SLES:
     - 15
 Ubuntu:
   versions:
-    - trusty
     - xenial
     - bionic
 ```
@@ -164,6 +164,7 @@ Debian:
   versions:
     - jessie
     - stretch
+    - buster
 Ubuntu:
   versions:
     - xenial
@@ -334,10 +335,22 @@ nginx_main_template:
   conf_file_location: /etc/nginx/
   user: nginx
   worker_processes: auto
-  error_level: warn
+  #worker_rlimit_nofile: 1024
+  error_log:
+    location: /var/log/nginx/error.log
+    level: warn
   worker_connections: 1024
   http_enable: true
   http_settings:
+    access_log_format:
+      - name: main
+        format: |-
+          '$remote_addr - $remote_user [$time_local] "$request" '
+          '$status $body_bytes_sent "$http_referer" '
+          '"$http_user_agent" "$http_x_forwarded_for"'
+    access_log_location:
+      - name: main
+        location: /var/log/nginx/access.log
     keepalive_timeout: 65
     cache: false
     rate_limit: false
@@ -366,6 +379,12 @@ nginx_http_template:
     server_name: localhost
     include_files: []
     error_page: /usr/share/nginx/html
+    access_log:
+      - name: main
+        location: /var/log/nginx/access.log
+    error_log:
+      location: /var/log/nginx/error.log
+      level: warn
     root: /usr/share/nginx/html
     https_redirect: false
     autoindex: false
@@ -469,6 +488,10 @@ nginx_http_template:
           proxy_pass: http://backend
           #rewrite: /foo(.*) /$1 break
           #proxy_pass_request_body: off
+          #allows:
+          # - 192.168.1.0/24
+          #denies:
+          # - all
           proxy_set_header:
             header_host:
               name: Host
@@ -560,9 +583,6 @@ nginx_http_template:
         location: /
         code: 301
         value: http://$host$request_uri
-      return404:
-        location: /setup
-        code: 404
 
 # Enable NGINX status data.
 # Will enable 'stub_status' in NGINX Open Source and 'status' in NGINX Plus.

@@ -3,11 +3,16 @@ sudo: required
 language: python
 services:
   - docker
+scenario:
+  - default
+  - stable_push
+  - template_module
+  - unit
 before_install:
   - sudo apt-get -qq update
 install:
   - pip install molecule[docker]
 script:
-  - molecule test --all
+  - molecule test -s ${scenario}
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

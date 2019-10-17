@@ -5,3 +5,4 @@
     state: absent
   with_items:
     - "{{ nginx_cleanup_config_path }}"
+  notify: "(Handler: All OSs) Reload NGINX"

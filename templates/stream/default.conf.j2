@@ -24,6 +24,12 @@ upstream {{ item.value.upstreams[upstream].name }} {
 {% endfor %}
 {% endif %}
 
+{% if item.value.custom_options is defined and item.value.custom_options | length %}
+{% for inline_option in item.value.custom_options %}
+{{ inline_option }};
+{% endfor %}
+{% endif %}
+
 {% if item.value.network_streams is defined %}
 {% for stream in item.value.network_streams %}
 server {

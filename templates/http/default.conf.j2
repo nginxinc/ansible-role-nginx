@@ -57,6 +57,12 @@ auth_request {{ item.value.auth_request_http }};
 auth_request_set {{ item.value.auth_request_set_http.name }} {{ item.value.auth_request_set_http.value }};
 {% endif %}
 
+{% if item.value.http_custom_options is defined and item.value.http_custom_options | length %}
+{% for inline_option in item.value.http_custom_options %}
+{{ inline_option }};
+{% endfor %}
+{% endif %}
+
 server {
 {% for listen in item.value.listen %}
     listen {% if item.value.listen[listen].ip is defined and item.value.listen[listen].ip | length %}{{ item.value.listen[listen].ip }}:{% endif %}{{ item.value.listen[listen].port }}{% if item.value.ssl is defined and item.value.ssl %} ssl{% endif %}{% if item.value.listen[listen].opts is defined and item.value.listen[listen].opts | length %} {{ item.value.listen[listen].opts | join(" ") }}{% endif %};
@@ -138,8 +144,8 @@ server {
 {% if item.value.client_max_body_size is defined and item.value.client_max_body_size %}
     client_max_body_size {{ item.value.client_max_body_size }};
 {% endif %}
-{% if item.value.custom_options is defined and item.value.custom_options | length %}
-{% for inline_option in item.value.custom_options %}
+{% if item.value.server_custom_options is defined and item.value.server_custom_options | length %}
+{% for inline_option in item.value.server_custom_options %}
     {{ inline_option }};
 {% endfor %}
 {% endif %}

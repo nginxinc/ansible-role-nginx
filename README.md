@@ -218,23 +218,23 @@ nginx_install_from: nginx_repository
 # Only works if 'install_from' is set to 'nginx_repository'.
 # Defaults are the official NGINX repositories.
 nginx_repository:
-alpine: >-
-    https://nginx.org/packages/{{ (nginx_branch == 'mainline')
-    | ternary('mainline/', '') }}alpine/v{{ ansible_distribution_version | regex_search('^[0-9]+\\.[0-9]+') }}/main
-debian:
-  - >-
-    deb https://nginx.org/packages/{{ (nginx_branch == 'mainline')
-    | ternary('mainline/', '') }}{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} nginx
-  - >-
-    deb-src https://nginx.org/packages/{{ (nginx_branch == 'mainline')
-    | ternary('mainline/', '') }}{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} nginx
-redhat: >-
-    https://nginx.org/packages/{{ (nginx_branch == 'mainline')
-    | ternary('mainline/', '') }}{{ (ansible_distribution == "RedHat")
-    | ternary('rhel', 'centos') }}/{{ ansible_distribution_major_version }}/$basearch/
-suse: >-
-    https://nginx.org/packages/{{ (nginx_branch == 'mainline')
-    | ternary('mainline/', '') }}sles/{{ ansible_distribution_major_version }}
+  alpine: >-
+      https://nginx.org/packages/{{ (nginx_branch == 'mainline')
+      | ternary('mainline/', '') }}alpine/v{{ ansible_distribution_version | regex_search('^[0-9]+\\.[0-9]+') }}/main
+  debian:
+    - >-
+      deb https://nginx.org/packages/{{ (nginx_branch == 'mainline')
+      | ternary('mainline/', '') }}{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} nginx
+    - >-
+      deb-src https://nginx.org/packages/{{ (nginx_branch == 'mainline')
+      | ternary('mainline/', '') }}{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} nginx
+  redhat: >-
+      https://nginx.org/packages/{{ (nginx_branch == 'mainline')
+      | ternary('mainline/', '') }}{{ (ansible_distribution == "RedHat")
+      | ternary('rhel', 'centos') }}/{{ ansible_distribution_major_version }}/$basearch/
+  suse: >-
+      https://nginx.org/packages/{{ (nginx_branch == 'mainline')
+      | ternary('mainline/', '') }}sles/{{ ansible_distribution_major_version }}
 
 # Specify which branch of NGINX Open Source you want to install.
 # Options are 'mainline' or 'stable'.
@@ -245,8 +245,8 @@ nginx_branch: mainline
 # Location of your NGINX Plus license in your local machine.
 # Default is the files folder within the NGINX Ansible role.
 nginx_license:
-certificate: license/nginx-repo.crt
-key: license/nginx-repo.key
+  certificate: license/nginx-repo.crt
+  key: license/nginx-repo.key
 
 # Delete NGINX Plus license after installation for security purposes.
 # Default is true.
@@ -255,13 +255,13 @@ nginx_delete_license: true
 # Install NGINX JavaScript, Perl, ModSecurity WAF (NGINX Plus only), GeoIP, Image-Filter, RTMP Media Streaming, and/or XSLT modules.
 # Default is false.
 nginx_modules:
-njs: false
-perl: false
-waf: false
-geoip: false
-image_filter: false
-rtmp: false
-xslt: false
+  njs: false
+  perl: false
+  waf: false
+  geoip: false
+  image_filter: false
+  rtmp: false
+  xslt: false
 
 # Install NGINX Amplify.
 # Use your NGINX Amplify API key.
@@ -289,7 +289,7 @@ nginx_unit_modules: null
 # Default is false.
 nginx_cleanup_config: false
 nginx_cleanup_config_path:
-- /etc/nginx/conf.d
+  - /etc/nginx/conf.d
 
 # Enable uploading NGINX configuration files to your system.
 # Default for uploading files is false.
@@ -320,275 +320,276 @@ nginx_ssl_key_upload_dest: /etc/ssl/private/
 # Enable creating dynamic templated NGINX HTML demo websites.
 nginx_html_demo_template_enable: false
 nginx_html_demo_template:
-default:
-  template_file: www/index.html.j2
-  html_file_name: index.html
-  html_file_location: /usr/share/nginx/html
-  web_server_name: Default
+  default:
+    template_file: www/index.html.j2
+    html_file_name: index.html
+    html_file_location: /usr/share/nginx/html
+    web_server_name: Default
 
 # Enable creating dynamic templated NGINX configuration files.
 # Defaults are the values found in a fresh NGINX installation.
 nginx_main_template_enable: false
 nginx_main_template:
-template_file: nginx.conf.j2
-conf_file_name: nginx.conf
-conf_file_location: /etc/nginx/
-user: nginx
-worker_processes: auto
-#worker_rlimit_nofile: 1024
-error_log:
-  location: /var/log/nginx/error.log
-  level: warn
-worker_connections: 1024
-http_enable: true
-http_settings:
-  access_log_format:
-    - name: main
-      format: |-
-        '$remote_addr - $remote_user [$time_local] "$request" '
-        '$status $body_bytes_sent "$http_referer" '
-        '"$http_user_agent" "$http_x_forwarded_for"'
-  access_log_location:
-    - name: main
-      location: /var/log/nginx/access.log
-  keepalive_timeout: 65
-  cache: false
-  rate_limit: false
-  keyval: false
-http_global_autoindex: false
-#http_custom_options: []
-stream_enable: false
-#stream_custom_options: []
-#auth_request_http: /auth
-#auth_request_set_http:
-  #name: $auth_user
-  #value: $upstream_http_x_user
+  template_file: nginx.conf.j2
+  conf_file_name: nginx.conf
+  conf_file_location: /etc/nginx/
+  user: nginx
+  worker_processes: auto
+  #worker_rlimit_nofile: 1024
+  error_log:
+    location: /var/log/nginx/error.log
+    level: warn
+  worker_connections: 1024
+  http_enable: true
+  http_settings:
+    access_log_format:
+      - name: main
+        format: |-
+          '$remote_addr - $remote_user [$time_local] "$request" '
+          '$status $body_bytes_sent "$http_referer" '
+          '"$http_user_agent" "$http_x_forwarded_for"'
+    access_log_location:
+      - name: main
+        location: /var/log/nginx/access.log
+    keepalive_timeout: 65
+    cache: false
+    rate_limit: false
+    keyval: false
+  http_global_autoindex: false
+  #http_custom_options: []
+  stream_enable: false
+  #stream_custom_options: []
+  #auth_request_http: /auth
+  #auth_request_set_http:
+    #name: $auth_user
+    #value: $upstream_http_x_user
 
 # Enable creating dynamic templated NGINX HTTP configuration files.
 # Defaults will not produce a valid configuration. Instead they are meant to showcase
 # the options available for templating. Each key represents a new configuration file.
 nginx_http_template_enable: false
 nginx_http_template:
-default:
-  template_file: http/default.conf.j2
-  conf_file_name: default.conf
-  conf_file_location: /etc/nginx/conf.d/
-  listen:
-    listen_localhost:
-      ip: localhost # Wrap in square brackets for IPv6 addresses
-      port: 8081
-      opts: [] # Listen opts like http2 which will be added (ssl is automatically added if you specify 'ssl:').
-  server_name: localhost
-  include_files: []
-  error_page: /usr/share/nginx/html
-  access_log:
-    - name: main
-      location: /var/log/nginx/access.log
-  error_log:
-    location: /var/log/nginx/error.log
-    level: warn
-  root: /usr/share/nginx/html
-  https_redirect: false
-  autoindex: false
-  auth_basic: null
-  auth_basic_user_file: null
-  try_files: $uri $uri/index.html $uri.html =404
-  #auth_request: /auth
-  #auth_request_set:
-    #name: $auth_user
-    #value: $upstream_http_x_user
-  client_max_body_size: 1m
-  proxy_hide_headers: [] # A list of headers which shouldn't be passed to the application
-  add_headers:
-    strict_transport_security:
-      name: Strict-Transport-Security
-      value: max-age=15768000; includeSubDomains
-      always: true
-    #header_name:
-      #name: Header-X
-      #value: Value-X
-      #always: false
-  ssl:
-    cert: /etc/ssl/certs/default.crt
-    key: /etc/ssl/private/default.key
-    dhparam: /etc/ssl/private/dh_param.pem
-    protocols: TLSv1 TLSv1.1 TLSv1.2
-    ciphers: HIGH:!aNULL:!MD5
-    prefer_server_ciphers: true
-    session_cache: none
-    session_timeout: 5m
-    disable_session_tickets: false
-    trusted_cert: /etc/ssl/certs/root_CA_cert_plus_intermediates.crt
-    stapling: true
-    stapling_verify: true
-  web_server:
-    locations:
-      default:
-        location: /
-        include_files: []
-        proxy_hide_headers: [] # A list of headers which shouldn't be passed to the application
-        add_headers:
-          strict_transport_security:
-            name: Strict-Transport-Security
-            value: max-age=15768000; includeSubDomains
-            always: true
-          #header_name:
-            #name: Header-X
-            #value: Value-X
-            #always: false
-        html_file_location: /usr/share/nginx/html
-        html_file_name: index.html
-        autoindex: false
-        auth_basic: null
-        auth_basic_user_file: null
-        try_files: $uri $uri/index.html $uri.html =404
-        #auth_request: /auth
-        #auth_request_set:
-          #name: $auth_user
-          #value: $upstream_http_x_user
-        client_max_body_size: 1m
-        #returns:
-          #return302:
-            #code: 302
-            #url: https://sso.somehost.local/?url=https://$http_host$request_uri
-        #custom_options: []
-    http_demo_conf: false
-  reverse_proxy:
-    proxy_cache_path:
-      - path: /var/cache/nginx/proxy/backend
+  default:
+    template_file: http/default.conf.j2
+    conf_file_name: default.conf
+    conf_file_location: /etc/nginx/conf.d/
+    listen:
+      listen_localhost:
+        ip: localhost # Wrap in square brackets for IPv6 addresses
+        port: 8081
+        opts: [] # Listen opts like http2 which will be added (ssl is automatically added if you specify 'ssl:').
+    server_name: localhost
+    include_files: []
+    error_page: /usr/share/nginx/html
+    access_log:
+      - name: main
+        location: /var/log/nginx/access.log
+    error_log:
+      location: /var/log/nginx/error.log
+      level: warn
+    root: /usr/share/nginx/html
+    https_redirect: false
+    autoindex: false
+    auth_basic: null
+    auth_basic_user_file: null
+    try_files: $uri $uri/index.html $uri.html =404
+    #auth_request: /auth
+    #auth_request_set:
+      #name: $auth_user
+      #value: $upstream_http_x_user
+    client_max_body_size: 1m
+    proxy_hide_headers: [] # A list of headers which shouldn't be passed to the application
+    add_headers:
+      strict_transport_security:
+        name: Strict-Transport-Security
+        value: max-age=15768000; includeSubDomains
+        always: true
+      #header_name:
+        #name: Header-X
+        #value: Value-X
+        #always: false
+    ssl:
+      cert: /etc/ssl/certs/default.crt
+      key: /etc/ssl/private/default.key
+      dhparam: /etc/ssl/private/dh_param.pem
+      protocols: TLSv1 TLSv1.1 TLSv1.2
+      ciphers: HIGH:!aNULL:!MD5
+      prefer_server_ciphers: true
+      session_cache: none
+      session_timeout: 5m
+      disable_session_tickets: false
+      trusted_cert: /etc/ssl/certs/root_CA_cert_plus_intermediates.crt
+      stapling: true
+      stapling_verify: true
+    web_server:
+      locations:
+        default:
+          location: /
+          include_files: []
+          proxy_hide_headers: [] # A list of headers which shouldn't be passed to the application
+          add_headers:
+            strict_transport_security:
+              name: Strict-Transport-Security
+              value: max-age=15768000; includeSubDomains
+              always: true
+            #header_name:
+              #name: Header-X
+              #value: Value-X
+              #always: false
+          html_file_location: /usr/share/nginx/html
+          html_file_name: index.html
+          autoindex: false
+          auth_basic: null
+          auth_basic_user_file: null
+          try_files: $uri $uri/index.html $uri.html =404
+          #auth_request: /auth
+          #auth_request_set:
+            #name: $auth_user
+            #value: $upstream_http_x_user
+          client_max_body_size: 1m
+          #returns:
+            #return302:
+              #code: 302
+              #url: https://sso.somehost.local/?url=https://$http_host$request_uri
+          #custom_options: []
+      http_demo_conf: false
+    reverse_proxy:
+      proxy_cache_path:
+        - path: /var/cache/nginx/proxy/backend
+          keys_zone:
+            name: backend_proxy_cache
+            size: 10m
+          levels: "1:2"
+          max_size: 10g
+          inactive: 60m
+          use_temp_path: true
+      proxy_temp_path:
+        path: /var/cache/nginx/proxy/temp
+      proxy_cache_lock: true
+      proxy_cache_min_uses: 5
+      proxy_cache_revalidate: true
+      proxy_cache_use_stale:
+        - error
+        - timeout
+      proxy_ignore_headers:
+        - Expires
+      locations:
+        backend:
+          location: /
+          include_files: []
+          proxy_hide_headers: [] # A list of headers which shouldn't be passed to the application
+          add_headers:
+            strict_transport_security:
+              name: Strict-Transport-Security
+              value: max-age=15768000; includeSubDomains
+              always: true
+            #header_name:
+              #name: Header-X
+              #value: Value-X
+              #always: false
+          proxy_connect_timeout: null
+          proxy_pass: http://backend
+          #rewrite: /foo(.*) /$1 break
+          #proxy_pass_request_body: off
+          #allows:
+          # - 192.168.1.0/24
+          #denies:
+          # - all
+          proxy_set_header:
+            header_host:
+              name: Host
+              value: $host
+            header_x_real_ip:
+              name: X-Real-IP
+              value: $remote_addr
+            header_x_forwarded_for:
+              name: X-Forwarded-For
+              value: $proxy_add_x_forwarded_for
+            header_x_forwarded_proto:
+              name: X-Forwarded-Proto
+              value: $scheme
+            #header_upgrade:
+              #name: Upgrade
+              #value: $http_upgrade
+            #header_connection:
+              #name: Connection
+              #value: "Upgrade"
+            #header_random:
+              #name: RandomName
+              #value: RandomValue
+          #internal: false
+          #proxy_store: off
+          #proxy_store_acccess: user:rw
+          proxy_read_timeout: null
+          proxy_ssl:
+            cert: /etc/ssl/certs/proxy_default.crt
+            key: /etc/ssl/private/proxy_default.key
+            trusted_cert: /etc/ssl/certs/proxy_ca.crt
+            protocols: TLSv1 TLSv1.1 TLSv1.2
+            ciphers: HIGH:!aNULL:!MD5
+            verify: false
+            verify_depth: 1
+            session_reuse: true
+          proxy_cache: frontend_proxy_cache
+          proxy_temp_path:
+            path: /var/cache/nginx/proxy/backend/temp
+          proxy_cache_lock: false
+          proxy_cache_min_uses: 3
+          proxy_cache_revalidate: false
+          proxy_cache_use_stale:
+            - http_403
+            - http_404
+          proxy_ignore_headers:
+            - Vary
+            - Cache-Control
+          proxy_cookie_path:
+            path: /web/
+            replacement: /
+          proxy_buffering: false
+          proxy_http_version: 1.0
+          websocket: false
+          auth_basic: null
+          auth_basic_user_file: null
+          try_files: $uri $uri/index.html $uri.html =404
+          #auth_request: /auth
+          #auth_request_set:
+            #name: $auth_user
+            #value: $upstream_http_x_user
+          #returns:
+            #return302:
+              #code: 302
+              #url: https://sso.somehost.local/?url=https://$http_host$request_uri
+          #custom_options: []
+      health_check_plus: false
+    proxy_cache:
+      proxy_cache_path:
+        path: /var/cache/nginx
         keys_zone:
-          name: backend_proxy_cache
+          name: one
           size: 10m
-        levels: "1:2"
-        max_size: 10g
-        inactive: 60m
-        use_temp_path: true
-    proxy_temp_path:
-      path: /var/cache/nginx/proxy/temp
-    proxy_cache_lock: true
-    proxy_cache_min_uses: 5
-    proxy_cache_revalidate: true
-    proxy_cache_use_stale:
-      - error
-      - timeout
-    proxy_ignore_headers:
-      - Expires
-    locations:
-      backend:
-        location: /
-        include_files: []
-        proxy_hide_headers: [] # A list of headers which shouldn't be passed to the application
-        add_headers:
-          strict_transport_security:
-            name: Strict-Transport-Security
-            value: max-age=15768000; includeSubDomains
-            always: true
-          #header_name:
-            #name: Header-X
-            #value: Value-X
-            #always: false
-        proxy_connect_timeout: null
-        proxy_pass: http://backend
-        #rewrite: /foo(.*) /$1 break
-        #proxy_pass_request_body: off
-        #allows:
-        # - 192.168.1.0/24
-        #denies:
-        # - all
-        proxy_set_header:
-          header_host:
-            name: Host
-            value: $host
-          header_x_real_ip:
-            name: X-Real-IP
-            value: $remote_addr
-          header_x_forwarded_for:
-            name: X-Forwarded-For
-            value: $proxy_add_x_forwarded_for
-          header_x_forwarded_proto:
-            name: X-Forwarded-Proto
-            value: $scheme
-          #header_upgrade:
-            #name: Upgrade
-            #value: $http_upgrade
-          #header_connection:
-            #name: Connection
-            #value: "Upgrade"
-          #header_random:
-            #name: RandomName
-            #value: RandomValue
-        #internal: false
-        #proxy_store: off
-        #proxy_store_acccess: user:rw
-        proxy_read_timeout: null
-        proxy_ssl:
-          cert: /etc/ssl/certs/proxy_default.crt
-          key: /etc/ssl/private/proxy_default.key
-          trusted_cert: /etc/ssl/certs/proxy_ca.crt
-          protocols: TLSv1 TLSv1.1 TLSv1.2
-          ciphers: HIGH:!aNULL:!MD5
-          verify: false
-          verify_depth: 1
-          session_reuse: true
-        proxy_cache: frontend_proxy_cache
-        proxy_temp_path:
-          path: /var/cache/nginx/proxy/backend/temp
-        proxy_cache_lock: false
-        proxy_cache_min_uses: 3
-        proxy_cache_revalidate: false
-        proxy_cache_use_stale:
-          - http_403
-          - http_404
-        proxy_ignore_headers:
-          - Vary
-          - Cache-Control
-        proxy_cookie_path:
-          path: /web/
-          replacement: /
-        proxy_buffering: false
-        proxy_http_version: 1.0
-        websocket: false
-        auth_basic: null
-        auth_basic_user_file: null
-        try_files: $uri $uri/index.html $uri.html =404
-        #auth_request: /auth
-        #auth_request_set:
-          #name: $auth_user
-          #value: $upstream_http_x_user
-        #returns:
-          #return302:
-            #code: 302
-            #url: https://sso.somehost.local/?url=https://$http_host$request_uri
+      proxy_temp_path:
+        path: /var/cache/nginx/proxy
+    upstreams:
+      upstream1:
+        name: backend
+        lb_method: least_conn
+        zone_name: backend_mem_zone
+        zone_size: 64k
+        sticky_cookie: false
+        servers:
+          server1:
+            address: localhost
+            port: 8081
+            weight: 1
+            health_check: max_fails=1 fail_timeout=10s
         #custom_options: []
-    health_check_plus: false
-  proxy_cache:
-    proxy_cache_path:
-      path: /var/cache/nginx
-      keys_zone:
-        name: one
-        size: 10m
-    proxy_temp_path:
-      path: /var/cache/nginx/proxy
-  upstreams:
-    upstream1:
-      name: backend
-      lb_method: least_conn
-      zone_name: backend_mem_zone
-      zone_size: 64k
-      sticky_cookie: false
-      servers:
-        server1:
-          address: localhost
-          port: 8081
-          weight: 1
-          health_check: max_fails=1 fail_timeout=10s
-      #custom_options: []
-  returns:
-    return301:
-      location: /
-      code: 301
-      value: http://$host$request_uri
-  #custom_options: []
+    returns:
+      return301:
+        location: /
+        code: 301
+        value: http://$host$request_uri
+    #http_custom_options: []
+    #server_custom_options: []
 
 # Enable NGINX status data.
 # Will enable 'stub_status' in NGINX Open Source and 'status' in NGINX Plus.
@@ -611,45 +612,46 @@ nginx_rest_api_dashboard: false
 # the options available for templating. Each key represents a new configuration file.
 nginx_stream_template_enable: false
 nginx_stream_template:
-default:
-  template_file: stream/default.conf.j2
-  conf_file_name: default.conf
-  conf_file_location: /etc/nginx/conf.d/stream/
-  network_streams:
-    default:
-      listen_address: localhost
-      listen_port: 80
-      udp_enable: false
-      include_files: []
-      proxy_pass: backend
-      proxy_timeout: 3s
-      proxy_connect_timeout: 1s
-      proxy_protocol: false
-      proxy_ssl:
-        cert: /etc/ssl/certs/proxy_default.crt
-        key: /etc/ssl/private/proxy_default.key
-        trusted_cert: /etc/ssl/certs/proxy_ca.crt
-        protocols: TLSv1 TLSv1.1 TLSv1.2
-        ciphers: HIGH:!aNULL:!MD5
-        verify: false
-        verify_depth: 1
-        session_reuse: true
-      health_check_plus: false
-      #custom_options: []
-  upstreams:
-    upstream1:
-      name: backend
-      lb_method: least_conn
-      zone_name: backend
-      zone_size: 64k
-      sticky_cookie: false
-      servers:
-        server1:
-          address: localhost
-          port: 8080
-          weight: 1
-          health_check: max_fails=1 fail_timeout=10s
-      #custom_options: []
+  default:
+    template_file: stream/default.conf.j2
+    conf_file_name: default.conf
+    conf_file_location: /etc/nginx/conf.d/stream/
+    network_streams:
+      default:
+        listen_address: localhost
+        listen_port: 80
+        udp_enable: false
+        include_files: []
+        proxy_pass: backend
+        proxy_timeout: 3s
+        proxy_connect_timeout: 1s
+        proxy_protocol: false
+        proxy_ssl:
+          cert: /etc/ssl/certs/proxy_default.crt
+          key: /etc/ssl/private/proxy_default.key
+          trusted_cert: /etc/ssl/certs/proxy_ca.crt
+          protocols: TLSv1 TLSv1.1 TLSv1.2
+          ciphers: HIGH:!aNULL:!MD5
+          verify: false
+          verify_depth: 1
+          session_reuse: true
+        health_check_plus: false
+        #custom_options: []
+    upstreams:
+      upstream1:
+        name: backend
+        lb_method: least_conn
+        zone_name: backend
+        zone_size: 64k
+        sticky_cookie: false
+        servers:
+          server1:
+            address: localhost
+            port: 8080
+            weight: 1
+            health_check: max_fails=1 fail_timeout=10s
+        #custom_options: []
+    #custom_options: []
 ```
 
 Dependencies

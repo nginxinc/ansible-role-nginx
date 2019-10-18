@@ -57,8 +57,8 @@ auth_request {{ item.value.auth_request_http }};
 auth_request_set {{ item.value.auth_request_set_http.name }} {{ item.value.auth_request_set_http.value }};
 {% endif %}
 
-{% if item.value.main_custom_options is defined and item.value.main_custom_options | length %}
-{% for inline_option in item.value.main_custom_options %}
+{% if item.value.custom_options is defined and item.value.custom_options | length %}
+{% for inline_option in item.value.custom_options %}
 {{ inline_option }};
 {% endfor %}
 {% endif %}

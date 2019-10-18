@@ -398,7 +398,7 @@ nginx_http_template:
         code: 301
         value: http://$host$request_uri
     #server_custom_options: []
-    #main_custom_options: []
+    #custom_options: []
 
 # Enable NGINX status data.
 # Will enable 'stub_status' in NGINX Open Source and 'status' in NGINX Plus.

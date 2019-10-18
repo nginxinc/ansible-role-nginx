@@ -227,6 +227,16 @@
               html_file_location: /usr/share/nginx/html
               html_file_name: backend_index.html
               autoindex: false
+            php:
+              location: ~ \.php$
+              html_file_location: /usr/share/nginx/html
+              autoindex: false
+              custom_options:
+                - fastcgi_split_path_info ^(.+\.php)(/.+)$
+                - fastcgi_pass unix:/run/php/php7.2-fpm.sock
+                - fastcgi_index index.php
+                - include fastcgi_params
+                - fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name
           http_demo_conf: true
     nginx_html_demo_template_enable: true
     nginx_html_demo_template:

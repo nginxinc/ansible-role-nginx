@@ -723,7 +723,12 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a 
         template_file: http/default.conf.j2
         conf_file_name: default.conf
         conf_file_location: /etc/nginx/conf.d/
-        port: 80
+        listen:
+          listen_localhost:
+            #ip: 0.0.0.0
+            port: 80
+            opts:
+              - default_server
         server_name: localhost
         error_page: /usr/share/nginx/html
         autoindex: false
@@ -744,8 +749,8 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a 
             sticky_cookie: false
             servers:
               frontend_server_1:
-                address: localhost
-                port: 80
+                address: 0.0.0.0
+                port: 8081
                 weight: 1
                 health_check: max_fails=3 fail_timeout=5s
           upstream_2:
@@ -756,10 +761,52 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a 
             sticky_cookie: false
             servers:
               backend_server_1:
-                address: localhost
-                port: 8080
+                address: 0.0.0.0
+                port: 8082
                 weight: 1
                 health_check: max_fails=3 fail_timeout=5s
+      frontend:
+        template_file: http/default.conf.j2
+        conf_file_name: frontend_default.conf
+        conf_file_location: /etc/nginx/conf.d/
+        listen:
+          listen_localhost:
+            ip: 0.0.0.0
+            port: 8081
+            opts: []
+        server_name: localhost
+        error_page: /usr/share/nginx/html
+        autoindex: false
+        web_server:
+          locations:
+            frontend_site:
+              location: /
+              proxy_hide_headers:
+                - X-Powered-By
+              html_file_location: /usr/share/nginx/html
+              html_file_name: index.html
+              autoindex: false
+          http_demo_conf: false
+      backend:
+        template_file: http/default.conf.j2
+        conf_file_name: backend_default.conf
+        conf_file_location: /etc/nginx/conf.d/
+        listen:
+          listen_localhost:
+            ip: 0.0.0.0
+            port: 8082
+            opts: []
+        server_name: localhost
+        error_page: /usr/share/nginx/html
+        autoindex: false
+        web_server:
+          locations:
+            backend_site:
+              location: /
+              html_file_location: /usr/share/nginx/html
+              html_file_name: index.html
+              autoindex: false
+          http_demo_conf: false
 ```
 
 

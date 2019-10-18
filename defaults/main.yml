@@ -166,8 +166,10 @@ nginx_main_template:
     cache: false
     rate_limit: false
     keyval: false
-  stream_enable: false
   http_global_autoindex: false
+  #http_custom_options: []
+  stream_enable: false
+  #stream_custom_options: []
   #auth_request_http: /auth
   #auth_request_set_http:
     #name: $auth_user
@@ -397,7 +399,6 @@ nginx_http_template:
         location: /
         code: 301
         value: http://$host$request_uri
-    #server_custom_options: []
     #custom_options: []
 
 # Enable NGINX status data.

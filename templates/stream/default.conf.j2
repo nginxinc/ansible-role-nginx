@@ -15,7 +15,18 @@ upstream {{ item.value.upstreams[upstream].name }} {
     sticky cookie srv_id expires=1h  path=/;
 {% endif %}
 {% endif %}
+{% if item.value.upstreams[upstream].custom_options is defined and item.value.upstreams[upstream].custom_options | length %}
+{% for inline_option in item.value.upstreams[upstream].custom_options %}
+    {{ inline_option }};
+{% endfor %}
+{% endif %}
 }
+{% endfor %}
+{% endif %}
+
+{% if item.value.custom_options is defined and item.value.custom_options | length %}
+{% for inline_option in item.value.custom_options %}
+{{ inline_option }};
 {% endfor %}
 {% endif %}
 
@@ -91,6 +102,11 @@ server {
 {% endif %}
 {% if item.value.network_streams[stream].health_check_plus %}
     health_check;
+{% endif %}
+{% if item.value.network_streams[stream].custom_options is defined and item.value.network_streams[stream].custom_options | length %}
+{% for inline_option in item.value.network_streams[stream].custom_options %}
+    {{ inline_option }};
+{% endfor %}
 {% endif %}
 }
 {% endfor %}

@@ -355,8 +355,10 @@ nginx_main_template:
     cache: false
     rate_limit: false
     keyval: false
-  stream_enable: false
   http_global_autoindex: false
+  #http_custom_options: []
+  stream_enable: false
+  #stream_custom_options: []
   #auth_request_http: /auth
   #auth_request_set_http:
     #name: $auth_user
@@ -449,6 +451,7 @@ nginx_http_template:
             #return302:
               #code: 302
               #url: https://sso.somehost.local/?url=https://$http_host$request_uri
+          #custom_options: []
       http_demo_conf: false
     reverse_proxy:
       proxy_cache_path:
@@ -556,6 +559,7 @@ nginx_http_template:
             #return302:
               #code: 302
               #url: https://sso.somehost.local/?url=https://$http_host$request_uri
+          #custom_options: []
       health_check_plus: false
     proxy_cache:
       proxy_cache_path:
@@ -578,11 +582,14 @@ nginx_http_template:
             port: 8081
             weight: 1
             health_check: max_fails=1 fail_timeout=10s
+        #custom_options: []
     returns:
       return301:
         location: /
         code: 301
         value: http://$host$request_uri
+    #http_custom_options: []
+    #server_custom_options: []
 
 # Enable NGINX status data.
 # Will enable 'stub_status' in NGINX Open Source and 'status' in NGINX Plus.
@@ -629,6 +636,7 @@ nginx_stream_template:
           verify_depth: 1
           session_reuse: true
         health_check_plus: false
+        #custom_options: []
     upstreams:
       upstream1:
         name: backend
@@ -642,6 +650,8 @@ nginx_stream_template:
             port: 8080
             weight: 1
             health_check: max_fails=1 fail_timeout=10s
+        #custom_options: []
+    #custom_options: []
 ```
 
 Dependencies

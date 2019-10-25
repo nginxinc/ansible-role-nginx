@@ -355,6 +355,7 @@ nginx_main_template:
     cache: false
     rate_limit: false
     keyval: false
+    #server_tokens: "off"
   http_global_autoindex: false
   #http_custom_options: []
   stream_enable: false

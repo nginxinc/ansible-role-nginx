@@ -32,6 +32,7 @@
         cache: false
         rate_limit: false
         keyval: false
+        server_tokens: "off"
       stream_enable: true
       http_global_autoindex: false
 

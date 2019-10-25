@@ -73,7 +73,7 @@ http {
     sendfile        on;
     #tcp_nopush     on;
 
-{% if nginx_main_template.http_settings.server_tokens is defined %}
+{% if nginx_main_template.http_settings.server_tokens is defined and nginx_main_template.http_settings.server_tokens | length %}
     server_tokens {{ nginx_main_template.http_settings.server_tokens }};
 {% endif %}
 

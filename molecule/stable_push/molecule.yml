@@ -15,8 +15,6 @@ platforms:
     volume_mounts:
       - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
     command: "/usr/sbin/init"
-  - name: debian-jessie
-    image: debian:jessie
   - name: debian-stretch
     image: debian:stretch
   - name: debian-buster

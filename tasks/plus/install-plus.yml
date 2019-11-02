@@ -18,6 +18,6 @@
 
 - name: "(Install: All OSs) Install NGINX Plus"
   package:
-    name: nginx-plus
+    name: "nginx-plus{{ nginx_version | default('') }}"
     state: present
   notify: "(Handler: All OSs) Start NGINX"

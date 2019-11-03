@@ -10,10 +10,13 @@ nginx_start: true
 # Print NGINX configuration file to terminal after executing playbook.
 nginx_debug_output: false
 
-# Specify which version of NGINX you want to install.
+# Specify which type of NGINX you want to install.
 # Options are 'opensource' or 'plus'.
 # Default is 'opensource'.
 nginx_type: opensource
+# Specify which version of NGINX you want to install.
+# Default is empty.
+# nginx_version: =19-1~bionic
 
 # Specify repository origin for NGINX Open Source.
 # Options are 'nginx_repository' or 'os_repository'.

@@ -199,7 +199,7 @@ server {
 {% if item.value.reverse_proxy.locations[location].rewrites is defined %}
 {% for rewrite in item.value.reverse_proxy.locations[location].rewrites %}
         rewrite {{ rewrite }};
-{% endif %}
+{% endfor %}
 {% endif %}
 {% if item.value.reverse_proxy.locations[location].proxy_read_timeout is defined and item.value.reverse_proxy.locations[location].proxy_read_timeout %}
         proxy_read_timeout {{ item.value.reverse_proxy.locations[location].proxy_read_timeout }};

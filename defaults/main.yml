@@ -304,7 +304,8 @@ nginx_http_template:
               #always: false
           proxy_connect_timeout: null
           proxy_pass: http://backend
-          #rewrite: /foo(.*) /$1 break
+          #rewrites:
+          # - /foo(.*) /$1 break
           #proxy_pass_request_body: off
           #allows:
           # - 192.168.1.0/24

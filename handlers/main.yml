@@ -13,7 +13,9 @@
         name: nginx
         state: reloaded
 
-  when: nginx_start | bool
+  when:
+    - nginx_start | bool
+    - not ansible_check_mode
 
 - name: "(Handler: All OSs) Start NGINX Amplify Agent"
   service:

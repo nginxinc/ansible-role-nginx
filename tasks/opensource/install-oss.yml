@@ -1,38 +1,8 @@
 ---
-- name: "(Install: Debian/Ubuntu/CentOS/RedHat/FreeBSD) Install NGINX"
-  block:
+- name: "(Install: OSS Linux)"
+  import_tasks: install-oss-linux.yml
+  when: ansible_os_family in nginx_linux_families
 
-    - import_tasks: setup-debian.yml
-      when: ansible_os_family == "Debian"
-
-    - import_tasks: setup-redhat.yml
-      when: ansible_os_family == "RedHat"
-
-    - import_tasks: setup-suse.yml
-      when: ansible_os_family == "Suse"
-
-    - import_tasks: setup-freebsd.yml
-      when: ansible_os_family == "FreeBSD"
-
-    - name: "(Install: Debian/Ubuntu/CentOS/RedHat) Install NGINX"
-      package:
-        name: "nginx{{ nginx_version | default('') }}"
-        state: present
-      when: ansible_os_family != "FreeBSD"
-      notify: "(Handler: All OSs) Start NGINX"
-
-    - name: "(Install: FreeBSD) Install NGINX"
-      portinstall:
-        name: nginx
-        state: present
-      when: ansible_os_family == "FreeBSD"
-      notify: "(Handler: All OSs) Start NGINX"
-
-  when: nginx_install_from == "nginx_repository"
-
-- name: "(Install: Debian/Ubuntu/CentOS/RedHat/FreeBSD) Install NGINX"
-  package:
-    name: "nginx{{ nginx_version | default('') }}"
-    state: present
-  when: nginx_install_from == "os_repository"
-  notify: "(Handler: All OSs) Start NGINX"
+- name: "(Install: OSS BSD)"
+  import_tasks: install-oss-bsd.yml
+  when: ansible_system in nginx_bsd_systems

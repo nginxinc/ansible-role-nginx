@@ -24,32 +24,33 @@ Alpine:
   versions:
     - 3.8
     - 3.9
+    - 3.10
 CentOS:
-  versions:
-    - 6
-    - 7.4+
-RedHat:
   versions:
     - 6
     - 7.4+
     - 8
 Debian:
   versions:
-    - jessie
     - stretch
     - buster
-Ubuntu:
-  versions:
-    - xenial
-    - bionic
-SUSE/SLES:
-  versions:
-    - 12
-    - 15
 FreeBSD:
   versions:
     - 11.2+
     - 12
+RedHat:
+  versions:
+    - 6
+    - 7.4+
+    - 8
+SUSE/SLES:
+  versions:
+    - 12
+    - 15
+Ubuntu:
+  versions:
+    - xenial
+    - bionic
 ```
 
 **NGINX Plus**
@@ -59,6 +60,7 @@ Alpine:
   versions:
     - 3.8
     - 3.9
+    - 3.10
 Amazon Linux:
   versions:
     - 2018.03
@@ -69,9 +71,9 @@ CentOS:
   versions:
     - 6.5+
     - 7.4+
+    - 8
 Debian:
   versions:
-    - jessie
     - stretch
     - buster
 FreeBSD:
@@ -97,7 +99,7 @@ Ubuntu:
     - bionic
 ```
 
-**NGINX Amplify**
+**NGINX Amplify Agent**
 
 ```yaml
 Amazon Linux:
@@ -122,7 +124,7 @@ RedHat:
     - 7
 ```
 
-**NGINX Controller**
+**NGINX Controller Agent**
 
 ```yaml
 Amazon Linux:
@@ -199,10 +201,13 @@ nginx_start: true
 # Print NGINX configuration file to terminal after executing playbook.
 nginx_debug_output: false
 
-# Specify which version of NGINX you want to install.
+# Specify which type of NGINX you want to install.
 # Options are 'opensource' or 'plus'.
 # Default is 'opensource'.
 nginx_type: opensource
+# Specify which version of NGINX you want to install.
+# Default is empty.
+# nginx_version: =19-1~bionic
 
 # Specify repository origin for NGINX Open Source.
 # Options are 'nginx_repository' or 'os_repository'.
@@ -595,17 +600,19 @@ nginx_http_template:
 
 # Enable NGINX status data.
 # Will enable 'stub_status' in NGINX Open Source and 'status' in NGINX Plus.
+# Note - 'status' has been deprecated since NGINX Plus R13.
 # Default is false.
 nginx_status_enable: false
-nginx_status_port: 8080
+nginx_status_location: /etc/nginx/conf.d/stub_status.conf
+nginx_status_port: 80
 
 # Enable NGINX Plus REST API, write access to the REST API, and NGINX Plus dashboard.
 # Requires NGINX Plus.
 # Default is false.
 nginx_rest_api_enable: false
-nginx_rest_api_src: http/api.conf.j2
-nginx_rest_api_location: /etc/nginx/conf.d/api.conf
-nginx_rest_api_port: 8080
+nginx_rest_api_template_file: http/api.conf.j2
+nginx_rest_api_file_location: /etc/nginx/conf.d/api.conf
+nginx_rest_api_port: 80
 nginx_rest_api_write: false
 nginx_rest_api_dashboard: false
 
@@ -837,6 +844,7 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a 
   vars:
     nginx_type: plus
     nginx_rest_api_enable: true
+    nginx_rest_api_port: 80
     nginx_rest_api_write: true
     nginx_controller_enable: true
     nginx_controller_api_key: <API_KEY_HERE>

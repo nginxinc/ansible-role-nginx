@@ -10,6 +10,10 @@ nginx_start: true
 # Print NGINX configuration file to terminal after executing playbook.
 nginx_debug_output: false
 
+# Supported systems
+nginx_linux_families: ['Debian', 'RedHat', 'Suse']
+nginx_bsd_systems: ['FreeBSD', 'NetBSD', 'OpenBSD', 'DragonFlyBSD', 'HardenedBSD']
+
 # Specify which type of NGINX you want to install.
 # Options are 'opensource' or 'plus'.
 # Default is 'opensource'.
@@ -49,6 +53,16 @@ nginx_repository:
   suse: >-
       https://nginx.org/packages/{{ (nginx_branch == 'mainline')
       | ternary('mainline/', '') }}sles/{{ ansible_distribution_major_version }}
+
+# Choose to install BSD packages or ports.
+# Options are True for packages or False for ports.
+# Default is True.
+nginx_bsd_install_packages: true
+
+# Choose to update BSD ports collection.
+# Options are True for update or False for do not update.
+# Default is True.
+nginx_bsd_update_ports: true
 
 # Specify which branch of NGINX Open Source you want to install.
 # Options are 'mainline' or 'stable'.

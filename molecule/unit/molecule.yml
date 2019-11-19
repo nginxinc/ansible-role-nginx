@@ -9,9 +9,10 @@ platforms:
   - name: centos-7
     image: centos/systemd
     privileged: True
-    volume_mounts:
+    volumes:
       - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
     command: "/usr/sbin/init"
+    tty: True
   - name: debian-stretch
     image: debian:stretch-slim
   - name: debian-buster

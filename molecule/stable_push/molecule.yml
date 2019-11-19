@@ -16,9 +16,9 @@ platforms:
       - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
     command: "/usr/sbin/init"
   - name: debian-stretch
-    image: debian:stretch
+    image: debian:stretch-slim
   - name: debian-buster
-    image: debian:buster
+    image: debian:buster-slim
   - name: ubuntu-xenial
     image: ubuntu:xenial
   - name: ubuntu-bionic

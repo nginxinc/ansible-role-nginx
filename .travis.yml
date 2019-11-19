@@ -13,6 +13,6 @@ before_install:
 install:
   - pip install molecule[docker]
 script:
-  - travis_wait 40 molecule test -s $scenario --parallel
+  - molecule test -s $scenario --parallel
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

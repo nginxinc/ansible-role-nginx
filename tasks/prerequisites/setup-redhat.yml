@@ -1,0 +1,6 @@
+---
+- name: "(Install: CentOS) Install Required CentOS Dependencies"
+  yum:
+    name:
+      - epel-release
+  when: ansible_distribution == "CentOS"

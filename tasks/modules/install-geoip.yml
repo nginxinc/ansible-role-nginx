@@ -1,4 +1,10 @@
 ---
+- name: "(Install: CentOS) Install GeoIP Required CentOS Dependencies"
+  yum:
+    name:
+      - epel-release
+  when: ansible_distribution == "CentOS"
+
 - name: "(Install: All OSs) Install NGINX Open Source GeoIP Module"
   package:
     name: nginx-module-geoip

@@ -5,8 +5,9 @@ services:
   - docker
 env:
   - scenario: default
+  - scenario: module
   - scenario: stable_push
-  - scenario: template_module
+  - scenario: template
   - scenario: unit
 before_install:
   - sudo apt-get -qq update

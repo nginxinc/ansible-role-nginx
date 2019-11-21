@@ -1,0 +1,16 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: ansible-role-nginx
+  vars:
+    nginx_debug_output: true
+
+    nginx_modules:
+      njs: true
+      perl: true
+      waf: false
+      geoip: true
+      image_filter: true
+      rtmp: true
+      xslt: true

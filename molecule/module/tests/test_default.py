@@ -1,4 +1,3 @@
-import nginx
 import os
 
 import testinfra.utils.ansible_runner

@@ -27,7 +27,7 @@
     - not nginx_freebsd_installed_modules[my_package_key][item]
 
 - name: "(Sanity: FreeBSD) Find NGINX if already installed."
-  shell: whereis -sq nginx | cut -d "/" -f 4-
+  command: sh -c "whereis -sq nginx | cut -d "/" -f 4-"
   changed_when: false
   register: result
 

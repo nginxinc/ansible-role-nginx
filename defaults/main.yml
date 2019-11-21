@@ -357,6 +357,7 @@ nginx_http_template:
           #proxy_store: off
           #proxy_store_acccess: user:rw
           proxy_read_timeout: null
+          proxy_send_timeout: null
           proxy_ssl:
             cert: /etc/ssl/certs/proxy_default.crt
             key: /etc/ssl/private/proxy_default.key

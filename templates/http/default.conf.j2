@@ -204,6 +204,9 @@ server {
 {% if item.value.reverse_proxy.locations[location].proxy_read_timeout is defined and item.value.reverse_proxy.locations[location].proxy_read_timeout %}
         proxy_read_timeout {{ item.value.reverse_proxy.locations[location].proxy_read_timeout }};
 {% endif %}
+{% if item.value.reverse_proxy.locations[location].proxy_send_timeout is defined and item.value.reverse_proxy.locations[location].proxy_send_timeout %}
+        proxy_send_timeout {{ item.value.reverse_proxy.locations[location].proxy_send_timeout }};
+{% endif %}
 {% if item.value.reverse_proxy.locations[location].proxy_pass_request_body is defined %}
         proxy_pass_request_body {{ item.value.reverse_proxy.locations[location].proxy_pass_request_body }};
 {% endif %}

@@ -4,7 +4,9 @@
 {% for upstream in item.value.upstreams %}
 upstream {{ item.value.upstreams[upstream].name }} {
     {{ item.value.upstreams[upstream].lb_method }};
+{% if item.value.upstreams[upstream].zone_name is defined and item.value.upstreams[upstream].zone_name %}
     zone {{ item.value.upstreams[upstream].zone_name }} {{ item.value.upstreams[upstream].zone_size }};
+{% endif %}
 {% for server in item.value.upstreams[upstream].servers %}
     server {{ item.value.upstreams[upstream].servers[server].address }}:{{ item.value.upstreams[upstream].servers[server].port }} weight={{ item.value.upstreams[upstream].servers[server].weight|default("1") }} {{ item.value.upstreams[upstream].servers[server].health_check|default("") }};
 {% endfor %}

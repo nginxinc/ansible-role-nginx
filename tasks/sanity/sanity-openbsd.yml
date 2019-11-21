@@ -29,7 +29,7 @@
 # TODO: Port other sanity tests to OpenBSD.
 
 # - name: "(Sanity: OpenBSD) Find NGINX if already installed."
-#   shell: whereis -sq nginx | cut -d "/" -f 4-
+#   command: sh -c "whereis -sq nginx | cut -d '/' -f 4-"
 #   register: result
 
 # - name: "(Sanity: OpenBSD) Debug NGINX if already installed"

@@ -21,7 +21,7 @@
     msg: |
       {{ my_package }} does not provide required module {{ item }}.
       End of play.
-  loop: "{{ nginx_modules|dict2items|json_query('[].key') }}"
+  loop: "{{ nginx_modules.keys() | list }}"
   when:
     - nginx_modules[item]
     - not nginx_freebsd_installed_modules[my_package_key][item]

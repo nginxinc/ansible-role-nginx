@@ -5,14 +5,15 @@ services:
   - docker
 env:
   - scenario: default
+  - scenario: module
   - scenario: stable_push
-  - scenario: template_module
+  - scenario: template
   - scenario: unit
 before_install:
   - sudo apt-get -qq update
 install:
   - pip install molecule[docker]
 script:
-  - molecule test -s $scenario --parallel
+  - molecule test -s $scenario
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

@@ -1,0 +1,47 @@
+---
+- name: "(Sanity: FreeBSD) Set name of the package."
+  set_fact:
+    my_package: "www/nginx{{ nginx_version | default('') }}"
+    my_package_key: "nginx{{ nginx_version | default('') }}"
+
+- name: "(Sanity: FreeBSD) Fail when {{ my_package }} is not supported."
+  fail:
+    msg: |
+      {{ my_package }} shall be installed.
+      This package is not supported by this role.
+      Chose NGINX package from the list of supported packages
+      [{% for pkg in nginx_freebsd_supported_packages %}
+      {{ pkg }}{% if not loop.last %}, {% endif %}
+      {% endfor %}].
+      End of play.
+  when: my_package not in nginx_freebsd_supported_packages
+
+- name: "(Sanity: FreeBSD) Fail when {{ my_package }} does not provide required module."
+  fail:
+    msg: |
+      {{ my_package }} does not provide required module {{ item }}.
+      End of play.
+  loop: "{{ nginx_modules|dict2items|json_query('[].key') }}"
+  when:
+    - nginx_modules[item]
+    - not nginx_freebsd_installed_modules[my_package_key][item]
+
+- name: "(Sanity: FreeBSD) Find NGINX if already installed."
+  shell: whereis -sq nginx | cut -d "/" -f 4-
+  changed_when: false
+  register: result
+
+- name: "(Sanity: FreeBSD) Debug NGINX if already installed"
+  debug:
+    var: result
+  when: nginx_debug_output | bool
+
+- name: "(Sanity: FreeBSD) Fail when other package is installed."
+  fail:
+    msg: |
+      {{ result.stdout }} is installed.
+      Deinstall {{ result.stdout }} before installing {{ my_package }}.
+      End of play.
+  when:
+    - result.stdout|default('')|length > 0
+    - result.stdout != my_package

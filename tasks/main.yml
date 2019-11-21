@@ -1,4 +1,7 @@
 ---
+- import_tasks: sanity/main.yml
+  tags: nginx_sanity
+
 - import_tasks: prerequisites/install-prerequisites.yml
   tags: nginx_prerequisites
 

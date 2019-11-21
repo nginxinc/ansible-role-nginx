@@ -1,0 +1,6 @@
+---
+- import_tasks: sanity-freebsd.yml
+  when: ansible_system == 'FreeBSD'
+
+- import_tasks: sanity-openbsd.yml
+  when: ansible_system == 'OpenBSD'

@@ -11,7 +11,7 @@ nginx_start: true
 nginx_debug_output: false
 
 # Supported systems
-nginx_linux_families: ['Debian', 'RedHat', 'Suse']
+nginx_linux_families: ['Alpine', 'Debian', 'RedHat', 'Suse']
 nginx_bsd_systems: ['FreeBSD', 'NetBSD', 'OpenBSD', 'DragonFlyBSD', 'HardenedBSD']
 
 # Specify which type of NGINX you want to install.
@@ -35,24 +35,7 @@ nginx_install_from: nginx_repository
 # Specify source repository for NGINX Open Source.
 # Only works if 'install_from' is set to 'nginx_repository'.
 # Defaults are the official NGINX repositories.
-nginx_repository:
-  alpine: >-
-      https://nginx.org/packages/{{ (nginx_branch == 'mainline')
-      | ternary('mainline/', '') }}alpine/v{{ ansible_distribution_version | regex_search('^[0-9]+\\.[0-9]+') }}/main
-  debian:
-    - >-
-      deb https://nginx.org/packages/{{ (nginx_branch == 'mainline')
-      | ternary('mainline/', '') }}{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} nginx
-    - >-
-      deb-src https://nginx.org/packages/{{ (nginx_branch == 'mainline')
-      | ternary('mainline/', '') }}{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} nginx
-  redhat: >-
-      https://nginx.org/packages/{{ (nginx_branch == 'mainline')
-      | ternary('mainline/', '') }}{{ (ansible_distribution == "RedHat")
-      | ternary('rhel', 'centos') }}/{{ ansible_distribution_major_version }}/$basearch/
-  suse: >-
-      https://nginx.org/packages/{{ (nginx_branch == 'mainline')
-      | ternary('mainline/', '') }}sles/{{ ansible_distribution_major_version }}
+# nginx_repository: deb https://nginx.org/packages/mainline/debian/ stretch nginx
 
 # Choose to install BSD packages or ports.
 # Options are True for packages or False for ports.

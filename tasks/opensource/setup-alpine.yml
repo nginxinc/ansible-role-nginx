@@ -1,6 +1,16 @@
 ---
-- name: "(Install: Alpine Linux) Add NGINX Plus Repository"
+- name: "(Install: Alpine) Set Default APK NGINX Repository"
+  set_fact:
+    default_repository: >-
+      https://nginx.org/packages/{{ (nginx_branch == 'mainline')
+      | ternary('mainline/', '') }}alpine/v{{ ansible_distribution_version.split('.')[0] }}.{{ ansible_distribution_version.split('.')[1] }}/main
+
+- name: "(Install: Alpine) Set APK NGINX Repository"
+  set_fact:
+    repository: "{{ nginx_repository | default(default_repository) }}"
+
+- name: "(Install: Alpine) Add NGINX Repository"
   lineinfile:
     path: /etc/apk/repositories
     insertafter: EOF
-    line: "{{ nginx_repository.alpine }}"
+    line: "{{ repository }}"

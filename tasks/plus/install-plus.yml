@@ -1,20 +1,20 @@
 ---
 - import_tasks: setup-license.yml
 
+- import_tasks: setup-alpine.yml
+  when: ansible_os_family == "Alpine"
+
 - import_tasks: setup-debian.yml
   when: ansible_os_family == "Debian"
+
+- import_tasks: setup-freebsd.yml
+  when: ansible_os_family == "FreeBSD"
 
 - import_tasks: setup-redhat.yml
   when: ansible_os_family == "RedHat"
 
 - import_tasks: setup-suse.yml
   when: ansible_os_family == "Suse"
-
-- import_tasks: setup-freebsd.yml
-  when: ansible_os_family == "FreeBSD"
-
-- import_tasks: setup-alpine.yml
-  when: ansible_os_family == "Alpine"
 
 - name: "(Install: All OSs) Install NGINX Plus"
   package:

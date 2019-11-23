@@ -1,0 +1,18 @@
+---
+- name: "(Install: FreeBSD) Install Required FreeBSD Dependencies"
+  block:
+
+    - name: "(Install: FreeBSD) Install extra package(s)"
+      pkgng:
+        name: "{{ nginx_freebsd_extra_packages  }}"
+        state: present
+      when: nginx_bsd_install_packages
+      notify: "(Handler: All OSs) Start NGINX"
+
+    - name: "(Install: FreeBSD) Install extra port(s)"
+      portinstall:
+        name: "{{ item }}"
+        use_packages: "{{ nginx_bsd_portinstall_use_packages | default(omit) }}"
+        state: present
+      loop: "{{ nginx_freebsd_extra_packages  }}"
+      when: not nginx_bsd_install_packages

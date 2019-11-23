@@ -18,3 +18,8 @@
     repo: "{{ item }}"
   with_items:
     - "{{ repository }}"
+
+- name: "(Install: Debian/Ubuntu) Install NGINX"
+  apt:
+    name: "nginx{{ nginx_version | default('') }}"
+  notify: "(Handler: All OSs) Start NGINX"

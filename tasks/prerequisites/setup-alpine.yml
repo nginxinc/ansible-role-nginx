@@ -1,6 +1,0 @@
----
-- name: "(Install: Alpine) Install Required Alpine Dependencies"
-  apk:
-    name:
-      - openssl
-      - pcre

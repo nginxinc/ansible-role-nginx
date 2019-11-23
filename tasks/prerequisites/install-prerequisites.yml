@@ -1,3 +1,6 @@
 ---
+- import_tasks: setup-alpine.yml
+  when: ansible_os_family == "Alpine"
+
 - import_tasks: setup-debian.yml
   when: ansible_os_family == "Debian"

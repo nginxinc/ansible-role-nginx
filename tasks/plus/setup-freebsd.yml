@@ -1,5 +1,4 @@
 ---
-
 - name: "(Install: FreeBSD) Add NGINX Plus Repository"
   blockinfile:
     path: /etc/pkg/nginx-plus.conf

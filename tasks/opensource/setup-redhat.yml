@@ -18,7 +18,13 @@
     enabled: yes
     gpgcheck: yes
 
+- name: "(Install: CentOS/RedHat) Install Required CentOS/RedHat Dependencies"
+  yum:
+    name: openssl
+
 - name: "(Install: CentOS/RedHat) Install NGINX"
   yum:
     name: "nginx{{ nginx_version | default('') }}"
+    disablerepo: "*"
+    enablerepo: "nginx"
   notify: "(Handler: All OSs) Start NGINX"

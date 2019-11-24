@@ -22,33 +22,33 @@ upstream {{ item.value.upstreams[upstream].name }} {
 {% endfor %}
 {% endif %}
 
-{% if item.value.reverse_proxy is defined and item.value.reverse_proxy %}
-{% if item.value.reverse_proxy.proxy_cache_path is defined and item.value.reverse_proxy.proxy_cache_path %}
-{% for proxy_cache_path in item.value.reverse_proxy.proxy_cache_path %}
+{% if item.value.proxy_cache is defined and item.value.proxy_cache %}
+{% if item.value.proxy_cache.proxy_cache_path is defined and item.value.proxy_cache.proxy_cache_path %}
+{% for proxy_cache_path in item.value.proxy_cache.proxy_cache_path %}
 proxy_cache_path {{ proxy_cache_path.path }} keys_zone={{ proxy_cache_path.keys_zone.name }}:{{ proxy_cache_path.keys_zone.size }}
                  levels={{ proxy_cache_path.levels }} max_size={{ proxy_cache_path.max_size }}
                  inactive={{ proxy_cache_path.inactive }} use_temp_path={{ proxy_cache_path.use_temp_path | ternary("on", "off") }};
 {% endfor %}
-{% if item.value.reverse_proxy.proxy_cache_background_update is defined and item.value.reverse_proxy.proxy_cache_background_update%}
-proxy_cache_background_update {{ item.value.reverse_proxy.proxy_cache_background_update | ternary("on", "off") }};
+{% if item.value.proxy_cache.proxy_cache_background_update is defined and item.value.proxy_cache.proxy_cache_background_update%}
+proxy_cache_background_update {{ item.value.proxy_cache.proxy_cache_background_update | ternary("on", "off") }};
 {% endif %}
-{% if item.value.reverse_proxy.proxy_cache_lock is defined and item.value.reverse_proxy.proxy_cache_lock %}
-proxy_cache_lock {{ item.value.reverse_proxy.proxy_cache_lock | ternary("on", "off") }};
+{% if item.value.proxy_cache.proxy_cache_lock is defined and item.value.proxy_cache.proxy_cache_lock %}
+proxy_cache_lock {{ item.value.proxy_cache.proxy_cache_lock | ternary("on", "off") }};
 {% endif %}
-{% if item.value.reverse_proxy.proxy_cache_min_uses is defined and item.value.reverse_proxy.proxy_cache_min_uses %}
-proxy_cache_min_uses {{ item.value.reverse_proxy.proxy_cache_min_uses }};
+{% if item.value.proxy_cache.proxy_cache_min_uses is defined and item.value.proxy_cache.proxy_cache_min_uses %}
+proxy_cache_min_uses {{ item.value.proxy_cache.proxy_cache_min_uses }};
 {% endif %}
-{% if item.value.reverse_proxy.proxy_cache_revalidate is defined and item.value.reverse_proxy.proxy_cache_revalidate %}
-proxy_cache_revalidate {{ item.value.reverse_proxy.proxy_cache_revalidate | ternary("on", "off") }};
+{% if item.value.proxy_cache.proxy_cache_revalidate is defined and item.value.proxy_cache.proxy_cache_revalidate %}
+proxy_cache_revalidate {{ item.value.proxy_cache.proxy_cache_revalidate | ternary("on", "off") }};
 {% endif %}
-{% if item.value.reverse_proxy.proxy_cache_use_stale is defined and item.value.reverse_proxy.proxy_cache_use_stale %}
-proxy_cache_use_stale {{ item.value.reverse_proxy.proxy_cache_use_stale | join(" ") }};
+{% if item.value.proxy_cache.proxy_cache_use_stale is defined and item.value.proxy_cache.proxy_cache_use_stale %}
+proxy_cache_use_stale {{ item.value.proxy_cache.proxy_cache_use_stale | join(" ") }};
 {% endif %}
-{% if item.value.reverse_proxy.proxy_ignore_headers is defined and item.value.reverse_proxy.proxy_ignore_headers %}
-proxy_ignore_headers {{ item.value.reverse_proxy.proxy_ignore_headers | join(" ") }};
+{% if item.value.proxy_cache.proxy_ignore_headers is defined and item.value.proxy_cache.proxy_ignore_headers %}
+proxy_ignore_headers {{ item.value.proxy_cache.proxy_ignore_headers | join(" ") }};
 {% endif %}
-{% if item.value.reverse_proxy.proxy_temp_path is defined and item.value.reverse_proxy.proxy_temp_path.path %}
-proxy_temp_path {{ item.value.reverse_proxy.proxy_temp_path.path }} {{ item.value.reverse_proxy.proxy_temp_path.level_1 | default("") }} {{ item.value.reverse_proxy.proxy_temp_path.level_2 | default("") }} {{ item.value.reverse_proxy.proxy_temp_path.level_3 | default("") }};
+{% if item.value.proxy_cache.proxy_temp_path is defined and item.value.proxy_cache.proxy_temp_path.path %}
+proxy_temp_path {{ item.value.proxy_cache.proxy_temp_path.path }} {{ item.value.proxy_cache.proxy_temp_path.level_1 | default("") }} {{ item.value.proxy_cache.proxy_temp_path.level_2 | default("") }} {{ item.value.proxy_cache.proxy_temp_path.level_3 | default("") }};
 {% endif %}
 {% endif %}
 {% endif %}

@@ -460,25 +460,6 @@ nginx_http_template:
           #custom_options: []
       http_demo_conf: false
     reverse_proxy:
-      proxy_cache_path:
-        - path: /var/cache/nginx/proxy/backend
-          keys_zone:
-            name: backend_proxy_cache
-            size: 10m
-          levels: "1:2"
-          max_size: 10g
-          inactive: 60m
-          use_temp_path: true
-      proxy_temp_path:
-        path: /var/cache/nginx/proxy/temp
-      proxy_cache_lock: true
-      proxy_cache_min_uses: 5
-      proxy_cache_revalidate: true
-      proxy_cache_use_stale:
-        - error
-        - timeout
-      proxy_ignore_headers:
-        - Expires
       locations:
         backend:
           location: /
@@ -570,12 +551,24 @@ nginx_http_template:
       health_check_plus: false
     proxy_cache:
       proxy_cache_path:
-        path: /var/cache/nginx
-        keys_zone:
-          name: one
-          size: 10m
+        - path: /var/cache/nginx/proxy/backend
+          keys_zone:
+            name: backend_proxy_cache
+            size: 10m
+          levels: "1:2"
+          max_size: 10g
+          inactive: 60m
+          use_temp_path: true
       proxy_temp_path:
-        path: /var/cache/nginx/proxy
+        path: /var/cache/nginx/proxy/temp
+      proxy_cache_lock: true
+      proxy_cache_min_uses: 5
+      proxy_cache_revalidate: true
+      proxy_cache_use_stale:
+        - error
+        - timeout
+      proxy_ignore_headers:
+        - Expires
     upstreams:
       upstream1:
         name: backend

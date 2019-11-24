@@ -61,33 +61,6 @@
                 value: max-age=15768000; includeSubDomains
                 always: true
             reverse_proxy:
-              proxy_cache_path:
-                - path: /var/cache/nginx/proxy/frontend
-                  keys_zone:
-                    name: frontend_proxy_cache
-                    size: 5m
-                  levels: "1:2"
-                  max_size: 5g
-                  inactive: 30m
-                  use_temp_path: true
-                - path: /var/cache/nginx/proxy/backend
-                  keys_zone:
-                    name: backend_proxy_cache
-                    size: 10m
-                  levels: "1:2"
-                  max_size: 10g
-                  inactive: 60m
-                  use_temp_path: true
-              proxy_temp_path:
-                path: /var/cache/nginx/proxy/temp
-              proxy_cache_lock: true
-              proxy_cache_min_uses: 5
-              proxy_cache_revalidate: true
-              proxy_cache_use_stale:
-                - error
-                - timeout
-              proxy_ignore_headers:
-                - Expires
               locations:
                 frontend:
                   location: /
@@ -166,6 +139,34 @@
                 location: ^~ /old-path
                 code: 301
                 value: http://$host/new-path
+        proxy_cache:
+          proxy_cache_path:
+            - path: /var/cache/nginx/proxy/frontend
+              keys_zone:
+                name: frontend_proxy_cache
+                size: 5m
+              levels: "1:2"
+              max_size: 5g
+              inactive: 30m
+              use_temp_path: true
+            - path: /var/cache/nginx/proxy/backend
+              keys_zone:
+                name: backend_proxy_cache
+                size: 10m
+              levels: "1:2"
+              max_size: 10g
+              inactive: 60m
+              use_temp_path: true
+          proxy_temp_path:
+            path: /var/cache/nginx/proxy/temp
+          proxy_cache_lock: true
+          proxy_cache_min_uses: 5
+          proxy_cache_revalidate: true
+          proxy_cache_use_stale:
+            - error
+            - timeout
+          proxy_ignore_headers:
+            - Expires
         upstreams:
           frontend_upstream:
             name: frontend_servers

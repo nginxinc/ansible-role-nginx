@@ -14,3 +14,15 @@
     path: /etc/apk/repositories
     insertafter: EOF
     line: "{{ repository }}"
+
+- name: "(Install: Alpine) Install Required Alpine Dependencies"
+  apk:
+    name:
+      - openssl
+      - pcre
+
+- name: "(Install: Alpine) Install NGINX"
+  apk:
+    name: "nginx{{ nginx_version | default('') }}"
+    repository: "{{ repository }}"
+  notify: "(Handler: All OSs) Start NGINX"

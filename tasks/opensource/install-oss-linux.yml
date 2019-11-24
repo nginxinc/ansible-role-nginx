@@ -14,11 +14,13 @@
     - import_tasks: setup-suse.yml
       when: ansible_os_family == "Suse"
 
-  when: nginx_install_from == "nginx_repository"
+  when:
+    - nginx_install_from == "nginx_repository"
 
 - name: "(Install: Linux) Install NGINX package"
   package:
     name: "nginx{{ nginx_version | default('') }}"
     state: present
-  when: ansible_os_family in nginx_linux_families
+  when:
+    - nginx_install_from == "os_repository"
   notify: "(Handler: All OSs) Start NGINX"

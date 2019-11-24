@@ -13,3 +13,8 @@
   zypper_repository:
     name: "nginx-{{ nginx_branch }}"
     repo: "{{ repository }}"
+
+- name: "(Install: SUSE) Install NGINX"
+  zypper:
+    name: "nginx{{ nginx_version | default('') }}"
+  notify: "(Handler: All OSs) Start NGINX"

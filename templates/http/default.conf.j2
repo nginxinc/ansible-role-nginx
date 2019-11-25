@@ -50,11 +50,11 @@ proxy_ignore_headers {{ item.value.reverse_proxy.proxy_ignore_headers | join(" "
 {% if item.value.reverse_proxy.proxy_temp_path is defined and item.value.reverse_proxy.proxy_temp_path.path %}
 proxy_temp_path {{ item.value.reverse_proxy.proxy_temp_path.path }} {{ item.value.reverse_proxy.proxy_temp_path.level_1 | default("") }} {{ item.value.reverse_proxy.proxy_temp_path.level_2 | default("") }} {{ item.value.reverse_proxy.proxy_temp_path.level_3 | default("") }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].proxy_cache_valid is defined %}
-{% for proxy_cache_valid in item.value.reverse_proxy.locations[location].proxy_cache_valid %}
+{% if item.value.reverse_proxy.proxy_cache_valid is defined %}
+{% for proxy_cache_valid in item.value.reverse_proxy.proxy_cache_valid %}
 {% if proxy_cache_valid.code is defined %}
 proxy_cache_valid {{ proxy_cache_valid.code }} {{ proxy_cache_valid.time | default("10m") }};
-{% elif proxy_cache_valid.time is defined and proxy_cache_time.code is not defined %}
+{% elif proxy_cache_valid.time is defined and proxy_cache_valid.code is not defined %}
 proxy_cache_valid {{ proxy_cache_valid.time }};
 {% endif %}
 {% endfor %}
@@ -295,7 +295,7 @@ server {
 {% for proxy_cache_valid in item.value.reverse_proxy.locations[location].proxy_cache_valid %}
 {% if proxy_cache_valid.code is defined %}
         proxy_cache_valid {{ proxy_cache_valid.code }} {{ proxy_cache_valid.time | default("10m") }};
-{% elif proxy_cache_valid.time is defined and proxy_cache_time.code is not defined %}
+{% elif proxy_cache_valid.time is defined and proxy_cache_valid.code is not defined %}
         proxy_cache_valid {{ proxy_cache_valid.time }};
 {% endif %}
 {% endfor %}

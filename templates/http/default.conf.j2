@@ -283,15 +283,13 @@ server {
         proxy_cache {{ item.value.reverse_proxy.locations[location].proxy_cache }};
 {% endif %}
 {% if item.value.reverse_proxy.locations[location].proxy_cache_valid is defined %}
-{% if item.value.reverse_proxy.locations[location].proxy_cache_valid.code is defined %}
 {% for proxy_cache_valid in item.value.reverse_proxy.locations[location].proxy_cache_valid %}
-        proxy_cache_valid {{ proxy_cache_valid.code }} {{ proxy_cache_valid.time }};
-{% endfor %}
-{% else %}
-{% for proxy_cache_valid in item.value.reverse_proxy.locations[location].proxy_cache_valid %}
+{% if proxy_cache_valid.code is defined %}
+        proxy_cache_valid {{ proxy_cache_valid.code }} {{ proxy_cache_valid.time | default("10m") }};
+{% elif proxy_cache_valid.time is defined and proxy_cache_time.code is not defined %}
         proxy_cache_valid {{ proxy_cache_valid.time }};
-{% endfor %}
 {% endif %}
+{% endfor %}
 {% endif %}
 {% if item.value.reverse_proxy.locations[location].proxy_cache_background_update is defined %}
         proxy_cache_background_update {{ item.value.reverse_proxy.locations[location].proxy_cache_background_update | ternary("on", "off") }};

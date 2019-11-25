@@ -283,6 +283,11 @@ nginx_http_template:
           use_temp_path: true
       proxy_temp_path:
         path: /var/cache/nginx/proxy/temp
+      proxy_cache_valid:
+        - code: 200
+          time: 10m
+        - code: 301
+          time: 1m
       proxy_cache_lock: true
       proxy_cache_min_uses: 5
       proxy_cache_revalidate: true
@@ -350,7 +355,12 @@ nginx_http_template:
             verify: false
             verify_depth: 1
             session_reuse: true
-          proxy_cache: frontend_proxy_cache
+          proxy_cache: backend_proxy_cache
+          proxy_cache_valid:
+            - code: 200
+              time: 10m
+            - code: 301
+              time: 1m
           proxy_temp_path:
             path: /var/cache/nginx/proxy/backend/temp
           proxy_cache_lock: false

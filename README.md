@@ -538,6 +538,11 @@ nginx_http_template:
             verify_depth: 1
             session_reuse: true
           proxy_cache: frontend_proxy_cache
+          proxy_cache_valid:
+            - code: 200
+              time: 10m
+            - code: 301
+              time: 1m
           proxy_temp_path:
             path: /var/cache/nginx/proxy/backend/temp
           proxy_cache_lock: false

@@ -201,6 +201,10 @@ nginx_start: true
 # Print NGINX configuration file to terminal after executing playbook.
 nginx_debug_output: false
 
+# Supported systems
+nginx_linux_families: ['Alpine', 'Debian', 'RedHat', 'Suse']
+nginx_bsd_systems: ['FreeBSD', 'NetBSD', 'OpenBSD', 'DragonFlyBSD', 'HardenedBSD']
+
 # Specify which type of NGINX you want to install.
 # Options are 'opensource' or 'plus'.
 # Default is 'opensource'.
@@ -222,24 +226,23 @@ nginx_install_from: nginx_repository
 # Specify source repository for NGINX Open Source.
 # Only works if 'install_from' is set to 'nginx_repository'.
 # Defaults are the official NGINX repositories.
-nginx_repository:
-  alpine: >-
-      https://nginx.org/packages/{{ (nginx_branch == 'mainline')
-      | ternary('mainline/', '') }}alpine/v{{ ansible_distribution_version | regex_search('^[0-9]+\\.[0-9]+') }}/main
-  debian:
-    - >-
-      deb https://nginx.org/packages/{{ (nginx_branch == 'mainline')
-      | ternary('mainline/', '') }}{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} nginx
-    - >-
-      deb-src https://nginx.org/packages/{{ (nginx_branch == 'mainline')
-      | ternary('mainline/', '') }}{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} nginx
-  redhat: >-
-      https://nginx.org/packages/{{ (nginx_branch == 'mainline')
-      | ternary('mainline/', '') }}{{ (ansible_distribution == "RedHat")
-      | ternary('rhel', 'centos') }}/{{ ansible_distribution_major_version }}/$basearch/
-  suse: >-
-      https://nginx.org/packages/{{ (nginx_branch == 'mainline')
-      | ternary('mainline/', '') }}sles/{{ ansible_distribution_major_version }}
+# nginx_repository: deb https://nginx.org/packages/mainline/debian/ stretch nginx
+
+# Choose to install BSD packages or ports.
+# Options are True for packages or False for ports.
+# Default is True.
+nginx_bsd_install_packages: true
+
+# Choose to update BSD ports collection.
+# Options are True for update or False for do not update.
+# Default is True.
+nginx_bsd_update_ports: true
+
+# Choose to install packages built from BSD ports collection if
+# available.
+# Options are True for use packages or False for do not use packages.
+# Default is True.
+nginx_bsd_portinstall_use_packages: true
 
 # Specify which branch of NGINX Open Source you want to install.
 # Options are 'mainline' or 'stable'.
@@ -512,6 +515,7 @@ nginx_http_template:
               #proxy_store: off
               #proxy_store_acccess: user:rw
               proxy_read_timeout: null
+              proxy_send_timeout: null
               proxy_ssl:
                 cert: /etc/ssl/certs/proxy_default.crt
                 key: /etc/ssl/private/proxy_default.key
@@ -521,7 +525,12 @@ nginx_http_template:
                 verify: false
                 verify_depth: 1
                 session_reuse: true
-              proxy_cache: frontend_proxy_cache
+              proxy_cache: backend_proxy_cache
+              proxy_cache_valid:
+                - code: 200
+                  time: 10m
+                - code: 301
+                  time: 1m
               proxy_temp_path:
                 path: /var/cache/nginx/proxy/backend/temp
               proxy_cache_lock: false
@@ -552,31 +561,36 @@ nginx_http_template:
                   #url: https://sso.somehost.local/?url=https://$http_host$request_uri
               #custom_options: []
           health_check_plus: false
-        proxy_cache:
-          proxy_cache_path:
-            - path: /var/cache/nginx/proxy/backend
-              keys_zone:
-                name: backend_proxy_cache
-                size: 10m
-              levels: "1:2"
-              max_size: 10g
-              inactive: 60m
-              use_temp_path: true
-          proxy_temp_path:
-            path: /var/cache/nginx/proxy/temp
-          proxy_cache_lock: true
-          proxy_cache_min_uses: 5
-          proxy_cache_revalidate: true
-          proxy_cache_use_stale:
-            - error
-            - timeout
-          proxy_ignore_headers:
-            - Expires
         returns:
           return301:
             location: /
             code: 301
             value: http://$host$request_uri
+    proxy_cache:
+      proxy_cache_path:
+        - path: /var/cache/nginx/proxy/backend
+          keys_zone:
+            name: backend_proxy_cache
+            size: 10m
+          levels: "1:2"
+          max_size: 10g
+          inactive: 60m
+          use_temp_path: true
+      proxy_temp_path:
+        path: /var/cache/nginx/proxy/temp
+      proxy_cache_valid:
+        - code: 200
+          time: 10m
+        - code: 301
+          time: 1m
+      proxy_cache_lock: true
+      proxy_cache_min_uses: 5
+      proxy_cache_revalidate: true
+      proxy_cache_use_stale:
+        - error
+        - timeout
+      proxy_ignore_headers:
+        - Expires
     upstreams:
       upstream1:
         name: backend

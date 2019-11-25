@@ -77,6 +77,11 @@
                       always: false
                   proxy_pass: http://frontend_servers/
                   proxy_cache: frontend_proxy_cache
+                  proxy_cache_valid:
+                    - code: 200
+                      time: 10m
+                    - code: 301
+                      time: 1m
                   proxy_temp_path:
                     path: /var/cache/nginx/proxy/frontend/temp
                   proxy_cache_lock: false
@@ -108,6 +113,8 @@
                   location: /backend
                   proxy_pass: http://backend_servers/
                   proxy_cache: backend_proxy_cache
+                  proxy_cache_valid:
+                    - time: 10m
                   proxy_temp_path:
                     path: /var/cache/nginx/proxy/backend/temp
                   proxy_cache_lock: true

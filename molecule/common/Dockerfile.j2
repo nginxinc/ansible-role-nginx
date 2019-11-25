@@ -34,7 +34,8 @@ RUN \
     && zypper clean -a; \
   elif [ $(command -v apk) ]; then \
     apk update \
-    && apk add --no-cache python sudo bash ca-certificates; \
+    && apk add --no-cache python sudo bash ca-certificates curl openrc; \
+    echo 'rc_provide="loopback net"' >> /etc/rc.conf; \
   elif [ $(command -v xbps-install) ]; then \
     xbps-install -Syu \
     && xbps-install -y python sudo bash ca-certificates iproute2 \

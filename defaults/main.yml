@@ -241,6 +241,7 @@ nginx_http_template:
           trusted_cert: /etc/ssl/certs/root_CA_cert_plus_intermediates.crt
           stapling: true
           stapling_verify: true
+        #custom_options: []
         web_server:
           locations:
             default:
@@ -369,7 +370,6 @@ nginx_http_template:
             location: /
             code: 301
             value: http://$host$request_uri
-        #server_custom_options: []
     proxy_cache:
       proxy_cache_path:
         - path: /var/cache/nginx/proxy/backend
@@ -404,7 +404,7 @@ nginx_http_template:
             weight: 1
             health_check: max_fails=1 fail_timeout=10s
         #custom_options: []
-    #http_custom_options: []
+      #custom_options: []
 
 # Enable NGINX status data.
 # Will enable 'stub_status' in NGINX Open Source and 'status' in NGINX Plus.

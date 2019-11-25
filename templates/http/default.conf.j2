@@ -59,12 +59,13 @@ auth_request {{ item.value.auth_request_http }};
 auth_request_set {{ item.value.auth_request_set_http.name }} {{ item.value.auth_request_set_http.value }};
 {% endif %}
 
-{% if item.value.http_custom_options is defined and item.value.http_custom_options | length %}
-{% for inline_option in item.value.http_custom_options %}
+{% if item.value.custom_options is defined and item.value.custom_options | length %}
+{% for inline_option in item.value.custom_options %}
 {{ inline_option }};
 {% endfor %}
 {% endif %}
 
+{% if item.value.servers is defined %}
 {% for server in item.value.servers %}
 server {
 {% for listen in item.value.servers[server].listen %}
@@ -147,8 +148,8 @@ server {
 {% if item.value.servers[server].client_max_body_size is defined and item.value.servers[server].client_max_body_size %}
     client_max_body_size {{ item.value.servers[server].client_max_body_size }};
 {% endif %}
-{% if item.value.servers[server].server_custom_options is defined and item.value.servers[server].server_custom_options | length %}
-{% for inline_option in item.value.servers[server].server_custom_options %}
+{% if item.value.servers[server].custom_options is defined and item.value.servers[server].custom_options | length %}
+{% for inline_option in item.value.servers[server].custom_options %}
     {{ inline_option }};
 {% endfor %}
 {% endif %}
@@ -426,3 +427,4 @@ server {
 
 }
 {% endfor %}
+{% endif %}

@@ -168,6 +168,8 @@ nginx_main_template:
     access_log_location:
       - name: main
         location: /var/log/nginx/access.log
+    tcp_nopush: true
+    tcp_nodelay: true
     keepalive_timeout: 65
     cache: false
     rate_limit: false

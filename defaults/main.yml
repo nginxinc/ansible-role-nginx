@@ -10,9 +10,14 @@ nginx_start: true
 # Print NGINX configuration file to terminal after executing playbook.
 nginx_debug_output: false
 
-# Supported systems
+# Supported distributions
 nginx_linux_families: ['Alpine', 'Debian', 'RedHat', 'Suse']
 nginx_bsd_systems: ['FreeBSD', 'NetBSD', 'OpenBSD', 'DragonFlyBSD', 'HardenedBSD']
+# Supported distributions NGINX Plus
+# https://docs.nginx.com/nginx/technical-specs/
+# RedHat={Amazon,CentOS,OracleLinux,RHEL} Debian={Ubuntu,Debian}
+nginx_plus_linux_families: ['Alpine', 'Debian', 'RedHat', 'Suse']
+nginx_plus_bsd_systems: ['FreeBSD']
 
 # Specify which type of NGINX you want to install.
 # Options are 'opensource' or 'plus'.
@@ -79,6 +84,9 @@ nginx_modules:
   image_filter: false
   rtmp: false
   xslt: false
+
+# FreeBSD extra packages
+nginx_freebsd_extra_packages: ['security/ca_root_nss']
 
 # Install NGINX Amplify.
 # Use your NGINX Amplify API key.

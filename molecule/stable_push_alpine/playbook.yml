@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: ansible-role-nginx
+  vars:
+    nginx_branch: stable
+    nginx_main_upload_enable: true
+    nginx_main_upload_src: files/nginx.conf
+    nginx_http_upload_enable: true
+    nginx_http_upload_src: files/http/*.conf

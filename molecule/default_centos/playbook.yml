@@ -1,0 +1,20 @@
+---
+- name: Converge
+  hosts: all
+  pre_tasks:
+    - name: "Set repo if Alpine"
+      set_fact:
+        version: "=1.17.6-r1"
+      when: ansible_os_family == "Alpine"
+    - name: "Set repo if Debian"
+      set_fact:
+        version: "=1.17.6-1~{{ ansible_distribution_release }}"
+      when: ansible_os_family == "Debian"
+    - name: "Set repo if RedHat"
+      set_fact:
+        version: "-1.17.6-1.el{{ ansible_distribution_major_version }}.ngx"
+      when: ansible_os_family == "RedHat"
+  roles:
+    - role: ansible-role-nginx
+  vars:
+    nginx_version: "{{ version }}"

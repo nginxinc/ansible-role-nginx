@@ -26,6 +26,8 @@ platforms:
     command: "/usr/sbin/init"
 provisioner:
   name: ansible
+  playbooks:
+    converge: ../common/playbook_stable_push.yml
   lint:
     name: ansible-lint
 verifier:

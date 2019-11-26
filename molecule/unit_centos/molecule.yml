@@ -23,5 +23,7 @@ platforms:
     command: "/usr/sbin/init"
 provisioner:
   name: ansible
+  playbooks:
+    converge: ../common/playbook_unit.yml
   lint:
     name: ansible-lint

@@ -21,6 +21,8 @@ platforms:
     dockerfile: ../common/Dockerfile.j2
 provisioner:
   name: ansible
+  playbooks:
+    converge: ../common/playbook_template.yml
   lint:
     name: ansible-lint
 verifier:

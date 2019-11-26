@@ -72,10 +72,10 @@ http {
 
     sendfile        on;
 
-{% if nginx_main_template.http_settings.tcp_nopush is defined and nginx_main_template.tcp_nopush %}
+{% if nginx_main_template.http_settings.tcp_nopush is defined and nginx_main_template.http_settings.tcp_nopush %}
     tcp_nopush      on;
 {% endif %}
-{% if nginx_main_template.http_settings.tcp_nodelay is defined and nginx_main_template.tcp_nodelay %}
+{% if nginx_main_template.http_settings.tcp_nodelay is defined and nginx_main_template.http_settings.tcp_nodelay %}
     tcp_nodelay     on;
 {% endif %}
 

@@ -24,5 +24,6 @@ provisioner:
     name: ansible-lint
 verifier:
   name: testinfra
+  directory: ../common/test_default
   lint:
     name: flake8

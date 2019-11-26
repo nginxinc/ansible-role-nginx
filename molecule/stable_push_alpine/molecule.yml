@@ -36,5 +36,6 @@ provisioner:
     name: ansible-lint
 verifier:
   name: testinfra
+  directory: ../common/test_stable_push
   lint:
     name: flake8

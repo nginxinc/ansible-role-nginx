@@ -4,29 +4,6 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: alpine-3.8
-    image: alpine:3.8
-    dockerfile: ../common/Dockerfile.j2
-    command: "/sbin/init"
-  - name: alpine-3.9
-    image: alpine:3.9
-    dockerfile: ../common/Dockerfile.j2
-    command: "/sbin/init"
-  - name: alpine-3.10
-    image: alpine:3.10
-    dockerfile: ../common/Dockerfile.j2
-    command: "/sbin/init"
-  - name: centos-6
-    image: centos:6
-    dockerfile: ../common/Dockerfile.j2
-  - name: centos-7
-    image: centos:7
-    dockerfile: ../common/Dockerfile.j2
-    privileged: True
-    volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/usr/sbin/init"
-    tty: True
   - name: debian-stretch
     image: debian:stretch-slim
     dockerfile: ../common/Dockerfile.j2
@@ -41,9 +18,12 @@ platforms:
     dockerfile: ../common/Dockerfile.j2
 provisioner:
   name: ansible
+  playbooks:
+    converge: ../common/playbook_module.yml
   lint:
     name: ansible-lint
 verifier:
   name: testinfra
+  directory: ../common/test_module
   lint:
     name: flake8

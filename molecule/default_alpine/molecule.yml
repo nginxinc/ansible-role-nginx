@@ -1,0 +1,38 @@
+---
+driver:
+  name: docker
+lint:
+  name: yamllint
+platforms:
+  - name: alpine-3.8
+    image: alpine:3.8
+    dockerfile: ../common/Dockerfile.j2
+    privileged: True
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/sbin/init"
+  - name: alpine-3.9
+    image: alpine:3.9
+    dockerfile: ../common/Dockerfile.j2
+    privileged: True
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/sbin/init"
+  - name: alpine-3.10
+    image: alpine:3.10
+    dockerfile: ../common/Dockerfile.j2
+    privileged: True
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/sbin/init"
+provisioner:
+  name: ansible
+  playbooks:
+    converge: ../common/playbook_default.yml
+  lint:
+    name: ansible-lint
+verifier:
+  name: testinfra
+  directory: ../common/test_default
+  lint:
+    name: flake8

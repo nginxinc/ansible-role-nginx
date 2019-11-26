@@ -1,0 +1,37 @@
+---
+dependency:
+  name: shell
+  command: pip install python-nginx
+driver:
+  name: docker
+lint:
+  name: yamllint
+platforms:
+  - name: centos-6
+    image: centos:6
+    dockerfile: ../common/Dockerfile.j2
+  - name: centos-7
+    image: centos:7
+    dockerfile: ../common/Dockerfile.j2
+    privileged: True
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/usr/sbin/init"
+  - name: centos-8
+    image: centos:8
+    dockerfile: ../common/Dockerfile.j2
+    privileged: True
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/usr/sbin/init"
+provisioner:
+  name: ansible
+  playbooks:
+    converge: ../common/playbook_stable_push.yml
+  lint:
+    name: ansible-lint
+verifier:
+  name: testinfra
+  directory: ../common/test_stable_push
+  lint:
+    name: flake8

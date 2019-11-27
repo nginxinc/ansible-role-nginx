@@ -10,15 +10,6 @@ nginx_start: true
 # Print NGINX configuration file to terminal after executing playbook.
 nginx_debug_output: false
 
-# Supported distributions
-nginx_linux_families: ['Alpine', 'Debian', 'RedHat', 'Suse']
-nginx_bsd_systems: ['FreeBSD', 'NetBSD', 'OpenBSD', 'DragonFlyBSD', 'HardenedBSD']
-# Supported distributions NGINX Plus
-# https://docs.nginx.com/nginx/technical-specs/
-# RedHat={Amazon,CentOS,OracleLinux,RHEL} Debian={Ubuntu,Debian}
-nginx_plus_linux_families: ['Alpine', 'Debian', 'RedHat', 'Suse']
-nginx_plus_bsd_systems: ['FreeBSD']
-
 # Specify which type of NGINX you want to install.
 # Options are 'opensource' or 'plus'.
 # Default is 'opensource'.
@@ -41,22 +32,6 @@ nginx_install_from: nginx_repository
 # Only works if 'install_from' is set to 'nginx_repository'.
 # Defaults are the official NGINX repositories.
 # nginx_repository: deb https://nginx.org/packages/mainline/debian/ stretch nginx
-
-# Choose to install BSD packages or ports.
-# Options are True for packages or False for ports.
-# Default is True.
-nginx_bsd_install_packages: true
-
-# Choose to update BSD ports collection.
-# Options are True for update or False for do not update.
-# Default is True.
-nginx_bsd_update_ports: true
-
-# Choose to install packages built from BSD ports collection if
-# available.
-# Options are True for use packages or False for do not use packages.
-# Default is True.
-nginx_bsd_portinstall_use_packages: true
 
 # Specify which branch of NGINX Open Source you want to install.
 # Options are 'mainline' or 'stable'.
@@ -84,9 +59,6 @@ nginx_modules:
   image_filter: false
   rtmp: false
   xslt: false
-
-# FreeBSD extra packages
-nginx_freebsd_extra_packages: ['security/ca_root_nss']
 
 # Install NGINX Amplify.
 # Use your NGINX Amplify API key.

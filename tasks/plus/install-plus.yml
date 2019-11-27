@@ -1,23 +1,11 @@
 ---
-- import_tasks: setup-license.yml
+- name: "(Install: All OSs) Setup license"
+  import_tasks: setup-license.yml
 
-- import_tasks: setup-debian.yml
-  when: ansible_os_family == "Debian"
+- name: "(Install: Linux) Install NGINX Plus"
+  import_tasks: install-plus-linux.yml
+  when: ansible_os_family in nginx_plus_linux_families
 
-- import_tasks: setup-redhat.yml
-  when: ansible_os_family == "RedHat"
-
-- import_tasks: setup-suse.yml
-  when: ansible_os_family == "Suse"
-
-- import_tasks: setup-freebsd.yml
-  when: ansible_os_family == "FreeBSD"
-
-- import_tasks: setup-alpine.yml
-  when: ansible_os_family == "Alpine"
-
-- name: "(Install: All OSs) Install NGINX Plus"
-  package:
-    name: "nginx-plus{{ nginx_version | default('') }}"
-    state: present
-  notify: "(Handler: All OSs) Start NGINX"
+- name: "(Install: FreeBSD) Install NGINX Plus"
+  import_tasks: install-plus-bsd.yml
+  when: ansible_system in nginx_plus_bsd_systems

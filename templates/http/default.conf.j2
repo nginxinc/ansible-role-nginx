@@ -4,7 +4,9 @@
 {% for upstream in item.value.upstreams %}
 upstream {{ item.value.upstreams[upstream].name }} {
     {{ item.value.upstreams[upstream].lb_method }};
+{% if item.value.upstreams[upstream].zone_name is defined and item.value.upstreams[upstream].zone_name %}
     zone {{ item.value.upstreams[upstream].zone_name }} {{ item.value.upstreams[upstream].zone_size }};
+{% endif %}
 {% for server in item.value.upstreams[upstream].servers %}
     server {{ item.value.upstreams[upstream].servers[server].address }}:{{ item.value.upstreams[upstream].servers[server].port }} weight={{ item.value.upstreams[upstream].servers[server].weight|default("1") }} {{ item.value.upstreams[upstream].servers[server].health_check|default("") }};
 {% endfor %}
@@ -20,33 +22,42 @@ upstream {{ item.value.upstreams[upstream].name }} {
 {% endfor %}
 {% endif %}
 
-{% if item.value.reverse_proxy is defined and item.value.reverse_proxy %}
-{% if item.value.reverse_proxy.proxy_cache_path is defined and item.value.reverse_proxy.proxy_cache_path %}
-{% for proxy_cache_path in item.value.reverse_proxy.proxy_cache_path %}
+{% if item.value.proxy_cache is defined and item.value.proxy_cache %}
+{% if item.value.proxy_cache.proxy_cache_path is defined and item.value.proxy_cache.proxy_cache_path %}
+{% for proxy_cache_path in item.value.proxy_cache.proxy_cache_path %}
 proxy_cache_path {{ proxy_cache_path.path }} keys_zone={{ proxy_cache_path.keys_zone.name }}:{{ proxy_cache_path.keys_zone.size }}
-                 levels={{ proxy_cache_path.levels }} max_size={{ proxy_cache_path.max_size }}
-                 inactive={{ proxy_cache_path.inactive }} use_temp_path={{ proxy_cache_path.use_temp_path | ternary("on", "off") }};
+                levels={{ proxy_cache_path.levels }} max_size={{ proxy_cache_path.max_size }}
+                inactive={{ proxy_cache_path.inactive }} use_temp_path={{ proxy_cache_path.use_temp_path | ternary("on", "off") }};
 {% endfor %}
-{% if item.value.reverse_proxy.proxy_cache_background_update is defined and item.value.reverse_proxy.proxy_cache_background_update%}
-proxy_cache_background_update {{ item.value.reverse_proxy.proxy_cache_background_update | ternary("on", "off") }};
+{% if item.value.proxy_cache.proxy_cache_background_update is defined and item.value.proxy_cache.proxy_cache_background_update%}
+proxy_cache_background_update {{ item.value.proxy_cache.proxy_cache_background_update | ternary("on", "off") }};
 {% endif %}
-{% if item.value.reverse_proxy.proxy_cache_lock is defined and item.value.reverse_proxy.proxy_cache_lock %}
-proxy_cache_lock {{ item.value.reverse_proxy.proxy_cache_lock | ternary("on", "off") }};
+{% if item.value.proxy_cache.proxy_cache_lock is defined and item.value.proxy_cache.proxy_cache_lock %}
+proxy_cache_lock {{ item.value.proxy_cache.proxy_cache_lock | ternary("on", "off") }};
 {% endif %}
-{% if item.value.reverse_proxy.proxy_cache_min_uses is defined and item.value.reverse_proxy.proxy_cache_min_uses %}
-proxy_cache_min_uses {{ item.value.reverse_proxy.proxy_cache_min_uses }};
+{% if item.value.proxy_cache.proxy_cache_min_uses is defined and item.value.proxy_cache.proxy_cache_min_uses %}
+proxy_cache_min_uses {{ item.value.proxy_cache.proxy_cache_min_uses }};
 {% endif %}
-{% if item.value.reverse_proxy.proxy_cache_revalidate is defined and item.value.reverse_proxy.proxy_cache_revalidate %}
-proxy_cache_revalidate {{ item.value.reverse_proxy.proxy_cache_revalidate | ternary("on", "off") }};
+{% if item.value.proxy_cache.proxy_cache_revalidate is defined and item.value.proxy_cache.proxy_cache_revalidate %}
+proxy_cache_revalidate {{ item.value.proxy_cache.proxy_cache_revalidate | ternary("on", "off") }};
 {% endif %}
-{% if item.value.reverse_proxy.proxy_cache_use_stale is defined and item.value.reverse_proxy.proxy_cache_use_stale %}
-proxy_cache_use_stale {{ item.value.reverse_proxy.proxy_cache_use_stale | join(" ") }};
+{% if item.value.proxy_cache.proxy_cache_use_stale is defined and item.value.proxy_cache.proxy_cache_use_stale %}
+proxy_cache_use_stale {{ item.value.proxy_cache.proxy_cache_use_stale | join(" ") }};
 {% endif %}
-{% if item.value.reverse_proxy.proxy_ignore_headers is defined and item.value.reverse_proxy.proxy_ignore_headers %}
-proxy_ignore_headers {{ item.value.reverse_proxy.proxy_ignore_headers | join(" ") }};
+{% if item.value.proxy_cache.proxy_ignore_headers is defined and item.value.proxy_cache.proxy_ignore_headers %}
+proxy_ignore_headers {{ item.value.proxy_cache.proxy_ignore_headers | join(" ") }};
 {% endif %}
-{% if item.value.reverse_proxy.proxy_temp_path is defined and item.value.reverse_proxy.proxy_temp_path.path %}
-proxy_temp_path {{ item.value.reverse_proxy.proxy_temp_path.path }} {{ item.value.reverse_proxy.proxy_temp_path.level_1 | default("") }} {{ item.value.reverse_proxy.proxy_temp_path.level_2 | default("") }} {{ item.value.reverse_proxy.proxy_temp_path.level_3 | default("") }};
+{% if item.value.proxy_cache.proxy_temp_path is defined and item.value.proxy_cache.proxy_temp_path.path %}
+proxy_temp_path {{ item.value.proxy_cache.proxy_temp_path.path }} {{ item.value.proxy_cache.proxy_temp_path.level_1 | default("") }} {{ item.value.proxy_cache.proxy_temp_path.level_2 | default("") }} {{ item.value.proxy_cache.proxy_temp_path.level_3 | default("") }};
+{% endif %}
+{% if item.value.proxy_cache.proxy_cache_valid is defined %}
+{% for proxy_cache_valid in item.value.proxy_cache.proxy_cache_valid %}
+{% if proxy_cache_valid.code is defined %}
+proxy_cache_valid {{ proxy_cache_valid.code }} {{ proxy_cache_valid.time | default("10m") }};
+{% elif proxy_cache_valid.time is defined and proxy_cache_valid.code is not defined %}
+proxy_cache_valid {{ proxy_cache_valid.time }};
+{% endif %}
+{% endfor %}
 {% endif %}
 {% endif %}
 {% endif %}
@@ -57,262 +68,276 @@ auth_request {{ item.value.auth_request_http }};
 auth_request_set {{ item.value.auth_request_set_http.name }} {{ item.value.auth_request_set_http.value }};
 {% endif %}
 
-{% if item.value.http_custom_options is defined and item.value.http_custom_options | length %}
-{% for inline_option in item.value.http_custom_options %}
+{% if item.value.custom_options is defined and item.value.custom_options | length %}
+{% for inline_option in item.value.custom_options %}
 {{ inline_option }};
 {% endfor %}
 {% endif %}
 
+{% if item.value.servers is defined %}
+{% for server in item.value.servers %}
 server {
-{% for listen in item.value.listen %}
-    listen {% if item.value.listen[listen].ip is defined and item.value.listen[listen].ip | length %}{{ item.value.listen[listen].ip }}:{% endif %}{{ item.value.listen[listen].port }}{% if item.value.ssl is defined and item.value.ssl %} ssl{% endif %}{% if item.value.listen[listen].opts is defined and item.value.listen[listen].opts | length %} {{ item.value.listen[listen].opts | join(" ") }}{% endif %};
+{% for listen in item.value.servers[server].listen %}
+    listen {% if item.value.servers[server].listen[listen].ip is defined and item.value.servers[server].listen[listen].ip | length %}{{ item.value.servers[server].listen[listen].ip }}:{% endif %}{{ item.value.servers[server].listen[listen].port }}{% if item.value.servers[server].ssl is defined and item.value.servers[server].ssl %} ssl{% endif %}{% if item.value.servers[server].listen[listen].opts is defined and item.value.servers[server].listen[listen].opts | length %} {{ item.value.servers[server].listen[listen].opts | join(" ") }}{% endif %};
 {% endfor %}
-    server_name {{ item.value.server_name | default('localhost') }};
-{% if item.value.ssl is defined and item.value.ssl %}
-    ssl_certificate {{ item.value.ssl.cert }};
-    ssl_certificate_key {{ item.value.ssl.key }};
-{% if item.value.ssl.trusted_cert is defined %}
-    ssl_trusted_certificate {{ item.value.ssl.trusted_cert }};
+    server_name {{ item.value.servers[server].server_name | default('localhost') }};
+{% if item.value.servers[server].ssl is defined and item.value.servers[server].ssl %}
+    ssl_certificate {{ item.value.servers[server].ssl.cert }};
+    ssl_certificate_key {{ item.value.servers[server].ssl.key }};
+{% if item.value.servers[server].ssl.trusted_cert is defined %}
+    ssl_trusted_certificate {{ item.value.servers[server].ssl.trusted_cert }};
 {% endif %}
-{% if item.value.ssl.dhparam is defined %}
-    ssl_dhparam {{ item.value.ssl.dhparam }};
+{% if item.value.servers[server].ssl.dhparam is defined %}
+    ssl_dhparam {{ item.value.servers[server].ssl.dhparam }};
 {% endif %}
-{% if item.value.ssl.protocols is defined and item.value.ssl.protocols %}
-    ssl_protocols {{ item.value.ssl.protocols }};
+{% if item.value.servers[server].ssl.protocols is defined and item.value.servers[server].ssl.protocols %}
+    ssl_protocols {{ item.value.servers[server].ssl.protocols }};
 {% endif %}
-{% if item.value.ssl.ciphers is defined and item.value.ssl.ciphers %}
-    ssl_ciphers {{ item.value.ssl.ciphers }};
+{% if item.value.servers[server].ssl.ciphers is defined and item.value.servers[server].ssl.ciphers %}
+    ssl_ciphers {{ item.value.servers[server].ssl.ciphers }};
 {% endif %}
-{% if item.value.ssl.prefer_server_ciphers is defined and item.value.ssl.prefer_server_ciphers %}
+{% if item.value.servers[server].ssl.prefer_server_ciphers is defined and item.value.servers[server].ssl.prefer_server_ciphers %}
     ssl_prefer_server_ciphers on;
 {% endif %}
-{% if item.value.ssl.session_cache is defined and item.value.ssl.session_cache %}
-    ssl_session_cache {{ item.value.ssl.session_cache }};
+{% if item.value.servers[server].ssl.session_cache is defined and item.value.servers[server].ssl.session_cache %}
+    ssl_session_cache {{ item.value.servers[server].ssl.session_cache }};
 {% endif %}
-{% if item.value.ssl.session_timeout is defined and item.value.ssl.session_timeout %}
-    ssl_session_timeout {{ item.value.ssl.session_timeout }};
+{% if item.value.servers[server].ssl.session_timeout is defined and item.value.servers[server].ssl.session_timeout %}
+    ssl_session_timeout {{ item.value.servers[server].ssl.session_timeout }};
 {% endif %}
-{% if item.value.ssl.disable_session_tickets is defined and item.value.ssl.disable_session_tickets %}
+{% if item.value.servers[server].ssl.disable_session_tickets is defined and item.value.servers[server].ssl.disable_session_tickets %}
     ssl_session_tickets off;
 {% endif %}
-{% if item.value.ssl.stapling is defined and item.value.ssl.stapling %}
+{% if item.value.servers[server].ssl.stapling is defined and item.value.servers[server].ssl.stapling %}
     ssl_stapling on;
 {% endif %}
-{% if item.value.ssl.stapling_verify is defined and item.value.ssl.stapling_verify %}
+{% if item.value.servers[server].ssl.stapling_verify is defined and item.value.servers[server].ssl.stapling_verify %}
     ssl_stapling_verify on;
 {% endif %}
 {% endif %}
-{% if item.value.include_files is defined and item.value.include_files | length %}
-{% for file in item.value.include_files %}
+{% if item.value.servers[server].include_files is defined and item.value.servers[server].include_files | length %}
+{% for file in item.value.servers[server].include_files %}
     include "{{ file }}";
 {% endfor %}
 {% endif %}
-{% if item.value.proxy_hide_headers is defined %}
-{% for header in item.value.proxy_hide_headers %}
+{% if item.value.servers[server].proxy_hide_headers is defined %}
+{% for header in item.value.servers[server].proxy_hide_headers %}
     proxy_hide_header {{ header }};
 {% endfor %}
 {% endif %}
-{% if item.value.add_headers is defined %}
-{% for header in item.value.add_headers %}
-    add_header {{ item.value.add_headers[header].name }} "{{ item.value.add_headers[header].value }}"{% if item.value.add_headers[header].always is defined and item.value.add_headers[header].always %} always{% endif %};
+{% if item.value.servers[server].add_headers is defined %}
+{% for header in item.value.servers[server].add_headers %}
+    add_header {{ item.value.servers[server].add_headers[header].name }} "{{ item.value.servers[server].add_headers[header].value }}"{% if item.value.servers[server].add_headers[header].always is defined and item.value.servers[server].add_headers[header].always %} always{% endif %};
 {% endfor %}
 {% endif %}
-{% if item.value.auth_basic is defined and item.value.auth_basic %}
-    auth_basic "{{ item.value.auth_basic }}";
+{% if item.value.servers[server].auth_basic is defined and item.value.servers[server].auth_basic %}
+    auth_basic "{{ item.value.servers[server].auth_basic }}";
 {% endif %}
-{% if item.value.auth_basic_user_file is defined and item.value.auth_basic_user_file %}
-    auth_basic_user_file {{ item.value.auth_basic_user_file }};
+{% if item.value.servers[server].auth_basic_user_file is defined and item.value.servers[server].auth_basic_user_file %}
+    auth_basic_user_file {{ item.value.servers[server].auth_basic_user_file }};
 {% endif %}
-{% if item.value.root is defined and item.value.root %}
-    root {{ item.value.root }};
+{% if item.value.servers[server].root is defined and item.value.servers[server].root %}
+    root {{ item.value.servers[server].root }};
 {% endif %}
-{% if item.value.https_redirect is defined and item.value.https_redirect %}
-    return 301 https://{% if item.value.server_name == "_" %}$host{% else %}{{ item.value.server_name }}{% endif %}$request_uri;
+{% if item.value.servers[server].https_redirect is defined and item.value.servers[server].https_redirect %}
+    return 301 https://{% if item.value.servers[server].server_name == "_" %}$host{% else %}{{ item.value.servers[server].server_name }}{% endif %}$request_uri;
 {% endif %}
-{% if item.value.autoindex is defined and item.value.autoindex %}
+{% if item.value.servers[server].autoindex is defined and item.value.servers[server].autoindex %}
     autoindex on;
 {% endif %}
-{% if item.value.try_files is defined %}
-    try_files {{ item.value.try_files }};
+{% if item.value.servers[server].try_files is defined %}
+    try_files {{ item.value.servers[server].try_files }};
 {% endif %}
-{% if item.value.auth_request is defined %}
-    auth_request {{ item.value.auth_request }};
+{% if item.value.servers[server].auth_request is defined %}
+    auth_request {{ item.value.servers[server].auth_request }};
 {% endif %}
-{% if item.value.auth_request_set is defined %}
-    auth_request_set {{ item.value.auth_request_set.name }} {{ item.value.auth_request_set.value }};
+{% if item.value.servers[server].auth_request_set is defined %}
+    auth_request_set {{ item.value.servers[server].auth_request_set.name }} {{ item.value.servers[server].auth_request_set.value }};
 {% endif %}
-{% if item.value.client_max_body_size is defined and item.value.client_max_body_size %}
-    client_max_body_size {{ item.value.client_max_body_size }};
+{% if item.value.servers[server].client_max_body_size is defined and item.value.servers[server].client_max_body_size %}
+    client_max_body_size {{ item.value.servers[server].client_max_body_size }};
 {% endif %}
-{% if item.value.server_custom_options is defined and item.value.server_custom_options | length %}
-{% for inline_option in item.value.server_custom_options %}
+{% if item.value.servers[server].custom_options is defined and item.value.servers[server].custom_options | length %}
+{% for inline_option in item.value.servers[server].custom_options %}
     {{ inline_option }};
 {% endfor %}
 {% endif %}
 
-{% if item.value.reverse_proxy is defined and item.value.reverse_proxy %}
-{% for location in item.value.reverse_proxy.locations %}
-    location {{ item.value.reverse_proxy.locations[location].location }} {
-{% if item.value.reverse_proxy.locations[location].internal is sameas true %}
+{% if item.value.servers[server].reverse_proxy is defined and item.value.servers[server].reverse_proxy %}
+{% for location in item.value.servers[server].reverse_proxy.locations %}
+    location {{ item.value.servers[server].reverse_proxy.locations[location].location }} {
+{% if item.value.servers[server].reverse_proxy.locations[location].internal is sameas true %}
         internal;
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].include_files is defined and item.value.reverse_proxy.locations[location].include_files | length %}
-{% for file in item.value.reverse_proxy.locations[location].include_files %}
+{% if item.value.servers[server].reverse_proxy.locations[location].include_files is defined and item.value.servers[server].reverse_proxy.locations[location].include_files | length %}
+{% for file in item.value.servers[server].reverse_proxy.locations[location].include_files %}
         include "{{ file }}";
 {% endfor %}
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].proxy_hide_headers is defined %}
-{% for header in item.value.reverse_proxy.locations[location].proxy_hide_headers %}
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_hide_headers is defined %}
+{% for header in item.value.servers[server].reverse_proxy.locations[location].proxy_hide_headers %}
         proxy_hide_header {{ header }};
 {% endfor %}
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].add_headers is defined %}
-{% for header in item.value.reverse_proxy.locations[location].add_headers %}
-        add_header {{ item.value.reverse_proxy.locations[location].add_headers[header].name }} "{{ item.value.reverse_proxy.locations[location].add_headers[header].value }}"{% if item.value.reverse_proxy.locations[location].add_headers[header].always is defined and item.value.reverse_proxy.locations[location].add_headers[header].always %} always{% endif %};
+{% if item.value.servers[server].reverse_proxy.locations[location].add_headers is defined %}
+{% for header in item.value.servers[server].reverse_proxy.locations[location].add_headers %}
+        add_header {{ item.value.servers[server].reverse_proxy.locations[location].add_headers[header].name }} "{{ item.value.servers[server].reverse_proxy.locations[location].add_headers[header].value }}"{% if item.value.servers[server].reverse_proxy.locations[location].add_headers[header].always is defined and item.value.servers[server].reverse_proxy.locations[location].add_headers[header].always %} always{% endif %};
 {% endfor %}
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].auth_request is defined %}
-        auth_request {{ item.value.reverse_proxy.locations[location].auth_request }};
+{% if item.value.servers[server].reverse_proxy.locations[location].auth_request is defined %}
+        auth_request {{ item.value.servers[server].reverse_proxy.locations[location].auth_request }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].auth_request_set is defined %}
-        auth_request_set {{ item.value.reverse_proxy.locations[location].auth_request_set.name }} {{ item.value.reverse_proxy.locations[location].auth_request_set.value }};
+{% if item.value.servers[server].reverse_proxy.locations[location].auth_request_set is defined %}
+        auth_request_set {{ item.value.servers[server].reverse_proxy.locations[location].auth_request_set.name }} {{ item.value.servers[server].reverse_proxy.locations[location].auth_request_set.value }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].auth_basic is defined and item.value.reverse_proxy.locations[location].auth_basic %}
-        auth_basic "{{ item.value.reverse_proxy.locations[location].auth_basic }}";
+{% if item.value.servers[server].reverse_proxy.locations[location].auth_basic is defined and item.value.servers[server].reverse_proxy.locations[location].auth_basic %}
+        auth_basic "{{ item.value.servers[server].reverse_proxy.locations[location].auth_basic }}";
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].auth_basic_user_file is defined and item.value.reverse_proxy.locations[location].auth_basic_user_file %}
-        auth_basic_user_file {{ item.value.reverse_proxy.locations[location].auth_basic_user_file }};
+{% if item.value.servers[server].reverse_proxy.locations[location].auth_basic_user_file is defined and item.value.servers[server].reverse_proxy.locations[location].auth_basic_user_file %}
+        auth_basic_user_file {{ item.value.servers[server].reverse_proxy.locations[location].auth_basic_user_file }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].returns is defined %}
-{% for code in item.value.reverse_proxy.locations[location].returns %}
-{% if item.value.reverse_proxy.locations[location].returns[code] is defined %}
-        return {{ item.value.reverse_proxy.locations[location].returns[code].code }} {{ item.value.reverse_proxy.locations[location].returns[code].url }};
+{% if item.value.servers[server].reverse_proxy.locations[location].returns is defined %}
+{% for code in item.value.servers[server].reverse_proxy.locations[location].returns %}
+{% if item.value.servers[server].reverse_proxy.locations[location].returns[code] is defined %}
+        return {{ item.value.servers[server].reverse_proxy.locations[location].returns[code].code }} {{ item.value.servers[server].reverse_proxy.locations[location].returns[code].url }};
 {% else %}
-        return {{ item.value.reverse_proxy.locations[location].returns[code].url }};
+        return {{ item.value.servers[server].reverse_proxy.locations[location].returns[code].url }};
 {% endif %}
 {% endfor %}
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].proxy_connect_timeout is defined and item.value.reverse_proxy.locations[location].proxy_connect_timeout %}
-        proxy_connect_timeout {{ item.value.reverse_proxy.locations[location].proxy_connect_timeout }};
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_connect_timeout is defined and item.value.servers[server].reverse_proxy.locations[location].proxy_connect_timeout %}
+        proxy_connect_timeout {{ item.value.servers[server].reverse_proxy.locations[location].proxy_connect_timeout }};
 {% endif %}
-        proxy_pass {{ item.value.reverse_proxy.locations[location].proxy_pass }};
-{% if item.value.reverse_proxy.locations[location].rewrites is defined %}
-{% for rewrite in item.value.reverse_proxy.locations[location].rewrites %}
+        proxy_pass {{ item.value.servers[server].reverse_proxy.locations[location].proxy_pass }};
+{% if item.value.servers[server].reverse_proxy.locations[location].rewrites is defined %}
+{% for rewrite in item.value.servers[server].reverse_proxy.locations[location].rewrites %}
         rewrite {{ rewrite }};
 {% endfor %}
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].proxy_read_timeout is defined and item.value.reverse_proxy.locations[location].proxy_read_timeout %}
-        proxy_read_timeout {{ item.value.reverse_proxy.locations[location].proxy_read_timeout }};
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_read_timeout is defined and item.value.servers[server].reverse_proxy.locations[location].proxy_read_timeout %}
+        proxy_read_timeout {{ item.value.servers[server].reverse_proxy.locations[location].proxy_read_timeout }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].proxy_pass_request_body is defined %}
-        proxy_pass_request_body {{ item.value.reverse_proxy.locations[location].proxy_pass_request_body }};
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_send_timeout is defined and item.value.servers[server].reverse_proxy.locations[location].proxy_send_timeout %}
+        proxy_send_timeout {{ item.value.servers[server].reverse_proxy.locations[location].proxy_send_timeout }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].proxy_store is defined %}
-        proxy_store {{ item.value.reverse_proxy.locations[location].proxy_store | ternary("on", "off") }};
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_pass_request_body is defined %}
+        proxy_pass_request_body {{ item.value.servers[server].reverse_proxy.locations[location].proxy_pass_request_body }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].proxy_store_access is defined %}
-        proxy_store_access {{ item.value.reverse_proxy.locations[location].proxy_store_access }};
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_store is defined %}
+        proxy_store {{ item.value.servers[server].reverse_proxy.locations[location].proxy_store | ternary("on", "off") }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].allows is defined %}
-{% for allow in item.value.reverse_proxy.locations[location].allows %}
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_store_access is defined %}
+        proxy_store_access {{ item.value.servers[server].reverse_proxy.locations[location].proxy_store_access }};
+{% endif %}
+{% if item.value.servers[server].reverse_proxy.locations[location].allows is defined %}
+{% for allow in item.value.servers[server].reverse_proxy.locations[location].allows %}
         allow {{ allow }};
 {% endfor %}
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].denies is defined %}
-{% for deny in item.value.reverse_proxy.locations[location].denies %}
+{% if item.value.servers[server].reverse_proxy.locations[location].denies is defined %}
+{% for deny in item.value.servers[server].reverse_proxy.locations[location].denies %}
         deny {{ deny }};
 {% endfor %}
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].proxy_set_header is defined %}
-{% for header in item.value.reverse_proxy.locations[location].proxy_set_header %}
-        proxy_set_header {{ item.value.reverse_proxy.locations[location].proxy_set_header[header].name }} {{ item.value.reverse_proxy.locations[location].proxy_set_header[header].value }};
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_set_header is defined %}
+{% for header in item.value.servers[server].reverse_proxy.locations[location].proxy_set_header %}
+        proxy_set_header {{ item.value.servers[server].reverse_proxy.locations[location].proxy_set_header[header].name }} {{ item.value.servers[server].reverse_proxy.locations[location].proxy_set_header[header].value }};
 {% endfor %}
-{% if item.value.reverse_proxy.locations[location].proxy_http_version is defined %}
-        proxy_http_version {{ item.value.reverse_proxy.locations[location].proxy_http_version }};
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_http_version is defined %}
+        proxy_http_version {{ item.value.servers[server].reverse_proxy.locations[location].proxy_http_version }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].websocket is defined and item.value.reverse_proxy.locations[location].websocket %}
+{% if item.value.servers[server].reverse_proxy.locations[location].websocket is defined and item.value.servers[server].reverse_proxy.locations[location].websocket %}
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "Upgrade";
 {% endif %}
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].try_files is defined %}
-        try_files {{ item.value.reverse_proxy.locations[location].try_files }};
+{% if item.value.servers[server].reverse_proxy.locations[location].try_files is defined %}
+        try_files {{ item.value.servers[server].reverse_proxy.locations[location].try_files }};
 {% endif %}
 
-{% if item.value.reverse_proxy.locations[location].proxy_ssl is defined and item.value.reverse_proxy.locations[location].proxy_ssl %}
-{% if item.value.reverse_proxy.locations[location].proxy_ssl.cert is defined %}
-        proxy_ssl_certificate {{ item.value.reverse_proxy.locations[location].proxy_ssl.cert }};
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_ssl is defined and item.value.servers[server].reverse_proxy.locations[location].proxy_ssl %}
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_ssl.cert is defined %}
+        proxy_ssl_certificate {{ item.value.servers[server].reverse_proxy.locations[location].proxy_ssl.cert }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].proxy_ssl.key is defined %}
-        proxy_ssl_certificate_key {{ item.value.reverse_proxy.locations[location].proxy_ssl.key }};
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_ssl.key is defined %}
+        proxy_ssl_certificate_key {{ item.value.servers[server].reverse_proxy.locations[location].proxy_ssl.key }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].proxy_ssl.trusted_cert is defined %}
-        proxy_ssl_trusted_certificate {{ item.value.reverse_proxy.locations[location].proxy_ssl.trusted_cert }};
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_ssl.trusted_cert is defined %}
+        proxy_ssl_trusted_certificate {{ item.value.servers[server].reverse_proxy.locations[location].proxy_ssl.trusted_cert }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].proxy_ssl.server_name is defined %}
-        proxy_ssl_server_name {{ item.value.reverse_proxy.locations[location].proxy_ssl.server_name | ternary("on", "off") }};
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_ssl.server_name is defined %}
+        proxy_ssl_server_name {{ item.value.servers[server].reverse_proxy.locations[location].proxy_ssl.server_name | ternary("on", "off") }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].proxy_ssl.name is defined %}
-        proxy_ssl_name {{ item.value.reverse_proxy.locations[location].proxy_ssl.name }};
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_ssl.name is defined %}
+        proxy_ssl_name {{ item.value.servers[server].reverse_proxy.locations[location].proxy_ssl.name }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].proxy_ssl.protocols is defined %}
-        proxy_ssl_protocols {{ item.value.reverse_proxy.locations[location].proxy_ssl.protocols }};
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_ssl.protocols is defined %}
+        proxy_ssl_protocols {{ item.value.servers[server].reverse_proxy.locations[location].proxy_ssl.protocols }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].proxy_ssl.ciphers is defined %}
-        proxy_ssl_ciphers {{ item.value.reverse_proxy.locations[location].proxy_ssl.ciphers }};
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_ssl.ciphers is defined %}
+        proxy_ssl_ciphers {{ item.value.servers[server].reverse_proxy.locations[location].proxy_ssl.ciphers }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].proxy_ssl.verify is defined %}
-        proxy_ssl_verify {{ item.value.reverse_proxy.locations[location].proxy_ssl.verify | ternary("on", "off") }};
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_ssl.verify is defined %}
+        proxy_ssl_verify {{ item.value.servers[server].reverse_proxy.locations[location].proxy_ssl.verify | ternary("on", "off") }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].proxy_ssl.verify_depth is defined %}
-        proxy_ssl_verify_depth {{ item.value.reverse_proxy.locations[location].proxy_ssl.verify_depth }};
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_ssl.verify_depth is defined %}
+        proxy_ssl_verify_depth {{ item.value.servers[server].reverse_proxy.locations[location].proxy_ssl.verify_depth }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].proxy_ssl.session_reuse is defined %}
-        proxy_ssl_session_reuse {{ item.value.reverse_proxy.locations[location].proxy_ssl.session_reuse | ternary("on", "off") }};
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_ssl.session_reuse is defined %}
+        proxy_ssl_session_reuse {{ item.value.servers[server].reverse_proxy.locations[location].proxy_ssl.session_reuse | ternary("on", "off") }};
 {% endif %}
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].proxy_redirect is defined %}
-        proxy_redirect {{ item.value.reverse_proxy.locations[location].proxy_redirect | ternary(item.value.reverse_proxy.locations[location].proxy_redirect, "off") }};
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_redirect is defined %}
+        proxy_redirect {{ item.value.servers[server].reverse_proxy.locations[location].proxy_redirect | ternary(item.value.servers[server].reverse_proxy.locations[location].proxy_redirect, "off") }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].proxy_cache is defined %}
-        proxy_cache {{ item.value.reverse_proxy.locations[location].proxy_cache }};
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_cache is defined %}
+        proxy_cache {{ item.value.servers[server].reverse_proxy.locations[location].proxy_cache }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].proxy_cache_background_update is defined %}
-        proxy_cache_background_update {{ item.value.reverse_proxy.locations[location].proxy_cache_background_update | ternary("on", "off") }};
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_cache_valid is defined %}
+{% for proxy_cache_valid in item.value.servers[server].reverse_proxy.locations[location].proxy_cache_valid %}
+{% if proxy_cache_valid.code is defined %}
+        proxy_cache_valid {{ proxy_cache_valid.code }} {{ proxy_cache_valid.time | default("10m") }};
+{% elif proxy_cache_valid.time is defined and proxy_cache_valid.code is not defined %}
+        proxy_cache_valid {{ proxy_cache_valid.time }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].proxy_cache_lock is defined %}
-        proxy_cache_lock {{ item.value.reverse_proxy.locations[location].proxy_cache_lock | ternary("on", "off") }};
+{% endfor %}
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].proxy_cache_min_uses is defined %}
-        proxy_cache_min_uses {{ item.value.reverse_proxy.locations[location].proxy_cache_min_uses }};
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_cache_background_update is defined %}
+        proxy_cache_background_update {{ item.value.servers[server].reverse_proxy.locations[location].proxy_cache_background_update | ternary("on", "off") }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].proxy_cache_revalidate is defined %}
-        proxy_cache_revalidate {{ item.value.reverse_proxy.locations[location].proxy_cache_revalidate | ternary("on", "off") }};
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_cache_lock is defined %}
+        proxy_cache_lock {{ item.value.servers[server].reverse_proxy.locations[location].proxy_cache_lock | ternary("on", "off") }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].proxy_cache_use_stale is defined %}
-        proxy_cache_use_stale {{ item.value.reverse_proxy.locations[location].proxy_cache_use_stale | join(" ") }};
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_cache_min_uses is defined %}
+        proxy_cache_min_uses {{ item.value.servers[server].reverse_proxy.locations[location].proxy_cache_min_uses }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].proxy_temp_path is defined %}
-        proxy_temp_path {{ item.value.reverse_proxy.locations[location].proxy_temp_path.path }} {{ item.value.reverse_proxy.locations[location].proxy_temp_path.level_1 | default("") }} {{ item.value.reverse_proxy.locations[location].proxy_temp_path.level_2 | default("") }} {{ item.value.reverse_proxy.locations[location].proxy_temp_path.level_3 | default("") }};
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_cache_revalidate is defined %}
+        proxy_cache_revalidate {{ item.value.servers[server].reverse_proxy.locations[location].proxy_cache_revalidate | ternary("on", "off") }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].proxy_ignore_headers is defined %}
-        proxy_ignore_headers {{ item.value.reverse_proxy.locations[location].proxy_ignore_headers | join(" ") }};
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_cache_use_stale is defined %}
+        proxy_cache_use_stale {{ item.value.servers[server].reverse_proxy.locations[location].proxy_cache_use_stale | join(" ") }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].client_max_body_size is defined and item.value.reverse_proxy.locations[location].client_max_body_size %}
-        client_max_body_size {{ item.value.reverse_proxy.locations[location].client_max_body_size }};
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_temp_path is defined %}
+        proxy_temp_path {{ item.value.servers[server].reverse_proxy.locations[location].proxy_temp_path.path }} {{ item.value.servers[server].reverse_proxy.locations[location].proxy_temp_path.level_1 | default("") }} {{ item.value.servers[server].reverse_proxy.locations[location].proxy_temp_path.level_2 | default("") }} {{ item.value.servers[server].reverse_proxy.locations[location].proxy_temp_path.level_3 | default("") }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].proxy_cookie_path is defined %}
-        proxy_cookie_path {{ item.value.reverse_proxy.locations[location].proxy_cookie_path.path }} {{ item.value.reverse_proxy.locations[location].proxy_cookie_path.replacement }};
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_ignore_headers is defined %}
+        proxy_ignore_headers {{ item.value.servers[server].reverse_proxy.locations[location].proxy_ignore_headers | join(" ") }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].proxy_buffering is defined %}
-        proxy_buffering {{ item.value.reverse_proxy.locations[location].proxy_buffering | ternary("on", "off") }};
+{% if item.value.servers[server].reverse_proxy.locations[location].client_max_body_size is defined and item.value.servers[server].reverse_proxy.locations[location].client_max_body_size %}
+        client_max_body_size {{ item.value.servers[server].reverse_proxy.locations[location].client_max_body_size }};
 {% endif %}
-{% if item.value.reverse_proxy.locations[location].custom_options is defined and item.value.reverse_proxy.locations[location].custom_options | length %}
-{% for inline_option in item.value.reverse_proxy.locations[location].custom_options %}
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_cookie_path is defined %}
+        proxy_cookie_path {{ item.value.servers[server].reverse_proxy.locations[location].proxy_cookie_path.path }} {{ item.value.servers[server].reverse_proxy.locations[location].proxy_cookie_path.replacement }};
+{% endif %}
+{% if item.value.servers[server].reverse_proxy.locations[location].proxy_buffering is defined %}
+        proxy_buffering {{ item.value.servers[server].reverse_proxy.locations[location].proxy_buffering | ternary("on", "off") }};
+{% endif %}
+{% if item.value.servers[server].reverse_proxy.locations[location].custom_options is defined and item.value.servers[server].reverse_proxy.locations[location].custom_options | length %}
+{% for inline_option in item.value.servers[server].reverse_proxy.locations[location].custom_options %}
         {{ inline_option }};
 {% endfor %}
 {% endif %}
-{% if (item.value.reverse_proxy.health_check_plus is defined) and item.value.reverse_proxy.health_check_plus %}
+{% if (item.value.servers[server].reverse_proxy.health_check_plus is defined) and item.value.servers[server].reverse_proxy.health_check_plus %}
         health_check;
 {% endif %}
 
@@ -320,66 +345,66 @@ server {
 {% endfor %}
 {% endif %}
 
-{% if item.value.web_server is defined %}
-{% for location in item.value.web_server.locations %}
-    location {{ item.value.web_server.locations[location].location }} {
-{% if item.value.web_server.locations[location].html_file_location is defined %}
-        root   {{ item.value.web_server.locations[location].html_file_location }};
+{% if item.value.servers[server].web_server is defined %}
+{% for location in item.value.servers[server].web_server.locations %}
+    location {{ item.value.servers[server].web_server.locations[location].location }} {
+{% if item.value.servers[server].web_server.locations[location].html_file_location is defined %}
+        root   {{ item.value.servers[server].web_server.locations[location].html_file_location }};
 {% endif %}
-{% if item.value.web_server.locations[location].html_file_name is defined %}
-        index  {{ item.value.web_server.locations[location].html_file_name }};
+{% if item.value.servers[server].web_server.locations[location].html_file_name is defined %}
+        index  {{ item.value.servers[server].web_server.locations[location].html_file_name }};
 {% endif %}
-{% if item.value.web_server.locations[location].autoindex | default(false) %}
+{% if item.value.servers[server].web_server.locations[location].autoindex | default(false) %}
         autoindex on;
 {% endif %}
-{% if item.value.web_server.locations[location].try_files is defined %}
-        try_files {{ item.value.web_server.locations[location].try_files }};
+{% if item.value.servers[server].web_server.locations[location].try_files is defined %}
+        try_files {{ item.value.servers[server].web_server.locations[location].try_files }};
 {% endif %}
-{% if item.value.web_server.locations[location].include_files is defined and item.value.web_server.locations[location].include_files | length %}
-{% for file in item.value.web_server.locations[location].include_files %}
+{% if item.value.servers[server].web_server.locations[location].include_files is defined and item.value.servers[server].web_server.locations[location].include_files | length %}
+{% for file in item.value.servers[server].web_server.locations[location].include_files %}
         include "{{ file }}";
 {% endfor %}
 {% endif %}
-{% if item.value.web_server.locations[location].custom_options is defined and item.value.web_server.locations[location].custom_options | length %}
-{% for inline_option in item.value.web_server.locations[location].custom_options %}
+{% if item.value.servers[server].web_server.locations[location].custom_options is defined and item.value.servers[server].web_server.locations[location].custom_options | length %}
+{% for inline_option in item.value.servers[server].web_server.locations[location].custom_options %}
         {{ inline_option }};
 {% endfor %}
 {% endif %}
-{% if item.value.web_server.locations[location].proxy_hide_headers is defined %}
-{% for header in item.value.web_server.locations[location].proxy_hide_headers %}
+{% if item.value.servers[server].web_server.locations[location].proxy_hide_headers is defined %}
+{% for header in item.value.servers[server].web_server.locations[location].proxy_hide_headers %}
         proxy_hide_header {{ header }};
 {% endfor %}
 {% endif %}
-{% if item.value.web_server.locations[location].add_headers is defined %}
-{% for header in item.value.web_server.locations[location].add_headers %}
-        add_header {{ item.value.web_server.locations[location].add_headers[header].name }} "{{ item.value.web_server.locations[location].add_headers[header].value }}"{% if item.value.web_server.locations[location].add_headers[header].always is defined and item.value.web_server.locations[location].add_headers[header].always %} always{% endif %};
+{% if item.value.servers[server].web_server.locations[location].add_headers is defined %}
+{% for header in item.value.servers[server].web_server.locations[location].add_headers %}
+        add_header {{ item.value.servers[server].web_server.locations[location].add_headers[header].name }} "{{ item.value.servers[server].web_server.locations[location].add_headers[header].value }}"{% if item.value.servers[server].web_server.locations[location].add_headers[header].always is defined and item.value.servers[server].web_server.locations[location].add_headers[header].always %} always{% endif %};
 {% endfor %}
 {% endif %}
-{% if item.value.web_server.locations[location].returns is defined %}
-{% for code in item.value.web_server.locations[location].returns %}
-{% if item.value.web_server.locations[location].returns[code] is defined %}
-        return {{ item.value.web_server.locations[location].returns[code].code }} {{ item.value.web_server.locations[location].returns[code].url }};
+{% if item.value.servers[server].web_server.locations[location].returns is defined %}
+{% for code in item.value.servers[server].web_server.locations[location].returns %}
+{% if item.value.servers[server].web_server.locations[location].returns[code] is defined %}
+        return {{ item.value.servers[server].web_server.locations[location].returns[code].code }} {{ item.value.servers[server].web_server.locations[location].returns[code].url }};
 {% else %}
-        return {{ item.value.web_server.locations[location].returns[code].url }};
+        return {{ item.value.servers[server].web_server.locations[location].returns[code].url }};
 {% endif %}
 {% endfor %}
 {% endif %}
-{% if item.value.web_server.locations[location].auth_basic is defined and item.value.web_server.locations[location].auth_basic %}
-        auth_basic "{{ item.value.web_server.locations[location].auth_basic }}";
+{% if item.value.servers[server].web_server.locations[location].auth_basic is defined and item.value.servers[server].web_server.locations[location].auth_basic %}
+        auth_basic "{{ item.value.servers[server].web_server.locations[location].auth_basic }}";
 {% endif %}
-{% if item.value.web_server.locations[location].auth_basic_user_file is defined and item.value.web_server.locations[location].auth_basic_user_file %}
-        auth_basic_user_file {{ item.value.web_server.locations[location].auth_basic_user_file }};
+{% if item.value.servers[server].web_server.locations[location].auth_basic_user_file is defined and item.value.servers[server].web_server.locations[location].auth_basic_user_file %}
+        auth_basic_user_file {{ item.value.servers[server].web_server.locations[location].auth_basic_user_file }};
 {% endif %}
-{% if item.value.web_server.locations[location].auth_request is defined %}
-        auth_request {{ item.value.web_server.locations[location].auth_request }};
+{% if item.value.servers[server].web_server.locations[location].auth_request is defined %}
+        auth_request {{ item.value.servers[server].web_server.locations[location].auth_request }};
 {% endif %}
-{% if item.value.web_server.locations[location].auth_request_set is defined %}
-        auth_request_set {{ item.value.web_server.locations[location].auth_request_set.name }} {{ item.value.web_server.locations[location].auth_request_set.value }};
+{% if item.value.servers[server].web_server.locations[location].auth_request_set is defined %}
+        auth_request_set {{ item.value.servers[server].web_server.locations[location].auth_request_set.name }} {{ item.value.servers[server].web_server.locations[location].auth_request_set.value }};
 {% endif %}
 
     }
 {% endfor %}
-{% if item.value.web_server.http_demo_conf %}
+{% if item.value.servers[server].web_server.http_demo_conf %}
     sub_filter_once off;
     sub_filter 'server_hostname' '$hostname';
     sub_filter 'server_address' '$server_addr:$server_port';
@@ -393,29 +418,31 @@ server {
     sub_filter 'proxied_for_ip' '$http_x_forwarded_for';
 {% endif %}
 {% endif %}
-{% if item.value.returns is defined %}
-{% for return in item.value.returns %}
-    location {{ item.value.returns[return].location }} {
-        return {{ item.value.returns[return].code }}{% if item.value.returns[return].value is defined %} {{ item.value.returns[return].value }}{% endif %};
+{% if item.value.servers[server].returns is defined %}
+{% for return in item.value.servers[server].returns %}
+    location {{ item.value.servers[server].returns[return].location }} {
+        return {{ item.value.servers[server].returns[return].code }}{% if item.value.servers[server].returns[return].value is defined %} {{ item.value.servers[server].returns[return].value }}{% endif %};
     }
 {% endfor %}
 {% endif %}
-{% if item.value.error_page is defined %}
+{% if item.value.servers[server].error_page is defined %}
     # redirect server error pages to the static page /50x.html
     #
     error_page   500 502 503 504  /50x.html;
     location = /50x.html {
-        root   {{ item.value.error_page }};
+        root   {{ item.value.servers[server].error_page }};
     }
 {% endif %}
 
-{% if item.value.access_log is defined %}
-{% for access_log in item.value.access_log %}
+{% if item.value.servers[server].access_log is defined %}
+{% for access_log in item.value.servers[server].access_log %}
     access_log  {{ access_log.location }}  {{ access_log.name }};
 {% endfor %}
 {% endif %}
-{% if item.value.error_log is defined %}
-    error_log {{ item.value.error_log.location }} {{ item.value.error_log.level }};
+{% if item.value.servers[server].error_log is defined %}
+    error_log {{ item.value.servers[server].error_log.location }} {{ item.value.servers[server].error_log.level }};
 {% endif %}
 
 }
+{% endfor %}
+{% endif %}

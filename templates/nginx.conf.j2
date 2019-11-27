@@ -71,7 +71,13 @@ http {
 {% endfor %}
 
     sendfile        on;
-    #tcp_nopush     on;
+
+{% if nginx_main_template.http_settings.tcp_nopush is defined and nginx_main_template.http_settings.tcp_nopush %}
+    tcp_nopush      on;
+{% endif %}
+{% if nginx_main_template.http_settings.tcp_nodelay is defined and nginx_main_template.http_settings.tcp_nodelay %}
+    tcp_nodelay     on;
+{% endif %}
 
 {% if nginx_main_template.http_settings.server_tokens is defined and nginx_main_template.http_settings.server_tokens | length %}
     server_tokens {{ nginx_main_template.http_settings.server_tokens }};

@@ -2,6 +2,9 @@
 - name: "(Install: Linux) Configure NGINX repo"
   block:
 
+    - import_tasks: setup-alpine.yml
+      when: ansible_os_family == "Alpine"
+
     - import_tasks: setup-debian.yml
       when: ansible_os_family == "Debian"
 
@@ -17,5 +20,5 @@
   package:
     name: "nginx{{ nginx_version | default('') }}"
     state: present
-  when: ansible_os_family in nginx_linux_families
+  when: nginx_install_from == "os_repository"
   notify: "(Handler: All OSs) Start NGINX"

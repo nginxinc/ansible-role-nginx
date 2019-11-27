@@ -4,23 +4,21 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: centos-6
-    image: centos:6
-  - name: centos-7
-    image: centos/systemd
-    privileged: True
-    volume_mounts:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/usr/sbin/init"
   - name: debian-stretch
-    image: debian:stretch
+    image: debian:stretch-slim
+    dockerfile: ../common/Dockerfile.j2
   - name: debian-buster
-    image: debian:buster
+    image: debian:buster-slim
+    dockerfile: ../common/Dockerfile.j2
   - name: ubuntu-xenial
     image: ubuntu:xenial
+    dockerfile: ../common/Dockerfile.j2
   - name: ubuntu-bionic
     image: ubuntu:bionic
+    dockerfile: ../common/Dockerfile.j2
 provisioner:
   name: ansible
+  playbooks:
+    converge: ../common/playbook_unit.yml
   lint:
     name: ansible-lint

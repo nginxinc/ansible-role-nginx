@@ -19,11 +19,11 @@ platforms:
 provisioner:
   name: ansible
   playbooks:
-    converge: ../common/playbook_default.yml
+    converge: ../common/playbook_module.yml
   lint:
     name: ansible-lint
 verifier:
   name: testinfra
-  directory: ../common/test_default
+  directory: ../common/test_module
   lint:
     name: flake8

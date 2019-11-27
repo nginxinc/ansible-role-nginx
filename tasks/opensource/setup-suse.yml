@@ -1,5 +1,20 @@
 ---
+- name: "(Install: SUSE) Set Default SUSE NGINX Repository"
+  set_fact:
+    default_repository: >-
+      https://nginx.org/packages/{{ (nginx_branch == 'mainline')
+      | ternary('mainline/', '') }}sles/{{ ansible_distribution_major_version }}
+
+- name: "(Install: SUSE) Set SUSE NGINX Repository"
+  set_fact:
+    repository: "{{ nginx_repository | default(default_repository) }}"
+
 - name: "(Install: SUSE) Add NGINX Repository"
   zypper_repository:
     name: "nginx-{{ nginx_branch }}"
-    repo: "{{ nginx_repository.suse }}"
+    repo: "{{ repository }}"
+
+- name: "(Install: SUSE) Install NGINX"
+  zypper:
+    name: "nginx{{ nginx_version | default('') }}"
+  notify: "(Handler: All OSs) Start NGINX"

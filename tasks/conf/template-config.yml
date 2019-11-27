@@ -42,7 +42,7 @@
     owner: "{{ nginx_main_template.user | default('nginx') }}"
   with_subelements:
     - "{{ nginx_http_template }}"
-    - reverse_proxy.proxy_cache_path
+    - proxy_cache.proxy_cache_path
     - skip_missing: true
   when: nginx_http_template_enable | bool
 

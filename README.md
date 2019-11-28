@@ -11,7 +11,12 @@ This role installs NGINX Open Source, NGINX Plus, the NGINX Amplify agent, the N
 Requirements
 ------------
 
-This role was developed using Ansible 2.4.0.0. Backwards compatibility is not guaranteed.
+**Ansible**
+
+This role was developed and tested with [maintained](https://docs.ansible.com/ansible/latest/reference_appendices/release_and_maintenance.html#release-status) versions of
+Ansible. Backwards compatibility is not guaranteed.
+
+**Ansible Galaxy**
 
 Use `ansible-galaxy install nginxinc.nginx` to install the role on your system.
 

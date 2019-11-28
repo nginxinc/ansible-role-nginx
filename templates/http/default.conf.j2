@@ -3,7 +3,7 @@
 {% if item.value.upstreams is defined and item.value.upstreams %}
 {% for upstream in item.value.upstreams %}
 upstream {{ item.value.upstreams[upstream].name }} {
-{% if item.value.upstreams[upstream].lb_method is defined %}
+{% if item.value.upstreams[upstream].lb_method is defined and item.value.upstreams[upstream].lb_method | length %}
     {{ item.value.upstreams[upstream].lb_method }};
 {% endif %}
 {% if item.value.upstreams[upstream].zone_name is defined and item.value.upstreams[upstream].zone_name %}

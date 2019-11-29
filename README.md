@@ -187,12 +187,12 @@ Role Variables
 --------------
 
 This role has multiple variables. The descriptions and defaults for all these variables
-are in the directory defaults/main in the following files:
+are in the directory **defaults/main** in the following files:
 
-- **[main.yml: Common variables](https://github.com/nginxinc/ansible-role-nginx/blob/master/defaults/main.yml)**
-- [linux.yml - Linux common varables (nginx_linux_*, nginx_plus_linux_*)](defaults/main/linux.yml)
-- [bsd.yml - BSD common variables (nginx_bsd_*, nginx_plus_bsd_*)](defaults/main/bsd.yml)
-- [freebsd.yml - FreeBSD variables (nginx_freebsd_*)](defaults/main/freebsd.yml)
+- **[main.yml: Common variables](defaults/main/main.yml)**
+- **[linux.yml - Linux common varables (nginx_linux_\*, nginx_plus_linux_\*)](defaults/main/linux.yml)**
+- **[bsd.yml - BSD common variables (nginx_bsd_\*, nginx_plus_bsd_\*)](defaults/main/bsd.yml)**
+- **[freebsd.yml - FreeBSD variables (nginx_freebsd_\*)](defaults/main/freebsd.yml)**
 
 
 Dependencies

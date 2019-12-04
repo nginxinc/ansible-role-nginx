@@ -28,7 +28,7 @@ Alpine:
 CentOS:
   versions:
     - 6
-    - 7.4+
+    - 7
     - 8
 Debian:
   versions:
@@ -186,13 +186,17 @@ FreeBSD:
 Role Variables
 --------------
 
-This role has multiple variables. The descriptions and defaults for all these variables
-are in the directory **defaults/main** in the following files:
+This role has multiple variables. The descriptions and defaults for all these variables can be found in the directory **`defaults/main`** in the following files:
 
-- **[main.yml: Common variables](defaults/main/main.yml)**
-- **[linux.yml: Linux common varables (nginx_linux_\*, nginx_plus_linux_\*)](defaults/main/linux.yml)**
-- **[bsd.yml: BSD common variables (nginx_bsd_\*, nginx_plus_bsd_\*)](defaults/main/bsd.yml)**
-- **[freebsd.yml: FreeBSD variables (nginx_freebsd_\*)](defaults/main/freebsd.yml)**
+-   **[defaults/main/main.yml](./defaults/main/main.yml):** Main variables related to installing NGINX on a system
+-   **[defaults/main/amplify.yml](./defaults/main/amplify.yml):** NGINX Amplify agent installation variables
+-   **[defaults/main/controller.yml](./defaults/main/controller.yml):** NGINX Controller agent installation variables
+-   **[defaults/main/template.yml](./defaults/main/template.yml):** NGINX configuration templating variables
+-   **[defaults/main/unit.yml](./defaults/main/unit.yml):** NGINX Unit installation variables
+-   **[defaults/main/upload.yml](./defaults/main/upload.yml):** NGINX configuration/html/ssl upload variables
+-   **[defaults/main/linux.yml](./defaults/main/linux.yml):** Linux installation variables
+-   **[defaults/main/bsd.yml](./defaults/main/bsd.yml):** BSD installation variables
+-   **[defaults/main/freebsd.yml](./defaults/main/freebsd.yml):** FreeBSD installation variables
 
 
 Dependencies
@@ -268,7 +272,7 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a 
         conf_file_name: default.conf
         conf_file_location: /etc/nginx/conf.d/
         servers:
-          server1:  
+          server1:
             listen:
               listen_localhost:
                 #ip: 0.0.0.0

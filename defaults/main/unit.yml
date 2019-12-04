@@ -1,3 +1,4 @@
+---
 # Install NGINX Unit and NGINX Unit modules.
 # Use a list of supported NGINX Unit modules.
 # Default is false.

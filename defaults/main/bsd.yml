@@ -1,6 +1,4 @@
 ---
-# Variables nginx_bsd_* and nginx_plus_bsd_*
-
 # Supported distributions
 nginx_bsd_systems: ['FreeBSD', 'NetBSD', 'OpenBSD', 'DragonFlyBSD', 'HardenedBSD']
 

@@ -1,3 +1,4 @@
+---
 # Enable creating dynamic templated NGINX HTML demo websites.
 nginx_html_demo_template_enable: false
 nginx_html_demo_template:

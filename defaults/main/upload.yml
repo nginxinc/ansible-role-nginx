@@ -1,3 +1,4 @@
+---
 # Enable uploading NGINX configuration files to your system.
 # Default for uploading files is false.
 # Default location of files is the files folder within the NGINX Ansible role.

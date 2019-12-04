@@ -1,3 +1,4 @@
+---
 # Install NGINX Amplify.
 # Use your NGINX Amplify API key.
 # Requires access to either the NGINX stub status or the NGINX Plus REST API.

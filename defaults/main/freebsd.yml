@@ -1,3 +1,0 @@
----
-# FreeBSD extra packages
-nginx_freebsd_extra_packages: ['security/ca_root_nss']

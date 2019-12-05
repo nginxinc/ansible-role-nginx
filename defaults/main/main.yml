@@ -50,7 +50,7 @@ nginx_license:
 # Default is false.
 nginx_delete_license: false
 
-# Install NGINX JavaScript, Perl, ModSecurity WAF (NGINX Plus only), GeoIP, Image-Filter, RTMP Media Streaming, and/or XSLT modules.
+# Install NGINX JavaScript, Perl, ModSecurity WAF (NGINX Plus only), GeoIP, Image-Filter, RTMP Media Streaming (NGINX Plus only), and/or XSLT modules.
 # Default is false.
 nginx_modules:
   njs: false

@@ -188,16 +188,14 @@ Role Variables
 
 This role has multiple variables. The descriptions and defaults for all these variables can be found in the directory **`defaults/main`** in the following files:
 
--   **[defaults/main/main.yml](./defaults/main/main.yml):** Main variables related to installing NGINX on a system
+-   **[defaults/main/main.yml](./defaults/main/main.yml):** NGINX installation variables
 -   **[defaults/main/amplify.yml](./defaults/main/amplify.yml):** NGINX Amplify agent installation variables
 -   **[defaults/main/controller.yml](./defaults/main/controller.yml):** NGINX Controller agent installation variables
 -   **[defaults/main/template.yml](./defaults/main/template.yml):** NGINX configuration templating variables
--   **[defaults/main/unit.yml](./defaults/main/unit.yml):** NGINX Unit installation variables
--   **[defaults/main/upload.yml](./defaults/main/upload.yml):** NGINX configuration/html/ssl upload variables
+-   **[defaults/main/upload.yml](./defaults/main/upload.yml):** NGINX configuration/HTML/SSL upload variables
 -   **[defaults/main/linux.yml](./defaults/main/linux.yml):** Linux installation variables
 -   **[defaults/main/bsd.yml](./defaults/main/bsd.yml):** BSD installation variables
--   **[defaults/main/freebsd.yml](./defaults/main/freebsd.yml):** FreeBSD installation variables
-
+-   **[defaults/main/unit.yml](./defaults/main/unit.yml):** NGINX Unit installation variables
 
 Dependencies
 ------------

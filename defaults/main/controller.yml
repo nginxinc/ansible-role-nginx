@@ -1,0 +1,8 @@
+---
+# Install NGINX Controller.
+# Use your NGINX Controller API key and NGINX Controller API endpoint.
+# Requires NGINX Plus and write access to the NGINX Plus REST API.
+# Default is null.
+nginx_controller_enable: false
+nginx_controller_api_key: null
+nginx_controller_api_endpoint: null

@@ -1,0 +1,26 @@
+---
+# Supported distributions
+nginx_bsd_systems: ['FreeBSD', 'NetBSD', 'OpenBSD', 'DragonFlyBSD', 'HardenedBSD']
+
+# Supported distributions NGINX Plus
+# https://docs.nginx.com/nginx/technical-specs/
+nginx_plus_bsd_systems: ['FreeBSD']
+
+# Choose to install BSD packages or ports.
+# Options are True for packages or False for ports.
+# Default is True.
+nginx_bsd_install_packages: true
+
+# Choose to update BSD ports collection.
+# Options are True for update or False for do not update.
+# Default is True.
+nginx_bsd_update_ports: true
+
+# Choose to install packages built from BSD ports collection if
+# available.
+# Options are True for use packages or False for do not use packages.
+# Default is True.
+nginx_bsd_portinstall_use_packages: true
+
+# FreeBSD extra packages
+nginx_freebsd_extra_packages: ['security/ca_root_nss']

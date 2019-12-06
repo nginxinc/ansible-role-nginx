@@ -1,0 +1,8 @@
+---
+# Supported distributions
+nginx_linux_families: ['Alpine', 'Debian', 'RedHat', 'Suse']
+
+# Supported distributions NGINX Plus
+# https://docs.nginx.com/nginx/technical-specs/
+# RedHat={Amazon,CentOS,OracleLinux,RHEL} Debian={Ubuntu,Debian}
+nginx_plus_linux_families: ['Alpine', 'Debian', 'RedHat', 'Suse']

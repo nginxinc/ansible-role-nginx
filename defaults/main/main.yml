@@ -1,0 +1,69 @@
+---
+# Install NGINX.
+# Default is true.
+nginx_enable: true
+
+# Start NGINX service.
+# Default is true.
+nginx_start: true
+
+# Print NGINX configuration file to terminal after executing playbook.
+nginx_debug_output: false
+
+# Specify which type of NGINX you want to install.
+# Options are 'opensource' or 'plus'.
+# Default is 'opensource'.
+nginx_type: opensource
+
+# Specify which version of NGINX you want to install.
+# Default is empty.
+# nginx_version: =19-1~bionic
+
+# Specify repository origin for NGINX Open Source.
+# Options are 'nginx_repository' or 'os_repository'.
+# Only works if 'nginx_type' is set to 'opensource'.
+# Default is nginx_repository.
+nginx_install_from: nginx_repository
+
+# Choose where to fetch the NGINX signing key from.
+# Default is the official NGINX signing key host.
+# nginx_signing_key: http://nginx.org/keys/nginx_signing.key
+
+# Specify source repository for NGINX Open Source.
+# Only works if 'install_from' is set to 'nginx_repository'.
+# Defaults are the official NGINX repositories.
+# nginx_repository: deb https://nginx.org/packages/mainline/debian/ stretch nginx
+
+# Specify which branch of NGINX Open Source you want to install.
+# Options are 'mainline' or 'stable'.
+# Only works if 'install_from' is set to 'nginx_repository'.
+# Default is mainline.
+nginx_branch: mainline
+
+# Location of your NGINX Plus license in your local machine.
+# Default is the files folder within the NGINX Ansible role.
+nginx_license:
+  certificate: license/nginx-repo.crt
+  key: license/nginx-repo.key
+
+# Delete NGINX Plus license after installation for security purposes.
+# Default is false.
+nginx_delete_license: false
+
+# Install NGINX JavaScript, Perl, ModSecurity WAF (NGINX Plus only), GeoIP, Image-Filter, RTMP Media Streaming (NGINX Plus only), and/or XSLT modules.
+# Default is false.
+nginx_modules:
+  njs: false
+  perl: false
+  waf: false
+  geoip: false
+  image_filter: false
+  rtmp: false
+  xslt: false
+
+# Remove previously existing NGINX configuration files.
+# Use a list of paths you wish to remove.
+# Default is false.
+nginx_cleanup_config: false
+nginx_cleanup_config_path:
+  - /etc/nginx/conf.d

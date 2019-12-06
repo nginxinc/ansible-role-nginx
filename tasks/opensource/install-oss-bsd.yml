@@ -22,7 +22,7 @@
     - name: "(Install: FreeBSD) Install NGINX package"
       pkgng:
         name: "www/nginx{{ nginx_version | default('') }}"
-        state: present
+        state: "{{ nginx_state }}"
       when: nginx_bsd_install_packages
       notify: "(Handler: All OSs) Start NGINX"
 
@@ -30,7 +30,7 @@
       portinstall:
         name: "www/nginx{{ nginx_version | default('') }}"
         use_packages: "{{ nginx_bsd_portinstall_use_packages | default(omit) }}"
-        state: present
+        state: "{{ nginx_state }}"
       when: not nginx_bsd_install_packages
       notify: "(Handler: All OSs) Start NGINX"
 
@@ -43,7 +43,7 @@
       openbsd_pkg:
         name: "nginx{{ nginx_version | default('') }}"
         build: false
-        state: present
+        state: "{{ nginx_state }}"
       when: nginx_bsd_install_packages
       notify: "(Handler: All OSs) Start NGINX"
 
@@ -51,7 +51,7 @@
       openbsd_pkg:
         name: "nginx{{ nginx_version | default('') }}"
         build: true
-        state: present
+        state: "{{ nginx_state }}"
       when: not nginx_bsd_install_packages
       notify: "(Handler: All OSs) Start NGINX"
 

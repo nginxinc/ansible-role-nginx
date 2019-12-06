@@ -25,6 +25,7 @@
 - name: "(Install: CentOS/RedHat) Install NGINX"
   yum:
     name: "nginx{{ nginx_version | default('') }}"
+    state: "{{ nginx_state }}"
     disablerepo: "*"
     enablerepo: "nginx"
   notify: "(Handler: All OSs) Start NGINX"

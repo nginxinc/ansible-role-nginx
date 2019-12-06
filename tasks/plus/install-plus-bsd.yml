@@ -24,7 +24,7 @@
     - name: "(Install: FreeBSD) Install nginx-plus{{ nginx_version | default('') }}"
       pkgng:
         name: "nginx-plus{{ nginx_version | default('') }}"
-        state: present
+        state: "{{ nginx_state }}"
       notify: "(Handler: All OSs) Start NGINX"
 
   when: ansible_system == "FreeBSD"

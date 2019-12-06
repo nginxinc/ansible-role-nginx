@@ -25,4 +25,5 @@
   apk:
     name: "nginx{{ nginx_version | default('') }}"
     repository: "{{ repository }}"
+    state: "{{ nginx_state }}"
   notify: "(Handler: All OSs) Start NGINX"

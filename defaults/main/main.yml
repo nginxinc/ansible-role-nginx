@@ -19,6 +19,13 @@ nginx_type: opensource
 # Default is empty.
 # nginx_version: =19-1~bionic
 
+# Specify whether you want to maintain your version of NGINX or upgrade to the latest version.
+# Can be used with `nginx_version` to achieve fine tune control on which version of NGINX is installed/used on each playbook execution.
+# Using 'present' will install the latest version (or 'nginx_version') of NGINX on a fresh install.
+# Using 'latest' will upgrade NGINX to the latest version (that matches your 'nginx_version') of NGINX on every playbook execution.
+# Default is present.
+nginx_state: present
+
 # Specify repository origin for NGINX Open Source.
 # Options are 'nginx_repository' or 'os_repository'.
 # Only works if 'nginx_type' is set to 'opensource'.

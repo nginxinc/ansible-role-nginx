@@ -142,7 +142,7 @@ server {
     root {{ item.value.servers[server].root }};
 {% endif %}
 {% if item.value.servers[server].https_redirect is defined and item.value.servers[server].https_redirect %}
-    return 301 https://{% if item.value.servers[server].server_name == "_" %}$host{% else %}{{ item.value.servers[server].server_name }}{% endif %}$request_uri;
+    return 301 https://{{ item.value.servers[server].https_redirect }}$request_uri;
 {% endif %}
 {% if item.value.servers[server].autoindex is defined and item.value.servers[server].autoindex %}
     autoindex on;

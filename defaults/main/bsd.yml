@@ -22,5 +22,33 @@ nginx_bsd_update_ports: true
 # Default is True.
 nginx_bsd_portinstall_use_packages: true
 
+# FreeBSD supported NGINX packages. Change in case of custom builds only.
+nginx_freebsd_supported_packages: ['www/nginx', 'www/nginx-full', 'www/nginx-lite', 'www/nginx-naxsi', 'www/nginx-devel']
+
 # FreeBSD extra packages
 nginx_freebsd_extra_packages: ['security/ca_root_nss']
+
+# FreeBSD NGINX modules installed by packages. Change in case of custom builds only.
+# <module>: <build option>
+# njs: NJS
+# perl: HTTP_PERL
+# waf: MODSECURITY, MODSECURITY3
+# geoip: HTTP_GEOIP2
+# image_filter: HTTP_IMAGE_FILTER
+# rtmp: RTMP
+# xslt: HTTP_XSLT
+nginx_freebsd_installed_modules:
+  nginx: {'njs': false, 'perl': false, 'waf': false, 'geoip': false, 'image_filter': false, 'rtmp': false, 'xslt': false}
+  nginx-full: {'njs': true, 'perl': true, 'waf': true, 'geoip': true, 'image_filter': true, 'rtmp': true, 'xslt': true}
+  nginx-lite: {'njs': false, 'perl': false, 'waf': false, 'geoip': false, 'image_filter': false, 'rtmp': false, 'xslt': false}
+  nginx-naxsi: {'njs': false, 'perl': false, 'waf': false, 'geoip': false, 'image_filter': false, 'rtmp': false, 'xslt': false}
+  nginx-devel: {'njs': false, 'perl': false, 'waf': false, 'geoip': false, 'image_filter': false, 'rtmp': false, 'xslt': false}
+
+# OpenBSD supported NGINX packages. Change in case of custom builds only.
+# TODO: See https://github.com/openbsd/ports/blob/master/www/nginx/Makefile
+nginx_openbsd_supported_packages: ['www/nginx']
+
+# OpenBSD NGINX modules installed by packages. Change in case of custom builds only.
+# TODO: See https://github.com/openbsd/ports/blob/master/www/nginx/Makefile
+nginx_openbsd_installed_modules:
+  nginx: {'njs': false, 'perl': false, 'waf': false, 'geoip': false, 'image_filter': false, 'rtmp': false, 'xslt': false}

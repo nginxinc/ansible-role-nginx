@@ -45,3 +45,12 @@
   when:
     - result.stdout|default('')|length > 0
     - result.stdout != my_package
+
+- name: "(Sanity: FreeBSD) Fail when latest package shall be installed via ports."
+  fail:
+    msg: |
+      Installation from the ports does not support nginx_state 'latest'.
+      End of play.
+  when:
+    - nginx_state == 'latest'
+    - not nginx_bsd_install_packages

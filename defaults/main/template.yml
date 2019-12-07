@@ -75,7 +75,7 @@ nginx_http_template:
           location: /var/log/nginx/error.log
           level: warn
         root: /usr/share/nginx/html
-        https_redirect: false
+        #https_redirect: $host
         autoindex: false
         auth_basic: null
         auth_basic_user_file: null

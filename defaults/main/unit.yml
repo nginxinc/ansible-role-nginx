@@ -1,0 +1,6 @@
+---
+# Install NGINX Unit and NGINX Unit modules.
+# Use a list of supported NGINX Unit modules.
+# Default is false.
+nginx_unit_enable: false
+nginx_unit_modules: null

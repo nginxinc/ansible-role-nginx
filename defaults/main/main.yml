@@ -19,10 +19,11 @@ nginx_type: opensource
 # Default is empty.
 # nginx_version: =19-1~bionic
 
-# Specify whether you want to maintain your version of NGINX or upgrade to the latest version.
+# Specify whether you want to maintain your version of NGINX, upgrade to the latest version, or remove NGINX.
 # Can be used with `nginx_version` to achieve fine tune control on which version of NGINX is installed/used on each playbook execution.
 # Using 'present' will install the latest version (or 'nginx_version') of NGINX on a fresh install.
 # Using 'latest' will upgrade NGINX to the latest version (that matches your 'nginx_version') of NGINX on every playbook execution.
+# Using 'absent' will remove NGINX from your system.
 # Default is present.
 nginx_state: present
 
@@ -53,7 +54,7 @@ nginx_license:
   certificate: license/nginx-repo.crt
   key: license/nginx-repo.key
 
-# Delete NGINX Plus license after installation for security purposes.
+# Remove NGINX Plus license and repository after installation for security purposes.
 # Default is false.
 nginx_delete_license: false
 

@@ -68,7 +68,9 @@
       tags: nginx_debug_output
 
     - import_tasks: plus/delete-license.yml
-      when: nginx_type == "plus" and nginx_delete_license
+      when:
+        - nginx_type == "plus"
+        - nginx_delete_license
       tags: nginx_delete_license
 
   when: nginx_enable | bool

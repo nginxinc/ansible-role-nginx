@@ -1,5 +1,5 @@
 ---
-- name: "(Install: CentOS/RedHat/Oracle Linux) Add NGINX Plus Repository"
+- name: "(Setup: CentOS/RedHat/Oracle Linux) Setup NGINX Plus Repository"
   yum_repository:
     name: nginx-plus
     baseurl: >-
@@ -10,9 +10,10 @@
     sslclientkey: /etc/ssl/nginx/nginx-repo.key
     enabled: yes
     gpgcheck: yes
+    state: "{{ nginx_license_status | default ('present') }}"
   when: ansible_distribution != "Amazon"
 
-- name: "(Install: Amazon Linux) Add NGINX Plus Repository"
+- name: "(Setup: Amazon Linux) Setup NGINX Plus Repository"
   yum_repository:
     name: nginx-plus
     baseurl: >-
@@ -23,4 +24,5 @@
     sslclientkey: /etc/ssl/nginx/nginx-repo.key
     enabled: yes
     gpgcheck: yes
+    state: "{{ nginx_license_status | default ('present') }}"
   when: ansible_distribution == "Amazon"

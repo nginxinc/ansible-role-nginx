@@ -4,7 +4,6 @@
     url: "https://{{ nginx_controller_endpoint }}/sapi/auth/login/"
     method: "POST"
     body:
-      state:
       email: "{{ nginx_controller_user_email }}"
       password: "{{ nginx_controller_password }}"
     body_format: json

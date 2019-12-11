@@ -379,7 +379,8 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a 
     nginx_type: plus
 ```
 
-This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a localhost to install NGINX Plus and the NGINX Controller agent.
+This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a localhost to install NGINX Plus and the NGINX Controller agent. Commented out
+are sample variables to install the NGINX Controller agent from your NGINX Controller instance instead of the NGINX repository.
 
 ```yaml
 - hosts: localhost
@@ -392,8 +393,18 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a 
     nginx_rest_api_port: 80
     nginx_rest_api_write: true
     nginx_controller_enable: true
+    nginx_controller_source: repository
     nginx_controller_api_key: <API_KEY_HERE>
-    nginx_controller_api_endpoint: https://<FQDN>/1.4
+    nginx_controller_endpoint: <FQDN> # e.g. controller.nginx.com
+    # nginx_type: plus
+    # nginx_rest_api_enable: true
+    # nginx_rest_api_port: 80
+    # nginx_rest_api_write: true
+    # nginx_controller_enable: true
+    # nginx_controller_source: instance
+    # nginx_controller_endpoint: controller.nginx.com
+    # nginx_controller_user_email: john_doe@nginx.com
+    # nginx_controller_password: password
 ```
 
 This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a localhost to install NGINX Unit and the PHP/Perl NGINX Unit language modules.

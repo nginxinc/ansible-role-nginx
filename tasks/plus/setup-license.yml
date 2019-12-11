@@ -1,13 +1,13 @@
 ---
-- name: "(All OSs) Setup NGINX Plus License"
+- name: "(Setup: All OSs Besides Alpine Linux) Setup NGINX Plus License"
   block:
 
-    - name: "(All OSs) Create SSL Directory"
+    - name: "(Setup: All OSs Besides Alpine Linux) Create SSL Directory"
       file:
         path: /etc/ssl/nginx
         state: directory
 
-    - name: "(All OSs) Copy NGINX Plus Certificate and License Key"
+    - name: "(Setup: All OSs Besides Alpine Linux) Copy NGINX Plus Certificate and License Key"
       copy:
         src: "{{ item }}"
         dest: /etc/ssl/nginx
@@ -18,21 +18,21 @@
 
   when: ansible_distribution != "Alpine"
 
-- name: "(Alpine Linux) Setup NGINX Plus License"
+- name: "(Setup: Alpine Linux) Setup NGINX Plus License"
   block:
 
-    - name: "(Alpine Linux) Create APK Directory"
+    - name: "(Setup: Alpine Linux) Create APK Directory"
       file:
         path: /etc/apk
         state: directory
 
-    - name: "(Alpine Linux) Copy NGINX Plus Key"
+    - name: "(Setup: Alpine Linux) Copy NGINX Plus Key"
       copy:
         src: "{{ nginx_license.key }}"
         dest: /etc/apk/cert.key
         decrypt: yes
 
-    - name: "(Alpine Linux) Copy NGINX Plus Certificate"
+    - name: "(Setup: Alpine Linux) Copy NGINX Plus Certificate"
       copy:
         src: "{{ nginx_license.certificate }}"
         dest: /etc/apk/cert.pem

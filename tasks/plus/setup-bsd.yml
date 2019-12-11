@@ -1,0 +1,21 @@
+---
+- name: "(Setup: FreeBSD) Setup NGINX Plus Repository"
+  blockinfile:
+    path: /etc/pkg/nginx-plus.conf
+    create: yes
+    block: |
+      nginx-plus: {
+      URL: pkg+https://plus-pkgs.nginx.com/freebsd/${ABI}/latest
+      ENABLED: yes
+      MIRROR_TYPE: SRV
+      }
+    state: "{{ nginx_license_status | default ('present') }}"
+
+- name: "(Setup: FreeBSD) Setup NGINX Plus License"
+  blockinfile:
+    path: /usr/local/etc/pkg.conf
+    block: |
+      PKG_ENV: { SSL_NO_VERIFY_PEER: "1",
+      SSL_CLIENT_CERT_FILE: "/etc/ssl/nginx/nginx-repo.crt",
+      SSL_CLIENT_KEY_FILE: "/etc/ssl/nginx/nginx-repo.key" }
+    state: "{{ nginx_license_status | default ('present') }}"

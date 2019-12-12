@@ -1,0 +1,28 @@
+---
+- name: "(Install: All OSs) Fetch NGINX Controller API Key"
+  uri:
+    url: "https://{{ nginx_controller_endpoint }}/sapi/auth/login/"
+    method: "POST"
+    body:
+      email: "{{ nginx_controller_user_email }}"
+      password: "{{ nginx_controller_password }}"
+    body_format: json
+    return_content: yes
+    status_code: 200
+    validate_certs: false
+  register: controller_return
+
+- name: "(Install: All OSs) Download the NGINX Controller Agent Installer Script"
+  get_url:
+    url: "https://{{ nginx_controller_endpoint }}:8443/1.4/install/controller/"
+    dest: /tmp/install.sh
+    validate_certs: no
+    force: yes
+
+- name: "(Install: All OSs) Run the NGINX Controller Agent Installer Script"
+  command: "sh ./install.sh -y"
+  args:
+    chdir: /tmp
+    creates: /var/log/nginx-controller/agent.log
+  environment:
+    API_KEY: "{{ controller_return.json.api_key }}"

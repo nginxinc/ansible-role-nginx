@@ -85,10 +85,8 @@
 - import_tasks: controller/install-controller.yml
   when:
     - nginx_controller_enable | bool
-    - nginx_controller_api_key is defined
-    - nginx_controller_api_key | length > 0
-    - nginx_controller_api_endpoint is defined
-    - nginx_controller_api_endpoint | length > 0
+    - nginx_controller_endpoint is defined
+    - nginx_controller_endpoint | length > 0
   tags: nginx_install_controller
 
 - import_tasks: unit/install-unit.yml

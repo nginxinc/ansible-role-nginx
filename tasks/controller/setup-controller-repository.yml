@@ -1,0 +1,48 @@
+---
+- name: "(Install: Debian/Ubuntu) Add NGINX Controller Agent Repository"
+  apt_repository:
+    filename: nginx-controller
+    repo: deb https://packages.nginx.org/controller/{{ ansible_distribution | lower }}/ {{ ansible_distribution_release | lower }} controller
+
+- name: "(Install: CentOS/RedHat) Add NGINX Controller Agent Repository"
+  yum_repository:
+    name: nginx-controller
+    baseurl: https://packages.nginx.org/controller/centos/$releasever/$basearch/
+    description: NGINX Controller Agent
+    gpgcheck: yes
+
+- name: "(Install: All OSs) Install NGINX Controller Agent"
+  package:
+    name: nginx-controller-agent
+    state: present
+
+- name: "(Setup: All OSs) Copy NGINX Controller Agent Configuration Template"
+  copy:
+    remote_src: yes
+    src: /etc/controller-agent/agent.controller.conf.default
+    dest: /etc/controller-agent/agent.conf
+
+- name: "(Setup: All OSs) Copy NGINX Configurator Agent Configuration Template"
+  copy:
+    remote_src: yes
+    src: /etc/controller-agent/agent.configurator.conf.default
+    dest: /etc/controller-agent/agent.configurator.conf
+
+- name: "(Setup: All OSs) Configure NGINX Controller Agent API Key"
+  lineinfile:
+    dest: /etc/controller-agent/agent.conf
+    regexp: api_key =.*
+    line: "api_key = {{ nginx_controller_api_key }}"
+
+- name: "(Setup: All OSs) Configure NGINX Controller Agent API URL"
+  lineinfile:
+    dest: /etc/controller-agent/agent.conf
+    regexp: api_url =.*
+    line: "api_url = https://{{ nginx_controller_endpoint }}/1.4"
+
+- name: "(Setup: All OSs) Configure NGINX Controller Agent API Hostname"
+  lineinfile:
+    dest: /etc/controller-agent/agent.conf
+    regexp: hostname =.*
+    line: "hostname = {{ ansible_hostname }}"
+  notify: "(Handler: All OSs) Start NGINX Controller Agent"

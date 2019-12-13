@@ -1,5 +1,34 @@
 ---
-- name: "(All OSs) Delete NGINX Plus License"
+- name: "(Setup: All OSs) Set NGINX Plus License State"
+  set_fact:
+    nginx_license_status: absent
+
+- name: "(Setup: All OSs Besides Alpine Linux) Delete NGINX Plus License"
   file:
     path: /etc/ssl/nginx
     state: absent
+  when: ansible_distribution != "Alpine"
+
+- name: "(Setup: Alpine Linux) Delete NGINX Plus License"
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /etc/apk/cert.key
+    - /etc/apk/cert.pem
+  when: ansible_distribution == "Alpine"
+
+- import_tasks: setup-alpine.yml
+  when: ansible_os_family == "Alpine"
+
+- import_tasks: setup-bsd.yml
+  when: ansible_os_family == "FreeBSD"
+
+- import_tasks: setup-debian.yml
+  when: ansible_os_family == "Debian"
+
+- import_tasks: setup-redhat.yml
+  when: ansible_os_family == "RedHat"
+
+- import_tasks: setup-suse.yml
+  when: ansible_os_family == "Suse"

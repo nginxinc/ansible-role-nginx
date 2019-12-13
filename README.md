@@ -13,14 +13,29 @@ Requirements
 
 **Ansible**
 
-This role was developed and tested with [maintained](https://docs.ansible.com/ansible/latest/reference_appendices/release_and_maintenance.html#release-status) versions of
-Ansible. Backwards compatibility is not guaranteed.
+This role was developed and tested with [maintained](https://docs.ansible.com/ansible/latest/reference_appendices/release_and_maintenance.html#release-status) versions of Ansible. Backwards compatibility is not guaranteed.
+
+Instructions on how to install Ansible can be found in the [Ansible website](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html).
+
+**Molecule**
+
+Molecule is used to test the various functionailities of the role. Instructions on how to install Molecule can be found in the [Molecule website](https://molecule.readthedocs.io/en/stable/installation.html).
+
+Installation
+------------
 
 **Ansible Galaxy**
 
-Use `ansible-galaxy install nginxinc.nginx` to install the role on your system.
+Use `ansible-galaxy install nginxinc.nginx` to install the latest stable release of the role on your system.
 
-It supports all platforms supported by [NGINX Open Source](https://nginx.org/en/linux_packages.html#mainline) and [NGINX Plus](https://www.nginx.com/products/technical-specs/):
+**Git**
+
+Use `git clone https://github.com/nginxinc/ansible-role-nginx.git` to pull the latest edge commit of the role from GitHub.
+
+Platforms
+---------
+
+The NGINX Ansible role supports all platforms supported by [NGINX Open Source](https://nginx.org/en/linux_packages.html#mainline), [NGINX Plus](https://www.nginx.com/products/technical-specs/), the [NGINX Amplify agent](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-faq.md#21-what-operating-systems-are-supported), the [NGINX Controller agent](https://docs.nginx.com/nginx-controller/technical-specs/#nginx-controller-agent-technical-specifications), and [NGINX Unit](https://unit.nginx.org/installation/#official-packages):
 
 **NGINX Open Source**
 
@@ -120,7 +135,6 @@ Debian:
     - stretch
 Ubuntu:
   versions:
-    - trusty
     - xenial
     - bionic
 RedHat:
@@ -245,18 +259,23 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a 
         template_file: http/default.conf.j2
         conf_file_name: default.conf
         conf_file_location: /etc/nginx/conf.d/
-        port: 80
-        server_name: localhost
-        error_page: /usr/share/nginx/html
-        autoindex: false
-        web_server:
-          locations:
-            default:
-              location: /
-              html_file_location: /usr/share/nginx/html
-              html_file_name: index.html
-              autoindex: false
-          http_demo_conf: false
+        servers:
+          server1:
+            listen:
+              listen_localhost:
+                # ip: 0.0.0.0
+                port: 80
+            server_name: localhost
+            error_page: /usr/share/nginx/html
+            autoindex: false
+            web_server:
+              locations:
+                default:
+                  location: /
+                  html_file_location: /usr/share/nginx/html
+                  html_file_name: index.html
+                  autoindex: false
+              http_demo_conf: false
 ```
 
 This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a localhost and installing the open source version of NGINX as a reverse proxy.
@@ -278,7 +297,7 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a 
           server1:
             listen:
               listen_localhost:
-                #ip: 0.0.0.0
+                # ip: 0.0.0.0
                 port: 80
                 opts:
                   - default_server

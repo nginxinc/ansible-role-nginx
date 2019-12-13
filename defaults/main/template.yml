@@ -17,7 +17,7 @@ nginx_main_template:
   conf_file_location: /etc/nginx/
   user: nginx
   worker_processes: auto
-  #worker_rlimit_nofile: 1024
+  # worker_rlimit_nofile: 1024
   error_log:
     location: /var/log/nginx/error.log
     level: warn
@@ -39,15 +39,15 @@ nginx_main_template:
     cache: false
     rate_limit: false
     keyval: false
-    #server_tokens: "off"
+    # server_tokens: "off"
   http_global_autoindex: false
-  #http_custom_options: []
+  # http_custom_options: []
   stream_enable: false
-  #stream_custom_options: []
-  #auth_request_http: /auth
-  #auth_request_set_http:
-    #name: $auth_user
-    #value: $upstream_http_x_user
+  # stream_custom_options: []
+  # auth_request_http: /auth
+  # auth_request_set_http:
+  #   name: $auth_user
+  #   value: $upstream_http_x_user
 
 # Enable creating dynamic templated NGINX HTTP configuration files.
 # Defaults will not produce a valid configuration. Instead they are meant to showcase
@@ -62,9 +62,9 @@ nginx_http_template:
       server1:
         listen:
           listen_localhost:
-            ip: localhost # Wrap in square brackets for IPv6 addresses
+            ip: localhost  # Wrap in square brackets for IPv6 addresses
             port: 8081
-            opts: [] # Listen opts like http2 which will be added (ssl is automatically added if you specify 'ssl:').
+            opts: []  # Listen opts like http2 which will be added (ssl is automatically added if you specify 'ssl:').
         server_name: localhost
         include_files: []
         error_page: /usr/share/nginx/html
@@ -75,26 +75,26 @@ nginx_http_template:
           location: /var/log/nginx/error.log
           level: warn
         root: /usr/share/nginx/html
-        #https_redirect: $host
+        # https_redirect: $host
         autoindex: false
         auth_basic: null
         auth_basic_user_file: null
         try_files: $uri $uri/index.html $uri.html =404
-        #auth_request: /auth
-        #auth_request_set:
-          #name: $auth_user
-          #value: $upstream_http_x_user
+        # auth_request: /auth
+        # auth_request_set:
+        #   name: $auth_user
+        #   value: $upstream_http_x_user
         client_max_body_size: 1m
-        proxy_hide_headers: [] # A list of headers which shouldn't be passed to the application
+        proxy_hide_headers: []  # A list of headers which shouldn't be passed to the application
         add_headers:
           strict_transport_security:
             name: Strict-Transport-Security
             value: max-age=15768000; includeSubDomains
             always: true
-          #header_name:
-            #name: Header-X
-            #value: Value-X
-            #always: false
+          # header_name:
+          #   name: Header-X
+          #   value: Value-X
+          #   always: false
         ssl:
           cert: /etc/ssl/certs/default.crt
           key: /etc/ssl/private/default.key
@@ -108,63 +108,63 @@ nginx_http_template:
           trusted_cert: /etc/ssl/certs/root_CA_cert_plus_intermediates.crt
           stapling: true
           stapling_verify: true
-        #custom_options: []
+        # custom_options: []
         web_server:
           locations:
             default:
               location: /
               include_files: []
-              proxy_hide_headers: [] # A list of headers which shouldn't be passed to the application
+              proxy_hide_headers: []  # A list of headers which shouldn't be passed to the application
               add_headers:
                 strict_transport_security:
                   name: Strict-Transport-Security
                   value: max-age=15768000; includeSubDomains
                   always: true
-                #header_name:
-                  #name: Header-X
-                  #value: Value-X
-                  #always: false
+                # header_name:
+                #   name: Header-X
+                #   value: Value-X
+                #   always: false
               html_file_location: /usr/share/nginx/html
               html_file_name: index.html
               autoindex: false
               auth_basic: null
               auth_basic_user_file: null
               try_files: $uri $uri/index.html $uri.html =404
-              #auth_request: /auth
-              #auth_request_set:
-                #name: $auth_user
-                #value: $upstream_http_x_user
+              # auth_request: /auth
+              # auth_request_set:
+              #   name: $auth_user
+              #   value: $upstream_http_x_user
               client_max_body_size: 1m
-              #returns:
-                #return302:
-                  #code: 302
-                  #url: https://sso.somehost.local/?url=https://$http_host$request_uri
-              #custom_options: []
+              # returns:
+              #   return302:
+              #     code: 302
+              #     url: https://sso.somehost.local/?url=https://$http_host$request_uri
+              # custom_options: []
           http_demo_conf: false
         reverse_proxy:
           locations:
             backend:
               location: /
               include_files: []
-              proxy_hide_headers: [] # A list of headers which shouldn't be passed to the application
+              proxy_hide_headers: []  # A list of headers which shouldn't be passed to the application
               add_headers:
                 strict_transport_security:
                   name: Strict-Transport-Security
                   value: max-age=15768000; includeSubDomains
                   always: true
-                #header_name:
-                  #name: Header-X
-                  #value: Value-X
-                  #always: false
+                # header_name:
+                #   name: Header-X
+                #   value: Value-X
+                #   always: false
               proxy_connect_timeout: null
               proxy_pass: http://backend
-              #rewrites:
-              # - /foo(.*) /$1 break
-              #proxy_pass_request_body: off
-              #allows:
-              # - 192.168.1.0/24
-              #denies:
-              # - all
+              # rewrites:
+              #   - /foo(.*) /$1 break
+              # proxy_pass_request_body: off
+              # allows:
+              #   - 192.168.1.0/24
+              # denies:
+              #   - all
               proxy_set_header:
                 header_host:
                   name: Host
@@ -178,18 +178,18 @@ nginx_http_template:
                 header_x_forwarded_proto:
                   name: X-Forwarded-Proto
                   value: $scheme
-                #header_upgrade:
-                  #name: Upgrade
-                  #value: $http_upgrade
-                #header_connection:
-                  #name: Connection
-                  #value: "Upgrade"
-                #header_random:
-                  #name: RandomName
-                  #value: RandomValue
-              #internal: false
-              #proxy_store: off
-              #proxy_store_acccess: user:rw
+                # header_upgrade:
+                #   name: Upgrade
+                #   value: $http_upgrade
+                # header_connection:
+                #   name: Connection
+                #   value: "Upgrade"
+                # header_random:
+                #   name: RandomName
+                #   value: RandomValue
+              # internal: false
+              # proxy_store: off
+              # proxy_store_acccess: user:rw
               proxy_read_timeout: null
               proxy_send_timeout: null
               proxy_ssl:
@@ -227,15 +227,15 @@ nginx_http_template:
               auth_basic: null
               auth_basic_user_file: null
               try_files: $uri $uri/index.html $uri.html =404
-              #auth_request: /auth
-              #auth_request_set:
-                #name: $auth_user
-                #value: $upstream_http_x_user
-              #returns:
-                #return302:
-                  #code: 302
-                  #url: https://sso.somehost.local/?url=https://$http_host$request_uri
-              #custom_options: []
+              # auth_request: /auth
+              # auth_request_set:
+              #   name: $auth_user
+              #   value: $upstream_http_x_user
+              # returns:
+              #   return302:
+              #     code: 302
+              #     url: https://sso.somehost.local/?url=https://$http_host$request_uri
+              # custom_options: []
           health_check_plus: false
         returns:
           return301:
@@ -280,8 +280,8 @@ nginx_http_template:
             port: 8081
             weight: 1
             health_check: max_fails=1 fail_timeout=10s
-        #custom_options: []
-      #custom_options: []
+        # custom_options: []
+      # custom_options: []
 
 # Enable NGINX status data.
 # Will enable 'stub_status' in NGINX Open Source and 'status' in NGINX Plus.
@@ -330,7 +330,7 @@ nginx_stream_template:
           verify_depth: 1
           session_reuse: true
         health_check_plus: false
-        #custom_options: []
+        # custom_options: []
     upstreams:
       upstream1:
         name: backend
@@ -344,5 +344,5 @@ nginx_stream_template:
             port: 8080
             weight: 1
             health_check: max_fails=1 fail_timeout=10s
-        #custom_options: []
-    #custom_options: []
+        # custom_options: []
+    # custom_options: []

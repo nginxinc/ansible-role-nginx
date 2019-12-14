@@ -42,6 +42,7 @@ nginx_main_template:
     # server_tokens: "off"
   http_global_autoindex: false
   # http_custom_options: []
+  # events_custom_options: []
   stream_enable: false
   # stream_custom_options: []
   # auth_request_http: /auth

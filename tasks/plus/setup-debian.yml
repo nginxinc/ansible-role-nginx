@@ -1,7 +1,7 @@
 ---
 - name: "(Setup: Debian/Ubuntu) Setup NGINX Plus Repository"
   apt_repository:
-    repo: deb https://plus-pkgs.nginx.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} nginx-plus
+    repo: deb [arch=amd64] https://plus-pkgs.nginx.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} nginx-plus
     filename: nginx-plus
     update_cache: no
     state: "{{ nginx_license_status | default ('present') }}"

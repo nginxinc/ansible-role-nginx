@@ -64,6 +64,7 @@ nginx_http_template:
           listen_localhost:
             ip: localhost  # Wrap in square brackets for IPv6 addresses
             port: 8081
+            ssl: true
             opts: []  # Listen opts like http2 which will be added (ssl is automatically added if you specify 'ssl:').
         server_name: localhost
         include_files: []

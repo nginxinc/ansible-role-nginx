@@ -347,6 +347,7 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a 
               listen_localhost:
                 ip: 0.0.0.0
                 port: 8081
+                ssl: false
                 opts: []
             server_name: localhost
             error_page: /usr/share/nginx/html
@@ -371,6 +372,7 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a 
               listen_localhost:
                 ip: 0.0.0.0
                 port: 8082
+                ssl: false
                 opts: []
             server_name: localhost
             error_page: /usr/share/nginx/html

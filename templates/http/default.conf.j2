@@ -80,7 +80,7 @@ auth_request_set {{ item.value.auth_request_set_http.name }} {{ item.value.auth_
 {% for server in item.value.servers %}
 server {
 {% for listen in item.value.servers[server].listen %}
-    listen {% if item.value.servers[server].listen[listen].ip is defined and item.value.servers[server].listen[listen].ip | length %}{{ item.value.servers[server].listen[listen].ip }}:{% endif %}{{ item.value.servers[server].listen[listen].port }}{% if item.value.servers[server].ssl is defined and item.value.servers[server].ssl %} ssl{% endif %}{% if item.value.servers[server].listen[listen].opts is defined and item.value.servers[server].listen[listen].opts | length %} {{ item.value.servers[server].listen[listen].opts | join(" ") }}{% endif %};
+    listen {% if item.value.servers[server].listen[listen].ip is defined and item.value.servers[server].listen[listen].ip | length %}{{ item.value.servers[server].listen[listen].ip }}:{% endif %}{{ item.value.servers[server].listen[listen].port }}{% if item.value.servers[server].listen[listen].ssl is defined and item.value.servers[server].listen[listen].ssl %} ssl{% endif %}{% if item.value.servers[server].listen[listen].opts is defined and item.value.servers[server].listen[listen].opts | length %} {{ item.value.servers[server].listen[listen].opts | join(" ") }}{% endif %};
 {% endfor %}
     server_name {{ item.value.servers[server].server_name | default('localhost') }};
 {% if item.value.servers[server].ssl is defined and item.value.servers[server].ssl %}

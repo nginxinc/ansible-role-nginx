@@ -22,7 +22,8 @@ env:
 before_install:
   - sudo apt-get -qq update
 install:
-  - pip install molecule[docker]
+  - pip install ansible==2.9.2
+  - pip install molecule[docker]==2.22
 script:
   - travis_wait 50 molecule test -s $scenario
 notifications:

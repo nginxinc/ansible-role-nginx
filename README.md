@@ -460,4 +460,4 @@ Author Information
 
 [Grzegorz Dzien](https://github.com/gdzien)
 
-&copy; [NGINX, Inc.](https://www.nginx.com/) 2018 - 2019
+&copy; [NGINX, Inc.](https://www.nginx.com/) 2018 - 2020

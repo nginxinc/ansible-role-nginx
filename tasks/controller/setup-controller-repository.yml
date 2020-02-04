@@ -3,6 +3,7 @@
   apt_repository:
     filename: nginx-controller
     repo: deb [arch=amd64] https://packages.nginx.org/controller/{{ ansible_distribution | lower }}/ {{ ansible_distribution_release | lower }} controller
+  when: ansible_os_family == "Debian"
 
 - name: "(Install: CentOS/RedHat) Add NGINX Controller Agent Repository"
   yum_repository:
@@ -10,6 +11,7 @@
     baseurl: https://packages.nginx.org/controller/centos/$releasever/$basearch/
     description: NGINX Controller Agent
     gpgcheck: yes
+  when: ansible_os_family == "RedHat"
 
 - name: "(Install: All OSs) Install NGINX Controller Agent"
   package:

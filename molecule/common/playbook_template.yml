@@ -33,6 +33,11 @@
         rate_limit: false
         keyval: false
         server_tokens: "off"
+      sub_filter:
+        # sub_filters: []
+        last_modified: "off"
+        once: "on"
+        types: "text/html"
       stream_enable: true
       http_global_autoindex: false
 
@@ -60,6 +65,12 @@
                 name: Strict-Transport-Security
                 value: max-age=15768000; includeSubDomains
                 always: true
+            sub_filter:
+              # sub_filters: []
+              last_modified: "off"
+              once: "on"
+              types: "text/html"
+        # custom_options: []
             reverse_proxy:
               locations:
                 frontend:
@@ -109,6 +120,11 @@
                       value: $scheme
                   proxy_buffering: false
                   client_max_body_size: 5m
+                  sub_filter:
+                    # sub_filters: []
+                    last_modified: "off"
+                    once: "on"
+                    types: "text/html"
                 backend:
                   location: /backend
                   proxy_pass: http://backend_servers/
@@ -212,6 +228,21 @@
             server_name: localhost
             error_page: /usr/share/nginx/html
             autoindex: false
+            sub_filter:
+              sub_filters:
+                - "'server_hostname' '$hostname'"
+                - "'server_address' '$server_addr:$server_port'"
+                - "'server_url' '$request_uri'"
+                - "'remote_addr' '$remote_addr:$remote_port'"
+                - "'server_date' '$time_local'"
+                - "'client_browser' '$http_user_agent'"
+                - "'request_id' '$request_id'"
+                - "'nginx_version' '$nginx_version'"
+                - "'document_root' '$document_root'"
+                - "'proxied_for_ip' '$http_x_forwarded_for'"
+              last_modified: "off"
+              once: "off"
+              types: "text/html"
             web_server:
               locations:
                 frontend_site:
@@ -221,7 +252,12 @@
                   html_file_location: /usr/share/nginx/html
                   html_file_name: frontend_index.html
                   autoindex: false
-              http_demo_conf: true
+              sub_filter:
+                # sub_filters: []
+                last_modified: "off"
+                once: "off"
+                types: "text/html"
+              http_demo_conf: false
       backend:
         template_file: http/default.conf.j2
         conf_file_name: backend_default.conf
@@ -235,6 +271,21 @@
             server_name: localhost
             error_page: /usr/share/nginx/html
             autoindex: false
+            sub_filter:
+              sub_filters:
+                - "'server_hostname' '$hostname'"
+                - "'server_address' '$server_addr:$server_port'"
+                - "'server_url' '$request_uri'"
+                - "'remote_addr' '$remote_addr:$remote_port'"
+                - "'server_date' '$time_local'"
+                - "'client_browser' '$http_user_agent'"
+                - "'request_id' '$request_id'"
+                - "'nginx_version' '$nginx_version'"
+                - "'document_root' '$document_root'"
+                - "'proxied_for_ip' '$http_x_forwarded_for'"
+              last_modified: "off"
+              once: "off"
+              types: "text/html"
             web_server:
               locations:
                 backend_site:
@@ -252,7 +303,12 @@
                     - fastcgi_index index.php
                     - include fastcgi_params
                     - fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name
-              http_demo_conf: true
+              sub_filter:
+                # sub_filters: []
+                last_modified: "off"
+                once: "off"
+                types: "text/html"
+              http_demo_conf: false
     nginx_html_demo_template_enable: true
     nginx_html_demo_template:
       frontend:

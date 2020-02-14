@@ -41,6 +41,11 @@ nginx_main_template:
     keyval: false
     # server_tokens: "off"
   http_global_autoindex: false
+  sub_filter:
+    # sub_filters: []
+    last_modified: "off"
+    once: "on"
+    types: "text/html"
   # http_custom_options: []
   stream_enable: false
   # stream_custom_options: []
@@ -109,6 +114,11 @@ nginx_http_template:
           trusted_cert: /etc/ssl/certs/root_CA_cert_plus_intermediates.crt
           stapling: true
           stapling_verify: true
+        sub_filter:
+          # sub_filters: []
+          last_modified: "off"
+          once: "on"
+          types: "text/html"
         # custom_options: []
         web_server:
           locations:
@@ -140,6 +150,11 @@ nginx_http_template:
               #   return302:
               #     code: 302
               #     url: https://sso.somehost.local/?url=https://$http_host$request_uri
+              sub_filter:
+                # sub_filters: []
+                last_modified: "off"
+                once: "on"
+                types: "text/html"
               # custom_options: []
           http_demo_conf: false
         reverse_proxy:
@@ -236,6 +251,11 @@ nginx_http_template:
               #   return302:
               #     code: 302
               #     url: https://sso.somehost.local/?url=https://$http_host$request_uri
+              sub_filter:
+                # sub_filters: []
+                last_modified: "off"
+                once: "on"
+                types: "text/html"
               # custom_options: []
           health_check_plus: false
         returns:

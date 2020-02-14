@@ -159,6 +159,20 @@ server {
 {% if item.value.servers[server].client_max_body_size is defined and item.value.servers[server].client_max_body_size %}
     client_max_body_size {{ item.value.servers[server].client_max_body_size }};
 {% endif %}
+{% if item.value.servers[server].sub_filter.sub_filters is defined and item.value.servers[server].sub_filter.sub_filters | length %}
+{% for sub_filter in item.value.servers[server].sub_filter.sub_filters %}
+    sub_filter {{ sub_filter }};
+{% endfor %}
+{% endif %}
+{% if item.value.servers[server].sub_filter.last_modified is defined %}
+    sub_filter_last_modified  {{ item.value.servers[server].sub_filter.last_modified | ternary("on", "off") }};
+{% endif %}
+{% if item.value.servers[server].sub_filter.once is defined %}
+    sub_filter_once {{ item.value.servers[server].sub_filter.once | ternary("on", "off") }};
+{% endif %}
+{% if item.value.servers[server].sub_filter.types is defined and item.value.servers[server].sub_filter.types %}
+    sub_filter_types {{ item.value.servers[server].sub_filter.types }};
+{% endif %}
 {% if item.value.servers[server].custom_options is defined and item.value.servers[server].custom_options | length %}
 {% for inline_option in item.value.servers[server].custom_options %}
     {{ inline_option }};
@@ -334,6 +348,20 @@ server {
 {% if item.value.servers[server].reverse_proxy.locations[location].proxy_buffering is defined %}
         proxy_buffering {{ item.value.servers[server].reverse_proxy.locations[location].proxy_buffering | ternary("on", "off") }};
 {% endif %}
+{% if item.value.servers[server].reverse_proxy.locations[location].sub_filter.sub_filters is defined and item.value.servers[server].reverse_proxy.locations[location].sub_filter.sub_filters | length %}
+{% for sub_filter in item.value.servers[server].reverse_proxy.locations[location].sub_filter.sub_filters %}
+        sub_filter {{ sub_filter }};
+{% endfor %}
+{% endif %}
+{% if item.value.servers[server].reverse_proxy.locations[location].sub_filter.last_modified is defined %}
+        sub_filter_last_modified  {{ item.value.servers[server].reverse_proxy.locations[location].sub_filter.last_modified | ternary("on", "off") }};
+{% endif %}
+{% if item.value.servers[server].reverse_proxy.locations[location].sub_filter.once is defined %}
+        sub_filter_once {{ item.value.servers[server].reverse_proxy.locations[location].sub_filter.once | ternary("on", "off") }};
+{% endif %}
+{% if item.value.servers[server].reverse_proxy.locations[location].sub_filter.types is defined and item.value.servers[server].reverse_proxy.locations[location].sub_filter.types %}
+        sub_filter_types {{ item.value.servers[server].reverse_proxy.locations[location].sub_filter.types }};
+{% endif %}
 {% if item.value.servers[server].reverse_proxy.locations[location].custom_options is defined and item.value.servers[server].reverse_proxy.locations[location].custom_options | length %}
 {% for inline_option in item.value.servers[server].reverse_proxy.locations[location].custom_options %}
         {{ inline_option }};
@@ -402,6 +430,20 @@ server {
 {% endif %}
 {% if item.value.servers[server].web_server.locations[location].auth_request_set is defined %}
         auth_request_set {{ item.value.servers[server].web_server.locations[location].auth_request_set.name }} {{ item.value.servers[server].web_server.locations[location].auth_request_set.value }};
+{% endif %}
+{% if item.value.servers[server].web_server.locations[location].sub_filter.sub_filters is defined and item.value.servers[server].web_server.locations[location].sub_filter.sub_filters | length %}
+{% for sub_filter in item.value.servers[server].web_server.locations[location].sub_filter.sub_filters %}
+        sub_filter {{ sub_filter }};
+{% endfor %}
+{% endif %}
+{% if item.value.servers[server].web_server.locations[location].sub_filter.last_modified is defined %}
+        sub_filter_last_modified  {{ item.value.servers[server].web_server.locations[location].sub_filter.last_modified | ternary("on", "off") }};
+{% endif %}
+{% if item.value.servers[server].web_server.locations[location].sub_filter.once is defined %}
+        sub_filter_once {{ item.value.servers[server].web_server.locations[location].sub_filter.once | ternary("on", "off") }};
+{% endif %}
+{% if item.value.servers[server].web_server.locations[location].sub_filter.types is defined and item.value.servers[server].web_server.locations[location].sub_filter.types %}
+        sub_filter_types {{ item.value.servers[server].web_server.locations[location].sub_filter.types }};
 {% endif %}
 
     }

@@ -99,6 +99,20 @@ http {
 {% if nginx_main_template.http_global_autoindex | default(false) %}
     autoindex on;
 {% endif %}
+{% if nginx_main_template.sub_filter.sub_filters is defined and nginx_main_template.sub_filter.sub_filters | length %}
+{% for sub_filter in nginx_main_template.sub_filter.sub_filters %}
+    sub_filter {{ sub_filter }};
+{% endfor %}
+{% endif %}
+{% if nginx_main_template.sub_filter.last_modified is defined %}
+    sub_filter_last_modified  {{ nginx_main_template.sub_filter.last_modified | ternary("on", "off") }};
+{% endif %}
+{% if nginx_main_template.sub_filter.once is defined %}
+    sub_filter_once {{ nginx_main_template.sub_filter.once | ternary("on", "off") }};
+{% endif %}
+{% if nginx_main_template.sub_filter.types is defined and nginx_main_template.sub_filter.types %}
+    sub_filter_types {{ nginx_main_template.sub_filter.types }};
+{% endif %}
 {% if nginx_main_template.http_custom_options is defined and nginx_main_template.http_custom_options | length %}
 {% for inline_option in nginx_main_template.http_custom_options %}
     {{ inline_option }};

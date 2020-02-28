@@ -1,6 +1,5 @@
 ---
 galaxy_info:
-  role_name: nginx
   author: Alessandro Fael Garcia
   description: Official Ansible role for NGINX
   company: NGINX, Inc.
@@ -43,7 +42,6 @@ galaxy_info:
     - oss
     - plus
     - amplify
-    - controller
     - unit
     - web
     - server

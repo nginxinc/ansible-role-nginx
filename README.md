@@ -4,7 +4,7 @@ Ansible NGINX Role
 [![Ansible Galaxy](https://img.shields.io/badge/galaxy-nginxinc.nginx-5bbdbf.svg)](https://galaxy.ansible.com/nginxinc/nginx)
 [![Build Status](https://travis-ci.org/nginxinc/ansible-role-nginx.svg?branch=master)](https://travis-ci.org/nginxinc/ansible-role-nginx)
 
-This role installs NGINX Open Source, NGINX Plus, the NGINX Amplify agent, the NGINX Controller agent, or NGINX Unit on your target host.
+This role installs NGINX Open Source, NGINX Plus, the NGINX Amplify agent, or NGINX Unit on your target host.
 
 **Note:** This role is still in active development. There may be unidentified issues and the role variables may change as development continues.
 
@@ -35,7 +35,7 @@ Use `git clone https://github.com/nginxinc/ansible-role-nginx.git` to pull the l
 Platforms
 ---------
 
-The NGINX Ansible role supports all platforms supported by [NGINX Open Source](https://nginx.org/en/linux_packages.html#mainline), [NGINX Plus](https://www.nginx.com/products/technical-specs/), the [NGINX Amplify agent](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-faq.md#21-what-operating-systems-are-supported), the [NGINX Controller agent](https://docs.nginx.com/nginx-controller/technical-specs/#nginx-controller-agent-technical-specifications), and [NGINX Unit](https://unit.nginx.org/installation/#official-packages):
+The NGINX Ansible role supports all platforms supported by [NGINX Open Source](https://nginx.org/en/linux_packages.html#mainline), [NGINX Plus](https://www.nginx.com/products/technical-specs/), the [NGINX Amplify agent](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-faq.md#21-what-operating-systems-are-supported), and [NGINX Unit](https://unit.nginx.org/installation/#official-packages):
 
 **NGINX Open Source**
 
@@ -143,33 +143,6 @@ RedHat:
     - 7
 ```
 
-**NGINX Controller Agent**
-
-```yaml
-Amazon Linux:
-  versions:
-    - 2017.09
-Amazon Linux 2:
-  versions:
-    - LTS
-CentOS:
-  versions:
-    - 6
-    - 7
-Debian:
-  versions:
-    - jessie
-    - stretch
-Ubuntu:
-  versions:
-    - xenial
-    - bionic
-RedHat:
-  versions:
-    - 6
-    - 7
-```
-
 **NGINX Unit**
 
 ```yaml
@@ -209,7 +182,6 @@ This role has multiple variables. The descriptions and defaults for all these va
 
 -   **[defaults/main/main.yml](./defaults/main/main.yml):** NGINX installation variables
 -   **[defaults/main/amplify.yml](./defaults/main/amplify.yml):** NGINX Amplify agent installation variables
--   **[defaults/main/controller.yml](./defaults/main/controller.yml):** NGINX Controller agent installation variables
 -   **[defaults/main/template.yml](./defaults/main/template.yml):** NGINX configuration templating variables
 -   **[defaults/main/upload.yml](./defaults/main/upload.yml):** NGINX configuration/HTML/SSL upload variables
 -   **[defaults/main/linux.yml](./defaults/main/linux.yml):** Linux installation variables
@@ -400,34 +372,6 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a 
     nginx_type: plus
 ```
 
-This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a localhost to install NGINX Plus and the NGINX Controller agent. Commented out
-are sample variables to install the NGINX Controller agent from your NGINX Controller instance instead of the NGINX repository.
-
-```yaml
-- hosts: localhost
-  become: true
-  roles:
-    - role: nginxinc.nginx
-  vars:
-    nginx_type: plus
-    nginx_rest_api_enable: true
-    nginx_rest_api_port: 80
-    nginx_rest_api_write: true
-    nginx_controller_enable: true
-    nginx_controller_source: repository
-    nginx_controller_api_key: <API_KEY_HERE>
-    nginx_controller_endpoint: <FQDN> # e.g. controller.nginx.com
-    # nginx_type: plus
-    # nginx_rest_api_enable: true
-    # nginx_rest_api_port: 80
-    # nginx_rest_api_write: true
-    # nginx_controller_enable: true
-    # nginx_controller_source: instance
-    # nginx_controller_endpoint: controller.nginx.com
-    # nginx_controller_user_email: john_doe@nginx.com
-    # nginx_controller_password: password
-```
-
 This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a localhost to install NGINX Unit and the PHP/Perl NGINX Unit language modules.
 
 ```yaml
@@ -447,6 +391,11 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a 
 To run any of the above sample playbooks create a `setup-nginx.yml` file and paste the contents. Executing the Ansible Playbook is then as simple as executing `ansible-playbook setup-nginx.yml`.
 
 Alternatively, you can also clone this repository instead of installing it from Ansible Galaxy. If you decide to do so, replace the role variable in the previous sample playbooks from `nginxinc.nginx` to `ansible-role-nginx`.
+
+Other NGINX Roles
+-----------------
+
+You can find an Ansible collection of roles to help you install and configure NGINX Controller [here](https://github.com/nginxinc/ansible-collection-nginx_controller)
 
 License
 -------

@@ -7,7 +7,6 @@
     - ansible_os_family == "Debian"
     - nginx_install_from == "nginx_repository"
       or nginx_amplify_enable
-      or nginx_controller_enable
       or nginx_unit_enable
   tags: nginx_aptkey
 
@@ -17,7 +16,6 @@
       or ansible_os_family == "Suse"
     - nginx_install_from == "nginx_repository"
       or nginx_amplify_enable
-      or nginx_controller_enable
       or nginx_unit_enable
   tags: nginx_rpmkey
 
@@ -81,13 +79,6 @@
     - nginx_amplify_api_key is defined
     - nginx_amplify_api_key | length > 0
   tags: nginx_install_amplify
-
-- import_tasks: controller/install-controller.yml
-  when:
-    - nginx_controller_enable | bool
-    - nginx_controller_endpoint is defined
-    - nginx_controller_endpoint | length > 0
-  tags: nginx_install_controller
 
 - import_tasks: unit/install-unit.yml
   when: nginx_unit_enable | bool

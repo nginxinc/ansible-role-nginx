@@ -3,10 +3,10 @@
   set_fact:
     default_repository:
       - >-
-        deb https://nginx.org/packages/{{ (nginx_branch == 'mainline')
+        deb [arch=amd64] https://nginx.org/packages/{{ (nginx_branch == 'mainline')
         | ternary('mainline/', '') }}{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} nginx
       - >-
-        deb-src https://nginx.org/packages/{{ (nginx_branch == 'mainline')
+        deb-src [arch=amd64] https://nginx.org/packages/{{ (nginx_branch == 'mainline')
         | ternary('mainline/', '') }}{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} nginx
 
 - name: "(Install: Debian/Ubuntu) Set APT NGINX Repository"

@@ -26,7 +26,7 @@ Follow our [Installation Guide](https://github.com/nginxinc/ansible-role-nginx/b
 
 ### Project Structure
 
-*   The NGINX Ansible role is written in `yaml` and supports open source NGINX, NGINX Plus, NGINX Amplify, NGINX Controller, and NGINX Unit.
+*   The NGINX Ansible role is written in `yaml` and supports open source NGINX, NGINX Plus, NGINX Amplify, and NGINX Unit.
 *   The project follows the standard [Ansible role directory structure](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html)
     *   The main code is found at `tasks/`
     *   The main variables can be found at `defaults/main/`

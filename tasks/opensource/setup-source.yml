@@ -1,0 +1,134 @@
+---
+- name: "(Install: Linux) Install PCRE Dependency"
+  block:
+
+  - name: "(Install: Linux) Install PCRE Dependency: Download"
+    get_url:
+      url: "ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/{{ pcre_version }}.tar.gz"
+      dest: "/tmp/{{ pcre_version }}.tar.gz"
+    register: pcre_source
+
+  - name: "(Install: Linux) Install PCRE Dependency: Unpack"
+    unarchive:
+      copy: no
+      dest: /tmp/
+      src: "{{ pcre_source.dest }}"
+    when: pcre_source|changed
+    register: pcre_source_unpack
+
+  - name: "(Install: Linux) Install PCRE Dependency: Configure"
+    command: "./configure"
+    args:
+      chdir: "/tmp/{{ pcre_version }}"
+    when: pcre_source_unpack|changed
+    register: pcre_configure
+  
+  - name: "(Install: Linux) Install PCRE Dependency: Install"
+    become: yes
+    shell: make && make install
+    args:
+      chdir: "/tmp/{{ pcre_version }}"
+    when: pcre_configure|changed
+
+- name: "(Install: Linux) Install zlib Dependency"
+  block:
+
+  - name: "(Install: Linux) Install zlib Dependency: Download"
+    get_url:
+      url: "http://zlib.net/{{ zlib_version }}.tar.gz"
+      dest: "/tmp/{{ zlib_version }}.tar.gz"
+    register: zlib_source
+
+  - name: "(Install: Linux) Install zlib Dependency: Unpack"
+    unarchive:
+      copy: no
+      dest: /tmp/
+      src: "{{ zlib_source.dest }}"
+    when: zlib_source|changed
+    register: zlib_source_unpack
+
+  - name: "(Install: Linux) Install zlib Dependency: Configure"
+    command: "./configure"
+    args:
+      chdir: "/tmp/{{ zlib_version }}"
+    when: zlib_source_unpack|changed
+    register: zlib_configure
+  
+  - name: "(Install: Linux) Install zlib Dependency: Install"
+    become: yes
+    shell: make && make install
+    args:
+      chdir: "/tmp/{{ zlib_version }}"
+    when: zlib_configure|changed
+
+- name: "(Install: Linux) Install OpenSSL Dependency"
+  block:
+
+  - name: "(Install: Linux) Install OpenSSL Dependency: Download"
+    get_url:
+      url: "http://www.openssl.org/source/{{ openssl_version }}.tar.gz"
+      dest: "/tmp/{{ openssl_version }}.tar.gz"
+    register: openssl_source
+
+  - name: "(Install: Linux) Install OpenSSL Dependency: Unpack"
+    unarchive:
+      copy: no
+      dest: /tmp/
+      src: "{{ openssl_source.dest }}"
+    when: openssl_source|changed
+    register: openssl_source_unpack
+
+  - name: "(Install: Linux) Install OpenSSL Dependency: Configure"
+    command: "./configure"
+    args:
+      chdir: "/tmp/{{ openssl_version }}"
+    when: openssl_source_unpack|changed
+    register: openssl_configure
+  
+  - name: "(Install: Linux) Install OpenSSL Dependency: Install"
+    become: yes
+    shell: make && make install
+    args:
+      chdir: "/tmp/{{ openssl_version }}"
+    when: openssl_configure|changed
+
+- name: "(Install: Linux) Install NGINX"
+  block:
+
+  - name: "(Install: Linux) Install NGINX: Set Branch to mainline"
+    set_fact:
+      nginx_version: "{{ nginx_mainline_version }}"
+    when: nginx_branch == "mainline"
+
+  - name: "(Install: Linux) Install NGINX: Set Branch to stable"
+    set_fact:
+      nginx_version: "{{ nginx_mainline_version }}"
+    when: nginx_branch == "stable"
+
+  - name: "(Install: Linux) Install NGINX: Download"
+    get_url:
+      url: "https://nginx.org/download/{{ nginx_version }}.tar.gz"
+      dest: "/tmp/{{ nginx_version }}.tar.gz"
+    register: nginx_source
+
+  - name: "(Install: Linux) Install NGINX: Unpack"
+    unarchive:
+      copy: no
+      dest: /tmp/
+      src: "{{ nginx_source.dest }}"
+    when: nginx_source|changed
+    register: nginx_source_unpack
+
+  - name: "(Install: Linux) Install NGINX: Configure"
+    command: "./configure"
+    args:
+      chdir: "/tmp/{{ nginx_version }}"
+    when: nginx_source_unpack|changed
+    register: nginx_configure
+  
+  - name: "(Install: Linux) Install NGINX: Install"
+    become: yes
+    shell: make && make install
+    args:
+      chdir: "/tmp/{{ nginx_version }}"
+    when: nginx_configure|changed

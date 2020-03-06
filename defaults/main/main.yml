@@ -28,7 +28,7 @@ nginx_type: opensource
 nginx_state: present
 
 # Specify repository origin for NGINX Open Source.
-# Options are 'nginx_repository' or 'os_repository'.
+# Options are 'nginx_repository', 'source' or 'os_repository'.
 # Only works if 'nginx_type' is set to 'opensource'.
 # Default is nginx_repository.
 nginx_install_from: nginx_repository
@@ -44,7 +44,7 @@ nginx_install_from: nginx_repository
 
 # Specify which branch of NGINX Open Source you want to install.
 # Options are 'mainline' or 'stable'.
-# Only works if 'install_from' is set to 'nginx_repository'.
+# Only works if 'install_from' is set to 'nginx_repository' or 'source'.
 # Default is mainline.
 nginx_branch: mainline
 

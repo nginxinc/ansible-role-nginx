@@ -124,7 +124,7 @@
     register: nginx_html_text
   
   - name: "(Install: Linux) Install NGINX: Get NGINX versions"
-    command: "sed 's:.*tip</option><option value=\"[^\"]*\">\([^<]*\)<.*:\1:' <<< {{ nginx_html_text.stout | quote }}"
+    command: "sed 's:.*tip</option><option value=\"[^\"]*\">\\([^<]*\\)<.*:\\1:' <<< {{ nginx_html_text.stout | quote }}"
     args:
       chdir: "/tmp"
     when: nginx_html_text | changed

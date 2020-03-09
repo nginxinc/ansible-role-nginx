@@ -12,5 +12,5 @@ pcre_version: pcre-8.43
 zlib_version: zlib-1.2.11
 openssl_version: openssl-1.1.1c
 
-nginx_mainline_version: nginx-1.17.6
+# mainline is latest by default but we must track stable for now
 nginx_stable_version: nginx-1.16.1

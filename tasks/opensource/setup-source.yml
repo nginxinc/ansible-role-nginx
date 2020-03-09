@@ -110,23 +110,15 @@
 - name: "(Install: Linux) Install NGINX"
   block:
 
-  - name: "(Install: Linux) Install NGINX: Get mainline version"
-  
-
-  - name: "(Install: Linux) Install NGINX: Set Branch to mainline"
-    set_fact:
-      nginx_version: "{{ nginx_mainline_version }}"
-    when: nginx_branch == "mainline"
-
   - name: "(Install: Linux) Install NGINX: Set Branch to stable"
     set_fact:
-      nginx_version: "{{ nginx_mainline_version }}"
+      nginx_version: "{{ nginx_stable_version }}"
     when: nginx_branch == "stable"
 
   - name: "(Install: Linux) Install NGINX: Download"
     get_url:
       url: "https://nginx.org/download/{{ nginx_version }}.tar.gz"
-      dest: "/tmp/{{ nginx_version }}.tar.gz"
+      dest: "/tmp/{{ nginx_version | default('default') }}.tar.gz"
     register: nginx_source
 
   - name: "(Install: Linux) Install NGINX: Unpack"

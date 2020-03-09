@@ -109,7 +109,27 @@
 
 - name: "(Install: Linux) Install NGINX"
   block:
+
+  - name: "(Install: Linux) Install NGINX: Get NGINX versions"
+    get_url:
+      url: "https://trac.nginx.org/nginx/browser"
+      dest: "/tmp/nginx_version.html"
+    register: nginx_html
   
+  - name: "(Install: Linux) Install NGINX: Get NGINX versions"
+    command: "sed 's:^ *::g' < nginx_version.html | tr -d \\n > nginx_version.txt"
+    args:
+      chdir: "/tmp"
+    when: nginx_html | changed
+    register: nginx_html_text
+  
+  - name: "(Install: Linux) Install NGINX: Get NGINX versions"
+    command: "sed 's:.*tip</option><option value=\"[^\"]*\">\([^<]*\)<.*:\1:' <<< {{ nginx_html_text.stout | quote }}"
+    args:
+      chdir: "/tmp"
+    when: nginx_html_text | changed
+    register: "{{ nginx_mainline_version }}"
+
   - name: "(Install: Linux) Install NGINX: Set Branch to mainline"
     set_fact:
       nginx_version: "{{ nginx_mainline_version }}"

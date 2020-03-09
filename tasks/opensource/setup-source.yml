@@ -13,22 +13,27 @@
       copy: no
       dest: /tmp/
       src: "{{ pcre_source.dest }}"
-    when: pcre_source|changed
+    when: pcre_source | changed
     register: pcre_source_unpack
 
   - name: "(Install: Linux) Install PCRE Dependency: Configure"
     command: "./configure"
     args:
       chdir: "/tmp/{{ pcre_version }}"
-    when: pcre_source_unpack|changed
+    when: pcre_source_unpack | changed
     register: pcre_configure
   
   - name: "(Install: Linux) Install PCRE Dependency: Install"
-    become: yes
-    shell: make && make install
-    args:
+    make:
       chdir: "/tmp/{{ pcre_version }}"
-    when: pcre_configure|changed
+    when: pcre_configure | changed
+
+  - name: "(Install: Linux) Install PCRE Dependency: Install"
+    make:
+      chdir: "/tmp/{{ pcre_version }}"
+      target: install
+    become: yes
+    when: pcre_configure | changed
 
 - name: "(Install: Linux) Install zlib Dependency"
   block:
@@ -44,22 +49,27 @@
       copy: no
       dest: /tmp/
       src: "{{ zlib_source.dest }}"
-    when: zlib_source|changed
+    when: zlib_source | changed
     register: zlib_source_unpack
 
   - name: "(Install: Linux) Install zlib Dependency: Configure"
     command: "./configure"
     args:
       chdir: "/tmp/{{ zlib_version }}"
-    when: zlib_source_unpack|changed
+    when: zlib_source_unpack | changed
     register: zlib_configure
-  
+
   - name: "(Install: Linux) Install zlib Dependency: Install"
-    become: yes
-    shell: make && make install
-    args:
+    make:
       chdir: "/tmp/{{ zlib_version }}"
-    when: zlib_configure|changed
+    when: zlib_configure | changed
+
+  - name: "(Install: Linux) Install zlib Dependency: Install"
+    make:
+      chdir: "/tmp/{{ zlib_version }}"
+      target: install
+    become: yes
+    when: zlib_configure | changed
 
 - name: "(Install: Linux) Install OpenSSL Dependency"
   block:
@@ -75,25 +85,33 @@
       copy: no
       dest: /tmp/
       src: "{{ openssl_source.dest }}"
-    when: openssl_source|changed
+    when: openssl_source | changed
     register: openssl_source_unpack
 
   - name: "(Install: Linux) Install OpenSSL Dependency: Configure"
     command: "./configure"
     args:
       chdir: "/tmp/{{ openssl_version }}"
-    when: openssl_source_unpack|changed
+    when: openssl_source_unpack | changed
     register: openssl_configure
-  
+
   - name: "(Install: Linux) Install OpenSSL Dependency: Install"
-    become: yes
-    shell: make && make install
-    args:
+    make:
       chdir: "/tmp/{{ openssl_version }}"
-    when: openssl_configure|changed
+    when: openssl_configure | changed
+
+  - name: "(Install: Linux) Install OpenSSL Dependency: Install"
+    make:
+      chdir: "/tmp/{{ openssl_version }}"
+      target: install
+    become: yes
+    when: openssl_configure | changed
 
 - name: "(Install: Linux) Install NGINX"
   block:
+
+  - name: "(Install: Linux) Install NGINX: Get mainline version"
+  
 
   - name: "(Install: Linux) Install NGINX: Set Branch to mainline"
     set_fact:
@@ -116,19 +134,24 @@
       copy: no
       dest: /tmp/
       src: "{{ nginx_source.dest }}"
-    when: nginx_source|changed
+    when: nginx_source | changed
     register: nginx_source_unpack
 
   - name: "(Install: Linux) Install NGINX: Configure"
     command: "./configure"
     args:
       chdir: "/tmp/{{ nginx_version }}"
-    when: nginx_source_unpack|changed
+    when: nginx_source_unpack | changed
     register: nginx_configure
-  
+
   - name: "(Install: Linux) Install NGINX: Install"
-    become: yes
-    shell: make && make install
-    args:
+    make:
       chdir: "/tmp/{{ nginx_version }}"
-    when: nginx_configure|changed
+    when: nginx_configure | changed
+
+  - name: "(Install: Linux) Install NGINX: Install"
+    make:
+      chdir: "/tmp/{{ nginx_version }}"
+      target: install
+    become: yes
+    when: nginx_configure | changed

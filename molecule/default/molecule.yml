@@ -1,8 +1,11 @@
 ---
 driver:
   name: docker
-lint:
-  name: yamllint
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+  flake8
 platforms:
   - name: debian-stretch
     image: debian:stretch-slim
@@ -20,10 +23,6 @@ provisioner:
   name: ansible
   playbooks:
     converge: ../common/playbook_default.yml
-  lint:
-    name: ansible-lint
 verifier:
   name: testinfra
   directory: ../common/test_default
-  lint:
-    name: flake8

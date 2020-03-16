@@ -34,156 +34,156 @@
 - name: "(Install: Linux) Install zlib Dependency"
   block:
 
-  - name: "(Install: Linux) Install zlib Dependency: Download"
-    get_url:
-      url: "http://zlib.net/{{ zlib_version }}.tar.gz"
-      dest: "/tmp/{{ zlib_version }}.tar.gz"
-    register: zlib_source
+    - name: "(Install: Linux) Install zlib Dependency: Download"
+      get_url:
+        url: "http://zlib.net/{{ zlib_version }}.tar.gz"
+        dest: "/tmp/{{ zlib_version }}.tar.gz"
+      register: zlib_source
 
-  - name: "(Install: Linux) Install zlib Dependency: Unpack"
-    unarchive:
-      copy: no
-      dest: /tmp/
-      src: "{{ zlib_source.dest }}"
-    register: zlib_source_unpack
+    - name: "(Install: Linux) Install zlib Dependency: Unpack"
+      unarchive:
+        copy: no
+        dest: /tmp/
+        src: "{{ zlib_source.dest }}"
+      register: zlib_source_unpack
 
-  - name: "(Install: Linux) Install zlib Dependency: Configure"
-    command: "./configure"
-    args:
-      chdir: "/tmp/{{ zlib_version }}"
-    register: zlib_configure
+    - name: "(Install: Linux) Install zlib Dependency: Configure"
+      command: "./configure"
+      args:
+        chdir: "/tmp/{{ zlib_version }}"
+      register: zlib_configure
 
-  - name: "(Install: Linux) Install zlib Dependency: Install"
-    make:
-      chdir: "/tmp/{{ zlib_version }}"
+    - name: "(Install: Linux) Install zlib Dependency: Install"
+      make:
+        chdir: "/tmp/{{ zlib_version }}"
 
-  - name: "(Install: Linux) Install zlib Dependency: Install"
-    make:
-      chdir: "/tmp/{{ zlib_version }}"
-      target: install
-    become: yes
+    - name: "(Install: Linux) Install zlib Dependency: Install"
+      make:
+        chdir: "/tmp/{{ zlib_version }}"
+        target: install
+      become: yes
 
 - name: "(Install: Linux) Install OpenSSL Dependency"
   block:
 
-  - name: "(Install: Linux) Install OpenSSL Dependency: Download"
-    get_url:
-      url: "http://www.openssl.org/source/{{ openssl_version }}.tar.gz"
-      dest: "/tmp/{{ openssl_version }}.tar.gz"
-    register: openssl_source
+    - name: "(Install: Linux) Install OpenSSL Dependency: Download"
+      get_url:
+        url: "http://www.openssl.org/source/{{ openssl_version }}.tar.gz"
+        dest: "/tmp/{{ openssl_version }}.tar.gz"
+      register: openssl_source
 
-  - name: "(Install: Linux) Install OpenSSL Dependency: Unpack"
-    unarchive:
-      copy: no
-      dest: /tmp/
-      src: "{{ openssl_source.dest }}"
-    register: openssl_source_unpack
+    - name: "(Install: Linux) Install OpenSSL Dependency: Unpack"
+      unarchive:
+        copy: no
+        dest: /tmp/
+        src: "{{ openssl_source.dest }}"
+      register: openssl_source_unpack
 
-  - name: "(Install: Linux) Install OpenSSL Dependency: Configure"
-    command: "./conf --prefix=/usr"
-    args:
-      chdir: "/tmp/{{ openssl_version }}"
-    register: openssl_configure
+    - name: "(Install: Linux) Install OpenSSL Dependency: Configure"
+      command: "./conf --prefix=/usr"
+      args:
+        chdir: "/tmp/{{ openssl_version }}"
+      register: openssl_configure
 
-  - name: "(Install: Linux) Install OpenSSL Dependency: Make"
-    make:
-      chdir: "/tmp/{{ openssl_version }}"
+    - name: "(Install: Linux) Install OpenSSL Dependency: Make"
+      make:
+        chdir: "/tmp/{{ openssl_version }}"
 
-  - name: "(Install: Linux) Install OpenSSL Dependency: Install"
-    make:
-      chdir: "/tmp/{{ openssl_version }}"
-      target: install
-    become: yes
+    - name: "(Install: Linux) Install OpenSSL Dependency: Install"
+      make:
+        chdir: "/tmp/{{ openssl_version }}"
+        target: install
+      become: yes
 
 - name: "(Install: Linux) Install NGINX"
   block:
 
-  - name: "(Install: Linux) Install NGINX: Get NGINX mainline source"
-    get_url:
-      url: "https://trac.nginx.org/nginx/browser"
-      dest: "/tmp/nginx_version.html"
-    register: nginx_html
-    when: nginx_branch == "mainline"
+    - name: "(Install: Linux) Install NGINX: Get NGINX mainline source"
+      get_url:
+        url: "https://trac.nginx.org/nginx/browser"
+        dest: "/tmp/nginx_version.html"
+      register: nginx_html
+      when: nginx_branch == "mainline"
 
-  - name: "(Install: Linux) Install NGINX: Get NGINX mainline version"
-    shell:
-    args:
-      cmd: sed 's:.*tip</option><option value="[^"]*">release\([^<]*\)<.*:nginx\1:' <<< $(sed 's:^ *::g' < /tmp/nginx_version.html | tr -d \\n) #noqa 301 303
-    register: nginx_mainline_version
-    when: nginx_branch == "mainline"
+    - name: "(Install: Linux) Install NGINX: Get NGINX mainline version"
+      shell:
+      args:
+        cmd: sed 's:.*tip</option><option value="[^"]*">release\([^<]*\)<.*:nginx\1:' <<< $(sed 's:^ *::g' < /tmp/nginx_version.html | tr -d \\n)  # noqa 204 301 303
+      register: nginx_mainline_version
+      when: nginx_branch == "mainline"
 
-  - name: "(Install: Linux) Install NGINX: Set NGINX mainline version"
-    set_fact:
-      nginx_version: "{{ nginx_mainline_version.stdout }}"
-    when: nginx_branch == "mainline"
+    - name: "(Install: Linux) Install NGINX: Set NGINX mainline version"
+      set_fact:
+        nginx_version: "{{ nginx_mainline_version.stdout }}"
+      when: nginx_branch == "mainline"
 
-  - name: "(Install: Linux) Install NGINX: Get NGINX stable source"
-    get_url:
-      url: "https://trac.nginx.org/nginx/browser"
-      dest: "/tmp/nginx_version.html"
-    register: nginx_html
-    when: nginx_branch == "stable"
+    - name: "(Install: Linux) Install NGINX: Get NGINX stable source"
+      get_url:
+        url: "https://trac.nginx.org/nginx/browser"
+        dest: "/tmp/nginx_version.html"
+      register: nginx_html
+      when: nginx_branch == "stable"
 
-  - name: "(Install: Linux) Install NGINX: Get NGINX stable version 1/2"
-    shell:
-    args:
-      cmd: sed 's:.*default (tip)</option><option value="[^"]*">stable\([^<]*\)<.*:release\1:' <<< $(sed 's:^ *::g' < /tmp/nginx_version.html | tr -d \\n) # noqa 204 301 303
-    register: nginx_tmp_version
-    when: nginx_branch == "stable"
+    - name: "(Install: Linux) Install NGINX: Get NGINX stable version 1/2"
+      shell:
+      args:
+        cmd: sed 's:.*default (tip)</option><option value="[^"]*">stable\([^<]*\)<.*:release\1:' <<< $(sed 's:^ *::g' < /tmp/nginx_version.html | tr -d \\n)  # noqa 204 301 303
+      register: nginx_tmp_version
+      when: nginx_branch == "stable"
 
-  - name: "(Install: Linux) Install NGINX: Get NGINX stable version 2/2"
-    shell:
-    args:
-      cmd: grep {{ nginx_tmp_version.stdout }} /tmp/nginx_version.html | head -1 | sed -e 's:.*<option value="[^"]*">release\([^<]*\)<.*:nginx\1:' # noqa 204 301 303
-    register: nginx_stable_version
-    when: nginx_branch == "stable"
+    - name: "(Install: Linux) Install NGINX: Get NGINX stable version 2/2"
+      shell:
+      args:
+        cmd: grep {{ nginx_tmp_version.stdout }} /tmp/nginx_version.html | head -1 | sed -e 's:.*<option value="[^"]*">release\([^<]*\)<.*:nginx\1:'  # noqa 204 301 303
+      register: nginx_stable_version
+      when: nginx_branch == "stable"
 
-  - name: "(Install: Linux) Install NGINX: Set NGINX stable version"
-    set_fact:
-      nginx_version: "{{ nginx_stable_version.stdout }}"
-    when: nginx_branch == "stable"
+    - name: "(Install: Linux) Install NGINX: Set NGINX stable version"
+      set_fact:
+        nginx_version: "{{ nginx_stable_version.stdout }}"
+      when: nginx_branch == "stable"
 
-  - name: "(Install: Linux) Install NGINX: Set NGINX download filename"
-    set_fact:
-      nginx_download_name: "{{ nginx_version }}"
-    when: nginx_branch == "stable" or nginx_branch == "mainline"
+    - name: "(Install: Linux) Install NGINX: Set NGINX download filename"
+      set_fact:
+        nginx_download_name: "{{ nginx_version }}"
+      when: nginx_branch == "stable" or nginx_branch == "mainline"
 
-  - name: "(Install: Linux) Install NGINX: Download"
-    get_url:
-      url: "https://nginx.org/download/{{ nginx_download_name }}.tar.gz"
-      dest: "/tmp/{{ nginx_download_name }}.tar.gz"
-    register: nginx_source
+    - name: "(Install: Linux) Install NGINX: Download"
+      get_url:
+        url: "https://nginx.org/download/{{ nginx_download_name }}.tar.gz"
+        dest: "/tmp/{{ nginx_download_name }}.tar.gz"
+      register: nginx_source
 
-  - name: "(Install: Linux) Install NGINX: Unpack"
-    unarchive:
-      copy: no
-      dest: /tmp/
-      src: "{{ nginx_source.dest }}"
-    register: nginx_source_unpack
+    - name: "(Install: Linux) Install NGINX: Unpack"
+      unarchive:
+        copy: no
+        dest: /tmp/
+        src: "{{ nginx_source.dest }}"
+      register: nginx_source_unpack
 
-  - name: "(Install: Linux) Install NGINX: Configure"
-    command: "./configure"
-    args:
-      chdir: "/tmp/{{ nginx_version }}"
-    register: nginx_configure
+    - name: "(Install: Linux) Install NGINX: Configure"
+      command: "./configure"
+      args:
+        chdir: "/tmp/{{ nginx_version }}"
+      register: nginx_configure
 
-  - name: "(Install: Linux) Install NGINX: Install"
-    make:
-      chdir: "/tmp/{{ nginx_version }}"
+    - name: "(Install: Linux) Install NGINX: Install"
+      make:
+        chdir: "/tmp/{{ nginx_version }}"
 
-  - name: "(Install: Linux) Install NGINX: Install"
-    make:
-      chdir: "/tmp/{{ nginx_version }}"
-      target: install
-    become: yes
+    - name: "(Install: Linux) Install NGINX: Install"
+      make:
+        chdir: "/tmp/{{ nginx_version }}"
+        target: install
+      become: yes
 
-  - name: "(Install: Linux) Install NGINX: Cleanup"
-    file:
-      path: "{{ item }}"
-      state: absent
-    loop:
-      - "{{ pcre_source.dest }}"
-      - "{{ zlib_source.dest }}"
-      - "{{ openssl_source.dest }}"
-      - "{{ nginx_html.dest }}"
-      - "{{ nginx_source.dest }}"
+    - name: "(Install: Linux) Install NGINX: Cleanup"
+      file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - "{{ pcre_source.dest }}"
+        - "{{ zlib_source.dest }}"
+        - "{{ openssl_source.dest }}"
+        - "{{ nginx_html.dest }}"
+        - "{{ nginx_source.dest }}"

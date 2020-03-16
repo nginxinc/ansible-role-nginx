@@ -3,11 +3,28 @@ sudo: required
 language: python
 services:
   - docker
+env:
+  - scenario=default
+  - scenario=default_alpine
+  - scenario=default_centos
+  - scenario=module
+  - scenario=module_alpine
+  - scenario=module_centos
+  - scenario=stable_push
+  - scenario=stable_push_alpine
+  - scenario=stable_push_centos
+  - scenario=template
+  - scenario=template_alpine
+  - scenario=template_centos
+  - scenario=unit
+  - scenario=unit_alpine
+  - scenario=unit_centos
 before_install:
   - sudo apt-get -qq update
 install:
   - pip install ansible==2.9.6
   - pip install molecule[docker]>=3.0.0
+  - pip install testinfra
   - pip install ansible-lint
   - pip install flake8
 script:

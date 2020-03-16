@@ -195,3 +195,14 @@
       target: install
     become: yes
     when: nginx_configure.changed
+  
+  - name: "(Install: Linux) Install NGINX: Cleanup"
+    file:
+      path: "{{ item }}"
+      state: absent
+    loop:
+      - {{ pcre_source.dest }}
+      - {{ zlib_source.dest }}
+      - {{ openssl_source.dest }}
+      - {{ nginx_html.dest }}
+      - {{ nginx_source.dest }}

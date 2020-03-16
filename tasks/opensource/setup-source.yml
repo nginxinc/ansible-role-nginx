@@ -149,7 +149,6 @@
     shell:
     args:
       cmd: grep {{ nginx_tmp_version.stdout }} /tmp/nginx_version.html | head -1 | sed -e 's:.*<option value="[^"]*">release\([^<]*\)<.*:nginx\1:'
-      #cmd: sed 's:.*default (tip)</option><option value="[^"]*">stable\([^<]*\)<.*:release\1:' <<< $(sed 's:^ *::g' < /tmp/nginx_version.html | tr -d \\n)
       warn: false
     register: nginx_stable_version
     when: nginx_html.changed and nginx_branch == "stable"

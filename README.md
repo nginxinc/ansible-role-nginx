@@ -19,7 +19,7 @@ Instructions on how to install Ansible can be found in the [Ansible website](htt
 
 **Molecule**
 
-Molecule is used to test the various functionailities of the role. Instructions on how to install Molecule can be found in the [Molecule website](https://molecule.readthedocs.io/en/stable/installation.html).
+Molecule is used to test the various functionailities of the role. Instructions on how to install Molecule can be found in the [Molecule website](https://molecule.readthedocs.io/en/latest/installation.html).
 
 Installation
 ------------

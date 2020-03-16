@@ -22,10 +22,10 @@ env:
 before_install:
   - sudo apt-get -qq update
 install:
-  - python3 pip install ansible==2.9.6
-  - python3 pip install molecule[docker]>=3.0.0
-  - python3 pip install ansible-lint
-  - python3 pip install flake8
+  - pip install ansible==2.9.6
+  - pip install molecule[docker]>=3.0.0
+  - pip install ansible-lint
+  - pip install flake8
 script:
   - travis_wait 50 molecule test -s $scenario
 notifications:

@@ -13,27 +13,23 @@
       copy: no
       dest: /tmp/
       src: "{{ pcre_source.dest }}"
-    when: pcre_source.changed
     register: pcre_source_unpack
 
   - name: "(Install: Linux) Install PCRE Dependency: Configure"
     command: "./configure"
     args:
       chdir: "/tmp/{{ pcre_version }}"
-    when: pcre_source_unpack.changed
     register: pcre_configure
-  
+
   - name: "(Install: Linux) Install PCRE Dependency: Install"
     make:
       chdir: "/tmp/{{ pcre_version }}"
-    when: pcre_configure.changed
 
   - name: "(Install: Linux) Install PCRE Dependency: Install"
     make:
       chdir: "/tmp/{{ pcre_version }}"
       target: install
     become: yes
-    when: pcre_configure.changed
 
 - name: "(Install: Linux) Install zlib Dependency"
   block:
@@ -49,27 +45,23 @@
       copy: no
       dest: /tmp/
       src: "{{ zlib_source.dest }}"
-    when: zlib_source.changed
     register: zlib_source_unpack
 
   - name: "(Install: Linux) Install zlib Dependency: Configure"
     command: "./configure"
     args:
       chdir: "/tmp/{{ zlib_version }}"
-    when: zlib_source_unpack.changed
     register: zlib_configure
 
   - name: "(Install: Linux) Install zlib Dependency: Install"
     make:
       chdir: "/tmp/{{ zlib_version }}"
-    when: zlib_configure.changed
 
   - name: "(Install: Linux) Install zlib Dependency: Install"
     make:
       chdir: "/tmp/{{ zlib_version }}"
       target: install
     become: yes
-    when: zlib_configure.changed
 
 - name: "(Install: Linux) Install OpenSSL Dependency"
   block:
@@ -85,27 +77,23 @@
       copy: no
       dest: /tmp/
       src: "{{ openssl_source.dest }}"
-    when: openssl_source.changed
     register: openssl_source_unpack
 
   - name: "(Install: Linux) Install OpenSSL Dependency: Configure"
     command: "./conf --prefix=/usr"
     args:
       chdir: "/tmp/{{ openssl_version }}"
-    when: openssl_source_unpack.changed
     register: openssl_configure
 
   - name: "(Install: Linux) Install OpenSSL Dependency: Make"
     make:
       chdir: "/tmp/{{ openssl_version }}"
-    when: openssl_configure.changed
 
   - name: "(Install: Linux) Install OpenSSL Dependency: Install"
     make:
       chdir: "/tmp/{{ openssl_version }}"
       target: install
     become: yes
-    when: openssl_configure.changed
 
 - name: "(Install: Linux) Install NGINX"
   block:
@@ -116,19 +104,18 @@
       dest: "/tmp/nginx_version.html"
     register: nginx_html
     when: nginx_branch == "mainline"
-  
+
   - name: "(Install: Linux) Install NGINX: Get NGINX mainline version"
     shell:
     args:
-      cmd: sed 's:.*tip</option><option value="[^"]*">release\([^<]*\)<.*:nginx\1:' <<< $(sed 's:^ *::g' < /tmp/nginx_version.html | tr -d \\n)
-      warn: false
+      cmd: sed 's:.*tip</option><option value="[^"]*">release\([^<]*\)<.*:nginx\1:' <<< $(sed 's:^ *::g' < /tmp/nginx_version.html | tr -d \\n) #noqa 301 303
     register: nginx_mainline_version
-    when: nginx_html.changed and nginx_branch == "mainline"
+    when: nginx_branch == "mainline"
 
   - name: "(Install: Linux) Install NGINX: Set NGINX mainline version"
     set_fact:
       nginx_version: "{{ nginx_mainline_version.stdout }}"
-    when: nginx_mainline_version.changed and nginx_branch == "mainline"
+    when: nginx_branch == "mainline"
 
   - name: "(Install: Linux) Install NGINX: Get NGINX stable source"
     get_url:
@@ -140,18 +127,16 @@
   - name: "(Install: Linux) Install NGINX: Get NGINX stable version 1/2"
     shell:
     args:
-      cmd: sed 's:.*default (tip)</option><option value="[^"]*">stable\([^<]*\)<.*:release\1:' <<< $(sed 's:^ *::g' < /tmp/nginx_version.html | tr -d \\n)
-      warn: false
+      cmd: sed 's:.*default (tip)</option><option value="[^"]*">stable\([^<]*\)<.*:release\1:' <<< $(sed 's:^ *::g' < /tmp/nginx_version.html | tr -d \\n) # noqa 204 301 303
     register: nginx_tmp_version
-    when: nginx_html.changed and nginx_branch == "stable"
+    when: nginx_branch == "stable"
 
   - name: "(Install: Linux) Install NGINX: Get NGINX stable version 2/2"
     shell:
     args:
-      cmd: grep {{ nginx_tmp_version.stdout }} /tmp/nginx_version.html | head -1 | sed -e 's:.*<option value="[^"]*">release\([^<]*\)<.*:nginx\1:'
-      warn: false
+      cmd: grep {{ nginx_tmp_version.stdout }} /tmp/nginx_version.html | head -1 | sed -e 's:.*<option value="[^"]*">release\([^<]*\)<.*:nginx\1:' # noqa 204 301 303
     register: nginx_stable_version
-    when: nginx_html.changed and nginx_branch == "stable"
+    when: nginx_branch == "stable"
 
   - name: "(Install: Linux) Install NGINX: Set NGINX stable version"
     set_fact:
@@ -174,35 +159,31 @@
       copy: no
       dest: /tmp/
       src: "{{ nginx_source.dest }}"
-    when: nginx_source.changed
     register: nginx_source_unpack
 
   - name: "(Install: Linux) Install NGINX: Configure"
     command: "./configure"
     args:
       chdir: "/tmp/{{ nginx_version }}"
-    when: nginx_source_unpack.changed
     register: nginx_configure
 
   - name: "(Install: Linux) Install NGINX: Install"
     make:
       chdir: "/tmp/{{ nginx_version }}"
-    when: nginx_configure.changed
 
   - name: "(Install: Linux) Install NGINX: Install"
     make:
       chdir: "/tmp/{{ nginx_version }}"
       target: install
     become: yes
-    when: nginx_configure.changed
-  
+
   - name: "(Install: Linux) Install NGINX: Cleanup"
     file:
       path: "{{ item }}"
       state: absent
     loop:
-      - {{ pcre_source.dest }}
-      - {{ zlib_source.dest }}
-      - {{ openssl_source.dest }}
-      - {{ nginx_html.dest }}
-      - {{ nginx_source.dest }}
+      - "{{ pcre_source.dest }}"
+      - "{{ zlib_source.dest }}"
+      - "{{ openssl_source.dest }}"
+      - "{{ nginx_html.dest }}"
+      - "{{ nginx_source.dest }}"

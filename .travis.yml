@@ -3,22 +3,6 @@ sudo: required
 language: python
 services:
   - docker
-env:
-  - scenario: default
-  - scenario: default_alpine
-  - scenario: default_centos
-  - scenario: module
-  - scenario: module_alpine
-  - scenario: module_centos
-  - scenario: stable_push
-  - scenario: stable_push_alpine
-  - scenario: stable_push_centos
-  - scenario: template
-  - scenario: template_alpine
-  - scenario: template_centos
-  - scenario: unit
-  - scenario: unit_alpine
-  - scenario: unit_centos
 before_install:
   - sudo apt-get -qq update
 install:

@@ -4,7 +4,7 @@
 
   - name: "(Install: Linux) Install PCRE Dependency: Download"
     get_url:
-      url: "ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/{{ pcre_version }}.tar.gz"
+      url: "https://ftp.pcre.org/pub/pcre/{{ pcre_version }}.tar.gz"
       dest: "/tmp/{{ pcre_version }}.tar.gz"
     register: pcre_source
 
@@ -89,13 +89,13 @@
     register: openssl_source_unpack
 
   - name: "(Install: Linux) Install OpenSSL Dependency: Configure"
-    command: "./configure"
+    command: "./conf --prefix=/usr"
     args:
       chdir: "/tmp/{{ openssl_version }}"
     when: openssl_source_unpack.changed
     register: openssl_configure
 
-  - name: "(Install: Linux) Install OpenSSL Dependency: Install"
+  - name: "(Install: Linux) Install OpenSSL Dependency: Make"
     make:
       chdir: "/tmp/{{ openssl_version }}"
     when: openssl_configure.changed
@@ -110,42 +110,64 @@
 - name: "(Install: Linux) Install NGINX"
   block:
 
-  - name: "(Install: Linux) Install NGINX: Get NGINX versions"
+  - name: "(Install: Linux) Install NGINX: Get NGINX mainline source"
     get_url:
       url: "https://trac.nginx.org/nginx/browser"
       dest: "/tmp/nginx_version.html"
     register: nginx_html
+    when: nginx_branch == "mainline"
   
   - name: "(Install: Linux) Install NGINX: Get NGINX mainline version"
     shell:
     args:
-      cmd: sed 's:.*tip</option><option value="[^"]*">\([^<]*\)<.*:\1:' <<< $(sed 's:^ *::g' < /tmp/nginx_version.html | tr -d \\n)
+      cmd: sed 's:.*tip</option><option value="[^"]*">release\([^<]*\)<.*:nginx\1:' <<< $(sed 's:^ *::g' < /tmp/nginx_version.html | tr -d \\n)
       warn: false
     register: nginx_mainline_version
     when: nginx_html.changed and nginx_branch == "mainline"
 
-  - name: "(Install: Linux) Install NGINX: Get NGINX stable version"
-    shell:
-    args:
-      cmd: sed 's:.*default (tip)</option><option value="[^"]*">\([^<]*\)<.*:\1:' <<< $(sed 's:^ *::g' < /tmp/nginx_version.html | tr -d \\n)
-      warn: false
-    register: nginx_stable_version
-    when: nginx_html.changed and nginx_branch == "stable"
-
   - name: "(Install: Linux) Install NGINX: Set NGINX mainline version"
     set_fact:
       nginx_version: "{{ nginx_mainline_version.stdout }}"
-    when: nginx_branch == "mainline"
+    when: nginx_mainline_version.changed and nginx_branch == "mainline"
+
+  - name: "(Install: Linux) Install NGINX: Get NGINX stable source"
+    get_url:
+      url: "https://trac.nginx.org/nginx/browser"
+      dest: "/tmp/nginx_version.html"
+    register: nginx_html
+    when: nginx_branch == "stable"
+
+  - name: "(Install: Linux) Install NGINX: Get NGINX stable version 1/2"
+    shell:
+    args:
+      cmd: sed 's:.*default (tip)</option><option value="[^"]*">stable\([^<]*\)<.*:release\1:' <<< $(sed 's:^ *::g' < /tmp/nginx_version.html | tr -d \\n)
+      warn: false
+    register: nginx_tmp_version
+    when: nginx_html.changed and nginx_branch == "stable"
+
+  - name: "(Install: Linux) Install NGINX: Get NGINX stable version 2/2"
+    shell:
+    args:
+      cmd: grep {{ nginx_tmp_version.stdout }} /tmp/nginx_version.html | head -1 | sed -e 's:.*<option value="[^"]*">release\([^<]*\)<.*:nginx\1:'
+      #cmd: sed 's:.*default (tip)</option><option value="[^"]*">stable\([^<]*\)<.*:release\1:' <<< $(sed 's:^ *::g' < /tmp/nginx_version.html | tr -d \\n)
+      warn: false
+    register: nginx_stable_version
+    when: nginx_html.changed and nginx_branch == "stable"
 
   - name: "(Install: Linux) Install NGINX: Set NGINX stable version"
     set_fact:
       nginx_version: "{{ nginx_stable_version.stdout }}"
     when: nginx_branch == "stable"
 
+  - name: "(Install: Linux) Install NGINX: Set NGINX download filename"
+    set_fact:
+      nginx_download_name: "{{ nginx_version }}"
+    when: nginx_branch == "stable" or nginx_branch == "mainline"
+
   - name: "(Install: Linux) Install NGINX: Download"
     get_url:
-      url: "https://nginx.org/download/{{ nginx_version }}.tar.gz"
-      dest: "/tmp/{{ nginx_version }}.tar.gz"
+      url: "https://nginx.org/download/{{ nginx_download_name }}.tar.gz"
+      dest: "/tmp/{{ nginx_download_name }}.tar.gz"
     register: nginx_source
 
   - name: "(Install: Linux) Install NGINX: Unpack"

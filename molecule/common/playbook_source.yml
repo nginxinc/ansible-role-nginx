@@ -33,14 +33,24 @@
         name:
           - "@Development tools"
           - perl
+          - gcc
+          - glibc
+          - glibc-common
+          - gd
+          - gd-devel
         state: present
       become: yes
       when: ansible_os_family == "RedHat" and ansible_distribution_major_version == 7
     - name: "Install build tools for RedHat 8"
       dnf:
-        name:
+        name: 
           - "@Development tools"
           - perl
+          - gcc
+          - glibc
+          - glibc-common
+          - gd
+          - gd-devel
         state: present
       become: yes
       when: ansible_os_family == "RedHat" and ansible_distribution_major_version == 8

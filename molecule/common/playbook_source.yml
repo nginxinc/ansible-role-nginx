@@ -8,7 +8,7 @@
       when: ansible_os_family == "Alpine"
     - name: "Install build tools for Alpine"
       apk:
-        name: alpine-sdk, perl
+        name: alpine-sdk, perl, linux-headers
         state: present
       become: yes
       when: ansible_os_family == "Alpine"

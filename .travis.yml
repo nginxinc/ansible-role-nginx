@@ -25,6 +25,9 @@ jobs:
   include:
     - name: "Install from Source Test - Debian"
       python: "3.6"
+      root:
+        dist: xenial
+        os: linux
       env: scenario=source
     - name: "Install from Source Test - Alpine"
       python: "3.6"

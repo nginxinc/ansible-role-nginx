@@ -98,18 +98,17 @@
 - name: "(Install: Linux) Install NGINX"
   block:
 
-    - name: "(Install: Linux) Install NGINX: Get NGINX mainline source"
-      get_url:
-        url: "https://trac.nginx.org/nginx/browser"
-        dest: "/tmp/nginx_version.html"
-      register: nginx_html
-      when: nginx_branch == "mainline"
+    # - name: "(Install: Linux) Install NGINX: Get NGINX mainline source"
+    #   get_url:
+    #     url: "https://trac.nginx.org/nginx/browser"
+    #     dest: "/tmp/nginx_version.html"
+    #   register: nginx_html
+    #   when: nginx_branch == "mainline"
 
     - name: "(Install: Linux) Install NGINX: Get NGINX mainline version"
       shell:
       args:
-        #cmd: sed 's:.*tip</option><option value="[^"]*">release\([^<]*\)<.*:nginx\1:' <<< $(sed 's:^ *::g' < /tmp/nginx_version.html | tr -d \\n)  # noqa 204 301 303
-        cmd: grep release /tmp/nginx_version.html | head -1 | sed -e 's:.*<option value="[^"]*">release\([^<]*\)<.*:nginx\1:'
+        cmd: curl --stderr - https://trac.nginx.org/nginx/browser | grep release | head -1 | sed -e 's:.*<option value="[^"]*">release\([^<]*\)<.*:nginx\1:'
       register: nginx_mainline_version
       when: nginx_branch == "mainline"
 
@@ -178,13 +177,13 @@
         target: install
       become: yes
 
-    - name: "(Install: Linux) Install NGINX: Cleanup"
-      file:
-        path: "{{ item }}"
-        state: absent
-      loop:
-        - "{{ pcre_source.dest }}"
-        - "{{ zlib_source.dest }}"
-        - "{{ openssl_source.dest }}"
-        - "{{ nginx_html.dest }}"
-        - "{{ nginx_source.dest }}"
+    # - name: "(Install: Linux) Install NGINX: Cleanup"
+    #   file:
+    #     path: "{{ item }}"
+    #     state: absent
+    #   loop:
+    #     - "{{ pcre_source.dest }}"
+    #     - "{{ zlib_source.dest }}"
+    #     - "{{ openssl_source.dest }}"
+    #     - "{{ nginx_html.dest }}"
+    #     - "{{ nginx_source.dest }}"

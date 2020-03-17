@@ -8,7 +8,7 @@
       when: ansible_os_family == "Alpine"
     - name: "Install build tools for Alpine"
       apk:
-        name: alpine-sdk
+        name: alpine-sdk, perl
         state: present
       become: yes
       when: ansible_os_family == "Alpine"
@@ -18,7 +18,9 @@
       when: ansible_os_family == "Debian"
     - name: "Install build tools for Debian"
       apt:
-        name: build-essential
+        name:
+        - build-essential
+        - perl
         state: present
       become: yes
       when: ansible_os_family == "Debian"
@@ -28,7 +30,9 @@
       when: ansible_os_family == "RedHat"
     - name: "Install build tools for RedHat"
       yum:
-        name: "@Development tools"
+        name: 
+        - "@Development tools"
+        - perl
         state: present
       become: yes
       when: ansible_os_family == "RedHat"

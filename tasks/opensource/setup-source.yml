@@ -98,17 +98,10 @@
 - name: "(Install: Linux) Install NGINX"
   block:
 
-    # - name: "(Install: Linux) Install NGINX: Get NGINX mainline source"
-    #   get_url:
-    #     url: "https://trac.nginx.org/nginx/browser"
-    #     dest: "/tmp/nginx_version.html"
-    #   register: nginx_html
-    #   when: nginx_branch == "mainline"
-
     - name: "(Install: Linux) Install NGINX: Get NGINX mainline version"
       shell:
       args:
-        cmd: curl --stderr - https://trac.nginx.org/nginx/browser | grep release | head -1 | sed -e 's:.*<option value="[^"]*">release\([^<]*\)<.*:nginx\1:'
+        cmd: curl --stderr - https://trac.nginx.org/nginx/browser | grep release | head -1 | sed -e 's:.*<option value="[^"]*">release\([^<]*\)<.*:nginx\1:'  # noqa 204 303
       register: nginx_mainline_version
       when: nginx_branch == "mainline"
 
@@ -117,24 +110,17 @@
         nginx_version: "{{ nginx_mainline_version.stdout }}"
       when: nginx_branch == "mainline"
 
-    - name: "(Install: Linux) Install NGINX: Get NGINX stable source"
-      get_url:
-        url: "https://trac.nginx.org/nginx/browser"
-        dest: "/tmp/nginx_version.html"
-      register: nginx_html
-      when: nginx_branch == "stable"
-
     - name: "(Install: Linux) Install NGINX: Get NGINX stable version 1/2"
       shell:
       args:
-        cmd: sed 's:.*default (tip)</option><option value="[^"]*">stable\([^<]*\)<.*:release\1:' <<< $(sed 's:^ *::g' < /tmp/nginx_version.html | tr -d \\n)  # noqa 204 301 303
+        cmd: curl --stderr - https://trac.nginx.org/nginx/browser | grep stable | head -1 | sed -e 's:.*<option value="[^"]*">stable\([^<]*\)<.*:release\1:'  # noqa 204 303
       register: nginx_tmp_version
       when: nginx_branch == "stable"
 
     - name: "(Install: Linux) Install NGINX: Get NGINX stable version 2/2"
       shell:
       args:
-        cmd: grep {{ nginx_tmp_version.stdout }} /tmp/nginx_version.html | head -1 | sed -e 's:.*<option value="[^"]*">release\([^<]*\)<.*:nginx\1:'  # noqa 204 301 303
+        cmd: curl --stderr - https://trac.nginx.org/nginx/browser | grep {{ nginx_tmp_version.stdout }} | head -1 | sed -e 's:.*<option value="[^"]*">release\([^<]*\)<.*:nginx\1:'  # noqa 204 303
       register: nginx_stable_version
       when: nginx_branch == "stable"
 

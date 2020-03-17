@@ -6,13 +6,31 @@
       set_fact:
         version: "=1.17.6-r1"
       when: ansible_os_family == "Alpine"
+    - name: "Install build tools for Alpine"
+      apk:
+        name: alpine-sdk
+        state: present
+      become: yes
+      when: ansible_os_family == "Alpine"
     - name: "Set repo if Debian"
       set_fact:
         version: "=1.17.6-1~{{ ansible_distribution_release }}"
       when: ansible_os_family == "Debian"
+    - name: "Install build tools for Debian"
+      apt:
+        name: build-essential
+        state: present
+      become: yes
+      when: ansible_os_family == "Debian"
     - name: "Set repo if RedHat"
       set_fact:
         version: "-1.17.6-1.el{{ ansible_distribution_major_version }}.ngx"
+      when: ansible_os_family == "RedHat"
+    - name: "Install build tools for RedHat"
+      yum:
+        name: "@Development tools"
+        state: present
+      become: yes
       when: ansible_os_family == "RedHat"
   roles:
     - role: ansible-role-nginx

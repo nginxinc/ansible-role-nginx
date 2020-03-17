@@ -80,7 +80,7 @@
       register: openssl_source_unpack
 
     - name: "(Install: Linux) Install OpenSSL Dependency: Configure"
-      command: "./conf --prefix=/usr"
+      command: "./config --prefix=/usr"
       args:
         chdir: "/tmp/{{ openssl_version }}"
       register: openssl_configure

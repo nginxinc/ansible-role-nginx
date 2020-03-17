@@ -19,6 +19,9 @@ env:
   - scenario: unit
   - scenario: unit_alpine
   - scenario: unit_centos
+  - scenario: source
+  - scenario: source_alpine
+  - scenario: source_centos
 before_install:
   - sudo apt-get -qq update
 install:

@@ -2,27 +2,68 @@
 language: python
 services:
   - docker
-# env:
-  # - scenario: default
-  # - scenario: default_alpine
-  # - scenario: default_centos
-  # - scenario: module
-  # - scenario: module_alpine
-  # - scenario: module_centos
-  # - scenario: stable_push
-  # - scenario: stable_push_alpine
-  # - scenario: stable_push_centos
-  # - scenario: template
-  # - scenario: template_alpine
-  # - scenario: template_centos
-  # - scenario: unit
-  # - scenario: unit_alpine
-  # - scenario: unit_centos
-  # - scenario: source
-  # - scenario: source_alpine
-  # - scenario: source_centos
 jobs:
   include:
+    # - name: "Install Test - Debian"
+    #   python: "3.6"
+    #   root:
+    #     dist: xenial
+    #     os: linux
+    #   env: scenario=default
+    # - name: "Install Test - Alpine"
+    #   python: "3.6"
+    #   env: scenario=default_alpine
+    # - name: "Install Test - CentOS"
+    #   python: "3.6"
+    #   env: scenario=default_centos
+    # - name: "Install Modules Test - Debian"
+    #   python: "3.6"
+    #   root:
+    #     dist: xenial
+    #     os: linux
+    #   env: scenario=module
+    # - name: "Install Modules Test - Alpine"
+    #   python: "3.6"
+    #   env: scenario=module_alpine
+    # - name: "Install Modules Test - CentOS"
+    #   python: "3.6"
+    #   env: scenario=module_centos
+    # - name: "Install Stable Push Test - Debian"
+    #   python: "3.6"
+    #   root:
+    #     dist: xenial
+    #     os: linux
+    #   env: scenario=stable_push
+    # - name: "Install Stable Push Test - Alpine"
+    #   python: "3.6"
+    #   env: scenario=stable_push_alpine
+    # - name: "Install Stable Push Test - CentOS"
+    #   python: "3.6"
+    #   env: scenario=stable_push_centos
+        # - name: "Install Template Test - Debian"
+    #   python: "3.6"
+    #   root:
+    #     dist: xenial
+    #     os: linux
+    #   env: scenario=template
+    # - name: "Install Template Test - Alpine"
+    #   python: "3.6"
+    #   env: scenario=template_alpine
+    # - name: "Install Template Test - CentOS"
+    #   python: "3.6"
+    #   env: scenario=template_centos
+        # - name: "Install Unit Test - Debian"
+    #   python: "3.6"
+    #   root:
+    #     dist: xenial
+    #     os: linux
+    #   env: scenario=unit
+    # - name: "Install Unit Test - Alpine"
+    #   python: "3.6"
+    #   env: scenario=unit_alpine
+    # - name: "Install Unit Test - CentOS"
+    #   python: "3.6"
+    #   env: scenario=unit_centos
     - name: "Install from Source Test - Debian"
       python: "3.6"
       root:

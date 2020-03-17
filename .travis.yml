@@ -5,69 +5,41 @@ services:
 jobs:
   include:
     # - name: "Install Test - Debian"
-    #   python: "3.6"
-    #   root:
-    #     dist: xenial
-    #     os: linux
     #   env: scenario=default
     # - name: "Install Test - Alpine"
-    #   python: "3.6"
     #   env: scenario=default_alpine
     # - name: "Install Test - CentOS"
     #   python: "3.6"
     #   env: scenario=default_centos
     # - name: "Install Modules Test - Debian"
-    #   python: "3.6"
-    #   root:
-    #     dist: xenial
-    #     os: linux
     #   env: scenario=module
     # - name: "Install Modules Test - Alpine"
-    #   python: "3.6"
     #   env: scenario=module_alpine
     # - name: "Install Modules Test - CentOS"
     #   python: "3.6"
     #   env: scenario=module_centos
     # - name: "Install Stable Push Test - Debian"
-    #   python: "3.6"
-    #   root:
-    #     dist: xenial
-    #     os: linux
     #   env: scenario=stable_push
     # - name: "Install Stable Push Test - Alpine"
-    #   python: "3.6"
     #   env: scenario=stable_push_alpine
     # - name: "Install Stable Push Test - CentOS"
     #   python: "3.6"
     #   env: scenario=stable_push_centos
-        # - name: "Install Template Test - Debian"
-    #   python: "3.6"
-    #   root:
-    #     dist: xenial
-    #     os: linux
+    # - name: "Install Template Test - Debian"
     #   env: scenario=template
     # - name: "Install Template Test - Alpine"
-    #   python: "3.6"
     #   env: scenario=template_alpine
     # - name: "Install Template Test - CentOS"
     #   python: "3.6"
     #   env: scenario=template_centos
-        # - name: "Install Unit Test - Debian"
-    #   python: "3.6"
-    #   root:
-    #     dist: xenial
-    #     os: linux
+    # - name: "Install Unit Test - Debian"
     #   env: scenario=unit
     # - name: "Install Unit Test - Alpine"
-    #   python: "3.6"
     #   env: scenario=unit_alpine
     # - name: "Install Unit Test - CentOS"
     #   python: "3.6"
     #   env: scenario=unit_centos
     - name: "Install from Source Test - Debian"
-      root:
-        dist: xenial
-        os: linux
       env: scenario=source
     - name: "Install from Source Test - Alpine"
       env: scenario=source_alpine

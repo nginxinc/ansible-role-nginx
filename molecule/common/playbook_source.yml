@@ -19,8 +19,8 @@
     - name: "Install build tools for Debian"
       apt:
         name:
-        - build-essential
-        - perl
+          - build-essential
+          - perl
         state: present
       become: yes
       when: ansible_os_family == "Debian"
@@ -30,9 +30,9 @@
       when: ansible_os_family == "RedHat"
     - name: "Install build tools for RedHat"
       yum:
-        name: 
-        - "@Development tools"
-        - perl
+        name:
+          - "@Development tools"
+          - perl
         state: present
       become: yes
       when: ansible_os_family == "RedHat"

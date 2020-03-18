@@ -153,7 +153,7 @@
         chdir: "/tmp/{{ nginx_version }}"
       register: nginx_configure
 
-    - name: "(Install: Linux) Install NGINX: Install"
+    - name: "(Install: Linux) Install NGINX: Make"
       make:
         chdir: "/tmp/{{ nginx_version }}"
 
@@ -165,16 +165,20 @@
 
     - name: "(Install: Linux) Upload systemd NGINX debug service file"
       copy:
-        src: 'services/systemd/nginx-debug.service'
-        dest: '/lib/systemd/system/'
-        backup: yes
+        src: services/systemd/nginx-debug.service
+        dest: /lib/systemd/system/nginx-debug.service
+        owner: root
+        group: root
+        mode: '0644'
       when: ansible_os_family == "RedHat" or ansible_os_family == "Debian"
 
     - name: "(Install: Linux) Upload systemd NGINX service file"
       copy:
-        src: 'services/systemd/nginx.service'
-        dest: '/lib/systemd/system/'
-        backup: yes
+        src: services/systemd/nginx.service
+        dest: /lib/systemd/system/nginx.service
+        owner: root
+        group: root
+        mode: '0644'
       notify: "(Handler: Debian/Ubuntu/CentOS/RedHat) Reload systemd"
       when: ansible_os_family == "RedHat" or ansible_os_family == "Debian"
 
@@ -185,11 +189,22 @@
         enabled: yes
       when: ansible_os_family == "RedHat" or ansible_os_family == "Debian"
 
+    - name: "(Install: Linux) Upload init.d NGINX debug service file"
+      copy:
+        src: services/init.d/nginx-debug
+        dest: /etc/init.d/nginx-debug
+        owner: root
+        group: root
+        mode: '0755'
+      when: ansible_os_family == "Alpine"
+
     - name: "(Install: Linux) Upload init.d NGINX service file"
       copy:
-        src: 'services/systemd/nginx.service'
-        dest: '/lib/systemd/system/'
-        backup: yes
+        src: services/init.d/nginx
+        dest: /etc/init.d/nginx
+        owner: root
+        group: root
+        mode: '0755'
       notify: "(Handler: Alpine) Reload init.d"
       when: ansible_os_family == "Alpine"
 

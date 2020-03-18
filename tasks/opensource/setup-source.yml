@@ -29,7 +29,6 @@
     make:
       chdir: "/tmp/{{ pcre_version }}"
       target: install
-    become: yes
 
 - name: "(Install: Linux) Install zlib Dependency"
   block:
@@ -93,7 +92,6 @@
       make:
         chdir: "/tmp/{{ openssl_version }}"
         target: install
-      become: yes
 
 - name: "(Install: Linux) Install NGINX"
   block:
@@ -161,7 +159,6 @@
       make:
         chdir: "/tmp/{{ nginx_version }}"
         target: install
-      become: yes
 
     - name: "(Install: Linux) Upload systemd NGINX service file"
       copy:

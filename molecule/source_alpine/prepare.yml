@@ -21,3 +21,7 @@
       file:
         path: /run/openrc/softlevel
         state: touch
+
+    - name: "Add nginx user"
+      user:
+        name: nginx

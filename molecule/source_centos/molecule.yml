@@ -13,20 +13,21 @@ platforms:
   - name: centos-7
     image: centos:7
     dockerfile: ../common/Dockerfile.j2
-    privileged: True
+    privileged: true
     volumes:
       - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
     command: "/usr/sbin/init"
   - name: centos-8
     image: centos:8
     dockerfile: ../common/Dockerfile.j2
-    privileged: True
+    privileged: true
     volumes:
       - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
     command: "/usr/sbin/init"
 provisioner:
   name: ansible
   playbooks:
+    cleanup: cleanup.yml
     prepare: prepare.yml
     converge: ../common/playbook_source.yml
 verifier:

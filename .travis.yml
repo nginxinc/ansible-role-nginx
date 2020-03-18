@@ -55,6 +55,8 @@ install:
   - pip install ansible-lint
   - pip install flake8
 script:
+  - molecule --version
+  - ansible --version
   - travis_wait 50 molecule test -s $scenario
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

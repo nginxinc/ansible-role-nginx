@@ -1,0 +1,14 @@
+---
+- name: Prepare
+  hosts: all
+  gather_facts: true
+  become: true
+  tasks:
+    - name: Cleanup tmp NGINX
+      shell: /bin/rm -rf /tmp/nginx*
+    - name: Cleanup tmp openssl
+      shell: /bin/rm -rf /tmp/openssl*
+    - name: Cleanup tmp pcre
+      shell: /bin/rm -rf /tmp/pcre*
+    - name: Cleanup tmp zlib
+      shell: /bin/rm -rf /tmp/zlib*

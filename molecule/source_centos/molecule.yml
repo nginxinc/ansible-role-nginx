@@ -27,7 +27,6 @@ platforms:
 provisioner:
   name: ansible
   playbooks:
-    # cleanup: cleanup.yml
     prepare: prepare.yml
     converge: ../common/playbook_source.yml
 verifier:

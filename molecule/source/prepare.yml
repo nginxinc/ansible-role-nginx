@@ -27,7 +27,7 @@
           - zlib1g-dev
           - libtemplate-perl
         state: present
-    
+
     - name: "Add nginx user"
       user:
         name: nginx

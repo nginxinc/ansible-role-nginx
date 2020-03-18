@@ -1,0 +1,16 @@
+description "nginx - small, powerful, scalable web/proxy server"
+
+start on filesystem and static-network-up
+stop on runlevel [016]
+
+expect fork
+respawn
+
+pre-start script
+	[ -x /usr/sbin/nginx ] || { stop; exit 0; }
+	/usr/sbin/nginx -q -t -g 'daemon on; master_process on;' || { stop; exit 0; }
+end script
+
+exec /usr/sbin/nginx -g 'daemon on; master_process on;'
+
+pre-stop exec /usr/sbin/nginx -s quit

@@ -163,54 +163,62 @@
         target: install
       become: yes
 
-    - name: "(Install: Linux) Upload systemd NGINX debug service file"
-      copy:
-        src: services/systemd/nginx-debug.service
-        dest: /lib/systemd/system/nginx-debug.service
-        owner: root
-        group: root
-        mode: '0644'
-      when: ansible_service_mgr == "systemd"
-
     - name: "(Install: Linux) Upload systemd NGINX service file"
       copy:
-        src: services/systemd/nginx.service
+        src: services/nginx.systemd
         dest: /lib/systemd/system/nginx.service
         owner: root
         group: root
         mode: '0644'
-      notify: "(Handler: Debian/Ubuntu/CentOS/RedHat) Reload systemd"
+      notify: "(Handler: CentOS/RedHat) Enable NGINX"
       when: ansible_service_mgr == "systemd"
 
-    - name: "(Install: Linux) Enable systemd NGINX service file"
-      systemd:
-        name: nginx
-        state: started
-        enabled: yes
-      when: ansible_service_mgr == "systemd"
-
-    - name: "(Install: Linux) Upload init.d NGINX debug service file"
+    - name: "(Install: Linux) Upload upstart NGINX service file"
       copy:
-        src: services/init.d/nginx-debug
-        dest: /etc/init.d/nginx-debug
-        owner: root
-        group: root
-        mode: '0755'
-      when: ansible_os_family == "Alpine"
-
-    - name: "(Install: Linux) Upload init.d NGINX service file"
-      copy:
-        src: services/init.d/nginx
+        src: services/nginx.upstart
         dest: /etc/init.d/nginx
         owner: root
         group: root
         mode: '0755'
-      when: ansible_os_family == "Alpine"
+      when: ansible_service_mgr == "upstart"
 
-    - name: "(Install: Linux) Enable init.d NGINX service"
+    - name: "(Install: Linux) Upload upstart NGINX service conf file"
+      copy:
+        src: services/nginx.conf.upstart
+        dest: /etc/init/nginx.conf
+        owner: root
+        group: root
+        mode: '0644'
+      when: ansible_service_mgr == "upstart"
+
+    - name: "(Install: Linux) Enable upstart NGINX service reload"
+      command: "initctl reload-configuration"
+      notify: "(Handler: All OSs) Enable NGINX"
+      when: ansible_service_mgr == "upstart"
+    
+    - name: "(Install: Linux) Upload sysvinit NGINX service file"
+      copy:
+        src: services/nginx.sysvinit
+        dest: /lib/systemd/system/nginx.service
+        owner: root
+        group: root
+        mode: '0644'
+      notify: "(Handler: All OSs) Enable NGINX"
+      when: ansible_service_mgr == "sysvinit"
+
+    - name: "(Install: Linux) Upload openrc NGINX service file"
+      copy:
+        src: services/nginx.openrc
+        dest: /etc/init.d/nginx
+        owner: root
+        group: root
+        mode: '0755'
+      when: ansible_service_mgr == "openrc"
+
+    - name: "(Install: Linux) Enable openrc NGINX service"
       command: rc-update add nginx default
-      notify: "(Handler: Alpine) Reload init.d"
-      when: ansible_os_family == "Alpine"
+      notify: "(Handler: All OSs) Enable NGINX"
+      when: ansible_service_mgr == "openrc"
 
     - name: "(Install: Linux) Install NGINX: Cleanup Downloads"
       file:

@@ -34,11 +34,14 @@
     state: started
     enabled: yes
 
-- name: "(Handler: Debian/Ubuntu/CentOS/RedHat) Reload systemd"
+- name: "(Handler: CentOS/RedHat) Enable NGINX"
   systemd:
+    name: nginx
+    state: started
     daemon_reload: yes
+    enabled: yes
 
-- name: "(Handler: Alpine) Reload init.d"
+- name: "(Handler: All OSs) Enable NGINX"
   service:
     name: nginx
     state: started

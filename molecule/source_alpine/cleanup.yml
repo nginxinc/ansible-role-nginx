@@ -1,7 +1,7 @@
 ---
-- name: Prepare
+- name: Cleanup
   hosts: all
-  gather_facts: true
+  gather_facts: false
   become: true
   tasks:
     - name: Cleanup tmp NGINX  # noqa 301 302

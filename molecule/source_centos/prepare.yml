@@ -17,6 +17,9 @@
       package:
         name:
           - centos-release-scl
+          - rh-python36
+          - rh-python36-python-pip
+          - rh-python36-python-devel
         state: present
       when: ansible_distribution_major_version == "6"
 
@@ -27,6 +30,7 @@
           - python3-pip
           - python3-devel
         state: present
+      when: ansible_distribution_major_verison >= "7"
 
     - name: "Install Build Tools"
       package:

@@ -17,17 +17,20 @@
       package:
         name:
           - centos-release-scl
-        state: present
-      when: ansible_distribution_major_version == "6"
-
-    - name: "Install Python el6"
-      package:
-        name:
           - rh-python36
           - rh-python36-python-pip
           - rh-python36-python-devel
         state: present
       when: ansible_distribution_major_version == "6"
+
+    # - name: "Install Python el6"
+    #   package:
+    #     name:
+    #       - rh-python36
+    #       - rh-python36-python-pip
+    #       - rh-python36-python-devel
+    #     state: present
+    #   when: ansible_distribution_major_version == "6"
 
     - name: "Install Python el7+"
       package:

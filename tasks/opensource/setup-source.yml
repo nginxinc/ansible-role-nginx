@@ -199,10 +199,10 @@
     - name: "(Install: Linux) Upload sysvinit NGINX service file"
       copy:
         src: services/nginx.sysvinit
-        dest: /lib/systemd/system/nginx.service
+        dest: /init.d/nginx
         owner: root
         group: root
-        mode: '0644'
+        mode: '0755'
       notify: "(Handler: All OSs) Enable NGINX"
       when: ansible_service_mgr == "sysvinit"
 

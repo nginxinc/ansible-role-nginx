@@ -30,7 +30,7 @@
           - python3-pip
           - python3-devel
         state: present
-      when: ansible_distribution_major_verison >= "7"
+      when: ansible_distribution_major_version >= "7"
 
     - name: "Install Build Tools"
       package:

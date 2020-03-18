@@ -13,7 +13,6 @@
           - glibc-common
           - gd
           - gd-devel
-          - libtemplate-perl
           - perl-core
           - zlib-devel
         state: present

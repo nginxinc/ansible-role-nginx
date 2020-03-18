@@ -1,8 +1,14 @@
 ---
 - name: Prepare
   hosts: all
+  become: true
   gather_facts: true
   tasks:
+
+    - name: "Add backports repo for Buster"
+      apt_repository:
+        repo: deb http://ftp.us.debian.org/debian buster-backports main
+      when: ansible_distribution == "Debian" and ansible_distribution_release == "buster"
 
     - name: "Install Build Tools"
       apt:
@@ -14,11 +20,9 @@
           - zlib1g-dev
           - libtemplate-perl
         state: present
-      become: true
 
     - name: Install python for Ansible
       raw: (test -e /usr/bin/python || test -e /usr/bin/python3) || (apt install -y python-minimal)
-      become: true
       changed_when: "'installed' in update_result.stdout"
       register: update_result
       retries: 10

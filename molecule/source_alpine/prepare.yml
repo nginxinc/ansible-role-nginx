@@ -2,17 +2,16 @@
 - name: Prepare
   hosts: all
   gather_facts: true
+  become: true
   tasks:
 
     - name: "Install Build Tools"
       apk:
         name: alpine-sdk, perl, linux-headers, tar, zlib-dev
         state: present
-      become: true
 
     - name: Install python for Ansible
       raw: (test -e /usr/bin/python || test -e /usr/bin/python3) || (apk add -y python-minimal)
-      become: true
       changed_when: "'installed' in update_result.stdout"
       register: update_result
       retries: 10

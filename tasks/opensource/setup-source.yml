@@ -163,6 +163,36 @@
         target: install
       become: yes
 
+    - name: "(Install: Linux) Upload systemd NGINX debug service file"
+      copy:
+        src: 'services/systemd/nginx-debug.service'
+        dest: '/lib/systemd/system/'
+        backup: yes
+      when: ansible_os_family == "RedHat" or ansible_os_family == "Debian"
+
+    - name: "(Install: Linux) Upload systemd NGINX service file"
+      copy:
+        src: 'services/systemd/nginx.service'
+        dest: '/lib/systemd/system/'
+        backup: yes
+      notify: "(Handler: Debian/Ubuntu/CentOS/RedHat) Reload systemd"
+      when: ansible_os_family == "RedHat" or ansible_os_family == "Debian"
+
+    - name: "(Install: Linux) Enable systemd NGINX service file"
+      systemd:
+        name: nginx
+        state: started
+        enabled: yes
+      when: ansible_os_family == "RedHat" or ansible_os_family == "Debian"
+
+    - name: "(Install: Linux) Upload init.d NGINX service file"
+      copy:
+        src: 'services/systemd/nginx.service'
+        dest: '/lib/systemd/system/'
+        backup: yes
+      notify: "(Handler: Alpine) Reload init.d"
+      when: ansible_os_family == "Alpine"
+
     - name: "(Install: Linux) Install NGINX: Cleanup Downloads"
       file:
         path: "{{ item }}"

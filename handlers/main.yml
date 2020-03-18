@@ -33,3 +33,13 @@
     name: unitd
     state: started
     enabled: yes
+
+- name: "(Handler: Debian/Ubuntu/CentOS/RedHat) Reload systemd"
+  systemd:
+    daemon_reload: yes
+
+- name: "(Handler: Alpine) Reload init.d"
+  service:
+    name: nginx
+    state: started
+    enabled: yes

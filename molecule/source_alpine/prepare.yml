@@ -4,20 +4,10 @@
   gather_facts: true
   become: true
   tasks:
-
     - name: "Install Build Tools"
       apk:
-        name: alpine-sdk, perl, linux-headers, tar, zlib-dev, openrc
+        name: alpine-sdk, build-base, git, wget, perl, linux-headers, tar, openrc, python-minimal
         state: present
-
-    - name: "Install python for Ansible"
-      raw: (test -e /usr/bin/python || test -e /usr/bin/python3) || (apk add -y python-minimal)
-      changed_when: "'installed' in update_result.stdout"
-      register: update_result
-      retries: 10
-      delay: 5
-      until: update_result.rc == 0
-
     - name: "Enable openrc"
       file:
         path: /run/openrc/softlevel

@@ -9,6 +9,7 @@
       package:
         name:
           - centos-release-scl
+          - epel-release
         state: present
       when: ansible_distribution_major_version == "6"
 

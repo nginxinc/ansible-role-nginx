@@ -170,7 +170,7 @@
         owner: root
         group: root
         mode: '0644'
-      when: ansible_os_family == "RedHat" or ansible_os_family == "Debian"
+      when: ansible_service_mgr == "systemd"
 
     - name: "(Install: Linux) Upload systemd NGINX service file"
       copy:
@@ -180,14 +180,14 @@
         group: root
         mode: '0644'
       notify: "(Handler: Debian/Ubuntu/CentOS/RedHat) Reload systemd"
-      when: ansible_os_family == "RedHat" or ansible_os_family == "Debian"
+      when: ansible_service_mgr == "systemd"
 
     - name: "(Install: Linux) Enable systemd NGINX service file"
       systemd:
         name: nginx
         state: started
         enabled: yes
-      when: ansible_os_family == "RedHat" or ansible_os_family == "Debian"
+      when: ansible_service_mgr == "systemd"
 
     - name: "(Install: Linux) Upload init.d NGINX debug service file"
       copy:

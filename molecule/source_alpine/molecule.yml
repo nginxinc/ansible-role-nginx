@@ -23,8 +23,6 @@ platforms:
     command: "/sbin/init"
 provisioner:
   name: ansible
-  options:
-    vvv: True
   playbooks:
     prepare: prepare.yml
     converge: ../common/playbook_source.yml

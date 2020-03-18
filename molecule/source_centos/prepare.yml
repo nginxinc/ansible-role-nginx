@@ -13,15 +13,13 @@
       delay: 5
       until: update_result.rc == 0
 
-    - name: "Install python for EL8"
+    - name: "Install python"
       package:
         name:
           - python3
           - python3-pip
           - python3-devel
-          - openssl-devel
         state: present
-      when: ansible_distribution_major_version == "8"
 
     - name: "Install Build Tools"
       package:

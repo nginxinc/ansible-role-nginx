@@ -5,40 +5,6 @@
 
   tasks:
 
-    - name: "Install SCL el6"
-      package:
-        name:
-          - centos-release-scl
-          - epel-release
-        state: present
-      when: ansible_distribution_major_version == "6"
-
-    - name: "Install Python el6"
-      package:
-        name:
-          - rh-python36
-          - rh-python36-python-pip
-          - rh-python36-python-devel
-          - python-pip
-          - python-devel
-          - libffi-devel
-          - openssl-devel
-        state: present
-      when: ansible_distribution_major_version == "6"
-    
-    - name: "Change to Python 3.6 el6"
-      shell: echo 'source scl_source enable rh-python36' >> ~/.bashrc  && source scl_source enable rh-python36
-      when: ansible_distribution_major_version == "6"
-    
-    - name: "Install Python modules el6"
-      pip:
-        name:
-          - urllib3
-          - pyopenssl
-          - ndg-httpsclient
-          - pyasn1
-      when: ansible_distribution_major_version == "6"    
-
     - name: "Install Python el7+"
       package:
         name:
@@ -46,7 +12,6 @@
           - python3-pip
           - python3-devel
         state: present
-      when: ansible_distribution_major_version >= "7"
 
     - name: "Install Build Tools"
       package:

@@ -1,0 +1,22 @@
+---
+- name: prepare
+  hosts: all
+  gather_facts: False
+  tasks:
+
+    - name: "Install Build Tools"
+      apt:
+        name:
+          - build-essential
+          - perl
+        state: present
+      become: true
+
+    - name: Install python for Ansible
+      raw: (test -e /usr/bin/python || test -e /usr/bin/python3) || (apt install -y python-minimal)
+      become: true
+      changed_when: "'installed' in update_result.stdout"
+      register: update_result
+      retries: 10
+      delay: 5
+      until: update_result.rc == 0

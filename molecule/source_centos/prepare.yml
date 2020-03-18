@@ -1,0 +1,28 @@
+---
+- name: Prepare
+  hosts: all
+  gather_facts: true
+  tasks:
+
+    - name: Install python for Ansible
+      raw: "(test -e /usr/bin/python || test -e /usr/bin/python3) ||\
+        (dnf install -y epel-release && dnf -y update && dnf install -y python3)"
+      become: true
+      changed_when: "'Installed' in update_result.stdout"
+      register: update_result
+      retries: 10
+      delay: 5
+      until: update_result.rc == 0
+
+    - name: "Install Build Tools"
+      package:
+        name:
+          - "@Development tools"
+          - perl
+          - gcc
+          - glibc
+          - glibc-common
+          - gd
+          - gd-devel
+        state: present
+      become: true

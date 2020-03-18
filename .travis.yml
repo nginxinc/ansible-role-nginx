@@ -9,42 +9,36 @@ jobs:
     # - name: "Install Test - Alpine"
     #   env: scenario=default_alpine
     # - name: "Install Test - CentOS"
-    #   python: "3.6"
     #   env: scenario=default_centos
     # - name: "Install Modules Test - Debian"
     #   env: scenario=module
     # - name: "Install Modules Test - Alpine"
     #   env: scenario=module_alpine
     # - name: "Install Modules Test - CentOS"
-    #   python: "3.6"
     #   env: scenario=module_centos
     # - name: "Install Stable Push Test - Debian"
     #   env: scenario=stable_push
     # - name: "Install Stable Push Test - Alpine"
     #   env: scenario=stable_push_alpine
     # - name: "Install Stable Push Test - CentOS"
-    #   python: "3.6"
     #   env: scenario=stable_push_centos
     # - name: "Install Template Test - Debian"
     #   env: scenario=template
     # - name: "Install Template Test - Alpine"
     #   env: scenario=template_alpine
     # - name: "Install Template Test - CentOS"
-    #   python: "3.6"
     #   env: scenario=template_centos
     # - name: "Install Unit Test - Debian"
     #   env: scenario=unit
     # - name: "Install Unit Test - Alpine"
     #   env: scenario=unit_alpine
     # - name: "Install Unit Test - CentOS"
-    #   python: "3.6"
     #   env: scenario=unit_centos
     - name: "Install from Source Test - Debian"
       env: scenario=source
     - name: "Install from Source Test - Alpine"
       env: scenario=source_alpine
     - name: "Install from Source Test - CentOS"
-      python: "3.6"
       env: scenario=source_centos
 before_install:
   - sudo apt-get -qq update

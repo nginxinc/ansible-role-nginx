@@ -14,7 +14,7 @@
 
     - name: "Install Build Tools"
       apk:
-        name: alpine-sdk, build-base, git, wget, perl, linux-headers, tar, openrc, python-minimal
+        name: alpine-sdk, build-base, git, wget, perl, linux-headers, tar, openrc
         state: present
 
     - name: "Enable openrc"

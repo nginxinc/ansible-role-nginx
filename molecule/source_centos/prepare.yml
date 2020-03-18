@@ -13,7 +13,7 @@
       delay: 5
       until: update_result.rc == 0
 
-    - name: "Setup SCL for Centos6"
+    - name: "Install Python el6"
       package:
         name:
           - centos-release-scl
@@ -23,7 +23,7 @@
         state: present
       when: ansible_distribution_major_version == "6"
 
-    - name: "Install python"
+    - name: "Install Python el7+"
       package:
         name:
           - python3

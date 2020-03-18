@@ -7,7 +7,7 @@
 
     - name: "Install Build Tools"
       apk:
-        name: alpine-sdk, perl, linux-headers, tar, zlib-dev
+        name: alpine-sdk, perl, linux-headers, tar, zlib-dev, openrc
         state: present
 
     - name: Install python for Ansible

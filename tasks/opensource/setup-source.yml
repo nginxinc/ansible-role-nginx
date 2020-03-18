@@ -148,7 +148,7 @@
       register: nginx_source_unpack
 
     - name: "(Install: Linux) Install NGINX: Configure"
-      command: "./configure"
+      command: "./configure --prefix=/usr"
       args:
         chdir: "/tmp/{{ nginx_version }}"
       register: nginx_configure
@@ -205,6 +205,10 @@
         owner: root
         group: root
         mode: '0755'
+      when: ansible_os_family == "Alpine"
+
+    - name: "(Install: Linux) Enable init.d NGINX service"
+      command: rc-update add nginx default
       notify: "(Handler: Alpine) Reload init.d"
       when: ansible_os_family == "Alpine"
 

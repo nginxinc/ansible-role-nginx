@@ -4,7 +4,7 @@
   gather_facts: true
 
   tasks:
-    - name: Install python for Ansible
+    - name: "Install python for Ansible"
       raw: "(test -e /usr/bin/python || test -e /usr/bin/python3) ||\
         (dnf install -y epel-release && dnf -y update && dnf install -y python3)"
       changed_when: "'Installed' in update_result.stdout"
@@ -12,6 +12,13 @@
       retries: 10
       delay: 5
       until: update_result.rc == 0
+
+    - name: "Setup SCL for Centos6"
+      package:
+        name:
+          - centos-release-scl
+        state: present
+      when: ansible_distribution_major_version == "6"
 
     - name: "Install python"
       package:

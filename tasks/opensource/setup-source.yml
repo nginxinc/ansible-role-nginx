@@ -199,7 +199,7 @@
     - name: "(Install: Linux) Upload sysvinit NGINX service file"
       copy:
         src: services/nginx.sysvinit
-        dest: /init.d/nginx
+        dest: /etc/init.d/nginx
         owner: root
         group: root
         mode: '0755'

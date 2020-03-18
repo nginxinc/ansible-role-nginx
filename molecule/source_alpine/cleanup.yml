@@ -4,11 +4,11 @@
   gather_facts: true
   become: true
   tasks:
-    - name: Cleanup tmp NGINX
+    - name: Cleanup tmp NGINX  # noqa 301 302
       shell: /bin/rm -rf /tmp/nginx*
-    - name: Cleanup tmp openssl
+    - name: Cleanup tmp openssl  # noqa 301 302
       shell: /bin/rm -rf /tmp/openssl*
-    - name: Cleanup tmp pcre
+    - name: Cleanup tmp pcre  # noqa 301 302
       shell: /bin/rm -rf /tmp/pcre*
-    - name: Cleanup tmp zlib
+    - name: Cleanup tmp zlib  # noqa 301 302
       shell: /bin/rm -rf /tmp/zlib*

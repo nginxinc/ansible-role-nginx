@@ -135,6 +135,7 @@
       get_url:
         url: "https://nginx.org/download/{{ nginx_download_name }}.tar.gz"
         dest: "/tmp/{{ nginx_download_name }}.tar.gz"
+        validate_certs: no
       register: nginx_source
 
     - name: "(Install: Linux) Install NGINX: Unpack"

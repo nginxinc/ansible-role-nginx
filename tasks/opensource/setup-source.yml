@@ -188,7 +188,7 @@
     - name: "(Install: Linux) Enable systemd NGINX service file"
       systemd:
         daemon_reload: yes
-      notify: "(Handler: All OSs) Run NGINX"
+      notify: "(Handler: All OSs) Start NGINX"
       when: ansible_service_mgr == "systemd"
 
     - name: "(Install: Linux) Upload upstart NGINX service file"
@@ -211,10 +211,7 @@
 
     - name: "(Install: Linux) Enable upstart NGINX service reload"
       command: "initctl reload-configuration"
-      when: ansible_service_mgr == "upstart"
-
-    - name: "(Install: Linux) Enable upstart NGINX service reload"
-      command: "initctl start nginx"
+      notify: "(Handler: All OSs) Start NGINX"
       when: ansible_service_mgr == "upstart"
 
     - name: "(Install: Linux) Upload sysvinit NGINX service file"
@@ -224,7 +221,7 @@
         owner: root
         group: root
         mode: '0755'
-      notify: "(Handler: All OSs) Run NGINX"
+      notify: "(Handler: All OSs) Start NGINX"
       when: ansible_service_mgr == "sysvinit"
 
     - name: "(Install: Linux) Upload openrc NGINX service file"
@@ -238,7 +235,7 @@
 
     - name: "(Install: Linux) Enable openrc NGINX service"
       command: rc-update add nginx default
-      notify: "(Handler: All OSs) Run NGINX"
+      notify: "(Handler: All OSs) Start NGINX"
       when: ansible_service_mgr == "openrc"
 
     - name: "(Install: Linux) Install NGINX: Cleanup Downloads"

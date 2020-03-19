@@ -25,3 +25,7 @@
           - perl-core
           - wget
         state: present
+
+    - name: "Add nginx user"
+      user:
+        name: nginx

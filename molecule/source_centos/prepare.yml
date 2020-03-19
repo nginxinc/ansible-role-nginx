@@ -23,4 +23,5 @@
           - gd
           - gd-devel
           - perl-core
+          - wget
         state: present

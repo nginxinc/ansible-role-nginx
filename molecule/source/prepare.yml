@@ -31,13 +31,3 @@
     - name: "Add nginx user"
       user:
         name: nginx
-
-    - name: "Create html directory"
-      file:
-        path: /usr/share/nginx/html
-        state: directory
-
-    - name: "Copy index.html"
-      copy:
-        src: files/www/index.html
-        dest: /usr/share/nginx/html/index.html

@@ -180,7 +180,7 @@
         owner: root
         group: root
         mode: '0644'
-      notify: "(Handler: CentOS/RedHat) Enable NGINX"
+      # notify: "(Handler: CentOS/RedHat) Enable NGINX"
       when: ansible_service_mgr == "systemd"
 
     - name: "(Install: Linux) Upload upstart NGINX service file"
@@ -203,7 +203,7 @@
 
     - name: "(Install: Linux) Enable upstart NGINX service reload"
       command: "initctl reload-configuration"
-      notify: "(Handler: All OSs) Enable NGINX"
+      # notify: "(Handler: All OSs) Enable NGINX"
       when: ansible_service_mgr == "upstart"
 
     - name: "(Install: Linux) Upload sysvinit NGINX service file"
@@ -213,7 +213,7 @@
         owner: root
         group: root
         mode: '0755'
-      notify: "(Handler: All OSs) Enable NGINX"
+      # notify: "(Handler: All OSs) Enable NGINX"
       when: ansible_service_mgr == "sysvinit"
 
     - name: "(Install: Linux) Upload openrc NGINX service file"
@@ -227,7 +227,7 @@
 
     - name: "(Install: Linux) Enable openrc NGINX service"
       command: rc-update add nginx default
-      notify: "(Handler: All OSs) Enable NGINX"
+      # notify: "(Handler: All OSs) Enable NGINX"
       when: ansible_service_mgr == "openrc"
 
     - name: "(Install: Linux) Install NGINX: Cleanup Downloads"

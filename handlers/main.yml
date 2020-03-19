@@ -33,16 +33,3 @@
     name: unitd
     state: started
     enabled: yes
-
-- name: "(Handler: CentOS/RedHat) Enable NGINX"
-  systemd:
-    name: nginx
-    state: started
-    # daemon_reload: yes
-    enabled: yes
-
-- name: "(Handler: All OSs) Enable NGINX"
-  service:
-    name: nginx
-    state: started
-    enabled: yes

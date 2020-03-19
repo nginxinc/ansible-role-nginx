@@ -60,7 +60,6 @@
       make:
         chdir: "/tmp/{{ zlib_version }}"
         target: install
-      become: yes
 
 - name: "(Install: Linux) Install OpenSSL Dependency"
   block:

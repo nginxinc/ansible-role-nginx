@@ -146,7 +146,7 @@
       register: nginx_source_unpack
 
     - name: "(Install: Linux) Install NGINX: Configure"
-      command: "./configure --prefix=/usr --pid-path=/var/run/nginx.pid --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --lock-path=/var/lock/nginx.lock --modules-path=/usr/lib/nginx/modules"  # noqa 204
+      command: "./configure --prefix=/usr --pid-path=/var/run/nginx.pid --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --lock-path=/var/lock/nginx.lock --modules-path=/usr/lib/nginx/modules --with-http_ssl_module --with-stream --with-mail=dynamic"  # noqa 204
       args:
         chdir: "/tmp/{{ nginx_version }}"
       register: nginx_configure

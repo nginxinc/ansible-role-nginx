@@ -39,5 +39,5 @@
 
     - name: "Copy index.html"
       copy:
-        src: www/index.html
+        src: files/www/index.html
         dest: /usr/share/nginx/html/index.html

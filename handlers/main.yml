@@ -38,7 +38,7 @@
   systemd:
     name: nginx
     state: started
-    daemon_reload: yes
+    #daemon_reload: yes
     enabled: yes
 
 - name: "(Handler: All OSs) Enable NGINX"

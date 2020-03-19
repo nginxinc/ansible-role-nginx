@@ -6,7 +6,7 @@
     get_url:
       url: "https://ftp.pcre.org/pub/pcre/{{ pcre_version }}.tar.gz"
       dest: "/tmp/{{ pcre_version }}.tar.gz"
-      validate_certs: no
+      # validate_certs: no
     register: pcre_source
 
   - name: "(Install: Linux) Install PCRE Dependency: Unpack"
@@ -38,7 +38,7 @@
       get_url:
         url: "http://zlib.net/{{ zlib_version }}.tar.gz"
         dest: "/tmp/{{ zlib_version }}.tar.gz"
-        validate_certs: no
+        # validate_certs: no
       register: zlib_source
 
     - name: "(Install: Linux) Install zlib Dependency: Unpack"
@@ -70,7 +70,7 @@
       get_url:
         url: "http://www.openssl.org/source/{{ openssl_version }}.tar.gz"
         dest: "/tmp/{{ openssl_version }}.tar.gz"
-        validate_certs: no
+        # validate_certs: no
       register: openssl_source
 
     - name: "(Install: Linux) Install OpenSSL Dependency: Unpack"
@@ -138,7 +138,7 @@
       get_url:
         url: "https://nginx.org/download/{{ nginx_download_name }}.tar.gz"
         dest: "/tmp/{{ nginx_download_name }}.tar.gz"
-        validate_certs: no
+        # validate_certs: no
       register: nginx_source
 
     - name: "(Install: Linux) Install NGINX: Unpack"

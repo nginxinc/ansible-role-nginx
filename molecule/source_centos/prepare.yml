@@ -17,6 +17,7 @@
       alternatives:
         name: python
         path: /usr/bin/python3
+        link: /usr/bin/python
 
     - name: "Install Build Tools"
       package:

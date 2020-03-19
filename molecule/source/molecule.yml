@@ -13,9 +13,9 @@ platforms:
   - name: debian-buster
     image: debian:buster-slim
     dockerfile: ../common/Dockerfile.j2
-  - name: ubuntu-xenial
-    image: ubuntu:xenial
-    dockerfile: ../common/Dockerfile.j2
+  # - name: ubuntu-xenial
+  #   image: ubuntu:xenial
+  #   dockerfile: ../common/Dockerfile.j2
   - name: ubuntu-bionic
     image: ubuntu:bionic
     dockerfile: ../common/Dockerfile.j2

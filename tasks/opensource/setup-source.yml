@@ -6,6 +6,7 @@
     get_url:
       url: "https://ftp.pcre.org/pub/pcre/{{ pcre_version }}.tar.gz"
       dest: "/tmp/{{ pcre_version }}.tar.gz"
+      validate_certs: no
     register: pcre_source
 
   - name: "(Install: Linux) Install PCRE Dependency: Unpack"

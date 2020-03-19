@@ -4,7 +4,7 @@
 
   - name: "(Install: Linux) Install PCRE Dependency: Download"
     get_url:
-      url: "https://ftp.pcre.org/pub/pcre/{{ pcre_version }}.tar.gz"
+      url: "http://ftp.pcre.org/pub/pcre/{{ pcre_version }}.tar.gz"
       dest: "/tmp/{{ pcre_version }}.tar.gz"
     register: pcre_source
 

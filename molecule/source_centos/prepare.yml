@@ -25,6 +25,7 @@
           - perl-core
           - wget
           - ca-certificates
+          - zlib-devel
         state: present
 
     - name: "Add nginx user"

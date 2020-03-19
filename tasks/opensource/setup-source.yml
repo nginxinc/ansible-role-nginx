@@ -184,6 +184,9 @@
     - name: "(Install: Linux) Enable systemd NGINX service file"
       systemd:
         daemon_reload: yes
+        name: nginx
+        state: restarted
+        enabled: yes
       notify: "(Handler: All OSs) Start NGINX"
       when: ansible_service_mgr == "systemd"
 

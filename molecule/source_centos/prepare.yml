@@ -13,6 +13,11 @@
           - python3-devel
         state: present
 
+    - name: "Set Python3 as default"
+      alternatives:
+        name: python
+        path: /usr/bin/python3
+
     - name: "Install Build Tools"
       package:
         name:

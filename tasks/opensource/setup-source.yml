@@ -183,6 +183,11 @@
       # notify: "(Handler: CentOS/RedHat) Enable NGINX"
       when: ansible_service_mgr == "systemd"
 
+    - name: "(Install: Linux) Upload systemd NGINX service file"
+      systemd:
+        daemon_reload: yes
+      when: ansible_service_mgr == "systemd"
+
     - name: "(Install: Linux) Upload upstart NGINX service file"
       copy:
         src: services/nginx.upstart

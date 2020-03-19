@@ -13,11 +13,12 @@
           - python3-devel
         state: present
 
-    - name: "Set Python3 as default"
+    - name: "Set Python3 as default el8"
       alternatives:
         name: python
         path: /usr/bin/python3
         link: /usr/bin/python
+      when: ansible_distribution_major_version == "8"
 
     - name: "Install Build Tools"
       package:

@@ -207,7 +207,10 @@
 
     - name: "(Install: Linux) Enable upstart NGINX service reload"
       command: "initctl reload-configuration"
-      notify: "(Handler: All OSs) Start NGINX"
+      when: ansible_service_mgr == "upstart"
+
+    - name: "(Install: Linux) Start upstart NGINX service reload"
+      command: "nginx"
       when: ansible_service_mgr == "upstart"
 
     - name: "(Install: Linux) Upload sysvinit NGINX service file"

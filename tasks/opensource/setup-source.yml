@@ -38,6 +38,7 @@
       get_url:
         url: "http://zlib.net/{{ zlib_version }}.tar.gz"
         dest: "/tmp/{{ zlib_version }}.tar.gz"
+        validate_certs: no
       register: zlib_source
 
     - name: "(Install: Linux) Install zlib Dependency: Unpack"
@@ -69,6 +70,7 @@
       get_url:
         url: "http://www.openssl.org/source/{{ openssl_version }}.tar.gz"
         dest: "/tmp/{{ openssl_version }}.tar.gz"
+        validate_certs: no
       register: openssl_source
 
     - name: "(Install: Linux) Install OpenSSL Dependency: Unpack"

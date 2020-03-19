@@ -23,10 +23,4 @@
           - gd
           - gd-devel
           - perl-core
-          - zlib-devel
-          - ca-certificates
         state: present
-
-    - name: "Add nginx user"
-      user:
-        name: nginx

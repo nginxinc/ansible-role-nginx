@@ -284,3 +284,4 @@
     - "{{ zlib_source.dest }}"
     - "{{ openssl_source.dest }}"
     - "{{ nginx_source.dest }}"
+  when: item is defined

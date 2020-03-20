@@ -251,7 +251,8 @@
 
     - name: "(Install: Linux) Check for NGINX Install"
       stat:
-        path: /tmp/{{ nginx_version }}
+        path: /usr/sbin/nginx
+        follow: true
       register: nginx_result
 
 - name: "(Install: Linux) Add NGINX User"

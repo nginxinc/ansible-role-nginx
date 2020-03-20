@@ -289,9 +289,9 @@
         --with-http_ssl_module 
         --with-stream 
         --with-mail=dynamic 
-        {{ nginx_install_source_pcre | ternary('--with-pcre=../' + pcre_version, omit) }} 
-        {{ nginx_install_source_zlib | ternary('--with-zlib=../' + zlib_version, omit) }}
-        {{ nginx_install_source_openssl | ternary('--with-openssl=../' + openssl_version, omit) }}
+        {{ nginx_install_source_pcre | ternary('--with-pcre=../' + pcre_version, '') }} 
+        {{ nginx_install_source_zlib | ternary('--with-zlib=../' + zlib_version, '') }} 
+        {{ nginx_install_source_openssl | ternary('--with-openssl=../' + openssl_version, '') }} 
       args:
         chdir: "/tmp/{{ nginx_version }}"
       register: nginx_configure

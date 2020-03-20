@@ -93,10 +93,22 @@
         path: /tmp/{{ openssl_version }}
       register: openssl_result
 
-- name: "(Install: Linux) Install PCRE Dependency: Package"
-  when: nginx_install_source_pcre
+- name: "(Install: Linux) Install PCRE Dependency: Package: Centos/RHEL"
+  when: nginx_install_source_pcre and ansible_os_family == "RedHat"
   package:
     name: pcre-devel
+    state: present
+
+- name: "(Install: Linux) Install PCRE Dependency: Package: Debian/Ubuntu"
+  when: nginx_install_source_pcre and ansible_os_family == "Debian"
+  package:
+    name: libpcre3–dev
+    state: present
+
+- name: "(Install: Linux) Install PCRE Dependency: Package: Alpine"
+  when: nginx_install_source_pcre and ansible_os_family == "Alpine"
+  package:
+    name: pcre-dev
     state: present
 
 - name: "(Install: Linux) Install PCRE Dependency: Source"
@@ -131,10 +143,22 @@
         chdir: "/tmp/{{ pcre_version }}"
         target: install
 
-- name: "(Install: Linux) Install zlib Dependency: Package"
-  when: nginx_install_source_zlib
+- name: "(Install: Linux) Install zlib Dependency: Package: Centos/RHEL"
+  when: nginx_install_source_zlib and ansible_os_family == "RedHat"
   package:
     name: zlib-devel
+    state: present
+
+- name: "(Install: Linux) Install zlib Dependency: Package: Debian/Ubuntu"
+  when: nginx_install_source_zlib and ansible_os_family == "Debian"
+  package:
+    name: zlib1g-dev
+    state: present
+
+- name: "(Install: Linux) Install zlib Dependency: Package: Alpine"
+  when: nginx_install_source_zlib and ansible_os_family == "Alpine"
+  package:
+    name: zlib-dev
     state: present
 
 - name: "(Install: Linux) Install zlib Dependency: Source"
@@ -169,10 +193,22 @@
         chdir: "/tmp/{{ zlib_version }}"
         target: install
 
-- name: "(Install: Linux) Install OpenSSL Dependency: Package"
-  when: nginx_install_source_openssl
+- name: "(Install: Linux) Install OpenSSL Dependency: Package: Centos/RHEL"
+  when: nginx_install_source_openssl and ansible_os_family == "RedHat"
   package:
     name: openssl-devel
+    state: present
+
+- name: "(Install: Linux) Install OpenSSL Dependency: Package: Debian/Ubuntu"
+  when: nginx_install_source_openssl and ansible_os_family == "Debian"
+  package:
+    name: libssl-dev
+    state: present
+
+- name: "(Install: Linux) Install OpenSSL Dependency: Package: Alpine"
+  when: nginx_install_source_openssl and ansible_os_family == "Alpine"
+  package:
+    name: openssl-dev
     state: present
 
 - name: "(Install: Linux) Install OpenSSL Dependency: Source"

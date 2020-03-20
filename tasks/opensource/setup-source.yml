@@ -1,12 +1,106 @@
 ---
 
-- name: "(Install: Linux) Check for PCRE Install"
-  stat:
-    path: /tmp/{{ pcre_version }}
-  register: pcre_result
+- name: "(Install: Linux) Check for build tools"
+  when: nginx_install_source_build_tools
+  block:
 
-- name: "(Install: Linux) Install PCRE Dependency"
-  when: not pcre_result.stat.exists
+    - name: "(Install: Linux) Install Python - Centos/RHEL"
+      package:
+        name:
+          - python3
+          - python3-pip
+          - python3-devel
+        state: present
+      when:  ansible_os_family == "RedHat"
+
+    - name: "(Install: Linux) Set Python3 default - Centos/RHEL"
+      alternatives:
+        name: python
+        path: /usr/bin/python3
+        link: /usr/bin/python
+      when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "8"
+
+    - name: "(Install: Linux) Install Build Tools - Centos/RHEL"
+      package:
+        name:
+          - "@Development tools"
+          - gcc
+          - glibc
+          - glibc-common
+          - gd
+          - gd-devel
+          - perl-core
+          - wget
+          - ca-certificates
+          - zlib-devel
+        state: present
+      when:  ansible_os_family == "RedHat"
+
+    - name: "(Install: Linux) Install backports repo for Buster"
+      apt_repository:
+        repo: deb http://ftp.us.debian.org/debian buster-backports main
+      when: ansible_distribution_release == "buster"
+
+    - name: "(Install: Linux) Install Build Tools - Debian/Ubuntu"
+      package:
+        name:
+          - python-minimal
+          - build-essential
+          - perl
+          - tar
+          - checkinstall
+          - zlib1g-dev
+          - libtemplate-perl
+        state: present
+      when:  ansible_os_family == "Debian"
+
+    - name: "(Install: Linux) Install Build Tools - Alpine"
+      package:
+        name:
+          - python
+          - alpine-sdk
+          - build-base
+          - git
+          - wget
+          - perl
+          - linux-headers
+          - tar
+          - openrc
+        state: present
+      when:  ansible_os_family == "Alpine"
+
+    - name: "Enable openrc"
+      file:
+        path: /run/openrc/softlevel
+        state: touch
+      when: ansible_os_family == "Alpine"
+
+- name: "(Install: Linux) Check for Source Installs"
+  block:
+
+    - name: "(Install: Linux) Check for PCRE Install"
+      stat:
+        path: /tmp/{{ pcre_version }}
+      register: pcre_result
+
+    - name: "(Install: Linux) Check for zlib Install"
+      stat:
+        path: /tmp/{{ zlib_version }}
+      register: zlib_result
+
+    - name: "(Install: Linux) Check for openssl Install"
+      stat:
+        path: /tmp/{{ openssl_version }}
+      register: openssl_result
+
+- name: "(Install: Linux) Install PCRE Dependency: Package"
+  when: nginx_install_source_pcre
+  package:
+    name: pcre-devel
+    state: present
+
+- name: "(Install: Linux) Install PCRE Dependency: Source"
+  when: not pcre_result.stat.exists and not nginx_install_source_pcre
   block:
 
     - name: "(Install: Linux) Install PCRE Dependency: Download"
@@ -37,13 +131,14 @@
         chdir: "/tmp/{{ pcre_version }}"
         target: install
 
-- name: "(Install: Linux) Check for zlib Install"
-  stat:
-    path: /tmp/{{ zlib_version }}
-  register: zlib_result
+- name: "(Install: Linux) Install zlib Dependency: Package"
+  when: nginx_install_source_zlib
+  package:
+    name: zlib-devel
+    state: present
 
-- name: "(Install: Linux) Install zlib Dependency"
-  when: not zlib_result.stat.exists
+- name: "(Install: Linux) Install zlib Dependency: Source"
+  when: not zlib_result.stat.exists and not nginx_install_source_zlib
   block:
 
     - name: "(Install: Linux) Install zlib Dependency: Download"
@@ -74,13 +169,14 @@
         chdir: "/tmp/{{ zlib_version }}"
         target: install
 
-- name: "(Install: Linux) Check for openssl Install"
-  stat:
-    path: /tmp/{{ openssl_version }}
-  register: openssl_result
+- name: "(Install: Linux) Install OpenSSL Dependency: Package"
+  when: nginx_install_source_openssl
+  package:
+    name: openssl-devel
+    state: present
 
-- name: "(Install: Linux) Install OpenSSL Dependency"
-  when: not openssl_result.stat.exists
+- name: "(Install: Linux) Install OpenSSL Dependency: Source"
+  when: not openssl_result.stat.exists and not nginx_install_source_openssl
   block:
 
     - name: "(Install: Linux) Install OpenSSL Dependency: Download"
@@ -158,6 +254,10 @@
         path: /tmp/{{ nginx_version }}
       register: nginx_result
 
+- name: "(Install: Linux) Add NGINX User"
+  user:
+    name: nginx
+
 - name: "(Install: Linux) Install NGINX"
   when: not nginx_result.stat.exists
   block:
@@ -176,7 +276,21 @@
       register: nginx_source_unpack
 
     - name: "(Install: Linux) Install NGINX: Configure"
-      command: "./configure --prefix=/usr --pid-path=/var/run/nginx.pid --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --lock-path=/var/lock/nginx.lock --modules-path=/usr/lib/nginx/modules --with-http_ssl_module --with-stream --with-mail=dynamic --with-pcre=../{{ pcre_version }} --with-zlib=../{{ zlib_version }} --with-openssl=../{{ openssl_version }}"  # noqa 204
+      command: >-
+        ./configure 
+        --prefix=/usr 
+        --pid-path=/var/run/nginx.pid 
+        --conf-path=/etc/nginx/nginx.conf 
+        --error-log-path=/var/log/nginx/error.log 
+        --http-log-path=/var/log/nginx/access.log 
+        --lock-path=/var/lock/nginx.lock 
+        --modules-path=/usr/lib/nginx/modules 
+        --with-http_ssl_module 
+        --with-stream 
+        --with-mail=dynamic 
+        {{ nginx_install_source_pcre | terniary("--with-pcre=../{{ pcre_version }}", omit) }} 
+        {{ nginx_install_source_zlib | terniary("--with-zlib=../{{ zlib_version }}", omit) }}
+        {{ nginx_install_source_openssl | terniary("--with-openssl=../{{ openssl_version }}", omit) }}
       args:
         chdir: "/tmp/{{ nginx_version }}"
       register: nginx_configure

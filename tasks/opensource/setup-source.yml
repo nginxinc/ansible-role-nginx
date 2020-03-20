@@ -69,10 +69,13 @@
         state: present
       when: ansible_os_family == "Alpine"
 
-    - name: "Enable openrc"
-      file:
-        path: /run/openrc/softlevel
-        state: touch
+    - name: "(Install: Linux) Enable openrc - Alpine"
+      copy:
+        content: ""
+        dest: /run/openrc/softlevel
+        force: no
+        owner: root
+        mode: 0644
       when: ansible_os_family == "Alpine"
 
 - name: "(Install: Linux) Check for Source Installs"

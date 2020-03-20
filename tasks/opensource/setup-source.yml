@@ -6,37 +6,36 @@
   register: pcre_result
 
 - name: "(Install: Linux) Install PCRE Dependency"
+  when: pcre_result.stat.exists == false
   block:
 
-  - name: "(Install: Linux) Install PCRE Dependency: Download"
-    get_url:
-      url: "http://ftp.pcre.org/pub/pcre/{{ pcre_version }}.tar.gz"
-      dest: "/tmp/{{ pcre_version }}.tar.gz"
-    register: pcre_source 
+    - name: "(Install: Linux) Install PCRE Dependency: Download"
+      get_url:
+        url: "http://ftp.pcre.org/pub/pcre/{{ pcre_version }}.tar.gz"
+        dest: "/tmp/{{ pcre_version }}.tar.gz"
+      register: pcre_source
 
-  - name: "(Install: Linux) Install PCRE Dependency: Unpack"
-    unarchive:
-      copy: no
-      dest: /tmp/
-      src: "{{ pcre_source.dest }}"
-    register: pcre_source_unpack
+    - name: "(Install: Linux) Install PCRE Dependency: Unpack"
+      unarchive:
+        copy: no
+        dest: /tmp/
+        src: "{{ pcre_source.dest }}"
+      register: pcre_source_unpack
 
-  - name: "(Install: Linux) Install PCRE Dependency: Configure"
-    command: "./configure"
-    args:
-      chdir: "/tmp/{{ pcre_version }}"
-    register: pcre_configure
+    - name: "(Install: Linux) Install PCRE Dependency: Configure"
+      command: "./configure"
+      args:
+        chdir: "/tmp/{{ pcre_version }}"
+      register: pcre_configure
 
-  - name: "(Install: Linux) Install PCRE Dependency: Install"
-    make:
-      chdir: "/tmp/{{ pcre_version }}"
+    - name: "(Install: Linux) Install PCRE Dependency: Install"
+      make:
+        chdir: "/tmp/{{ pcre_version }}"
 
-  - name: "(Install: Linux) Install PCRE Dependency: Install"
-    make:
-      chdir: "/tmp/{{ pcre_version }}"
-      target: install
-
-  when: pcre_result.stat.exists == false
+    - name: "(Install: Linux) Install PCRE Dependency: Install"
+      make:
+        chdir: "/tmp/{{ pcre_version }}"
+        target: install
 
 - name: "(Install: Linux) Check for zlib Install"
   stat:
@@ -44,6 +43,7 @@
   register: zlib_result
 
 - name: "(Install: Linux) Install zlib Dependency"
+  when: zlib_result.stat.exists == false
   block:
 
     - name: "(Install: Linux) Install zlib Dependency: Download"
@@ -74,14 +74,13 @@
         chdir: "/tmp/{{ zlib_version }}"
         target: install
 
-  when: zlib_result.stat.exists == false
-
 - name: "(Install: Linux) Check for openssl Install"
   stat:
     path: /tmp/{{ openssl_version }}
   register: openssl_result
 
 - name: "(Install: Linux) Install OpenSSL Dependency"
+  when: openssl_result.stat.exists == false
   block:
 
     - name: "(Install: Linux) Install OpenSSL Dependency: Download"
@@ -111,8 +110,6 @@
       make:
         chdir: "/tmp/{{ openssl_version }}"
         target: install
-
-  when: openssl_result.stat.exists == false
 
 - name: "(Install: Linux) Install NGINX: Get NGINX version"
   block:
@@ -162,6 +159,7 @@
       register: nginx_result
 
 - name: "(Install: Linux) Install NGINX"
+  when: nginx_result.stat.exists == false
   block:
 
     - name: "(Install: Linux) Install NGINX: Download"
@@ -272,8 +270,6 @@
       command: rc-update add nginx default
       notify: "(Handler: All OSs) Start NGINX"
       when: ansible_service_mgr == "openrc"
-  
-  when: nginx_result.stat.exists == false
 
 - name: "(Install: Linux) Install NGINX: Cleanup Downloads"
   file:

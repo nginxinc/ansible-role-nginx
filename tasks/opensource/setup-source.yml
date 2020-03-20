@@ -11,7 +11,7 @@
           - python3-pip
           - python3-devel
         state: present
-      when:  ansible_os_family == "RedHat"
+      when: ansible_os_family == "RedHat"
 
     - name: "(Install: Linux) Set Python3 default - Centos/RHEL"
       alternatives:
@@ -34,7 +34,7 @@
           - ca-certificates
           - zlib-devel
         state: present
-      when:  ansible_os_family == "RedHat"
+      when: ansible_os_family == "RedHat"
 
     - name: "(Install: Linux) Install backports repo for Buster"
       apt_repository:
@@ -52,7 +52,7 @@
           - zlib1g-dev
           - libtemplate-perl
         state: present
-      when:  ansible_os_family == "Debian"
+      when: ansible_os_family == "Debian"
 
     - name: "(Install: Linux) Install Build Tools - Alpine"
       package:
@@ -67,7 +67,7 @@
           - tar
           - openrc
         state: present
-      when:  ansible_os_family == "Alpine"
+      when: ansible_os_family == "Alpine"
 
     - name: "Enable openrc"
       file:
@@ -278,20 +278,20 @@
 
     - name: "(Install: Linux) Install NGINX: Configure"
       command: >-
-        ./configure 
-        --prefix=/usr 
-        --pid-path=/var/run/nginx.pid 
-        --conf-path=/etc/nginx/nginx.conf 
-        --error-log-path=/var/log/nginx/error.log 
-        --http-log-path=/var/log/nginx/access.log 
-        --lock-path=/var/lock/nginx.lock 
-        --modules-path=/usr/lib/nginx/modules 
-        --with-http_ssl_module 
-        --with-stream 
-        --with-mail=dynamic 
-        {{ nginx_install_source_pcre | ternary('', '--with-pcre=../' + pcre_version) }} 
-        {{ nginx_install_source_zlib | ternary('', '--with-zlib=../' + zlib_version) }} 
-        {{ nginx_install_source_openssl | ternary('', '--with-openssl=../' + openssl_version) }} 
+        ./configure
+        --prefix=/usr
+        --pid-path=/var/run/nginx.pid
+        --conf-path=/etc/nginx/nginx.conf
+        --error-log-path=/var/log/nginx/error.log
+        --http-log-path=/var/log/nginx/access.log
+        --lock-path=/var/lock/nginx.lock
+        --modules-path=/usr/lib/nginx/modules
+        --with-http_ssl_module
+        --with-stream
+        --with-mail=dynamic
+        {{ nginx_install_source_pcre | ternary('', '--with-pcre=../' + pcre_version) }}
+        {{ nginx_install_source_zlib | ternary('', '--with-zlib=../' + zlib_version) }}
+        {{ nginx_install_source_openssl | ternary('', '--with-openssl=../' + openssl_version) }}
       args:
         chdir: "/tmp/{{ nginx_version }}"
       register: nginx_configure

@@ -6,7 +6,7 @@
   register: pcre_result
 
 - name: "(Install: Linux) Install PCRE Dependency"
-  when: pcre_result.stat.exists == false
+  when: not pcre_result.stat.exists
   block:
 
     - name: "(Install: Linux) Install PCRE Dependency: Download"
@@ -43,7 +43,7 @@
   register: zlib_result
 
 - name: "(Install: Linux) Install zlib Dependency"
-  when: zlib_result.stat.exists == false
+  when: not zlib_result.stat.exists
   block:
 
     - name: "(Install: Linux) Install zlib Dependency: Download"
@@ -80,7 +80,7 @@
   register: openssl_result
 
 - name: "(Install: Linux) Install OpenSSL Dependency"
-  when: openssl_result.stat.exists == false
+  when: not openssl_result.stat.exists
   block:
 
     - name: "(Install: Linux) Install OpenSSL Dependency: Download"
@@ -159,7 +159,7 @@
       register: nginx_result
 
 - name: "(Install: Linux) Install NGINX"
-  when: nginx_result.stat.exists == false
+  when: not nginx_result.stat.exists
   block:
 
     - name: "(Install: Linux) Install NGINX: Download"

@@ -25,7 +25,7 @@ RUN \
   # && dnf clean all; \
   elif [ $(command -v dnf) ]; then \
     dnf makecache \
-    && dnf --assumeyes install /usr/bin/python3 /usr/bin/python3-config /usr/bin/dnf-3 python3-devel python3-dnf python3-pip sudo bash iproute \
+    && dnf --assumeyes install /usr/bin/python3 python3-devel python3-dnf python3-pip sudo bash iproute \
     && dnf clean all; \
   elif [ $(command -v yum) ]; then \
     yum makecache fast \

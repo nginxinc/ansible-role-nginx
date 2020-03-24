@@ -1,5 +1,4 @@
 ---
-
 - name: "(Install: Linux) Check for build tools"
   when: nginx_install_source_build_tools
   block:
@@ -399,6 +398,7 @@
 
     - name: "(Install: Linux) Start upstart NGINX service reload"
       command: "nginx"
+      notify: "(Handler: All OSs) Start NGINX"
       when: ansible_service_mgr == "upstart"
 
     - name: "(Install: Linux) Upload sysvinit NGINX service file"

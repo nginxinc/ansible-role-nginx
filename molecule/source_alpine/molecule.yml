@@ -7,17 +7,31 @@ lint: |
   ansible-lint
   flake8
 platforms:
+  - name: alpine-3.8
+    image: alpine:3.8
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/sbin/init"
+  - name: alpine-3.9
+    image: alpine:3.9
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/sbin/init"
   - name: alpine-3.10
     image: python:alpine3.10
     dockerfile: ../common/Dockerfile.j2
-    privileged: True
+    privileged: true
     volumes:
       - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
     command: "/sbin/init"
   - name: alpine-3.11
     image: python:alpine3.11
     dockerfile: ../common/Dockerfile.j2
-    privileged: True
+    privileged: true
     volumes:
       - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
     command: "/sbin/init"
@@ -28,19 +42,3 @@ provisioner:
 verifier:
   name: testinfra
   directory: ../common/test_source
-scenario:
-  name: source_alpine
-  test_sequence:
-    - dependency
-    - lint
-    - cleanup
-    - destroy
-    - syntax
-    - create
-    - prepare
-    - converge
-    - idempotence
-    - side_effect
-    - verify
-    - cleanup
-    - destroy

@@ -4,11 +4,11 @@ services:
   - docker
 jobs:
   include:
-    - name: "Install Test - Debian"
+    - name: "Install Specific Version Test - Debian"
       env: scenario=default
-    - name: "Install Test - Alpine"
+    - name: "Install Specific Version Test - Alpine"
       env: scenario=default_alpine
-    - name: "Install Test - CentOS"
+    - name: "Install Specific Version Test - CentOS"
       env: scenario=default_centos
     - name: "Install Modules Test - Debian"
       env: scenario=module
@@ -16,17 +16,17 @@ jobs:
       env: scenario=module_alpine
     - name: "Install Modules Test - CentOS"
       env: scenario=module_centos
-    - name: "Install Stable Push Test - Debian"
+    - name: "Install Stable Branch and Push Configuration Test - Debian"
       env: scenario=stable_push
-    - name: "Install Stable Push Test - Alpine"
+    - name: "Install Stable Branch and Push Configuration Test - Alpine"
       env: scenario=stable_push_alpine
-    - name: "Install Stable Push Test - CentOS"
+    - name: "Install Stable Branch and Push Configuration Test - CentOS"
       env: scenario=stable_push_centos
-    - name: "Install Template Test - Debian"
+    - name: "Use Template Setting Test - Debian"
       env: scenario=template
-    - name: "Install Template Test - Alpine"
+    - name: "Use Template Setting Test - Alpine"
       env: scenario=template_alpine
-    - name: "Install Template Test - CentOS"
+    - name: "Use Template Setting Test - CentOS"
       env: scenario=template_centos
     - name: "Install Unit Test - Debian"
       env: scenario=unit

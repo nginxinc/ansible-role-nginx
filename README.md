@@ -45,6 +45,7 @@ Alpine:
     - 3.8
     - 3.9
     - 3.10
+    - 3.11
 CentOS:
   versions:
     - 6
@@ -81,6 +82,7 @@ Alpine:
     - 3.8
     - 3.9
     - 3.10
+    - 3.11
 Amazon Linux:
   versions:
     - 2018.03

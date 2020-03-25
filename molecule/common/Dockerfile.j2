@@ -19,7 +19,7 @@ RUN \
     apt-get update \
     && apt-get install -y python3 sudo bash ca-certificates iproute2 python3-apt aptitude systemd systemd-sysv procps curl \
     && apt-get clean; \
-    elif [ $(command -v dnf) ]; then \
+  elif [ $(command -v dnf) ]; then \
     dnf makecache \
     && dnf --assumeyes install /usr/bin/python3 /usr/bin/python3-config /usr/bin/dnf-3 sudo bash iproute \
     && dnf clean all; \

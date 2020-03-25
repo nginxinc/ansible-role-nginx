@@ -1,0 +1,437 @@
+---
+- name: "(Install: Linux) Check for build tools"
+  when: nginx_install_source_build_tools
+  block:
+
+    - name: "(Install: Linux) Install Python - Centos/RHEL"
+      package:
+        name:
+          - python3
+          - python3-pip
+          - python3-devel
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: "(Install: Linux) Set Python3 default - Centos/RHEL"
+      alternatives:
+        name: python
+        path: /usr/bin/python3
+        link: /usr/bin/python
+      when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "8"
+
+    - name: "(Install: Linux) Install Build Tools - Centos/RHEL"
+      package:
+        name:
+          - "@Development tools"
+          - gcc
+          - glibc
+          - glibc-common
+          - gd
+          - gd-devel
+          - perl-core
+          - wget
+          - ca-certificates
+          - zlib-devel
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: "(Install: Linux) Install backports repo for Buster"
+      apt_repository:
+        repo: deb http://ftp.us.debian.org/debian buster-backports main
+      when: ansible_distribution_release == "buster"
+
+    - name: "(Install: Linux) Install Build Tools - Debian/Ubuntu"
+      package:
+        name:
+          - python-minimal
+          - build-essential
+          - perl
+          - tar
+          - checkinstall
+          - zlib1g-dev
+          - libtemplate-perl
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: "(Install: Linux) Install Build Tools - Alpine"
+      package:
+        name:
+          - python
+          - alpine-sdk
+          - build-base
+          - git
+          - wget
+          - perl
+          - linux-headers
+          - tar
+          - openrc
+        state: present
+      when: ansible_os_family == "Alpine"
+
+    - name: "(Install: Linux) Enable openrc - Alpine"
+      copy:
+        content: ""
+        dest: /run/openrc/softlevel
+        force: no
+        owner: root
+        mode: 0644
+      when: ansible_os_family == "Alpine"
+
+- name: "(Install: Linux) Check for Source Installs"
+  block:
+
+    - name: "(Install: Linux) Check for PCRE Install"
+      stat:
+        path: /tmp/{{ pcre_version }}
+      register: pcre_result
+
+    - name: "(Install: Linux) Check for zlib Install"
+      stat:
+        path: /tmp/{{ zlib_version }}
+      register: zlib_result
+
+    - name: "(Install: Linux) Check for openssl Install"
+      stat:
+        path: /tmp/{{ openssl_version }}
+      register: openssl_result
+
+- name: "(Install: Linux) Install PCRE Dependency: Package: Centos/RHEL"
+  when: nginx_install_source_pcre and ansible_os_family == "RedHat"
+  package:
+    name: pcre-devel
+    state: present
+
+- name: "(Install: Linux) Install PCRE Dependency: Package: Debian/Ubuntu"
+  when: nginx_install_source_pcre and ansible_os_family == "Debian"
+  package:
+    name: libpcre3–dev
+    state: present
+
+- name: "(Install: Linux) Install PCRE Dependency: Package: Alpine"
+  when: nginx_install_source_pcre and ansible_os_family == "Alpine"
+  package:
+    name: pcre-dev
+    state: present
+
+- name: "(Install: Linux) Install PCRE Dependency: Source"
+  when: not pcre_result.stat.exists and not nginx_install_source_pcre
+  block:
+
+    - name: "(Install: Linux) Install PCRE Dependency: Download"
+      get_url:
+        url: "http://ftp.pcre.org/pub/pcre/{{ pcre_version }}.tar.gz"
+        dest: "/tmp/{{ pcre_version }}.tar.gz"
+      register: pcre_source
+
+    - name: "(Install: Linux) Install PCRE Dependency: Unpack"
+      unarchive:
+        copy: no
+        dest: /tmp/
+        src: "{{ pcre_source.dest }}"
+      register: pcre_source_unpack
+
+    - name: "(Install: Linux) Install PCRE Dependency: Configure"
+      command: "./configure"
+      args:
+        chdir: "/tmp/{{ pcre_version }}"
+      register: pcre_configure
+
+    - name: "(Install: Linux) Install PCRE Dependency: Install"
+      make:
+        chdir: "/tmp/{{ pcre_version }}"
+
+    - name: "(Install: Linux) Install PCRE Dependency: Install"
+      make:
+        chdir: "/tmp/{{ pcre_version }}"
+        target: install
+
+- name: "(Install: Linux) Install zlib Dependency: Package: Centos/RHEL"
+  when: nginx_install_source_zlib and ansible_os_family == "RedHat"
+  package:
+    name: zlib-devel
+    state: present
+
+- name: "(Install: Linux) Install zlib Dependency: Package: Debian/Ubuntu"
+  when: nginx_install_source_zlib and ansible_os_family == "Debian"
+  package:
+    name: zlib1g-dev
+    state: present
+
+- name: "(Install: Linux) Install zlib Dependency: Package: Alpine"
+  when: nginx_install_source_zlib and ansible_os_family == "Alpine"
+  package:
+    name: zlib-dev
+    state: present
+
+- name: "(Install: Linux) Install zlib Dependency: Source"
+  when: not zlib_result.stat.exists and not nginx_install_source_zlib
+  block:
+
+    - name: "(Install: Linux) Install zlib Dependency: Download"
+      get_url:
+        url: "http://zlib.net/{{ zlib_version }}.tar.gz"
+        dest: "/tmp/{{ zlib_version }}.tar.gz"
+      register: zlib_source
+
+    - name: "(Install: Linux) Install zlib Dependency: Unpack"
+      unarchive:
+        copy: no
+        dest: /tmp/
+        src: "{{ zlib_source.dest }}"
+      register: zlib_source_unpack
+
+    - name: "(Install: Linux) Install zlib Dependency: Configure"
+      command: "./configure"
+      args:
+        chdir: "/tmp/{{ zlib_version }}"
+      register: zlib_configure
+
+    - name: "(Install: Linux) Install zlib Dependency: Install"
+      make:
+        chdir: "/tmp/{{ zlib_version }}"
+
+    - name: "(Install: Linux) Install zlib Dependency: Install"
+      make:
+        chdir: "/tmp/{{ zlib_version }}"
+        target: install
+
+- name: "(Install: Linux) Install OpenSSL Dependency: Package: Centos/RHEL"
+  when: nginx_install_source_openssl and ansible_os_family == "RedHat"
+  package:
+    name: openssl-devel
+    state: present
+
+- name: "(Install: Linux) Install OpenSSL Dependency: Package: Debian/Ubuntu"
+  when: nginx_install_source_openssl and ansible_os_family == "Debian"
+  package:
+    name: libssl-dev
+    state: present
+
+- name: "(Install: Linux) Install OpenSSL Dependency: Package: Alpine"
+  when: nginx_install_source_openssl and ansible_os_family == "Alpine"
+  package:
+    name: openssl-dev
+    state: present
+
+- name: "(Install: Linux) Install OpenSSL Dependency: Source"
+  when: not openssl_result.stat.exists and not nginx_install_source_openssl
+  block:
+
+    - name: "(Install: Linux) Install OpenSSL Dependency: Download"
+      get_url:
+        url: "http://www.openssl.org/source/{{ openssl_version }}.tar.gz"
+        dest: "/tmp/{{ openssl_version }}.tar.gz"
+      register: openssl_source
+
+    - name: "(Install: Linux) Install OpenSSL Dependency: Unpack"
+      unarchive:
+        copy: no
+        dest: /tmp/
+        src: "{{ openssl_source.dest }}"
+      register: openssl_source_unpack
+
+    - name: "(Install: Linux) Install OpenSSL Dependency: Configure"
+      command: "./config --prefix=/usr"
+      args:
+        chdir: "/tmp/{{ openssl_version }}"
+      register: openssl_configure
+
+    - name: "(Install: Linux) Install OpenSSL Dependency: Make"
+      make:
+        chdir: "/tmp/{{ openssl_version }}"
+
+    - name: "(Install: Linux) Install OpenSSL Dependency: Install"
+      make:
+        chdir: "/tmp/{{ openssl_version }}"
+        target: install
+
+- name: "(Install: Linux) Install NGINX: Get NGINX version"
+  block:
+
+    - name: "(Install: Linux) Install NGINX: Get NGINX mainline version"
+      shell:
+      args:
+        cmd: curl --stderr - https://trac.nginx.org/nginx/browser | grep release | head -1 | sed -e 's:.*<option value="[^"]*">release\([^<]*\)<.*:nginx\1:'  # noqa 204 303
+      register: nginx_mainline_version
+      changed_when: false
+      when: nginx_branch == "mainline"
+
+    - name: "(Install: Linux) Install NGINX: Set NGINX mainline version"
+      set_fact:
+        nginx_version: "{{ nginx_mainline_version.stdout }}"
+      when: nginx_branch == "mainline"
+
+    - name: "(Install: Linux) Install NGINX: Get NGINX stable version 1/2"
+      shell:
+      args:
+        cmd: curl --stderr - https://trac.nginx.org/nginx/browser | grep stable | head -1 | sed -e 's:.*<option value="[^"]*">stable\([^<]*\)<.*:release\1:'  # noqa 204 303
+      register: nginx_tmp_version
+      changed_when: false
+      when: nginx_branch == "stable"
+
+    - name: "(Install: Linux) Install NGINX: Get NGINX stable version 2/2"
+      shell:
+      args:
+        cmd: curl --stderr - https://trac.nginx.org/nginx/browser | grep {{ nginx_tmp_version.stdout }} | head -1 | sed -e 's:.*<option value="[^"]*">release\([^<]*\)<.*:nginx\1:'  # noqa 204 303
+      register: nginx_stable_version
+      changed_when: false
+      when: nginx_branch == "stable"
+
+    - name: "(Install: Linux) Install NGINX: Set NGINX stable version"
+      set_fact:
+        nginx_version: "{{ nginx_stable_version.stdout }}"
+      when: nginx_branch == "stable"
+
+    - name: "(Install: Linux) Install NGINX: Set NGINX download filename"
+      set_fact:
+        nginx_download_name: "{{ nginx_version }}"
+      when: nginx_branch == "stable" or nginx_branch == "mainline"
+
+    - name: "(Install: Linux) Check for NGINX Install"
+      stat:
+        path: /usr/sbin/nginx
+        follow: true
+      register: nginx_result
+
+- name: "(Install: Linux) Add NGINX User"
+  user:
+    name: nginx
+
+- name: "(Install: Linux) Install NGINX"
+  when: not nginx_result.stat.exists
+  block:
+
+    - name: "(Install: Linux) Install NGINX: Download"
+      get_url:
+        url: "http://nginx.org/download/{{ nginx_download_name }}.tar.gz"
+        dest: "/tmp/{{ nginx_download_name }}.tar.gz"
+      register: nginx_source
+
+    - name: "(Install: Linux) Install NGINX: Unpack"
+      unarchive:
+        copy: no
+        dest: /tmp/
+        src: "{{ nginx_source.dest }}"
+      register: nginx_source_unpack
+
+    - name: "(Install: Linux) Install NGINX: Configure"
+      command: >-
+        ./configure
+        --prefix=/usr
+        --pid-path=/var/run/nginx.pid
+        --conf-path=/etc/nginx/nginx.conf
+        --error-log-path=/var/log/nginx/error.log
+        --http-log-path=/var/log/nginx/access.log
+        --lock-path=/var/lock/nginx.lock
+        --modules-path=/usr/lib/nginx/modules
+        --with-http_ssl_module
+        --with-stream
+        --with-mail=dynamic
+        {{ nginx_install_source_pcre | ternary('', '--with-pcre=../' + pcre_version) }}
+        {{ nginx_install_source_zlib | ternary('', '--with-zlib=../' + zlib_version) }}
+        {{ nginx_install_source_openssl | ternary('', '--with-openssl=../' + openssl_version) }}
+      args:
+        chdir: "/tmp/{{ nginx_version }}"
+      register: nginx_configure
+
+    - name: "(Install: Linux) Install NGINX: Make"
+      make:
+        chdir: "/tmp/{{ nginx_version }}"
+
+    - name: "(Install: Linux) Install NGINX: Install"
+      make:
+        chdir: "/tmp/{{ nginx_version }}"
+        target: install
+
+    - name: "(Install: Linux) Install NGINX: Create html directory"
+      file:
+        path: /usr/share/nginx/html
+        state: directory
+
+    - name: "(Install: Linux) Install NGINX: Copy index.html"
+      copy:
+        src: www/index.html
+        owner: root
+        group: root
+        mode: '0644'
+        dest: /usr/share/nginx/html/index.html
+
+    - name: "(Install: Linux) Upload systemd NGINX service file"
+      copy:
+        src: services/nginx.systemd
+        dest: /lib/systemd/system/nginx.service
+        owner: root
+        group: root
+        mode: '0644'
+      when: ansible_service_mgr == "systemd"
+
+    - name: "(Install: Linux) Enable systemd NGINX service file"
+      systemd:
+        daemon_reload: yes
+        name: nginx
+        state: restarted
+        enabled: yes
+      notify: "(Handler: All OSs) Start NGINX"
+      when: ansible_service_mgr == "systemd"
+
+    - name: "(Install: Linux) Upload upstart NGINX service file"
+      copy:
+        src: services/nginx.upstart
+        dest: /etc/init.d/nginx
+        owner: root
+        group: root
+        mode: '0755'
+      when: ansible_service_mgr == "upstart"
+
+    - name: "(Install: Linux) Upload upstart NGINX service conf file"
+      copy:
+        src: services/nginx.conf.upstart
+        dest: /etc/init/nginx.conf
+        owner: root
+        group: root
+        mode: '0644'
+      when: ansible_service_mgr == "upstart"
+
+    - name: "(Install: Linux) Enable upstart NGINX service reload"
+      command: "initctl reload-configuration"
+      when: ansible_service_mgr == "upstart"
+
+    - name: "(Install: Linux) Start upstart NGINX service reload"
+      command: "nginx"
+      notify: "(Handler: All OSs) Start NGINX"
+      when: ansible_service_mgr == "upstart"
+
+    - name: "(Install: Linux) Upload sysvinit NGINX service file"
+      copy:
+        src: services/nginx.sysvinit
+        dest: /etc/init.d/nginx
+        owner: root
+        group: root
+        mode: '0755'
+      notify: "(Handler: All OSs) Start NGINX"
+      when: ansible_service_mgr == "sysvinit"
+
+    - name: "(Install: Linux) Upload openrc NGINX service file"
+      copy:
+        src: services/nginx.openrc
+        dest: /etc/init.d/nginx
+        owner: root
+        group: root
+        mode: '0755'
+      when: ansible_service_mgr == "openrc"
+
+    - name: "(Install: Linux) Enable openrc NGINX service"
+      command: rc-update add nginx default
+      notify: "(Handler: All OSs) Start NGINX"
+      when: ansible_service_mgr == "openrc"
+
+- name: "(Install: Linux) Install NGINX: Cleanup Downloads"
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - "{{ pcre_source.dest }}"
+    - "{{ zlib_source.dest }}"
+    - "{{ openssl_source.dest }}"
+    - "{{ nginx_source.dest }}"
+  when: item is defined

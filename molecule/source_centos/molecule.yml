@@ -7,9 +7,6 @@ lint: |
   ansible-lint
   flake8
 platforms:
-  - name: centos-6
-    image: centos:6
-    dockerfile: ../common/Dockerfile.j2
   - name: centos-7
     image: centos:7
     dockerfile: ../common/Dockerfile.j2
@@ -27,7 +24,7 @@ platforms:
 provisioner:
   name: ansible
   playbooks:
-    converge: ../common/playbook_module.yml
+    converge: ../common/playbook_source.yml
 verifier:
   name: testinfra
-  directory: ../common/test_module
+  directory: ../common/test_source

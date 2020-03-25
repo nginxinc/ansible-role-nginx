@@ -16,6 +16,10 @@
 
   when: nginx_install_from == "nginx_repository"
 
+- name: "(Install: Linux) Install NGINX from source"
+  import_tasks: setup-source.yml
+  when: nginx_install_from == "source"
+
 - name: "(Install: Linux) Install NGINX package"
   package:
     name: "nginx{{ nginx_version | default('') }}"

@@ -10,3 +10,6 @@ __pycache__
 Thumbs.db
 .DS_Store
 .vscode
+
+# Ansible specific
+*.retry

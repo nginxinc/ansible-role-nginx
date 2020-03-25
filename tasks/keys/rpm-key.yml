@@ -12,4 +12,3 @@
 - name: "(Install: RPM OSs) Add RPM NGINX Signing Key"
   rpm_key:
     key: "{{ keysite }}"
-  changed_when: false

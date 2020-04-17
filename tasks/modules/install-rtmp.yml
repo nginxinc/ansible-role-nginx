@@ -1,7 +1,7 @@
 ---
 - name: "(Install: All OSs) Install NGINX Plus RTMP Module"
   package:
-    name: nginx-plus-module-rtmp
+    name: "nginx-plus-module-rtmp{{ nginx_version | default('') }}"
     state: present
 
 - name: "(Setup: All NGINX) Load NGINX RTMP Module"

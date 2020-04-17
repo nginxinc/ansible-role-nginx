@@ -1,7 +1,7 @@
 ---
 - name: "(Install: All OSs) Install NGINX Plus WAF Module"
   package:
-    name: nginx-plus-module-modsecurity
+    name: "nginx-plus-module-modsecurity{{ nginx_version | default('') }}"
     state: present
 
 - name: "(Setup: NGINX Plus) Load NGINX Plus WAF Module"

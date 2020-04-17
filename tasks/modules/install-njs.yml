@@ -1,7 +1,7 @@
 ---
 - name: "(Install: All OSs) Install NGINX Open Source JavaScript Module"
   package:
-    name: nginx-module-njs
+    name: "nginx-module-njs{{ nginx_version | default('') }}"
     state: present
   when: nginx_type == "opensource"
 

@@ -6,13 +6,13 @@
 
 - name: "(Install: All OSs) Install NGINX Open Source Perl Module"
   package:
-    name: nginx-module-perl
+    name: "nginx-module-perl{{ nginx_version | default('') }}"
     state: present
   when: nginx_type == "opensource"
 
 - name: "(Install: All OSs) Install NGINX Plus Perl Module"
   package:
-    name: nginx-plus-module-perl
+    name: "nginx-plus-module-perl{{ nginx_version | default('') }}"
     state: present
   when: nginx_type == "plus"
 

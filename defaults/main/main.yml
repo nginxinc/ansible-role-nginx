@@ -17,7 +17,9 @@ nginx_type: opensource
 
 # Specify which version of NGINX you want to install.
 # Default is empty.
-# nginx_version: =19-1~bionic
+# nginx_version: "=19-1~bionic"
+# For Plus and modules you'll need a wilcard like below (which installs plus-20 and modules)
+# nginx_version: "-20*"
 
 # Specify whether you want to maintain your version of NGINX, upgrade to the latest version, or remove NGINX.
 # Can be used with `nginx_version` to achieve fine tune control on which version of NGINX is installed/used on each playbook execution.

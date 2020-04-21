@@ -72,8 +72,6 @@
       tags: nginx_delete_license
 
   when: nginx_enable | bool
-  always:
-    notify: "(Handler: All OSs) Check NGINX"
 
 - import_tasks: amplify/install-amplify.yml
   when:

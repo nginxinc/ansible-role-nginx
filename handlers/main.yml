@@ -37,7 +37,3 @@
     name: unitd
     state: started
     enabled: yes
-
-- name: "(Handler: All OSs) Check NGINX"
-  command: "nginx -t"
-  changed_when: false

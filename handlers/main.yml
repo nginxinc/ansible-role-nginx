@@ -2,10 +2,6 @@
 - name: "(Handler: All OSs) Run NGINX"
   block:
 
-    - name: "(Handler: All OSs) Check NGINX"
-      command: "nginx -t"
-      changed_when: false
-
     - name: "(Handler: All OSs) Start NGINX"
       service:
         name: nginx
@@ -13,9 +9,11 @@
         enabled: yes
 
     - name: "(Handler: All OSs) Reload NGINX"
-      service:
-        name: nginx
-        state: reloaded
+      # service:
+      #   name: nginx
+      #   state: reloaded
+      command: "nginx -s reload"
+      changed_when: false
 
   when:
     - nginx_start | bool
@@ -37,3 +35,7 @@
     name: unitd
     state: started
     enabled: yes
+
+- name: "(Handler: All OSs) Check NGINX"
+  command: "nginx -t"
+  changed_when: false

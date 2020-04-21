@@ -7,11 +7,9 @@
         name: nginx
         state: started
         enabled: yes
+      notify: "(Handler: All OSs) Check NGINX"
 
     - name: "(Handler: All OSs) Reload NGINX"
-      # service:
-      #   name: nginx
-      #   state: reloaded
       command: "nginx -s reload"
       changed_when: false
 

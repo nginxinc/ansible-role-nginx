@@ -37,10 +37,3 @@
 - name: "(Handler: All OSs) Check NGINX"
   command: "nginx -t"
   changed_when: false
-
-- name: "(Handler: All OSs) Restart NGINX"
-  service:
-    name: nginx
-    state: restarted
-    enabled: yes
-  notify: "(Handler: All OSs) Check NGINX"

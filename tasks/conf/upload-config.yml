@@ -88,4 +88,5 @@
     decrypt: yes
     backup: yes
   with_fileglob: "{{ nginx_ssl_key_upload_src }}"
+  no_log: yes
   when: nginx_ssl_upload_enable | bool

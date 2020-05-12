@@ -6,3 +6,7 @@
 - name: "(Setup: FreeBSD) Install Prerequisites"
   import_tasks: setup-freebsd.yml
   when: ansible_system == "FreeBSD"
+
+- name: "(Setup: CentOS/RedHat) Install Prerequisites"
+  import_tasks: setup-redhat.yml
+  when: ansible_os_family == "RedHat"

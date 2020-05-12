@@ -7,6 +7,7 @@
   register: web_dependencies_installed
   until: web_dependencies_installed is succeeded
   when:
+    - ansible_selinux.status == "enabled"
     - ansible_distribution_major_version == "7" or ansible_distribution_major_version == "6"
 
 - name: "(Install: CentOS/RedHat) Install related SELinux package on RHEL8"
@@ -17,6 +18,7 @@
   register: web_dependencies_installed
   until: web_dependencies_installed is succeeded
   when:
+    - ansible_selinux.status == "enabled"
     - ansible_distribution_major_version == "8"
 
 - name: "(Install: CentOS/RedHat) Enable httpd_can_network_connect SELinux boolean"
@@ -24,9 +26,13 @@
     name: httpd_can_network_connect
     state: yes
     persistent: yes
+  when:
+    - ansible_selinux.status == "enabled"
 
 - name: "(Install: CentOS/RedHat) Enable httpd_setrlimit SELinux boolean"
   seboolean:
     name: httpd_setrlimit
     state: yes
     persistent: yes
+  when:
+    - ansible_selinux.status == "enabled"

@@ -19,7 +19,7 @@ Instructions on how to install Ansible can be found in the [Ansible website](htt
 
 **Molecule**
 
-Molecule is used to test the various functionailities of the role. Instructions on how to install Molecule can be found in the [Molecule website](https://molecule.readthedocs.io/en/stable/installation.html).
+Molecule is used to test the various functionailities of the role. Instructions on how to install Molecule can be found in the [Molecule website](https://molecule.readthedocs.io/en/latest/installation.html).
 
 Installation
 ------------
@@ -45,6 +45,7 @@ Alpine:
     - 3.8
     - 3.9
     - 3.10
+    - 3.11
 CentOS:
   versions:
     - 6
@@ -81,6 +82,7 @@ Alpine:
     - 3.8
     - 3.9
     - 3.10
+    - 3.11
 Amazon Linux:
   versions:
     - 2018.03

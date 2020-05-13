@@ -17,7 +17,9 @@ nginx_type: opensource
 
 # Specify which version of NGINX you want to install.
 # Default is empty.
-# nginx_version: =19-1~bionic
+# nginx_version: "=19-1~bionic"
+# For Plus and modules you'll need a wilcard like below (which installs plus-20 and modules)
+# nginx_version: "-20*"
 
 # Specify whether you want to maintain your version of NGINX, upgrade to the latest version, or remove NGINX.
 # Can be used with `nginx_version` to achieve fine tune control on which version of NGINX is installed/used on each playbook execution.
@@ -28,10 +30,24 @@ nginx_type: opensource
 nginx_state: present
 
 # Specify repository origin for NGINX Open Source.
-# Options are 'nginx_repository' or 'os_repository'.
+# Options are 'nginx_repository', 'source' or 'os_repository'.
 # Only works if 'nginx_type' is set to 'opensource'.
 # Default is nginx_repository.
 nginx_install_from: nginx_repository
+
+# Specify source install options for NGINX Open Source.
+# Options represent whether to install from source also
+# or to install from packages (default). These only apply
+# if 'nginx_install_from' is set to 'source'
+# For the tools, true means we will isntall from a package
+# and false means install from source.
+# 'nginx_install_source_build_tools' will install compiler
+# and build tools from packages.  If false, you need to have
+# these present.
+nginx_install_source_build_tools: true
+nginx_install_source_pcre: false
+nginx_install_source_openssl: true
+nginx_install_source_zlib: false
 
 # Choose where to fetch the NGINX signing key from.
 # Default is the official NGINX signing key host.
@@ -44,7 +60,7 @@ nginx_install_from: nginx_repository
 
 # Specify which branch of NGINX Open Source you want to install.
 # Options are 'mainline' or 'stable'.
-# Only works if 'install_from' is set to 'nginx_repository'.
+# Only works if 'install_from' is set to 'nginx_repository' or 'source'.
 # Default is mainline.
 nginx_branch: mainline
 

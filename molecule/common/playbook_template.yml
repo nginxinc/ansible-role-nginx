@@ -351,3 +351,16 @@
                 port: 8091
                 weight: 1
                 health_check: max_fails=1 fail_timeout=10s
+
+    nginx_logrotate_conf_enable: true
+    nginx_logrotate_conf:
+      paths:
+        - "/var/log/nginx/*.log"
+      options:
+        - daily
+        - missingok
+        - rotate 14
+        - compress
+        - delaycompress
+        - notifempty
+        - sharedscripts

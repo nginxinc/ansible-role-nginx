@@ -1,0 +1,31 @@
+{% for path in nginx_logrotate_conf.paths %}
+{{ path }}
+{% endfor %}
+{
+{% for option in nginx_logrotate_conf.options %}
+    {{ option }}
+{% endfor %}
+    prerotate
+        if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
+            run-parts /etc/logrotate.d/httpd-prerotate; \
+        fi \
+    endscript
+    postrotate
+{% if ansible_os_family == "Debian" %}
+        invoke-rc.d nginx rotate >/dev/null 2>&1
+{% elif ansible_os_family == "RedHat" %}
+    {% if ansible_distribution_major_version == "6" %}
+        service nginx start
+        service nginx reload
+    {% else %}
+        systemctl start nginx
+        systemctl reload nginx
+    {% endif %}
+{% elif ansible_os_family == "Alpine" %}
+        service nginx start
+        service nginx reload
+{% else %}
+        nginx -s reopen
+{% endif %}
+    endscript
+}

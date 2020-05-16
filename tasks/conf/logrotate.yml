@@ -1,0 +1,38 @@
+---
+- name: Install logrotate
+  apk:
+    name: logrotate
+  when: ansible_os_family == "Alpine"
+
+- name: Install logrotate
+  apt:
+    name: logrotate
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Install logrotate
+  yum:
+    name: logrotate
+    state: present
+  when: ansible_os_family == "RedHat"
+
+- name: Add logrotate repo
+  zypper_repository:
+    repo: https://download.opensuse.org/repositories/openSUSE:Leap:42.1/standard/openSUSE:Leap:42.1.repo
+  when: ansible_os_family == "Suse"
+
+- name: Install logrotate
+  zypper:
+    name: logrotate
+    state: present
+  when: ansible_os_family == "Suse"
+
+- name: Create logrotate config
+  template:
+    src: "logrotate/nginx.j2"
+    dest: "/etc/logrotate.d/nginx"
+  register: nginx_logrotate_result
+
+- name: Run logrotate
+  command: logrotate -f /etc/logrotate.d/nginx
+  changed_when: nginx_logrotate_result.changed

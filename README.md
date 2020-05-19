@@ -362,6 +362,60 @@ This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a 
 ```
 
 
+This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a localhost and changes logs permission with custom logrotate config.
+
+```yaml
+---
+- hosts: localhost
+  become: true
+  roles:
+    - role: nginxinc.nginx
+  vars:
+    nginx_http_template_enable: true
+    nginx_http_template:
+      default:
+        template_file: http/default.conf.j2
+        conf_file_name: default.conf
+        conf_file_location: /etc/nginx/conf.d/
+        servers:
+          server1:
+            listen:
+              listen_localhost:
+                # ip: 0.0.0.0
+                port: 80
+            server_name: localhost
+            error_page: /usr/share/nginx/html
+            access_log:
+              - name: main
+                location: /var/log/nginx/access.log
+            error_log:
+              location: /var/log/nginx/error.log
+              level: warn
+            autoindex: false
+            web_server:
+              locations:
+                default:
+                  location: /
+                  html_file_location: /usr/share/nginx/html
+                  html_file_name: index.html
+                  autoindex: false
+              http_demo_conf: false
+    nginx_logrotate_conf_enable: true
+    nginx_logrotate_conf:
+      paths:
+        - "/var/log/nginx/*.log"
+      options:
+        - daily
+        - missingok
+        - rotate 14
+        - compress
+        - delaycompress
+        - notifempty
+        - create 0644 www-data adm # Changes nginx logs permissions
+        - sharedscripts
+```
+
+
 This is a sample playbook file for deploying the Ansible Galaxy NGINX role in a localhost and installing NGINX Plus.
 
 ```yaml

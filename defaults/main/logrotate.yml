@@ -1,0 +1,15 @@
+---
+# Create custom logrotate config
+nginx_logrotate_conf_enable: false
+nginx_logrotate_conf:
+  paths:
+    - "/var/log/nginx/*.log"
+  options:
+    - daily
+    - missingok
+    - rotate 14
+    - compress
+    - delaycompress
+    - notifempty
+    - create 0644 www-data adm  # Changes nginx logs permissions
+    - sharedscripts

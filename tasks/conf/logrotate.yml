@@ -1,0 +1,41 @@
+---
+- name: "(Config: Alpine) Install Logrotate"
+  apk:
+    name: logrotate
+  when: ansible_os_family == "Alpine"
+
+- name: "(Config: Ubuntu/Debian) Install Logrotate"
+  apt:
+    name: logrotate
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: "(Config: CentOS/RedHat) Install Logrotate"
+  yum:
+    name: logrotate
+    state: present
+  when: ansible_os_family == "RedHat"
+
+- name: "(Config: SUSE) Add Logrotate Repo"
+  zypper_repository:
+    repo: https://download.opensuse.org/repositories/openSUSE:Leap:42.1/standard/openSUSE:Leap:42.1.repo
+  when: ansible_os_family == "Suse"
+
+- name: "(Config: SUSE) Install Logrotate"
+  zypper:
+    name: logrotate
+    state: present
+  when: ansible_os_family == "Suse"
+
+- name: "(Config: All OSs) Create Logrotate Config"
+  template:
+    src: "logrotate/nginx.j2"
+    dest: "/etc/logrotate.d/nginx"
+  register: nginx_logrotate_result
+
+- name: "(Config: All OSs) Ensure NGINX is Running"
+  meta: flush_handlers
+
+- name: "(Config: All OSs) Run Logrotate"
+  command: logrotate -f /etc/logrotate.d/nginx
+  changed_when: nginx_logrotate_result.changed

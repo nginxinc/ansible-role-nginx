@@ -13,17 +13,6 @@
     postrotate
 {% if ansible_os_family == "Debian" %}
         invoke-rc.d nginx rotate >/dev/null 2>&1
-{% elif ansible_os_family == "RedHat" %}
-    {% if ansible_distribution_major_version == "6" %}
-        service nginx start
-        service nginx reload
-    {% else %}
-        systemctl start nginx
-        systemctl reload nginx
-    {% endif %}
-{% elif ansible_os_family == "Alpine" %}
-        service nginx start
-        service nginx reload
 {% else %}
         nginx -s reopen
 {% endif %}

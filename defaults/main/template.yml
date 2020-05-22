@@ -114,6 +114,8 @@ nginx_http_template:
           trusted_cert: /etc/ssl/certs/root_CA_cert_plus_intermediates.crt
           stapling: true
           stapling_verify: true
+          buffer_size: 16k
+          ecdh_curve: auto
         sub_filter:
           # sub_filters: []
           last_modified: "off"

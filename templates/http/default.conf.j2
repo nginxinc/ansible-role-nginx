@@ -116,6 +116,12 @@ server {
 {% if item.value.servers[server].ssl.stapling_verify is defined and item.value.servers[server].ssl.stapling_verify %}
     ssl_stapling_verify on;
 {% endif %}
+{% if item.value.servers[server].ssl.ecdh_curve is defined and item.value.servers[server].ssl.ecdh_curve %}
+    ssl_ecdh_curve {{ item.value.servers[server].ssl.ecdh_curve }};
+{% endif %}
+{% if item.value.servers[server].ssl.buffer_size is defined and item.value.servers[server].ssl.buffer_size %}
+    ssl_buffer_size {{ item.value.servers[server].ssl.buffer_size }};
+{% endif %}
 {% endif %}
 {% if item.value.servers[server].include_files is defined and item.value.servers[server].include_files | length %}
 {% for file in item.value.servers[server].include_files %}

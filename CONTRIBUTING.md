@@ -28,11 +28,11 @@ Follow our [Installation Guide](https://github.com/nginxinc/ansible-role-nginx/b
 
 *   The NGINX Ansible role is written in `yaml` and supports open source NGINX, NGINX Plus, NGINX Amplify, and NGINX Unit.
 *   The project follows the standard [Ansible role directory structure](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html)
-    *   The main code is found at `tasks/`
-    *   The main variables can be found at `defaults/main/`
-    *   Configuration templates for NGINX can be found at `templates/`
+    *   The main code is found in `tasks/`
+    *   The main variables can be found in `defaults/main/`
+    *   Configuration templates for NGINX can be found in `templates/`
     *   [Molecule](https://molecule.readthedocs.io/) tests can be found in `molecule/`.
-    *   CI/CD is done via Travis using `.travis.yml` Deployment yaml files, and Helm files are found at `deployments/`
+    *   CI/CD is done via Travis using `.travis.yml` deployment yaml files
 
 ## Contributing
 
@@ -46,7 +46,7 @@ To suggest an enhancement, please create an issue on GitHub with the label `enha
 
 ### Open a Pull Request
 
-*   Fork the repo, create a branch, submit a PR when your changes are tested and ready for review
+*   Fork the repo, create a branch, submit a PR when your changes are tested (ideally using Molecule) and ready for review
 *   Fill in [our pull request template](https://github.com/nginxinc/ansible-role-nginx/blob/master/.github/PULL_REQUEST_TEMPLATE.md)
 
 Note: if you’d like to implement a new feature, please consider creating a feature request issue first to start a discussion about the feature.

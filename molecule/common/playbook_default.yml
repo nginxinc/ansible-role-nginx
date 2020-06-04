@@ -17,4 +17,18 @@
   roles:
     - role: ansible-role-nginx
   vars:
+    nginx_debug_output: true
+
     nginx_version: "{{ version }}"
+    nginx_logrotate_conf_enable: true
+    nginx_logrotate_conf:
+      paths:
+        - "/var/log/nginx/*.log"
+      options:
+        - daily
+        - missingok
+        - rotate 14
+        - compress
+        - delaycompress
+        - notifempty
+        - sharedscripts

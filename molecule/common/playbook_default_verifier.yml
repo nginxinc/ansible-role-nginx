@@ -1,0 +1,10 @@
+---
+- name: Verify
+  hosts: all
+  tasks:
+    - name: "Test NGINX is installed"
+      assert:
+    - name: "Test NGINX service is running and enabled"
+      assert:
+    - name: "Test NGINX is listening"
+      assert:

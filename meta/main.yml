@@ -11,13 +11,15 @@ galaxy_info:
   platforms:
     - name: Alpine
       versions:
-        - all
+        - any
     - name: Amazon
       versions:
-        - Candidate
+        - 2018.03
+    - name: Amazon Linux 2
+      versions:
+        - any
     - name: Debian
       versions:
-        - jessie
         - stretch
         - buster
     - name: EL
@@ -32,6 +34,7 @@ galaxy_info:
       versions:
         - xenial
         - bionic
+        - focal
     - name: SLES
       versions:
         - 12

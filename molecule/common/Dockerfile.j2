@@ -17,7 +17,7 @@ ENV {{ var }} {{ value }}
 RUN \
   if [ $(command -v apt-get) ]; then \
     apt-get update \
-    && apt-get install -y python3 sudo bash ca-certificates iproute2 python3-apt aptitude systemd systemd-sysv procps curl \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y python3 sudo bash ca-certificates iproute2 python3-apt aptitude systemd systemd-sysv procps curl \
     && apt-get clean; \
   elif [ $(command -v dnf) ]; then \
     dnf makecache \

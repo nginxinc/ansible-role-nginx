@@ -72,6 +72,7 @@ Ubuntu:
   versions:
     - xenial
     - bionic
+    - focal
 ```
 
 **NGINX Plus**
@@ -88,7 +89,7 @@ Amazon Linux:
     - 2018.03
 Amazon Linux 2:
   versions:
-    - LTS
+    - any
 CentOS:
   versions:
     - 6.5+
@@ -119,6 +120,7 @@ Ubuntu:
   versions:
     - xenial
     - bionic
+    - focal
 ```
 
 **NGINX Amplify Agent**
@@ -148,33 +150,31 @@ RedHat:
 **NGINX Unit**
 
 ```yaml
-CentOS:
-  versions:
-    - 6
-    - 7
-RedHat:
-  versions:
-    - 6
-    - 7
-Debian:
-  versions:
-    - jessie
-    - stretch
-    - buster
-Ubuntu:
-  versions:
-    - xenial
-    - bionic
 Amazon Linux:
   versions:
     - 2018.03
 Amazon Linux 2:
   versions:
-    - 2
-FreeBSD:
+    - any
+CentOS:
   versions:
-    - 10
-    - 11
+    - 6
+    - 7
+    - 8
+Debian:
+  versions:
+    - stretch
+    - buster
+RedHat:
+  versions:
+    - 6
+    - 7
+    - 8
+Ubuntu:
+  versions:
+    - xenial
+    - bionic
+    - focal
 ```
 
 Role Variables

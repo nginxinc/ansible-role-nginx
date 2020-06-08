@@ -43,7 +43,7 @@
     - name: "(Install: Linux) Install Build Tools - Debian/Ubuntu"
       package:
         name:
-          - python-minimal
+          - python3-minimal
           - build-essential
           - perl
           - tar

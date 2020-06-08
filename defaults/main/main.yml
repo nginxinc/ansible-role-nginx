@@ -39,7 +39,7 @@ nginx_install_from: nginx_repository
 # Options represent whether to install from source also
 # or to install from packages (default). These only apply
 # if 'nginx_install_from' is set to 'source'
-# For the tools, true means we will isntall from a package
+# For the tools, true means we will install from a package
 # and false means install from source.
 # 'nginx_install_source_build_tools' will install compiler
 # and build tools from packages.  If false, you need to have

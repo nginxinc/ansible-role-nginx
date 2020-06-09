@@ -5,14 +5,11 @@
 {% for option in nginx_logrotate_conf.options %}
     {{ option }}
 {% endfor %}
-    prerotate
-        if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
-            run-parts /etc/logrotate.d/httpd-prerotate; \
-        fi \
-    endscript
     postrotate
 {% if ansible_os_family == "Debian" %}
-        invoke-rc.d nginx rotate >/dev/null 2>&1
+        if [ -f /var/run/nginx.pid ]; then
+            kill -USR1 `cat /var/run/nginx.pid`
+        fi
 {% else %}
         nginx -s reopen
 {% endif %}

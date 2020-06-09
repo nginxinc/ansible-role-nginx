@@ -17,7 +17,7 @@ upstream {{ item.value.upstreams[upstream].name }} {
 {% endif %}
 {% if item.value.upstreams[upstream].custom_options is defined and item.value.upstreams[upstream].custom_options | length %}
 {% for inline_option in item.value.upstreams[upstream].custom_options %}
-    {{ inline_option }};
+    {{ inline_option }}
 {% endfor %}
 {% endif %}
 }
@@ -26,7 +26,7 @@ upstream {{ item.value.upstreams[upstream].name }} {
 
 {% if item.value.custom_options is defined and item.value.custom_options | length %}
 {% for inline_option in item.value.custom_options %}
-{{ inline_option }};
+{{ inline_option }}
 {% endfor %}
 {% endif %}
 
@@ -105,7 +105,7 @@ server {
 {% endif %}
 {% if item.value.network_streams[stream].custom_options is defined and item.value.network_streams[stream].custom_options | length %}
 {% for inline_option in item.value.network_streams[stream].custom_options %}
-    {{ inline_option }};
+    {{ inline_option }}
 {% endfor %}
 {% endif %}
 }

@@ -17,7 +17,7 @@ upstream {{ item.value.upstreams[upstream].name }} {
 {% endif %}
 {% if item.value.upstreams[upstream].custom_options is defined and item.value.upstreams[upstream].custom_options | length %}
 {% for inline_option in item.value.upstreams[upstream].custom_options %}
-    {{ inline_option }};
+    {{ inline_option }}
 {% endfor %}
 {% endif %}
 }
@@ -72,7 +72,7 @@ auth_request_set {{ item.value.auth_request_set_http.name }} {{ item.value.auth_
 
 {% if item.value.custom_options is defined and item.value.custom_options | length %}
 {% for inline_option in item.value.custom_options %}
-{{ inline_option }};
+{{ inline_option }}
 {% endfor %}
 {% endif %}
 
@@ -181,7 +181,7 @@ server {
 {% endif %}
 {% if item.value.servers[server].custom_options is defined and item.value.servers[server].custom_options | length %}
 {% for inline_option in item.value.servers[server].custom_options %}
-    {{ inline_option }};
+    {{ inline_option }}
 {% endfor %}
 {% endif %}
 
@@ -370,7 +370,7 @@ server {
 {% endif %}
 {% if item.value.servers[server].reverse_proxy.locations[location].custom_options is defined and item.value.servers[server].reverse_proxy.locations[location].custom_options | length %}
 {% for inline_option in item.value.servers[server].reverse_proxy.locations[location].custom_options %}
-        {{ inline_option }};
+        {{ inline_option }}
 {% endfor %}
 {% endif %}
 {% if (item.value.servers[server].reverse_proxy.health_check_plus is defined) and item.value.servers[server].reverse_proxy.health_check_plus %}
@@ -403,7 +403,7 @@ server {
 {% endif %}
 {% if item.value.servers[server].web_server.locations[location].custom_options is defined and item.value.servers[server].web_server.locations[location].custom_options | length %}
 {% for inline_option in item.value.servers[server].web_server.locations[location].custom_options %}
-        {{ inline_option }};
+        {{ inline_option }}
 {% endfor %}
 {% endif %}
 {% if item.value.servers[server].web_server.locations[location].proxy_hide_headers is defined %}

@@ -298,11 +298,11 @@
                   html_file_location: /usr/share/nginx/html
                   autoindex: false
                   custom_options:
-                    - fastcgi_split_path_info ^(.+\.php)(/.+)$
-                    - fastcgi_pass unix:/run/php/php7.2-fpm.sock
-                    - fastcgi_index index.php
-                    - include fastcgi_params
-                    - fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name
+                    - fastcgi_split_path_info ^(.+\.php)(/.+)$;
+                    - fastcgi_pass unix:/run/php/php7.2-fpm.sock;
+                    - fastcgi_index index.php;
+                    - include fastcgi_params;
+                    - fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
               sub_filter:
                 # sub_filters: []
                 last_modified: "off"

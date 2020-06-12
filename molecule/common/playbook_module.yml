@@ -6,6 +6,12 @@
   vars:
     nginx_debug_output: true
 
+    nginx_cleanup_config: true
+    nginx_cleanup_config_path:
+      - directory:
+          - /etc/nginx/conf.d
+        recurse: false
+
     nginx_modules:
       njs: true
       perl: true

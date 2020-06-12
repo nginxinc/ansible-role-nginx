@@ -86,8 +86,11 @@ nginx_modules:
   xslt: false
 
 # Remove previously existing NGINX configuration files.
-# Use a list of paths you wish to remove.
+# You can specify a list of paths you wish to remove.
+# Alternatively you can also choose whether to recurse through the paths specified.
 # Default is false.
 nginx_cleanup_config: false
 nginx_cleanup_config_path:
-  - /etc/nginx/conf.d
+  - directory:
+      - /etc/nginx/conf.d
+    recurse: false

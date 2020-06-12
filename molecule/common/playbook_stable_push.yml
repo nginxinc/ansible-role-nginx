@@ -7,11 +7,7 @@
     nginx_debug_output: true
 
     nginx_branch: stable
-    nginx_cleanup_config: true
-    nginx_cleanup_config_path:
-      - directory:
-          - /etc/nginx/conf.d
-        recurse: false
-
     nginx_main_upload_enable: true
     nginx_main_upload_src: files/nginx.conf
+    nginx_http_upload_enable: true
+    nginx_http_upload_src: files/http/*.conf

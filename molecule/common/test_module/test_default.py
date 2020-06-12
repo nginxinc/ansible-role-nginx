@@ -22,9 +22,3 @@ def test_hosts_file(host):
     assert ngx.exists
     assert ngx.user == 'root'
     assert ngx.group == 'root'
-
-
-def test_endpoint(host):
-    command = """curl -I http://localhost/"""
-    cmd = host.run(command)
-    assert '200 OK' in cmd.stdout

@@ -1,0 +1,17 @@
+{% for path in nginx_logrotate_conf.paths %}
+{{ path }}
+{% endfor %}
+{
+{% for option in nginx_logrotate_conf.options %}
+    {{ option }}
+{% endfor %}
+    postrotate
+{% if ansible_os_family == "Debian" %}
+        if [ -f /var/run/nginx.pid ]; then
+            kill -USR1 `cat /var/run/nginx.pid`
+        fi
+{% else %}
+        nginx -s reopen
+{% endif %}
+    endscript
+}

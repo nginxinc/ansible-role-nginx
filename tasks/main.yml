@@ -83,3 +83,7 @@
 - import_tasks: unit/install-unit.yml
   when: nginx_unit_enable | bool
   tags: nginx_install_unit
+
+- import_tasks: conf/logrotate.yml
+  when: nginx_logrotate_conf_enable | bool
+  tags: nginx_logrotate_config

@@ -17,7 +17,7 @@ upstream {{ item.value.upstreams[upstream].name }} {
 {% endif %}
 {% if item.value.upstreams[upstream].custom_options is defined and item.value.upstreams[upstream].custom_options | length %}
 {% for inline_option in item.value.upstreams[upstream].custom_options %}
-    {{ inline_option }};
+    {{ inline_option }}
 {% endfor %}
 {% endif %}
 }
@@ -72,7 +72,7 @@ auth_request_set {{ item.value.auth_request_set_http.name }} {{ item.value.auth_
 
 {% if item.value.custom_options is defined and item.value.custom_options | length %}
 {% for inline_option in item.value.custom_options %}
-{{ inline_option }};
+{{ inline_option }}
 {% endfor %}
 {% endif %}
 
@@ -115,6 +115,12 @@ server {
 {% endif %}
 {% if item.value.servers[server].ssl.stapling_verify is defined and item.value.servers[server].ssl.stapling_verify %}
     ssl_stapling_verify on;
+{% endif %}
+{% if item.value.servers[server].ssl.ecdh_curve is defined and item.value.servers[server].ssl.ecdh_curve %}
+    ssl_ecdh_curve {{ item.value.servers[server].ssl.ecdh_curve }};
+{% endif %}
+{% if item.value.servers[server].ssl.buffer_size is defined and item.value.servers[server].ssl.buffer_size %}
+    ssl_buffer_size {{ item.value.servers[server].ssl.buffer_size }};
 {% endif %}
 {% endif %}
 {% if item.value.servers[server].include_files is defined and item.value.servers[server].include_files | length %}
@@ -175,7 +181,7 @@ server {
 {% endif %}
 {% if item.value.servers[server].custom_options is defined and item.value.servers[server].custom_options | length %}
 {% for inline_option in item.value.servers[server].custom_options %}
-    {{ inline_option }};
+    {{ inline_option }}
 {% endfor %}
 {% endif %}
 
@@ -259,13 +265,13 @@ server {
 {% for header in item.value.servers[server].reverse_proxy.locations[location].proxy_set_header %}
         proxy_set_header {{ item.value.servers[server].reverse_proxy.locations[location].proxy_set_header[header].name }} {{ item.value.servers[server].reverse_proxy.locations[location].proxy_set_header[header].value }};
 {% endfor %}
+{% endif %}
 {% if item.value.servers[server].reverse_proxy.locations[location].proxy_http_version is defined %}
         proxy_http_version {{ item.value.servers[server].reverse_proxy.locations[location].proxy_http_version }};
 {% endif %}
 {% if item.value.servers[server].reverse_proxy.locations[location].websocket is defined and item.value.servers[server].reverse_proxy.locations[location].websocket %}
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "Upgrade";
-{% endif %}
 {% endif %}
 {% if item.value.servers[server].reverse_proxy.locations[location].try_files is defined %}
         try_files {{ item.value.servers[server].reverse_proxy.locations[location].try_files }};
@@ -364,7 +370,7 @@ server {
 {% endif %}
 {% if item.value.servers[server].reverse_proxy.locations[location].custom_options is defined and item.value.servers[server].reverse_proxy.locations[location].custom_options | length %}
 {% for inline_option in item.value.servers[server].reverse_proxy.locations[location].custom_options %}
-        {{ inline_option }};
+        {{ inline_option }}
 {% endfor %}
 {% endif %}
 {% if (item.value.servers[server].reverse_proxy.health_check_plus is defined) and item.value.servers[server].reverse_proxy.health_check_plus %}
@@ -397,7 +403,7 @@ server {
 {% endif %}
 {% if item.value.servers[server].web_server.locations[location].custom_options is defined and item.value.servers[server].web_server.locations[location].custom_options | length %}
 {% for inline_option in item.value.servers[server].web_server.locations[location].custom_options %}
-        {{ inline_option }};
+        {{ inline_option }}
 {% endfor %}
 {% endif %}
 {% if item.value.servers[server].web_server.locations[location].proxy_hide_headers is defined %}

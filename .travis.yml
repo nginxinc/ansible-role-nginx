@@ -4,47 +4,65 @@ services:
   - docker
 jobs:
   include:
-    - name: "Install Specific Version Test - Debian"
-      env: scenario=default
-    - name: "Install Specific Version Test - Alpine"
-      env: scenario=default_alpine
-    - name: "Install Specific Version Test - CentOS"
-      env: scenario=default_centos
-    - name: "Install Modules Test - Debian"
-      env: scenario=module
-    - name: "Install Modules Test - Alpine"
-      env: scenario=module_alpine
-    - name: "Install Modules Test - CentOS"
-      env: scenario=module_centos
-    - name: "Install Stable Branch and Push Configuration Test - Debian"
-      env: scenario=stable_push
-    - name: "Install Stable Branch and Push Configuration Test - Alpine"
-      env: scenario=stable_push_alpine
-    - name: "Install Stable Branch and Push Configuration Test - CentOS"
-      env: scenario=stable_push_centos
-    - name: "Use Template Setting Test - Debian"
-      env: scenario=template
-    - name: "Use Template Setting Test - Alpine"
-      env: scenario=template_alpine
-    - name: "Use Template Setting Test - CentOS"
-      env: scenario=template_centos
-    - name: "Install Unit Test - Debian"
-      env: scenario=unit
-    - name: "Install Unit Test - Alpine"
-      env: scenario=unit_alpine
-    - name: "Install Unit Test - CentOS"
-      env: scenario=unit_centos
-    - name: "Install from Source Test - Debian"
-      env: scenario=source
-    - name: "Install from Source Test - Alpine"
-      env: scenario=source_alpine
-    - name: "Install from Source Test - CentOS"
-      env: scenario=source_centos
+    - name: "Install Specific Version - Debian/Ubuntu"
+      env:
+        scenario: default
+    - name: "Install Specific Version - Alpine"
+      env:
+        scenario: default_alpine
+    - name: "Install Specific Version - CentOS"
+      env:
+        scenario: default_centos
+    - name: "Install Modules - Debian/Ubuntu"
+      env:
+        scenario: module
+    - name: "Install Modules - Alpine"
+      env:
+        scenario: module_alpine
+    - name: "Install Modules - CentOS"
+      env:
+        scenario: module_centos
+    - name: "Install Stable Branch and Push Configuration - Debian/Ubuntu"
+      env:
+        scenario: stable_push
+    - name: "Install Stable Branch and Push Configuration - Alpine"
+      env:
+        scenario: stable_push_alpine
+    - name: "Install Stable Branch and Push Configuration - CentOS"
+      env:
+        scenario: stable_push_centos
+    - name: "Use Template Setting - Debian/Ubuntu"
+      env:
+        scenario: template
+    - name: "Use Template Setting - Alpine"
+      env:
+        scenario: template_alpine
+    - name: "Use Template Setting - CentOS"
+      env:
+        scenario: template_centos
+    - name: "Install Unit - Debian/Ubuntu"
+      env:
+        scenario: unit
+    - name: "Install Unit - Alpine"
+      env:
+        scenario: unit_alpine
+    - name: "Install Unit - CentOS"
+      env:
+        scenario: unit_centos
+    - name: "Install from Source - Debian/Ubuntu"
+      env:
+        scenario: source
+    - name: "Install from Source - Alpine"
+      env:
+        scenario: source_alpine
+    - name: "Install from Source - CentOS"
+      env:
+        scenario: source_centos
 before_install:
   - sudo apt-get -qq update
 install:
-  - pip install ansible==2.9.6
-  - pip install molecule[docker]>=3.0.0
+  - pip install ansible==2.9.9
+  - pip install molecule[docker]==3.0.4
   - pip install testinfra
   - pip install ansible-lint
   - pip install flake8

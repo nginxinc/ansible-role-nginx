@@ -46,6 +46,7 @@ nginx_main_template:
     last_modified: "off"
     once: "on"
     types: "text/html"
+  # custom_options: []
   # http_custom_options: []
   # events_custom_options: []
   stream_enable: false

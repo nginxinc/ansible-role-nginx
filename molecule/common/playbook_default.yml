@@ -14,6 +14,9 @@
       set_fact:
         version: "-1.17.10-1.el{{ ansible_distribution_major_version }}.ngx"
       when: ansible_os_family == "RedHat"
+    - name: "Enable Nginx @CentOS-AppStream dnf modules"
+      command: "dnf module enable -y nginx"
+      when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "8"
   roles:
     - role: ansible-role-nginx
   vars:

@@ -18,6 +18,13 @@
     enabled: yes
     gpgcheck: yes
 
+- name: "(Install: CentOS/RedHat) Set YUM NGINX Repository module_hotfixes Option"
+  lineinfile:
+    path: /etc/yum.repos.d/nginx.repo
+    insertafter: 'name'
+    regexp: '^module_hotfixes'
+    line: "module_hotfixes = True"
+
 - name: "(Install: CentOS/RedHat) Install Required CentOS/RedHat Dependencies"
   yum:
     name: openssl

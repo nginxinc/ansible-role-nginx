@@ -15,7 +15,11 @@
         version: "-1.17.10-1.el{{ ansible_distribution_major_version }}.ngx"
       when: ansible_os_family == "RedHat"
     - name: "Enable Nginx @CentOS-AppStream dnf modules"
-      command: "dnf module enable -y nginx"
+      shell:
+      args:
+        cmd: dnf module info nginx | grep -q 'Stream.*\[e\]' && echo -n ENABLED || dnf module enable -y nginx # noqa 204 303
+      register: dnf_module_enable
+      changed_when: dnf_module_enable.stdout != 'ENABLED'
       when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "8"
   roles:
     - role: ansible-role-nginx

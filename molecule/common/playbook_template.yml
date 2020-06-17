@@ -38,8 +38,14 @@
         last_modified: "off"
         once: "on"
         types: "text/html"
-      stream_enable: true
       http_global_autoindex: false
+      custom_options:
+        - master_process on;
+      http_custom_options:
+        - aio off;
+      events_custom_options:
+        - accept_mutex off;
+      stream_enable: true
 
     nginx_http_template_enable: true
     nginx_http_template:

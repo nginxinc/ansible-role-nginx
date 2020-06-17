@@ -22,6 +22,7 @@
 - name: "(Install: CentOS/RedHat) Add NGINX Repository for CentOS/RHEL 8"
   blockinfile:
     path: /etc/yum.repos.d/nginx.repo
+    create: true
     insertafter: 'name'
     block: |
       [nginx]

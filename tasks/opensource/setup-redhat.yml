@@ -23,7 +23,6 @@
   blockinfile:
     path: /etc/yum.repos.d/nginx.repo
     create: true
-    insertafter: 'name'
     block: |
       [nginx]
       baseurl = {{ repository }}

@@ -17,7 +17,7 @@
     - name: "Enable Nginx @CentOS-AppStream dnf modules"
       shell:
       args:
-        cmd: dnf module info nginx | grep -q 'Stream.*\[e\]' && echo -n ENABLED || dnf module enable -y nginx # noqa 204 303
+        cmd: dnf module info nginx | grep -q 'Stream.*\[e\]' && echo -n ENABLED || dnf module enable -y nginx  # noqa 204 303
       register: dnf_module_enable
       changed_when: dnf_module_enable.stdout != 'ENABLED'
       when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "8"

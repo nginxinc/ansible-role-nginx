@@ -11,6 +11,9 @@
 - import_tasks: setup-suse.yml
   when: ansible_os_family == "Suse"
 
+- import_tasks: setup-systemd.yml
+  when: ansible_service_mgr == "systemd"
+
 - name: "(Install: Linux) Install NGINX Plus"
   package:
     name: "nginx-plus{{ nginx_version | default('') }}"

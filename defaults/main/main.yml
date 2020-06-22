@@ -94,3 +94,9 @@ nginx_cleanup_config_path:
   - directory:
       - /etc/nginx/conf.d
     recurse: false
+
+# Set service timeout for systemd systems in seconds (default is 90s)
+# nginx_service_timeout: 120
+
+# Set the restart policy for systemd systems in seconds (default is not to set this)
+# nginx_service_restartonfailure: 30

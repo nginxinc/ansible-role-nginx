@@ -55,7 +55,6 @@
   when: nginx_http_template_enable | bool
   notify: "(Handler: All OSs) Reload NGINX"
 
-
 - name: "(Setup: All NGINX) Dynamically Generate NGINX API Configuration File"
   template:
     src: "{{ nginx_rest_api_template_file | default('http/api.conf.j2') }}"

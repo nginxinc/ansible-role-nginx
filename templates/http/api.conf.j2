@@ -2,6 +2,7 @@
 
 server {
     listen {{ nginx_rest_api_port | default('80') }};
+    access_log {{ nginx_rest_api_log | ternary("on", "off") }};
     location /api {
 {% if nginx_rest_api_write %}
         api write=on;

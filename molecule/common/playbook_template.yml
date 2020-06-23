@@ -43,6 +43,8 @@
         - master_process on;
       http_custom_options:
         - aio off;
+      http_custom_includes:
+        - "/etc/nginx/sites-enabled/*.conf"
       events_custom_options:
         - accept_mutex off;
       stream_enable: true

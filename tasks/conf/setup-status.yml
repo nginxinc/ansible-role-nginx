@@ -8,6 +8,7 @@
           listen 127.0.0.1:{{ nginx_status_port | default('80') }};
           location /nginx_status {
               stub_status on;
+              access_log {{ nginx_status_log | ternary("on", "off") }};
               allow 127.0.0.1;
               deny all;
           }
@@ -24,6 +25,7 @@
           listen 127.0.0.1:{{ nginx_status_port | default('80') }};
           location /status {
               status;
+              access_log {{ nginx_status_log | ternary("on", "off") }};
               allow 127.0.0.1;
               deny all;
           }

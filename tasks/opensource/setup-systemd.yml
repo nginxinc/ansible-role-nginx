@@ -4,7 +4,7 @@
     path: /etc/systemd/system/nginx.service.d
     state: directory
     mode: '0755'
-  when: nginx_service_timeout or nginx_service_restartonfailure is defined
+  when: nginx_service_modify
 
 - name: "(Install: Linux) Increase timeout for NGINX Plus Service"
   template:
@@ -13,4 +13,4 @@
     owner: root
     group: root
     mode: '0644'
-  when: nginx_service_timeout or nginx_service_restartonfailure is defined
+  when: nginx_service_modify

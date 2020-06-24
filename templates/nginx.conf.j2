@@ -119,6 +119,11 @@ http {
 {% endfor %}
 {% endif %}
     include /etc/nginx/conf.d/*.conf;
+{% if nginx_main_template.http_custom_includes is defined and nginx_main_template.http_custom_includes | length %}
+{% for inline_include in nginx_main_template.http_custom_includes %}
+    include {{ inline_include }};
+{% endfor %}
+{% endif %}
 }
 {% endif %}
 

@@ -49,6 +49,7 @@ nginx_main_template:
     types: "text/html"
   # custom_options: []
   # http_custom_options: []
+  # http_custom_includes: []
   # events_custom_options: []
   stream_enable: false
   # stream_custom_options: []

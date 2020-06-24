@@ -13,6 +13,7 @@
       conf_file_location: /etc/nginx/
       user: nginx
       worker_processes: auto
+      pid: /var/run/nginx.pid
       error_log:
         location: /var/log/nginx/error.log
         level: warn

@@ -13,6 +13,7 @@
       conf_file_location: /etc/nginx/
       user: nginx
       worker_processes: auto
+      pid: /var/run/nginx.pid
       error_log:
         location: /var/log/nginx/error.log
         level: warn
@@ -43,6 +44,8 @@
         - master_process on;
       http_custom_options:
         - aio off;
+      http_custom_includes:
+        - "/etc/nginx/sites-enabled/*.conf"
       events_custom_options:
         - accept_mutex off;
       stream_enable: true

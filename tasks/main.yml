@@ -1,5 +1,8 @@
 ---
-- include_tasks: "prerequisites/setup-{{ ansible_os_family }}.yml"
+- name: "What Path"
+  command: pwd
+
+- include_tasks: "../tasks/prerequisites/setup-{{ ansible_os_family | lower }}.yml"
   tags: nginx_prerequisites
 
 - name: "(Install: Debian/Ubuntu/CentOS/RedHat/FreeBSD) Install NGINX"

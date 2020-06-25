@@ -1,15 +1,10 @@
 ---
-- import_tasks: setup-alpine.yml
-  when: ansible_os_family == "Alpine"
-
-- import_tasks: setup-debian.yml
-  when: ansible_os_family == "Debian"
-
-- import_tasks: setup-redhat.yml
-  when: ansible_os_family == "RedHat"
-
-- import_tasks: setup-suse.yml
-  when: ansible_os_family == "Suse"
+- include_tasks: "setup-{{ ansible_os_family }}.yml"
+  when:
+    - ansible_os_family == "Alpine"
+      or ansible_os_family == "Debian"
+      or ansible_os_family == "RedHat"
+      or ansible_os_family == "Suse"
 
 - name: "(Install: Linux) Install NGINX Plus"
   package:

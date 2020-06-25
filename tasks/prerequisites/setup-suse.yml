@@ -1,7 +1,9 @@
 ---
 - name: "(Setup: Suse) Setup SELinux"
   include_tasks: "{{ role_path }}/tasks/prerequisites/setup-selinux.yml"
-  when: nginx_selinux
+  when:
+    - nginx_selinux
+    - ansible_selinux.mode is defined
 
 - name: "(Setup: Suse) Add rpm key"
   include_tasks: "{{ role_path }}/tasks/keys/rpm-key.yml"

@@ -25,7 +25,7 @@
     - role: ansible-role-nginx
   vars:
     nginx_debug_output: true
-
+    nginx_selinux: true
     nginx_version: "{{ version }}"
     nginx_logrotate_conf_enable: true
     nginx_logrotate_conf:

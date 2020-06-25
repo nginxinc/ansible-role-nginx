@@ -104,7 +104,7 @@ nginx_service_timeout: 120
 nginx_service_restartonfailure: 30
 
 # Set selinux enforcing for nginx (Centos/Redhat only) - you may need to open ports on your own
-nginx_selinux: true
+nginx_selinux: false
 # Enable enforcing mode if true.  Permissive if false (audit only, no enforcing) globally (only works with nginx_selinux: true)
 nginx_selinux_enforcing: true
 # Temporary directory to hold selinux modules

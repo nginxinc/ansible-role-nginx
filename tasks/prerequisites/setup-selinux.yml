@@ -3,6 +3,20 @@
   package:
     name: policycoreutils-python, setools
     state: present
+  when:
+    - not ansible_os_family == "RedHat"
+    - not ansible_distribution_major_version == "8"
+
+- name: "(Setup: SELinux) Install Required RHEL8 Dependencies"
+  package:
+    name:
+      - selinux-policy-targeted
+      - libselinux-utils
+      - policycoreutils
+    state: present
+  when:
+    - ansible_os_family == "RedHat"
+    - ansible_distribution_major_version == "8"
 
 - name: "(Setup: SELinux) Check for SELinux enabled"
   debug:

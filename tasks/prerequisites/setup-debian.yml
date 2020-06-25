@@ -7,7 +7,7 @@
       - python-apt
 
 - name: "(Setup: Debian/Ubuntu) Install apt key for Debian and Ubuntu"
-  include_tasks: keys/apt-key.yml
+  include_tasks: ../keys/apt-key.yml
   when:
     - nginx_install_from == "nginx_repository"
       or nginx_amplify_enable

@@ -107,3 +107,5 @@ nginx_service_restartonfailure: 30
 nginx_selinux: true
 # Enable enforcing mode if true.  Permissive if false (audit only, no enforcing) globally (only works with nginx_selinux: true)
 nginx_selinux_enforcing: true
+# Temporary directory to hold selinux modules
+nginx_tempdir: /tmp

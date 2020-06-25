@@ -1,73 +1,20 @@
-module nginx-plus-module-appprotect 1.0;
+module nginx-plus-module 1.0;
 
 require {
-        type faillog_t;
         type httpd_t;
-        type httpd_initrc_exec_t;
-        type httpd_log_t;
-        type http_cache_port_t;
-        type httpd_config_t;
-        type httpd_var_run_t;
-        type lastlog_t;
-        type initrc_t;
         type usr_t;
-        type security_t;
-        type shadow_t;
-        type systemd_logind_t;
-        type systemd_logind_sessions_t;
-        type unreserved_port_t;
-        type var_log_t;
-        type var_run_t;
-        
-        class capability { audit_write net_admin };
-        class dbus send_msg;
-        class dir { add_name create remove_name write }; 
-        class fifo_file { getattr ioctl open read write };
-        class file { create execute getattr read rename open setattr unlink write};
-        class netlink_selinux_socket { create bind };
-        class netlink_audit_socket { create nlmsg_relay read write };
-        class passwd passwd;
-        class security compute_av;
+        type initrc_t;
+        type http_cache_port_t;
         class sock_file write;
-        class tcp_socket name_connect;
         class unix_stream_socket connectto;
+        class file { create write };
+        class tcp_socket name_connect;
 }
 
 #============= httpd_t ==============
-allow httpd_t httpd_log_t:file write;
-allow httpd_t httpd_config_t:file write;
 allow httpd_t http_cache_port_t:tcp_socket name_connect;
-allow httpd_t httpd_var_run_t:file execute;
-
-allow httpd_t httpd_initrc_exec_t:fifo_file { getattr ioctl open read write };
-
-allow httpd_t lastlog_t:file { open read write };
-
-allow httpd_t faillog_t:file { write read open };
 
 allow httpd_t initrc_t:unix_stream_socket connectto;
 
-allow httpd_t unreserved_port_t:tcp_socket name_connect;
-
-allow httpd_t usr_t:dir { add_name create remove_name write };
-allow httpd_t usr_t:file { create rename setattr unlink write };
+allow httpd_t usr_t:file { create write };
 allow httpd_t usr_t:sock_file write;
-
-
-allow httpd_t security_t:security compute_av;
-
-allow httpd_t self:netlink_selinux_socket {create bind };
-allow httpd_t self:netlink_audit_socket { create nlmsg_relay read write };
-allow httpd_t self:passwd passwd;
-allow httpd_t self:capability { audit_write net_admin };
-
-allow httpd_t shadow_t:file { read write open getattr };
-
-allow httpd_t systemd_logind_sessions_t:fifo_file write;
-allow httpd_t systemd_logind_t:dbus send_msg;
-
-allow httpd_t var_log_t:file { open read };
-allow httpd_t var_run_t:file { read write };
-
-#============= systemd_logind_t ==============
-allow systemd_logind_t httpd_t:dbus send_msg;

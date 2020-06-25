@@ -1,11 +1,11 @@
 ---
-- name: "(Install: RedHat/CentOS) Setup SELinux"
+- name: "(Setup: RedHat/CentOS) Setup SELinux"
   command: echo "Enabling selinux..."
   notify: "(Handler: All OSs) Enable SELinux"
   when: nginx_selinux
   changed_when: false
 
-- name: "(Install: RedHat/CentOS) Add rpm key"
+- name: "(Setup: RedHat/CentOS) Add rpm key"
   include_tasks: keys/rpm-key.yml
   when:
     - nginx_install_from == "nginx_repository"

@@ -1,98 +1,98 @@
 ---
-- name: "(Install: SELinux) Install Required CentOS Dependencies"
+- name: "(Setup: SELinux) Install Required CentOS Dependencies"
   package:
     name: policycoreutils-python, setools
     state: present
 
-- name: "(Install: SELinux) Check for SELinux enabled"
+- name: "(Setup: SELinux) Check for SELinux enabled"
   debug:
     msg: "You need to enable selinux, if it was disabled you need to reboot"
   when: ansible_selinux is undefined
 
-- name: "(Install: SELinux) Permissive SELinux"
+- name: "(Setup: SELinux) Permissive SELinux"
   selinux:
     state: permissive
     policy: targeted
   changed_when: false
   when: ansible_selinux.mode == "enforcing"
 
-- name: "(Install: SELinux: Booleans) Allow HTTP network connection"
+- name: "(Setup: SELinux: Booleans) Allow HTTP network connection"
   seboolean:
     name: httpd_can_network_connect
     state: yes
     persistent: yes
 
-- name: "(Install: SELinux: Booleans) Allow HTTP relay connection"
+- name: "(Setup: SELinux: Booleans) Allow HTTP relay connection"
   seboolean:
     name: httpd_can_network_relay
     state: yes
     persistent: yes
 
-- name: "(Install: SELinux: Booleans) Allow HTTP mod auth pam"
+- name: "(Setup: SELinux: Booleans) Allow HTTP mod auth pam"
   seboolean:
     name: httpd_mod_auth_pam
     state: yes
     persistent: yes
 
-- name: "(Install: SELinux: Booleans) enable NIS"
+- name: "(Setup: SELinux: Booleans) enable NIS"
   seboolean:
     name: nis_enabled
     state: yes
     persistent: yes
 
-- name: "(Install: SELinux: Contexts) App Protect Logs"
+- name: "(Setup: SELinux: Contexts) App Protect Logs"
   sefcontext:
     target: '/var/log/app_protect(/.*)?'
     setype: httpd_log_t
     state: present
 
-- name: "(Install: SELinux: Contexts) App Protect Opt"
+- name: "(Setup: SELinux: Contexts) App Protect Opt"
   sefcontext:
     target: '/opt/app_protect(/.*)?'
     setype: httpd_var_run_t
     state: present
 
-- name: "(Install: SELinux: Contexts) App Protect Pipe"
+- name: "(Setup: SELinux: Contexts) App Protect Pipe"
   sefcontext:
     target: '/opt/app_protect/pipe(/.*)?'
     setype: httpd_initrc_exec_t
     state: present
 
-- name: "(Install: SELinux: Contexts) App Protect Config"
+- name: "(Setup: SELinux: Contexts) App Protect Config"
   sefcontext:
     target: '/opt/app_protect/config(/.*)?'
     setype: httpd_config_t
     state: present
 
-- name: "(Install: SELinux: Contexts) App Protect bin"
+- name: "(Setup: SELinux: Contexts) App Protect bin"
   sefcontext:
     target: '/opt/app_protect/bin(/.*)?'
     setype: httpd_exec_t
     state: present
 
-- name: "(Install: SELinux: Contexts) App Protect lock"
+- name: "(Setup: SELinux: Contexts) App Protect lock"
   sefcontext:
     target: '/opt/app_protect/lock(/.*)?'
     setype: httpd_lock_t
     state: present
 
-- name: "(Install: SELinux: Contexts) App Protect Temp"
+- name: "(Setup: SELinux: Contexts) App Protect Temp"
   sefcontext:
     target: '/opt/app_protect/temp(/.*)?'
     setype: httpd_tmp_t
     state: present
 
-- name: "(Install: SELinux: Contexts) App Protect Tmp"
+- name: "(Setup: SELinux: Contexts) App Protect Tmp"
   sefcontext:
     target: '/opt/app_protect/tmp(/.*)?'
     setype: httpd_tmp_t
     state: present
 
-- name: "(Install: SELinux: Contexts) Apply contexts to opt"
+- name: "(Setup: SELinux: Contexts) Apply contexts to opt"
   command: restorecon -iRv /opt/app_protect
   changed_when: false
 
-- name: "(Install: SELinux: Contexts) Apply permissions to opt/config"
+- name: "(Setup: SELinux: Contexts) Apply permissions to opt/config"
   file:
     path: /opt/app_protect/config
     owner: nginx
@@ -100,34 +100,34 @@
     mode: u=rwx,go=rx,g+s
     state: directory
 
-- name: "(Install: SELinux: Contexts) Apply contexts to log"
+- name: "(Setup: SELinux: Contexts) Apply contexts to log"
   command: restorecon -iRv /var/log/app_protect
   changed_when: false
 
-- name: "(Install: SELinux: Module) Create NGINX Plus App Protect Module"
+- name: "(Setup: SELinux: Module) Create NGINX Plus App Protect Module"
   template:
     src: nginx-plus-module-appprotect.te.j2
     dest: "{{ app_protect_tempdir }}/nginx-plus-module-appprotect.te"
   register: app_protect_module
 
-- name: "(Install: SELinux: Module) Check NGINX Plus App Protect Module"
+- name: "(Setup: SELinux: Module) Check NGINX Plus App Protect Module"
   command: "checkmodule -M -m -o {{ app_protect_tempdir }}/nginx-plus-module-appprotect.mod {{ app_protect_tempdir }}/nginx-plus-module-appprotect.te"
   args:
     creates: "{{ app_protect_tempdir }}/nginx-plus-module-appprotect.mod"
   changed_when: false
 
-- name: "(Install: SELinux: Module) Compile NGINX Plus App Protect Module"
+- name: "(Setup: SELinux: Module) Compile NGINX Plus App Protect Module"
   command: "semodule_package -o {{ app_protect_tempdir }}/nginx-plus-module-appprotect.pp -m {{ app_protect_tempdir }}/nginx-plus-module-appprotect.mod"
   args:
     creates: "{{ app_protect_tempdir }}/nginx-plus-module-appprotect.pp"
   changed_when: false
 
-- name: "(Install: SELinux: Module) Import NGINX Plus App Protect Module"  # noqa 503
+- name: "(Setup: SELinux: Module) Import NGINX Plus App Protect Module"  # noqa 503
   command: "semodule -i {{ app_protect_tempdir }}/nginx-plus-module-appprotect.pp"
   changed_when: false
   when: app_protect_module.changed
 
-- name: "(Install: SELinux) Enforce SELinux"
+- name: "(Setup: SELinux) Enforce SELinux"
   selinux:
     state: enforcing
     policy: targeted

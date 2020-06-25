@@ -1,11 +1,11 @@
 ---
-- name: "(Install: Suse) Setup SELinux"
+- name: "(Setup: Suse) Setup SELinux"
   command: echo "Enabling selinux..."
   notify: "(Handler: All OSs) Enable SELinux"
   when: nginx_selinux
   changed_when: false
 
-- name: "(Install: Suse) Add rpm key"
+- name: "(Setup: Suse) Add rpm key"
   include_tasks: keys/rpm-key.yml
   when:
     - nginx_install_from == "nginx_repository"

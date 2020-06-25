@@ -1,12 +1,12 @@
 ---
-- name: "(Install: Debian/Ubuntu) Install Required Debian and Ubuntu Dependencies"
+- name: "(Setup: Debian/Ubuntu) Install Required Debian and Ubuntu Dependencies"
   apt:
     name:
       - apt-transport-https
       - dirmngr
       - python-apt
 
-- name: "(Install: Debian/Ubuntu) Install apt key for Debian and Ubuntu"
+- name: "(Setup: Debian/Ubuntu) Install apt key for Debian and Ubuntu"
   inclule_tasks: keys/apt-key.yml
   when:
     - nginx_install_from == "nginx_repository"

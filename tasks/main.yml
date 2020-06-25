@@ -10,10 +10,12 @@
     - include_tasks: "{{ role_path }}/tasks/opensource/install-oss.yml"
       when: nginx_type == "opensource"
       tags: nginx_install_oss
+      notify: "(Handler: All OSs) Start NGINX"
 
     - include_tasks: "{{ role_path }}/tasks/plus/install-plus.yml"
       when: nginx_type == "plus"
       tags: nginx_install_plus
+      notify: "(Handler: All OSs) Start NGINX"
 
     - include_tasks: "{{ role_path }}/tasks/conf/cleanup-config.yml"
       when: nginx_cleanup_config | bool
@@ -53,7 +55,6 @@
       tags: nginx_delete_license
 
   when: nginx_enable | bool
-  notify: "(Handler: All OSs) Start NGINX"
 
 - include_tasks: "{{ role_path }}/tasks/amplify/install-amplify.yml"
   when:

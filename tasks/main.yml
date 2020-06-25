@@ -69,4 +69,3 @@
 - include_tasks: "{{ role_path }}/tasks/conf/logrotate.yml"
   when: nginx_logrotate_conf_enable | bool
   tags: nginx_logrotate_config
-  

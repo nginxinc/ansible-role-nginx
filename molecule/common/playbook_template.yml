@@ -13,6 +13,7 @@
       conf_file_location: /etc/nginx/
       user: nginx
       worker_processes: auto
+      pid: /var/run/nginx.pid
       error_log:
         location: /var/log/nginx/error.log
         level: warn
@@ -43,9 +44,16 @@
         - master_process on;
       http_custom_options:
         - aio off;
+      http_custom_includes:
+        - "/etc/nginx/sites-enabled/*.conf"
       events_custom_options:
         - accept_mutex off;
       stream_enable: true
+
+    nginx_status_enable: true
+    nginx_status_location: /etc/nginx/conf.d/stub_status.conf
+    nginx_status_port: 8080
+    nginx_status_log: true
 
     nginx_http_template_enable: true
     nginx_http_template:

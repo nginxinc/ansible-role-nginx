@@ -18,6 +18,7 @@ nginx_main_template:
   user: nginx
   worker_processes: auto
   # worker_rlimit_nofile: 1024
+  pid: /var/run/nginx.pid
   error_log:
     location: /var/log/nginx/error.log
     level: warn
@@ -48,6 +49,7 @@ nginx_main_template:
     types: "text/html"
   # custom_options: []
   # http_custom_options: []
+  # http_custom_includes: []
   # events_custom_options: []
   stream_enable: false
   # stream_custom_options: []
@@ -315,6 +317,7 @@ nginx_http_template:
 nginx_status_enable: false
 nginx_status_location: /etc/nginx/conf.d/stub_status.conf
 nginx_status_port: 80
+nginx_status_log: false
 
 # Enable NGINX Plus REST API, write access to the REST API, and NGINX Plus dashboard.
 # Requires NGINX Plus.
@@ -323,6 +326,7 @@ nginx_rest_api_enable: false
 nginx_rest_api_template_file: http/api.conf.j2
 nginx_rest_api_file_location: /etc/nginx/conf.d/api.conf
 nginx_rest_api_port: 80
+nginx_rest_api_log: false
 nginx_rest_api_write: false
 nginx_rest_api_dashboard: false
 

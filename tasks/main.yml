@@ -1,27 +1,30 @@
 ---
-- import_tasks: prerequisites/install-prerequisites.yml
+# - import_tasks: prerequisites/install-prerequisites.yml
+#   tags: nginx_prerequisites
+
+- include_tasks: "prerequisites/setup-{{ ansible_os_family }}.yml"
   tags: nginx_prerequisites
 
-- import_tasks: keys/apt-key.yml
-  when:
-    - ansible_os_family == "Debian"
-    - nginx_install_from == "nginx_repository"
-      or nginx_amplify_enable
-      or nginx_unit_enable
-  tags: nginx_aptkey
+# - import_tasks: keys/apt-key.yml
+#   when:
+#     - ansible_os_family == "Debian"
+#     - nginx_install_from == "nginx_repository"
+#       or nginx_amplify_enable
+#       or nginx_unit_enable
+#   tags: nginx_aptkey
 
-- import_tasks: keys/rpm-key.yml
-  when:
-    - ansible_os_family == "RedHat"
-      or ansible_os_family == "Suse"
-    - nginx_install_from == "nginx_repository"
-      or nginx_amplify_enable
-      or nginx_unit_enable
-  tags: nginx_rpmkey
+# - import_tasks: keys/rpm-key.yml
+#   when:
+#     - ansible_os_family == "RedHat"
+#       or ansible_os_family == "Suse"
+#     - nginx_install_from == "nginx_repository"
+#       or nginx_amplify_enable
+#       or nginx_unit_enable
+#   tags: nginx_rpmkey
 
-- import_tasks: keys/apk-key.yml
-  when: ansible_os_family == "Alpine"
-  tags: nginx_apkkey
+# - import_tasks: keys/apk-key.yml
+#   when: ansible_os_family == "Alpine"
+#   tags: nginx_apkkey
 
 - name: "(Install: Debian/Ubuntu/CentOS/RedHat/FreeBSD) Install NGINX"
   block:

@@ -1,0 +1,4 @@
+---
+- name: "(Install: Alpine) Install apk key for Alpine"
+  inclule_tasks: keys/apk-key.yml
+  tags: nginx_apkkey

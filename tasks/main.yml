@@ -1,17 +1,4 @@
 ---
-- name: "(Setup: Prerequisites) List Role Path in Tasks"
-  find:
-    paths: "{{ role_path }}/tasks"
-    file_type: directory
-    recurse: no
-  register: output
-
-- name: "(Setup: Prerequisites)"
-  debug:
-    msg: "Directory is {{ item.path }}"
-  changed_when: false
-  with_items: "{{ output.files }}"
-
 - name: "(Setup: Prerequisites)"
   include_tasks: "{{ role_path }}/tasks/prerequisites/setup-{{ ansible_os_family | lower }}.yml"
   tags:

@@ -28,17 +28,14 @@
     state: yes
     persistent: yes
 
-- name: "(Setup: SELinux: Booleans) Allow HTTP mod auth pam"
-  seboolean:
-    name: httpd_mod_auth_pam
-    state: yes
-    persistent: yes
-
-- name: "(Setup: SELinux: Booleans) enable NIS"
-  seboolean:
-    name: nis_enabled
-    state: yes
-    persistent: yes
+# - name: "(Setup: SELinux: Ports) Allow status ports"
+#   seport:
+#     ports: "{{ item }}"
+#     proto: tcp
+#     setype: http_port_t
+#     state: present
+#   with_items:
+#     - nginx_status_port
 
 - name: "(Setup: SELinux: Contexts) App Protect Logs"
   sefcontext:
@@ -46,84 +43,30 @@
     setype: httpd_log_t
     state: present
 
-- name: "(Setup: SELinux: Contexts) App Protect Opt"
-  sefcontext:
-    target: '/opt/app_protect(/.*)?'
-    setype: httpd_var_run_t
-    state: present
-
-- name: "(Setup: SELinux: Contexts) App Protect Pipe"
-  sefcontext:
-    target: '/opt/app_protect/pipe(/.*)?'
-    setype: httpd_initrc_exec_t
-    state: present
-
-- name: "(Setup: SELinux: Contexts) App Protect Config"
-  sefcontext:
-    target: '/opt/app_protect/config(/.*)?'
-    setype: httpd_config_t
-    state: present
-
-- name: "(Setup: SELinux: Contexts) App Protect bin"
-  sefcontext:
-    target: '/opt/app_protect/bin(/.*)?'
-    setype: httpd_exec_t
-    state: present
-
-- name: "(Setup: SELinux: Contexts) App Protect lock"
-  sefcontext:
-    target: '/opt/app_protect/lock(/.*)?'
-    setype: httpd_lock_t
-    state: present
-
-- name: "(Setup: SELinux: Contexts) App Protect Temp"
-  sefcontext:
-    target: '/opt/app_protect/temp(/.*)?'
-    setype: httpd_tmp_t
-    state: present
-
-- name: "(Setup: SELinux: Contexts) App Protect Tmp"
-  sefcontext:
-    target: '/opt/app_protect/tmp(/.*)?'
-    setype: httpd_tmp_t
-    state: present
-
-- name: "(Setup: SELinux: Contexts) Apply contexts to opt"
-  command: restorecon -iRv /opt/app_protect
-  changed_when: false
-
-- name: "(Setup: SELinux: Contexts) Apply permissions to opt/config"
-  file:
-    path: /opt/app_protect/config
-    owner: nginx
-    group: nginx
-    mode: u=rwx,go=rx,g+s
-    state: directory
-
 - name: "(Setup: SELinux: Contexts) Apply contexts to log"
   command: restorecon -iRv /var/log/app_protect
   changed_when: false
 
-- name: "(Setup: SELinux: Module) Create NGINX Plus App Protect Module"
+- name: "(Setup: SELinux: Module) Create NGINX Plus Module"
   template:
-    src: nginx-plus-module-appprotect.te.j2
-    dest: "{{ app_protect_tempdir }}/nginx-plus-module-appprotect.te"
+    src: "{{ role_path }}/templates/selinux/nginx-plus-module.te.j2"
+    dest: "{{ app_protect_tempdir }}/nginx-plus-module.te"
   register: app_protect_module
 
-- name: "(Setup: SELinux: Module) Check NGINX Plus App Protect Module"
-  command: "checkmodule -M -m -o {{ app_protect_tempdir }}/nginx-plus-module-appprotect.mod {{ app_protect_tempdir }}/nginx-plus-module-appprotect.te"
+- name: "(Setup: SELinux: Module) Check NGINX Plus Module"
+  command: "checkmodule -M -m -o {{ app_protect_tempdir }}/nginx-plus-module.mod {{ app_protect_tempdir }}/nginx-plus-module.te"
   args:
-    creates: "{{ app_protect_tempdir }}/nginx-plus-module-appprotect.mod"
+    creates: "{{ app_protect_tempdir }}/nginx-plus-module.mod"
   changed_when: false
 
-- name: "(Setup: SELinux: Module) Compile NGINX Plus App Protect Module"
-  command: "semodule_package -o {{ app_protect_tempdir }}/nginx-plus-module-appprotect.pp -m {{ app_protect_tempdir }}/nginx-plus-module-appprotect.mod"
+- name: "(Setup: SELinux: Module) Compile NGINX Plus Module"
+  command: "semodule_package -o {{ app_protect_tempdir }}/nginx-plus-module.pp -m {{ app_protect_tempdir }}/nginx-plus-module.mod"
   args:
-    creates: "{{ app_protect_tempdir }}/nginx-plus-module-appprotect.pp"
+    creates: "{{ app_protect_tempdir }}/nginx-plus-module.pp"
   changed_when: false
 
-- name: "(Setup: SELinux: Module) Import NGINX Plus App Protect Module"  # noqa 503
-  command: "semodule -i {{ app_protect_tempdir }}/nginx-plus-module-appprotect.pp"
+- name: "(Setup: SELinux: Module) Import NGINX Plus Module"  # noqa 503
+  command: "semodule -i {{ app_protect_tempdir }}/nginx-plus-module.pp"
   changed_when: false
   when: app_protect_module.changed
 

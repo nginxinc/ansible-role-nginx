@@ -53,6 +53,7 @@
       tags: nginx_delete_license
 
   when: nginx_enable | bool
+  notify: "(Handler: All OSs) Start NGINX"
 
 - include_tasks: "{{ role_path }}/tasks/amplify/install-amplify.yml"
   when:

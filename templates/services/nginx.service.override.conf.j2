@@ -1,0 +1,8 @@
+[Service]
+{% if nginx_service_timeout is defined %}
+TimeoutStopSec={{ nginx_service_timeout }}
+{% endif %}
+{% if nginx_service_restartonfailure is defined %}
+Restart=on-failure
+RestartSec={{ nginx_service_restartonfailure }}
+{% endif %}

@@ -95,8 +95,15 @@ nginx_cleanup_config_path:
       - /etc/nginx/conf.d
     recurse: false
 
+
+# Enable systemd modifications
+nginx_service_modify: false
+# Set service timeout for systemd systems in seconds (default is 90s) - no effect unless nginx_service_modify is true
+nginx_service_timeout: 120
+# Set the restart policy for systemd systems in seconds (default is not to set this) - no effect unless nginx_service_modify is true
+nginx_service_restartonfailure: 30
+
 # Set selinux enforcing for nginx (Centos/Redhat only) - you may need to open ports on your own
 nginx_selinux: true
-
 # Enable enforcing mode if true.  Permissive if false (audit only, no enforcing) globally (only works with nginx_selinux: true)
 nginx_selinux_enforcing: true

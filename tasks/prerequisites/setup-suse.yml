@@ -6,7 +6,7 @@
   changed_when: false
 
 - name: "(Setup: Suse) Add rpm key"
-  include_tasks: ../keys/rpm-key.yml
+  include_tasks: "{{ role_path }}/tasks/keys/rpm-key.yml"
   when:
     - nginx_install_from == "nginx_repository"
       or nginx_amplify_enable

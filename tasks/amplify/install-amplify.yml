@@ -1,5 +1,5 @@
 ---
-- include_tasks: "setup-{{ ansible_os_family }}.yml"
+- include_tasks: "{{ role_path }}/tasks/amplify/setup-{{ ansible_os_family }}.yml"
   when:
     - ansible_os_family == "Debian"
       or ansible_os_family == "Redhat"

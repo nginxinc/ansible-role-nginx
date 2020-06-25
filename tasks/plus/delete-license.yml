@@ -18,7 +18,7 @@
     - /etc/apk/cert.pem
   when: ansible_distribution == "Alpine"
 
-- include_tasks: setup-{{ ansible_os_family }}.yml
+- include_tasks: "{{ role_path }}/tasks/plus/setup-{{ ansible_os_family }}.yml"
   when:
     - ansible_os_family == "Alpine"
       or ansible_os_family == "FreeBSD"

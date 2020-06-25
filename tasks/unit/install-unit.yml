@@ -1,5 +1,5 @@
 ---
-- include_tasks: "setup-{{ ansible_os_family }}.yml"
+- include_tasks: "{{ role_path }}/tasks/unit/setup-{{ ansible_os_family }}.yml"
   when:
     - ansible_os_family == "Debian"
       or ansible_os_family == "RedHat"
@@ -19,5 +19,5 @@
   when: ansible_os_family == "FreeBSD"
   notify: "(Handler: FreeBSD) Start NGINX Unit"
 
-- include_tasks: install-modules.yml
+- include_tasks: "{{ role_path }}/tasks/unit/install-modules.yml"
   when: nginx_unit_modules is defined and nginx_unit_modules

@@ -1,4 +1,4 @@
 ---
 - name: "(Setup: Alpine) Install apk key for Alpine"
-  include_tasks: ../keys/apk-key.yml
+  include_tasks: "{{ role_path }}/tasks/keys/apk-key.yml"
   tags: nginx_apkkey

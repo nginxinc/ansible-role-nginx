@@ -1,7 +1,7 @@
 ---
 # handlers file for ansible-role-nginx
 - name: "(Handler: All OSs) Enable SELinux"
-  include_tasks: prerequisites/setup-selinux.yml
+  include_tasks: "{{ role_path }}/tasks/prerequisites/setup-selinux.yml"
 
 - name: "(Handler: All OSs) Check NGINX"
   command: "nginx -t"

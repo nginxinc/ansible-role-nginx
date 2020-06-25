@@ -1,6 +1,6 @@
 ---
 - name: "(Install: Linux) Configure NGINX repo"
-  include_tasks: "{{ role_path }}/tasks/opensource/setup-{{ ansible_os_family }}.yml"
+  include_tasks: "{{ role_path }}/tasks/opensource/setup-{{ ansible_os_family | lower }}.yml"
   when:
     - ansible_os_family == "Alpine"
       or ansible_os_family == "Debian"

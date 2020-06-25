@@ -21,3 +21,4 @@
     name: "nginx{{ nginx_version | default('') }}"
     state: "{{ nginx_state }}"
   when: nginx_install_from == "os_repository"
+  notify: "(Handler: All OSs) Start NGINX"

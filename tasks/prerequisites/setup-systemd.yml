@@ -1,12 +1,12 @@
 ---
-- name: "(Install: Linux) Create override for NGINX Plus service"
+- name: "(Setup: Linux) Create override for NGINX Plus service"
   file:
     path: /etc/systemd/system/nginx.service.d
     state: directory
     mode: '0755'
   when: nginx_service_modify
 
-- name: "(Install: Linux) Increase timeout for NGINX Plus Service"
+- name: "(Setup: Linux) Increase timeout for NGINX Plus Service"
   template:
     src: "{{ role_path }}/templates/services/nginx.service.override.conf.j2"
     dest: /etc/systemd/system/nginx.service.d/override.conf
@@ -14,3 +14,9 @@
     group: root
     mode: '0644'
   when: nginx_service_modify
+
+- name: "(Setup: Linux) systemd daemon-reload"
+  systemd:
+    daemon_reload: yes
+  changed_when: false
+  notify: "(Handler: All OSs) Start NGINX"

@@ -12,7 +12,7 @@
     owner: root
     group: root
     mode: '0644'
-  register: nginx_service_output
+  notify: "(Handler: All OSs) systemd daemon-reload"
   when:
     - not nginx_service_custom
     - not nginx_service_clean
@@ -24,7 +24,7 @@
     owner: root
     group: root
     mode: '0644'
-  register: nginx_service_output
+  notify: "(Handler: All OSs) systemd daemon-reload"
   when:
     - nginx_service_custom
     - not nginx_service_clean
@@ -33,13 +33,6 @@
   file:
     path: "{{ nginx_service_overridepath }}"
     state: absent
-  register: nginx_sevice_output
+  notify: "(Handler: All OSs) systemd daemon-reload"
   when:
     - nginx_service_clean
-
-- name: "(Setup: Linux) Trigger systemd daemon-reload"  # noqa 503
-  systemd:
-    daemon_reload: yes
-  when:
-    - nginx_service_output.changed
-  notify: "(Handler: All OSs) Start NGINX"

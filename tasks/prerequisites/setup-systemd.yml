@@ -40,5 +40,6 @@
 - name: "(Setup: Linux) Trigger systemd daemon-reload"  # noqa 503
   systemd:
     daemon_reload: yes
-  when: nginx_service_modify.changed
+  when: 
+    - nginx_service_output.changed
   notify: "(Handler: All OSs) Start NGINX"

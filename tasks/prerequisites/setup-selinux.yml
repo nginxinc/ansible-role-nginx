@@ -44,7 +44,7 @@
 
 - name: "(Setup: SELinux: Ports) Allow status ports"
   seport:
-    ports: nginx_status_port
+    ports: "{{ nginx_status_port }}"
     proto: tcp
     setype: http_port_t
     state: present
@@ -52,7 +52,7 @@
 
 - name: "(Setup: SELinux: Ports) Allow Rest API ports"
   seport:
-    ports: nginx_rest_api_port
+    ports: "{{ nginx_rest_api_port }}"
     proto: tcp
     setype: http_port_t
     state: present

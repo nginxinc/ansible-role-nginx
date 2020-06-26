@@ -8,6 +8,10 @@
 
     nginx_service_modify: true
     nginx_service_timeout: 95
+    nginx_selinux: true
+    nginx_selinux_tcp_ports:
+      - 80
+      - 443
 
     nginx_cleanup_config: true
     nginx_cleanup_config_path:

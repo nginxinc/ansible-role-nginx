@@ -1,7 +1,7 @@
 ---
 - name: "(Setup: Linux) Create override directory for NGINX systemd Service"
   file:
-    path: nginx_service_overridepath
+    path: "{{ nginx_service_overridepath }}"
     state: directory
     mode: '0755'
 
@@ -19,7 +19,7 @@
 
 - name: "(Setup: Linux) Customize override for NGINX systemd Service"
   copy:
-    src: nginx_service_custom_file
+    src: "{{ nginx_service_custom_file }}"
     dest: "{{ nginx_service_overridepath }}/{{ nginx_service_overridefilename }}"
     owner: root
     group: root
@@ -31,7 +31,7 @@
 
 - name: "(Setup: Linux) Remove override for NGINX systemd Service"
   file:
-    path: nginx_service_overridepath
+    path: "{{ nginx_service_overridepath }}"
     state: absent
   register: nginx_sevice_output
   when:

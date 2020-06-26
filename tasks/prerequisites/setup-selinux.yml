@@ -58,6 +58,22 @@
     state: present
   when: nginx_rest_api_port is defined"
 
+- name: "(Setup: SELinux: Ports) Allow Specific TCP Ports"
+  seport:
+    ports: "{{ nginx_selinux_tcp_ports }}"
+    proto: tcp
+    setype: http_port_t
+    state: present
+  when: nginx_selinux_tcp_ports is defined
+
+- name: "(Setup: SELinux: Ports) Allow Specific UDP Ports"
+  seport:
+    ports: "{{ nginx_selinux_udp_ports }}"
+    proto: udp
+    setype: http_port_t
+    state: present
+  when: nginx_selinux_udp_ports is defined
+
 - name: "(Setup: SELinux: Module) Create NGINX Plus Module"
   template:
     src: "{{ role_path }}/templates/selinux/nginx-plus-module.te.j2"

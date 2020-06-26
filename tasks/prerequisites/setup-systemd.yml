@@ -1,22 +1,44 @@
 ---
-- name: "(Setup: Linux) Create override for NGINX Plus service"
+- name: "(Setup: Linux) Create override directory for NGINX systemd Service"
   file:
-    path: /etc/systemd/system/nginx.service.d
+    path: nginx_service_overridepath
     state: directory
     mode: '0755'
-  when: nginx_service_modify
 
-- name: "(Setup: Linux) Increase timeout for NGINX Plus Service"
+- name: "(Setup: Linux) Create override for NGINX systemd Service"
   template:
     src: "{{ role_path }}/templates/services/nginx.service.override.conf.j2"
-    dest: /etc/systemd/system/nginx.service.d/override.conf
+    dest: "{{ nginx_service_overridepath }}/{{ nginx_service_overridefilename }}"
     owner: root
     group: root
     mode: '0644'
-  when: nginx_service_modify
+  register: nginx_service_output
+  when:
+    - not nginx_service_custom
+    - not nginx_service_clean
 
-- name: "(Setup: Linux) systemd daemon-reload"
+- name: "(Setup: Linux) Customize override for NGINX systemd Service"
+  copy:
+    src: nginx_service_custom_file
+    dest: "{{ nginx_service_overridepath }}/{{ nginx_service_overridefilename }}"
+    owner: root
+    group: root
+    mode: '0644'
+  register: nginx_service_output
+  when:
+    - nginx_service_custom
+    - not nginx_service_clean
+
+- name: "(Setup: Linux) Remove override for NGINX systemd Service"
+  file:
+    path: nginx_service_overridepath
+    state: absent
+  register: nginx_sevice_output
+  when:
+    - nginx_service_clean
+
+- name: "(Setup: Linux) Trigger systemd daemon-reload"  # noqa 503
   systemd:
     daemon_reload: yes
-  changed_when: false
+  when: nginx_service_modify.changed
   notify: "(Handler: All OSs) Start NGINX"

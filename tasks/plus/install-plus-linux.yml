@@ -8,7 +8,9 @@
 
 - name: "(Install: Linux) Modify Service for Systemd"
   include_tasks: "{{ role_path }}/tasks/prerequisites/setup-systemd.yml"
-  when: ansible_service_mgr == "systemd"
+  when:
+    - ansible_service_mgr == "systemd"
+    - nginx_service_modify
 
 - name: "(Install: Linux) Install NGINX Plus"
   package:

@@ -454,7 +454,7 @@ server {
 
     }
 {% endfor %}
-{% if item.value.servers[server].web_server.http_demo_conf %}
+{% if item.value.servers[server].web_server.http_demo_conf is defined %}
     sub_filter_once off;
     sub_filter 'server_hostname' '$hostname';
     sub_filter 'server_address' '$server_addr:$server_port';

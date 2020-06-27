@@ -70,6 +70,8 @@
                 opts:
                   - default_server
             server_name: localhost
+            http_error_pages:
+              404: /404.html
             error_page: /usr/share/nginx/html
             client_max_body_size: 512k
             proxy_hide_headers:

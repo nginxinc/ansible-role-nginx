@@ -5,18 +5,15 @@
     - nginx_prerequisites
 
 - name: "(Setup: Keys)"
-  include_tasks: "{{ role_path }}/tasks/keys/{{ item.name }}-key.yml"
+  import_tasks: keys/setup-keys.yml
   when:
-    - "{{ ansible_os_family }} == {{ item.os }}"
-    - nginx_install_from == "nginx-repository"
+    - ansible_os_family == "Debian"
+      or ansible_os_family == "RedHat"
+      or ansible_os_family == "Suse"
+      or ansible_os_family == "Alpine"
+    - nginx_install_from == "nginx_repository"
       or nginx_amplify_enable
       or nginx_unit_enable
-  tags: "{{ item.tag }}"
-  loop:
-    - { name: 'apt', os: 'Debian', tag: 'nginx_aptkey' }
-    - { name: 'rpm', os: 'RedHat', tag: 'nginx_rpmkey' }
-    - { name: 'rpm', os: 'Suse', tag: 'nginx_rpmkey' }
-    - { name: 'apk', os: 'Alpine', tag: 'nginx_apkkey' }
 
 - name: "(Install: Debian/Ubuntu/CentOS/RedHat/FreeBSD) Install NGINX"
   block:

@@ -5,3 +5,11 @@
       - apt-transport-https
       - dirmngr
       - python-apt
+
+# - name: "(Setup: Debian/Ubuntu) Install apt key for Debian and Ubuntu"
+#   include_tasks: "{{ role_path }}/tasks/keys/apt-key.yml"
+#   when:
+#     - nginx_install_from == "nginx_repository"
+#       or nginx_amplify_enable
+#       or nginx_unit_enable
+#   tags: nginx_aptkey

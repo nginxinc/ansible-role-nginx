@@ -4,11 +4,3 @@
   when:
     - nginx_selinux
     - ansible_selinux.mode is defined
-
-# - name: "(Setup: Suse) Add rpm key"
-#   include_tasks: "{{ role_path }}/tasks/keys/rpm-key.yml"
-#   when:
-#     - nginx_install_from == "nginx_repository"
-#       or nginx_amplify_enable
-#       or nginx_unit_enable
-#   tags: nginx_rpmkey

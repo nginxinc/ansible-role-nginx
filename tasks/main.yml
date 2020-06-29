@@ -6,7 +6,7 @@
 
 - name: "(Setup: Keys)"
   include_tasks: "{{ role_path }}/tasks/keys/{{ item.name }}-key.yml"
-  when: 
+  when:
     - "{{ ansible_os_family }} == {{ item.os }}"
     - nginx_install_from == "nginx-repository"
       or nginx_amplify_enable

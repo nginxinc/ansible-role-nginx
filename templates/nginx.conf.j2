@@ -44,8 +44,8 @@ worker_rlimit_nofile {{ nginx_main_template.worker_rlimit_nofile }};
 {% endfor %}
 {% endif %}
 
-error_log  {{ nginx_main_template.error_log.location }} {{ nginx_main_template.error_log.level }};
-pid        {{ nginx_main_template.pid }};
+error_log  {{ nginx_main_template.error_log.location | default("/var/log/nginx/error.log") }} {{ nginx_main_template.error_log.level | default("warn") }};
+pid        {{ nginx_main_template.pid | default("/var/run/nginx.pid") }};
 
 
 events {

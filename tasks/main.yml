@@ -4,6 +4,20 @@
   tags:
     - nginx_prerequisites
 
+- name: "(Setup: Keys)"
+  include_tasks: "{{ role_path }}/tasks/keys/{{ item.name }}-key.yml"
+  when: 
+    - "{{ ansible_os_family }} == {{ item.os }}"
+    - nginx_install_from == "nginx-repository"
+      or nginx_amplify_enable
+      or nginx_unit_enable
+  tags: "{{ item.tag }}"
+  loop:
+    - { name: 'apt', os: 'Debian', tag: 'nginx_aptkey' }
+    - { name: 'rpm', os: 'RedHat', tag: 'nginx_rpmkey' }
+    - { name: 'rpm', os: 'Suse', tag: 'nginx_rpmkey' }
+    - { name: 'apk', os: 'Alpine', tag: 'nginx_apkkey' }
+
 - name: "(Install: Debian/Ubuntu/CentOS/RedHat/FreeBSD) Install NGINX"
   block:
 

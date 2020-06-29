@@ -11,4 +11,3 @@
     - nginx_install_from == "nginx_repository"
       or nginx_amplify_enable
       or nginx_unit_enable
-  tags: nginx_rpmkey

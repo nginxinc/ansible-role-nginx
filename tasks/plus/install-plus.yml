@@ -1,11 +1,11 @@
 ---
 - name: "(Install: All OSs) Setup license"
-  import_tasks: setup-license.yml
+  include_tasks: "{{ role_path }}/tasks/plus/setup-license.yml"
 
 - name: "(Install: Linux) Install NGINX Plus"
-  import_tasks: install-plus-linux.yml
+  include_tasks: "{{ role_path }}/tasks/plus/install-plus-linux.yml"
   when: ansible_os_family in nginx_plus_linux_families
 
 - name: "(Install: FreeBSD) Install NGINX Plus"
-  import_tasks: install-plus-bsd.yml
+  include_tasks: "{{ role_path }}/tasks/plus/install-plus-bsd.yml"
   when: ansible_system in nginx_plus_bsd_systems

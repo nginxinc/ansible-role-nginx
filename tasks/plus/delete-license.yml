@@ -18,17 +18,10 @@
     - /etc/apk/cert.pem
   when: ansible_distribution == "Alpine"
 
-- import_tasks: setup-alpine.yml
-  when: ansible_os_family == "Alpine"
-
-- import_tasks: setup-bsd.yml
-  when: ansible_os_family == "FreeBSD"
-
-- import_tasks: setup-debian.yml
-  when: ansible_os_family == "Debian"
-
-- import_tasks: setup-redhat.yml
-  when: ansible_os_family == "RedHat"
-
-- import_tasks: setup-suse.yml
-  when: ansible_os_family == "Suse"
+- include_tasks: "{{ role_path }}/tasks/plus/setup-{{ ansible_os_family | lower }}.yml"
+  when:
+    - ansible_os_family == "Alpine"
+      or ansible_os_family == "FreeBSD"
+      or ansible_os_family == "Debian"
+      or ansible_os_family == "RedHat"
+      or ansible_os_family == "Suse"

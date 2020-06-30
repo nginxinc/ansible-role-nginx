@@ -1,28 +1,28 @@
 ---
-- import_tasks: install-njs.yml
+- include_tasks: "{{ role_path }}/tasks/modules/install-njs.yml"
   when: nginx_modules.njs | default(false)
 
-- import_tasks: install-perl.yml
+- include_tasks: "{{ role_path }}/tasks/modules/install-perl.yml"
   when: nginx_modules.perl | default(false)
 
-- import_tasks: install-geoip.yml
+- include_tasks: "{{ role_path }}/tasks/modules/install-geoip.yml"
   when:
     - nginx_modules.geoip | default(false)
     - ansible_os_family != "RedHat"
     - ansible_distribution_major_version != "8"
 
-- import_tasks: install-image-filter.yml
+- include_tasks: "{{ role_path }}/tasks/modules/install-image-filter.yml"
   when: nginx_modules.image_filter | default(false)
 
-- import_tasks: install-rtmp.yml
+- include_tasks: "{{ role_path }}/tasks/modules/install-rtmp.yml"
   when:
     - nginx_modules.rtmp | default(false)
     - nginx_type == "plus"
 
-- import_tasks: install-xslt.yml
+- include_tasks: "{{ role_path }}/tasks/modules/install-xslt.yml"
   when: nginx_modules.xslt | default(false)
 
-- import_tasks: install-waf.yml
+- include_tasks: "{{ role_path }}/tasks/modules/install-waf.yml"
   when:
     - nginx_modules.waf | default(false)
     - nginx_type == "plus"

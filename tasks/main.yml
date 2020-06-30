@@ -1,21 +1,19 @@
 ---
 - name: "(Setup: Prerequisites)"
   include_tasks: "{{ role_path }}/tasks/prerequisites/setup-{{ ansible_os_family | lower }}.yml"
-  tags:
-    - nginx_prerequisites
+  tags: nginx_prerequisites
 
 - name: "(Setup: Keys)"
   import_tasks: keys/setup-keys.yml
   when:
-    - ansible_os_family == "Debian"
+    - ansible_os_family == "Alpine"
+      or ansible_os_family == "Debian"
       or ansible_os_family == "RedHat"
       or ansible_os_family == "Suse"
-      or ansible_os_family == "Alpine"
     - nginx_install_from == "nginx_repository"
       or nginx_amplify_enable
       or nginx_unit_enable
-  tags:
-    - nginx_key
+  tags: nginx_key
 
 - name: "(Install: Debian/Ubuntu/CentOS/RedHat/FreeBSD) Install NGINX"
   block:

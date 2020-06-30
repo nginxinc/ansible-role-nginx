@@ -1,19 +1,16 @@
 ---
+- name: "(Setup: Keys) Alpine"
+  include_tasks: "{{ role_path }}/tasks/keys/apk-key.yml"
+  when: ansible_os_family == "Alpine"
+  tags: nginx_apkkey
+
 - name: "(Setup: Keys) Debian"
   include_tasks: "{{ role_path }}/tasks/keys/apt-key.yml"
-  when:
-    - ansible_os_family == "Debian"
+  when: ansible_os_family == "Debian"
   tags: nginx_aptkey
 
 - name: "(Setup: Keys) RedHat/Suse"
   include_tasks: "{{ role_path }}/tasks/keys/rpm-key.yml"
-  when:
-    - ansible_os_family == "RedHat"
-      or ansible_os_family == "Suse"
+  when: ansible_os_family == "RedHat"
+        or ansible_os_family == "Suse"
   tags: nginx_rpmkey
-
-- name: "(Setup: Keys) Alpine"
-  include_tasks: "{{ role_path }}/tasks/keys/apk-key.yml"
-  when:
-    - ansible_os_family == "Alpine"
-  tags: nginx_apkkey

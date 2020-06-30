@@ -25,7 +25,10 @@
     - role: ansible-role-nginx
   vars:
     nginx_debug_output: true
-
+    nginx_selinux: true
+    nginx_selinux_tcp_ports:
+      - 80
+      - 443
     nginx_version: "{{ version }}"
     nginx_logrotate_conf_enable: true
     nginx_logrotate_conf:

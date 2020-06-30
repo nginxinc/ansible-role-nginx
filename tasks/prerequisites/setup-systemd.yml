@@ -1,0 +1,38 @@
+---
+- name: "(Setup: Linux) Create override directory for NGINX systemd Service"
+  file:
+    path: "{{ nginx_service_overridepath }}"
+    state: directory
+    mode: '0755'
+
+- name: "(Setup: Linux) Create override for NGINX systemd Service"
+  template:
+    src: "{{ role_path }}/templates/services/nginx.service.override.conf.j2"
+    dest: "{{ nginx_service_overridepath }}/{{ nginx_service_overridefilename }}"
+    owner: root
+    group: root
+    mode: '0644'
+  notify: "(Handler: All OSs) systemd daemon-reload"
+  when:
+    - not nginx_service_custom
+    - not nginx_service_clean
+
+- name: "(Setup: Linux) Customize override for NGINX systemd Service"
+  copy:
+    src: "{{ nginx_service_custom_file }}"
+    dest: "{{ nginx_service_overridepath }}/{{ nginx_service_overridefilename }}"
+    owner: root
+    group: root
+    mode: '0644'
+  notify: "(Handler: All OSs) systemd daemon-reload"
+  when:
+    - nginx_service_custom
+    - not nginx_service_clean
+
+- name: "(Setup: Linux) Remove override for NGINX systemd Service"
+  file:
+    path: "{{ nginx_service_overridepath }}"
+    state: absent
+  notify: "(Handler: All OSs) systemd daemon-reload"
+  when:
+    - nginx_service_clean

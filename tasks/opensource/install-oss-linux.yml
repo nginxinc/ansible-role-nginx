@@ -1,23 +1,21 @@
 ---
 - name: "(Install: Linux) Configure NGINX repo"
-  block:
+  include_tasks: "{{ role_path }}/tasks/opensource/setup-{{ ansible_os_family | lower }}.yml"
+  when:
+    - ansible_os_family == "Alpine"
+      or ansible_os_family == "Debian"
+      or ansible_os_family == "RedHat"
+      or ansible_os_family == "Suse"
+    - nginx_install_from == "nginx_repository"
 
-    - import_tasks: setup-alpine.yml
-      when: ansible_os_family == "Alpine"
-
-    - import_tasks: setup-debian.yml
-      when: ansible_os_family == "Debian"
-
-    - import_tasks: setup-redhat.yml
-      when: ansible_os_family == "RedHat"
-
-    - import_tasks: setup-suse.yml
-      when: ansible_os_family == "Suse"
-
-  when: nginx_install_from == "nginx_repository"
+- name: "(Install: Linux) Modify Service for Systemd"
+  include_tasks: "{{ role_path }}/tasks/prerequisites/setup-systemd.yml"
+  when:
+    - ansible_service_mgr == "systemd"
+    - nginx_service_modify
 
 - name: "(Install: Linux) Install NGINX from source"
-  import_tasks: setup-source.yml
+  include_tasks: "{{ role_path }}/tasks/opensource/setup-source.yml"
   when: nginx_install_from == "source"
 
 - name: "(Install: Linux) Install NGINX package"

@@ -1,8 +1,8 @@
 ---
 - name: "(Install: OSS Linux)"
-  import_tasks: install-oss-linux.yml
+  include_tasks: "{{ role_path }}/tasks/opensource/install-oss-linux.yml"
   when: ansible_os_family in nginx_linux_families
 
 - name: "(Install: OSS BSD)"
-  import_tasks: install-oss-bsd.yml
+  include_tasks: "{{ role_path }}/tasks/opensource/install-oss-bsd.yml"
   when: ansible_system in nginx_bsd_systems

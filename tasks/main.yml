@@ -1,44 +1,36 @@
 ---
-- import_tasks: prerequisites/install-prerequisites.yml
+- name: "(Setup: Prerequisites)"
+  include_tasks: "{{ role_path }}/tasks/prerequisites/setup-{{ ansible_os_family | lower }}.yml"
   tags: nginx_prerequisites
 
-- import_tasks: keys/apt-key.yml
+- name: "(Setup: Keys)"
+  import_tasks: keys/setup-keys.yml
   when:
-    - ansible_os_family == "Debian"
-    - nginx_install_from == "nginx_repository"
-      or nginx_amplify_enable
-      or nginx_unit_enable
-  tags: nginx_aptkey
-
-- import_tasks: keys/rpm-key.yml
-  when:
-    - ansible_os_family == "RedHat"
+    - ansible_os_family == "Alpine"
+      or ansible_os_family == "Debian"
+      or ansible_os_family == "RedHat"
       or ansible_os_family == "Suse"
     - nginx_install_from == "nginx_repository"
       or nginx_amplify_enable
       or nginx_unit_enable
-  tags: nginx_rpmkey
-
-- import_tasks: keys/apk-key.yml
-  when: ansible_os_family == "Alpine"
-  tags: nginx_apkkey
+  tags: nginx_key
 
 - name: "(Install: Debian/Ubuntu/CentOS/RedHat/FreeBSD) Install NGINX"
   block:
 
-    - import_tasks: opensource/install-oss.yml
+    - include_tasks: "{{ role_path }}/tasks/opensource/install-oss.yml"
       when: nginx_type == "opensource"
       tags: nginx_install_oss
 
-    - import_tasks: plus/install-plus.yml
+    - include_tasks: "{{ role_path }}/tasks/plus/install-plus.yml"
       when: nginx_type == "plus"
       tags: nginx_install_plus
 
-    - import_tasks: conf/cleanup-config.yml
+    - include_tasks: "{{ role_path }}/tasks/conf/cleanup-config.yml"
       when: nginx_cleanup_config | bool
       tags: nginx_cleanup_config
 
-    - import_tasks: conf/upload-config.yml
+    - include_tasks: "{{ role_path }}/tasks/conf/upload-config.yml"
       when: nginx_main_upload_enable
             or nginx_http_upload_enable
             or nginx_stream_upload_enable
@@ -46,26 +38,26 @@
             or nginx_ssl_upload_enable
       tags: nginx_upload_config
 
-    - import_tasks: conf/template-config.yml
+    - include_tasks: "{{ role_path }}/tasks/conf/template-config.yml"
       when: nginx_main_template_enable
             or nginx_http_template_enable
             or nginx_stream_template_enable
             or nginx_rest_api_enable
       tags: nginx_template_config
 
-    - import_tasks: conf/setup-status.yml
+    - include_tasks: "{{ role_path }}/tasks/conf/setup-status.yml"
       when: nginx_status_enable | bool
       tags: nginx_setup_status
 
-    - import_tasks: modules/install-modules.yml
+    - include_tasks: "{{ role_path }}/tasks/modules/install-modules.yml"
       when: true in nginx_modules.values()
       tags: nginx_install_modules
 
-    - import_tasks: conf/debug-output.yml
+    - include_tasks: "{{ role_path }}/tasks/conf/debug-output.yml"
       when: nginx_debug_output | bool
       tags: nginx_debug_output
 
-    - import_tasks: plus/delete-license.yml
+    - include_tasks: "{{ role_path }}/tasks/plus/delete-license.yml"
       when:
         - nginx_type == "plus"
         - nginx_delete_license
@@ -73,17 +65,17 @@
 
   when: nginx_enable | bool
 
-- import_tasks: amplify/install-amplify.yml
+- include_tasks: "{{ role_path }}/tasks/amplify/install-amplify.yml"
   when:
     - nginx_amplify_enable | bool
     - nginx_amplify_api_key is defined
     - nginx_amplify_api_key | length > 0
   tags: nginx_install_amplify
 
-- import_tasks: unit/install-unit.yml
+- include_tasks: "{{ role_path }}/tasks/unit/install-unit.yml"
   when: nginx_unit_enable | bool
   tags: nginx_install_unit
 
-- import_tasks: conf/logrotate.yml
+- include_tasks: "{{ role_path }}/tasks/conf/logrotate.yml"
   when: nginx_logrotate_conf_enable | bool
   tags: nginx_logrotate_config

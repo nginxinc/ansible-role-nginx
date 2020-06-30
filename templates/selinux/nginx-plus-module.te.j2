@@ -1,0 +1,20 @@
+module nginx-plus-module 1.0;
+
+require {
+        type httpd_t;
+        type usr_t;
+        type initrc_t;
+        type http_cache_port_t;
+        class sock_file write;
+        class unix_stream_socket connectto;
+        class file { create write };
+        class tcp_socket name_connect;
+}
+
+#============= httpd_t ==============
+allow httpd_t http_cache_port_t:tcp_socket name_connect;
+
+allow httpd_t initrc_t:unix_stream_socket connectto;
+
+allow httpd_t usr_t:file { create write };
+allow httpd_t usr_t:sock_file write;

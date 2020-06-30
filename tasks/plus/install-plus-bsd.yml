@@ -1,5 +1,5 @@
 ---
-- import_tasks: setup-bsd.yml
+- include_tasks: "{{ role_path }}/tasks/plus/setup-bsd.yml"
   when: ansible_os_family == "FreeBSD"
 
 - name: "(Install: FreeBSD) Install NGINX Plus"

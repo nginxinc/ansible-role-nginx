@@ -223,4 +223,6 @@ Author Information
 
 [Grzegorz Dzien](https://github.com/gdzien)
 
+[Tom Gamull](https://github.com/magicalyak)
+
 &copy; [NGINX, Inc.](https://www.nginx.com/) 2018 - 2020

@@ -1,8 +1,0 @@
----
-- name: "(Setup: Debian/Ubuntu) Install Prerequisites"
-  import_tasks: setup-debian.yml
-  when: ansible_os_family == "Debian"
-
-- name: "(Setup: FreeBSD) Install Prerequisites"
-  import_tasks: setup-freebsd.yml
-  when: ansible_system == "FreeBSD"

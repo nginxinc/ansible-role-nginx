@@ -1,4 +1,14 @@
 ---
+# handlers file for ansible-role-nginx
+- name: "(Handler: All OSs) Check NGINX"
+  command: "nginx -t"
+  changed_when: false
+
+- name: "(Handler: All OSs) systemd daemon-reload"
+  systemd:
+    daemon_reload: yes
+  notify: "(Handler: All OSs) Start NGINX"
+
 - name: "(Handler: All OSs) Run NGINX"
   block:
 
@@ -33,7 +43,3 @@
     name: unitd
     state: started
     enabled: yes
-
-- name: "(Handler: All OSs) Check NGINX"
-  command: "nginx -t"
-  changed_when: false

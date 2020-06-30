@@ -1,0 +1,105 @@
+---
+- name: "(Setup: SELinux) Install Required CentOS Dependencies"
+  package:
+    name: policycoreutils-python, setools
+    state: present
+  when:
+    - not ansible_os_family == "RedHat"
+    - not ansible_distribution_major_version == "8"
+
+- name: "(Setup: SELinux) Install Required RHEL8 Dependencies"
+  package:
+    name:
+      - selinux-policy-targeted
+      - libselinux-utils
+      - policycoreutils
+    state: present
+  when:
+    - ansible_os_family == "RedHat"
+    - ansible_distribution_major_version == "8"
+
+- name: "(Setup: SELinux) Check for SELinux enabled"
+  debug:
+    msg: "You need to enable selinux, if it was disabled you need to reboot"
+  when: ansible_selinux is undefined
+
+- name: "(Setup: SELinux) Permissive SELinux"
+  selinux:
+    state: permissive
+    policy: targeted
+  changed_when: false
+  when: ansible_selinux.mode == "enforcing"
+
+- name: "(Setup: SELinux: Booleans) Allow HTTP network connection"
+  seboolean:
+    name: httpd_can_network_connect
+    state: yes
+    persistent: yes
+
+- name: "(Setup: SELinux: Booleans) Allow HTTP relay connection"
+  seboolean:
+    name: httpd_can_network_relay
+    state: yes
+    persistent: yes
+
+- name: "(Setup: SELinux: Ports) Allow status ports"
+  seport:
+    ports: "{{ nginx_status_port }}"
+    proto: tcp
+    setype: http_port_t
+    state: present
+  when: nginx_status_port is defined
+
+- name: "(Setup: SELinux: Ports) Allow Rest API ports"
+  seport:
+    ports: "{{ nginx_rest_api_port }}"
+    proto: tcp
+    setype: http_port_t
+    state: present
+  when: nginx_rest_api_port is defined"
+
+- name: "(Setup: SELinux: Ports) Allow Specific TCP Ports"
+  seport:
+    ports: "{{ nginx_selinux_tcp_ports }}"
+    proto: tcp
+    setype: http_port_t
+    state: present
+  when: nginx_selinux_tcp_ports is defined
+
+- name: "(Setup: SELinux: Ports) Allow Specific UDP Ports"
+  seport:
+    ports: "{{ nginx_selinux_udp_ports }}"
+    proto: udp
+    setype: http_port_t
+    state: present
+  when: nginx_selinux_udp_ports is defined
+
+- name: "(Setup: SELinux: Module) Create NGINX Plus Module"
+  template:
+    src: "{{ role_path }}/templates/selinux/nginx-plus-module.te.j2"
+    dest: "{{ nginx_tempdir }}/nginx-plus-module.te"
+  register: nginx_selinux_module
+
+- name: "(Setup: SELinux: Module) Check NGINX Plus Module"
+  command: "checkmodule -M -m -o {{ nginx_tempdir }}/nginx-plus-module.mod {{ nginx_tempdir }}/nginx-plus-module.te"
+  args:
+    creates: "{{ nginx_tempdir }}/nginx-plus-module.mod"
+  changed_when: false
+
+- name: "(Setup: SELinux: Module) Compile NGINX Plus Module"
+  command: "semodule_package -o {{ nginx_tempdir }}/nginx-plus-module.pp -m {{ nginx_tempdir }}/nginx-plus-module.mod"
+  args:
+    creates: "{{ nginx_tempdir }}/nginx-plus-module.pp"
+  changed_when: false
+
+- name: "(Setup: SELinux: Module) Import NGINX Plus Module"  # noqa 503
+  command: "semodule -i {{ nginx_tempdir }}/nginx-plus-module.pp"
+  changed_when: false
+  when: nginx_selinux_module.changed
+
+- name: "(Setup: SELinux) Enforce SELinux"
+  selinux:
+    state: enforcing
+    policy: targeted
+  changed_when: false
+  when: nginx_selinux_enforcing and ansible_selinux.mode == "permissive"

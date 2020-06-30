@@ -1,15 +1,16 @@
 ---
-- import_tasks: setup-alpine.yml
-  when: ansible_os_family == "Alpine"
+- include_tasks: "{{ role_path }}/tasks/plus/setup-{{ ansible_os_family | lower }}.yml"
+  when:
+    - ansible_os_family == "Alpine"
+      or ansible_os_family == "Debian"
+      or ansible_os_family == "RedHat"
+      or ansible_os_family == "Suse"
 
-- import_tasks: setup-debian.yml
-  when: ansible_os_family == "Debian"
-
-- import_tasks: setup-redhat.yml
-  when: ansible_os_family == "RedHat"
-
-- import_tasks: setup-suse.yml
-  when: ansible_os_family == "Suse"
+- name: "(Install: Linux) Modify Service for Systemd"
+  include_tasks: "{{ role_path }}/tasks/prerequisites/setup-systemd.yml"
+  when:
+    - ansible_service_mgr == "systemd"
+    - nginx_service_modify
 
 - name: "(Install: Linux) Install NGINX Plus"
   package:

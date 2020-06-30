@@ -1,0 +1,43 @@
+---
+# Enable systemd modifications
+# ** ALL of the following variables are ignored unless this is set to true **
+nginx_service_modify: false
+
+# Remove the override file completely
+nginx_service_clean: false
+
+# Override the systemd directory
+# Default is /etc/systemd/system/nginx.service.d
+nginx_service_overridepath: /etc/systemd/system/nginx.service.d
+
+# Override the systemd filename
+# Default is override.conf
+nginx_service_overridefilename: override.conf
+
+# Set service timeout for systemd systems in seconds (default: 90)
+# [Service]
+# TimeoutStopSec=90
+# Default is to comment this out
+# nginx_service_timeoutstopsec: 90
+
+# Set the restart policy for systemd systems
+# Values = no (default), on-failure, on-abnormal, on-watchdog, on-abort, always
+# [Service]
+# Restart=on-failure
+# Default is to comment this out
+# nginx_service_restart: on-failure
+
+# Set the restart timer in seconds
+# [Service]
+# RestartSec=5s
+# Default is to comment this out
+# nginx_service_restartsec: 5s
+
+# Enable a custom systemd override file
+# ** This could break the service **
+# Setting this to true disables custom values above
+nginx_service_custom: false
+
+# Filename and path for systemd override file
+# Setting this will overwrite existing override file
+nginx_service_custom_file: "{{ role_path }}/files/services/nginx.override.conf"

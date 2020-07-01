@@ -475,6 +475,12 @@ server {
     }
 {% endfor %}
 {% endif %}
+{% if item.value.servers[server].http_error_pages is defined %}
+    # redirect server error pages
+{% for error_code in item.value.servers[server].http_error_pages %}
+    error_page {{ error_code }} {{ item.value.servers[server].http_error_pages[error_code] }};
+{% endfor %}
+{% endif %}
 {% if item.value.servers[server].error_page is defined %}
     # redirect server error pages to the static page /50x.html
     #

@@ -242,6 +242,10 @@
                 address: unix:/var/run/control.unit.sock
                 weight: 1
                 health_check: max_fails=3 fail_timeout=5s
+              backend_server_3:
+                address: 0.0.0.0
+                port: 8083
+                down: true
       frontend:
         template_file: http/default.conf.j2
         conf_file_name: frontend_default.conf
@@ -378,3 +382,7 @@
                 port: 8091
                 weight: 1
                 health_check: max_fails=1 fail_timeout=10s
+              backend_server_2:
+                address: 0.0.0.0
+                port: 8092
+                down: true

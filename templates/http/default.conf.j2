@@ -10,7 +10,7 @@ upstream {{ item.value.upstreams[upstream].name }} {
     zone {{ item.value.upstreams[upstream].zone_name }} {{ item.value.upstreams[upstream].zone_size }};
 {% endif %}
 {% for server in item.value.upstreams[upstream].servers %}
-    server {{ item.value.upstreams[upstream].servers[server].address }}{{(":" + item.value.upstreams[upstream].servers[server].port | string) if item.value.upstreams[upstream].servers[server].port is defined}} weight={{ item.value.upstreams[upstream].servers[server].weight | default("1") }} {{ item.value.upstreams[upstream].servers[server].health_check | default("") }};
+    server {{ item.value.upstreams[upstream].servers[server].address }}{{(":" + item.value.upstreams[upstream].servers[server].port | string) if item.value.upstreams[upstream].servers[server].port is defined}} {% if item.value.upstreams[upstream].servers[server].down is defined and item.value.upstreams[upstream].servers[server].down %}down{% else %}weight={{ item.value.upstreams[upstream].servers[server].weight | default("1") }} {{ item.value.upstreams[upstream].servers[server].health_check | default("") }}{% endif %};
 {% endfor %}
 {% if item.value.upstreams[upstream].sticky_cookie %}
     sticky cookie srv_id expires=1h  path=/;

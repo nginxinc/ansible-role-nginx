@@ -53,15 +53,22 @@
       when: true in nginx_modules.values()
       tags: nginx_install_modules
 
-    - include_tasks: "{{ role_path }}/tasks/conf/debug-output.yml"
-      when: nginx_debug_output | bool
-      tags: nginx_debug_output
-
     - include_tasks: "{{ role_path }}/tasks/plus/delete-license.yml"
       when:
         - nginx_type == "plus"
         - nginx_delete_license
       tags: nginx_delete_license
+
+    - name: "(Config: All OSs) Ensure NGINX is Running"
+      meta: flush_handlers
+
+    - include_tasks: "{{ role_path }}/tasks/conf/debug-output.yml"
+      when: nginx_debug_output | bool
+      tags: nginx_debug_output
+
+    - include_tasks: "{{ role_path }}/tasks/conf/logrotate.yml"
+      when: nginx_logrotate_conf_enable | bool
+      tags: nginx_logrotate_config
 
   when: nginx_enable | bool
 
@@ -75,7 +82,3 @@
 - include_tasks: "{{ role_path }}/tasks/unit/install-unit.yml"
   when: nginx_unit_enable | bool
   tags: nginx_install_unit
-
-- include_tasks: "{{ role_path }}/tasks/conf/logrotate.yml"
-  when: nginx_logrotate_conf_enable | bool
-  tags: nginx_logrotate_config

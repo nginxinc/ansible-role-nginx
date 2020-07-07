@@ -3,7 +3,7 @@
   package:
     name: "{{ item }}"
     state: present
-  with_items: "{{ nginx_unit_modules }}"
+  loop: "{{ nginx_unit_modules }}"
   when: ansible_os_family != "FreeBSD"
   notify: "(Handler: Debian/Ubuntu/CentOS/RedHat) Start NGINX Unit"
 
@@ -11,6 +11,6 @@
   portinstall:
     name: "{{ item }}"
     state: present
-  with_items: "{{ nginx_unit_modules }}"
+  loop: "{{ nginx_unit_modules }}"
   when: ansible_os_family == "FreeBSD"
   notify: "(Handler: FreeBSD) Start NGINX Unit"

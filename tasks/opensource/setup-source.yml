@@ -343,19 +343,6 @@
         chdir: "/tmp/{{ nginx_version }}"
         target: install
 
-    - name: "(Install: Linux) Install NGINX: Create html directory"
-      file:
-        path: /usr/share/nginx/html
-        state: directory
-
-    - name: "(Install: Linux) Install NGINX: Copy index.html"
-      copy:
-        src: www/index.html
-        owner: root
-        group: root
-        mode: '0644'
-        dest: /usr/share/nginx/html/index.html
-
     - name: "(Install: Linux) Upload systemd NGINX service file"
       copy:
         src: services/nginx.systemd

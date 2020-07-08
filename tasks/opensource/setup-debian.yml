@@ -16,8 +16,7 @@
 - name: "(Install: Debian/Ubuntu) Add NGINX Repository"
   apt_repository:
     repo: "{{ item }}"
-  loop:
-    - "{{ repository }}"
+  loop: "{{ repository }}"
 
 - name: "(Install: Debian/Ubuntu) Install NGINX"
   apt:

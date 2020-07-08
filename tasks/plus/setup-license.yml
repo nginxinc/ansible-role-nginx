@@ -12,7 +12,7 @@
         src: "{{ item }}"
         dest: /etc/ssl/nginx
         decrypt: yes
-      with_items:
+      loop:
         - "{{ nginx_license.certificate }}"
         - "{{ nginx_license.key }}"
 

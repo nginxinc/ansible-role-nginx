@@ -2,6 +2,6 @@
 - name: "(Install: Debian/Ubuntu) Add NGINX Unit Repository"
   apt_repository:
     repo: "{{ item }}"
-  with_items:
+  loop:
     - deb [arch=amd64] https://packages.nginx.org/unit/{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} unit
     - deb-src https://packages.nginx.org/unit/{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} unit

@@ -18,7 +18,7 @@ The following is a set of guidelines for contributing to the NGINX Ansible role.
 
 ## Ask a Question
 
-Please open an Issue on GitHub with the label `question`.
+Don't know how something works? Curious if the role can achieve your desired functionality. Please open an Issue on GitHub with the label `question`.
 
 ## Getting Started
 
@@ -29,7 +29,7 @@ Follow our [Installation Guide](https://github.com/nginxinc/ansible-role-nginx/b
 *   The NGINX Ansible role is written in `yaml` and supports open source NGINX, NGINX Plus, NGINX Amplify, and NGINX Unit.
 *   The project follows the standard [Ansible role directory structure](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html)
     *   The main code is found in `tasks/`
-    *   The main variables can be found in `defaults/main/`
+    *   The main variables can be found in `defaults/main/*.yml`
     *   Configuration templates for NGINX can be found in `templates/`
     *   [Molecule](https://molecule.readthedocs.io/) tests can be found in `molecule/`.
     *   CI/CD is done via Travis using `.travis.yml` deployment yaml files
@@ -46,12 +46,20 @@ To suggest an enhancement, please create an issue on GitHub with the label `enha
 
 ### Open a Pull Request
 
-*   Fork the repo, create a branch, submit a PR when your changes are tested (ideally using Molecule) and ready for review
+*   Fork the repo, create a branch, submit a PR when your changes are **tested** (ideally using Molecule) and ready for review
 *   Fill in [our pull request template](https://github.com/nginxinc/ansible-role-nginx/blob/master/.github/PULL_REQUEST_TEMPLATE.md)
 
 Note: if you’d like to implement a new feature, please consider creating a feature request issue first to start a discussion about the feature.
 
 ## Code Guidelines
+
+### Ansible Guidelines
+
+*   Run `molecule lint` over your code to automatically resolve a lot of `yaml` and Ansible style issues.
+*   Run `molecule test --all` on your code before you submit a PR to catch any potential issues.
+*   Follow these guides on some good practices for Ansible:
+    *   <https://www.ansible.com/blog/ansible-best-practices-essentials>
+    *   <https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html>
 
 ### Git Guidelines
 
@@ -62,11 +70,3 @@ Note: if you’d like to implement a new feature, please consider creating a fea
     *   Limit the subject line to 72 characters or less
     *   Reference issues and pull requests liberally after the subject line
     *   Add more detailed description in the body of the git message (`git commit -a` to give you more space and time in your text editor to write a good message instead of `git commit -am`)
-
-### Ansible Guidelines
-
-*   Run `molecule lint` over your code to automatically resolve a lot of `yaml` and Ansible style issues.
-*   Run `molecule test --all` on your code to catch any other issues.
-*   Follow these guides on some good practices for Ansible:
-    *   <https://www.ansible.com/blog/ansible-best-practices-essentials>
-    *   <https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html>

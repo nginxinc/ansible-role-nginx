@@ -1,7 +1,16 @@
 ---
-# Install NGINX.
+# Enable NGINX options -- `nginx_install` and `nginx_configure`.
 # Default is true.
 nginx_enable: true
+
+# Install NGINX and NGINX modules.
+# Variables for these options can be found below.
+# Default is true.
+nginx_install: true
+# Enable NGINX configuration options.
+# Variables for these options can be found in `./template.yml` and `./upload.yml`.
+# Default is true.
+nginx_configure: true
 
 # Start NGINX service.
 # Default is true.

@@ -20,9 +20,9 @@ Steps to reproduce the behavior:
 A clear and concise description of what you expected to happen.
 
 **Your environment:**
- - Version of the NGINX Role or specific commit
- - Version of Ansible
- - Target deployment platform
+-   Version of the NGINX Role or specific commit
+-   Version of Ansible
+-   Target deployment platform
 
 **Additional context**
 Add any other context about the problem here.

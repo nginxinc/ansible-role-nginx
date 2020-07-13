@@ -1,7 +1,17 @@
 ---
-# Install NGINX.
+# Enable NGINX options -- `nginx_install` and `nginx_configure`.
 # Default is true.
 nginx_enable: true
+
+# Install NGINX and NGINX modules.
+# Variables for these options can be found below.
+# Default is true.
+nginx_install: true
+
+# Enable NGINX configuration options.
+# Variables for these options can be found in `./template.yml` and `./upload.yml`.
+# Default is true.
+nginx_configure: true
 
 # Start NGINX service.
 # Default is true.
@@ -22,7 +32,7 @@ nginx_type: opensource
 # nginx_version: "-20*"
 
 # Specify whether you want to maintain your version of NGINX, upgrade to the latest version, or remove NGINX.
-# Can be used with `nginx_version` to achieve fine tune control on which version of NGINX is installed/used on each playbook execution.
+# Can be used with `nginx_version` to fine tune control on which version of NGINX is installed/used on each playbook execution.
 # Using 'present' will install the latest version (or 'nginx_version') of NGINX on a fresh install.
 # Using 'latest' will upgrade NGINX to the latest version (that matches your 'nginx_version') of NGINX on every playbook execution.
 # Using 'absent' will remove NGINX from your system.
@@ -36,14 +46,11 @@ nginx_state: present
 nginx_install_from: nginx_repository
 
 # Specify source install options for NGINX Open Source.
-# Options represent whether to install from source also
-# or to install from packages (default). These only apply
-# if 'nginx_install_from' is set to 'source'
-# For the tools, true means we will install from a package
-# and false means install from source.
-# 'nginx_install_source_build_tools' will install compiler
-# and build tools from packages.  If false, you need to have
-# these present.
+# Options represent whether to install from source also or to install from packages (default).
+# These only apply if 'nginx_install_from' is set to 'source'.
+# For the tools, true means we will install from a package and false means install from source.
+# 'nginx_install_source_build_tools' will install compiler and build tools from packages.
+# If false, you need to have these present.
 nginx_install_source_build_tools: true
 nginx_install_source_pcre: false
 nginx_install_source_openssl: true

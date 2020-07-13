@@ -7,7 +7,7 @@ nginx_linux_families: ['Alpine', 'Debian', 'RedHat', 'Suse']
 # RedHat={Amazon,CentOS,OracleLinux,RHEL} Debian={Ubuntu,Debian}
 nginx_plus_linux_families: ['Alpine', 'Debian', 'RedHat', 'Suse']
 
-# Default locations and versions for install from source
+# Default locations and versions when 'nginx_install_from; is set to 'source'
 pcre_version: pcre-8.43
 zlib_version: zlib-1.2.11
 openssl_version: openssl-1.1.1c

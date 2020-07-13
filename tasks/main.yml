@@ -18,46 +18,50 @@
 - name: "(Install: Debian/Ubuntu/CentOS/RedHat/FreeBSD) Install NGINX"
   block:
 
-    - include_tasks: "{{ role_path }}/tasks/opensource/install-oss.yml"
-      when: nginx_type == "opensource"
-      tags: nginx_install_oss
+    - block:
+        - include_tasks: "{{ role_path }}/tasks/opensource/install-oss.yml"
+          when: nginx_type == "opensource"
+          tags: nginx_install_oss
 
-    - include_tasks: "{{ role_path }}/tasks/plus/install-plus.yml"
-      when: nginx_type == "plus"
-      tags: nginx_install_plus
+        - include_tasks: "{{ role_path }}/tasks/plus/install-plus.yml"
+          when: nginx_type == "plus"
+          tags: nginx_install_plus
 
-    - include_tasks: "{{ role_path }}/tasks/conf/cleanup-config.yml"
-      when: nginx_cleanup_config | bool
-      tags: nginx_cleanup_config
+        - include_tasks: "{{ role_path }}/tasks/modules/install-modules.yml"
+          when: true in nginx_modules.values()
+          tags: nginx_install_modules
 
-    - include_tasks: "{{ role_path }}/tasks/conf/upload-config.yml"
-      when: nginx_main_upload_enable
-            or nginx_http_upload_enable
-            or nginx_stream_upload_enable
-            or nginx_html_upload_enable
-            or nginx_ssl_upload_enable
-      tags: nginx_upload_config
+        - include_tasks: "{{ role_path }}/tasks/plus/delete-license.yml"
+          when:
+            - nginx_type == "plus"
+            - nginx_delete_license
+          tags: nginx_delete_license
+      when: nginx_install | bool
 
-    - include_tasks: "{{ role_path }}/tasks/conf/template-config.yml"
-      when: nginx_main_template_enable
-            or nginx_http_template_enable
-            or nginx_stream_template_enable
-            or nginx_rest_api_enable
-      tags: nginx_template_config
+    - block:
+        - include_tasks: "{{ role_path }}/tasks/conf/cleanup-config.yml"
+          when: nginx_cleanup_config | bool
+          tags: nginx_cleanup_config
 
-    - include_tasks: "{{ role_path }}/tasks/conf/setup-status.yml"
-      when: nginx_status_enable | bool
-      tags: nginx_setup_status
+        - include_tasks: "{{ role_path }}/tasks/conf/upload-config.yml"
+          when: nginx_main_upload_enable
+                or nginx_http_upload_enable
+                or nginx_stream_upload_enable
+                or nginx_html_upload_enable
+                or nginx_ssl_upload_enable
+          tags: nginx_upload_config
 
-    - include_tasks: "{{ role_path }}/tasks/modules/install-modules.yml"
-      when: true in nginx_modules.values()
-      tags: nginx_install_modules
+        - include_tasks: "{{ role_path }}/tasks/conf/template-config.yml"
+          when: nginx_main_template_enable
+                or nginx_http_template_enable
+                or nginx_stream_template_enable
+                or nginx_rest_api_enable
+          tags: nginx_template_config
 
-    - include_tasks: "{{ role_path }}/tasks/plus/delete-license.yml"
-      when:
-        - nginx_type == "plus"
-        - nginx_delete_license
-      tags: nginx_delete_license
+        - include_tasks: "{{ role_path }}/tasks/conf/setup-status.yml"
+          when: nginx_status_enable | bool
+          tags: nginx_setup_status
+      when: nginx_configure | bool
 
     - name: "(Config: All OSs) Ensure NGINX is Running"
       meta: flush_handlers
@@ -69,7 +73,6 @@
     - include_tasks: "{{ role_path }}/tasks/conf/logrotate.yml"
       when: nginx_logrotate_conf_enable | bool
       tags: nginx_logrotate_config
-
   when: nginx_enable | bool
 
 - include_tasks: "{{ role_path }}/tasks/amplify/install-amplify.yml"

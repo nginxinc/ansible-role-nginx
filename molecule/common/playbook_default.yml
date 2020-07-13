@@ -30,6 +30,7 @@
       - 80
       - 443
     nginx_version: "{{ version }}"
+    nginx_configure: false
     nginx_logrotate_conf_enable: true
     nginx_logrotate_conf:
       paths:

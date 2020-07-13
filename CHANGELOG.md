@@ -12,10 +12,11 @@ FEATURES:
 *   Add support to configure logrotate
 *   Add support for Ubuntu Focal
 *   Add support to configure SELinux
+*   Two new variables have been introduced -- `nginx_install` and `nginx_configure` -- to let you choose whether you want to install NGINX, configure NGINX, or both
 
 ENHANCEMENTS:
 
-*   Use `include_tasks` instead of `import_tasks` when possible to speed up the role's execution time
+*   The role now uses `include_tasks` instead of `import_tasks` when possible to speed up the role's execution time
 *   Improve configuration templating capabilities:
     *   Add support for unix upstreams
     *   Add PID templating option

@@ -5,7 +5,6 @@ lint: |
   set -e
   yamllint .
   ansible-lint
-  flake8
 platforms:
   - name: debian-stretch
     image: debian:stretch-slim
@@ -45,4 +44,4 @@ platforms:
 provisioner:
   name: ansible
   playbooks:
-    converge: ../common/playbook_unit.yml
+    converge: ../common/playbooks/unit_converge.yml

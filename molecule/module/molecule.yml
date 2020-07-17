@@ -5,7 +5,6 @@ lint: |
   set -e
   yamllint .
   ansible-lint
-  flake8
 platforms:
   - name: debian-stretch
     image: debian:stretch-slim
@@ -45,7 +44,5 @@ platforms:
 provisioner:
   name: ansible
   playbooks:
-    converge: ../common/playbook_module.yml
-verifier:
-  name: testinfra
-  directory: ../common/test_module
+    converge: ../common/playbooks/module_converge.yml
+    verify: ../common/playbooks/module_verify.yml

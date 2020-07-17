@@ -1,14 +1,10 @@
 ---
-dependency:
-  name: shell
-  command: pip install python-nginx
 driver:
   name: docker
 lint: |
   set -e
   yamllint .
   ansible-lint
-  flake8
 platforms:
   - name: debian-stretch
     image: debian:stretch-slim
@@ -48,7 +44,5 @@ platforms:
 provisioner:
   name: ansible
   playbooks:
-    converge: ../common/playbook_stable_push.yml
-verifier:
-  name: testinfra
-  directory: ../common/test_stable_push
+    converge: ../common/playbooks/stable_push_converge.yml
+    verify: ../common/playbooks/stable_push_verify.yml

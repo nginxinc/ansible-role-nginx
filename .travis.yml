@@ -63,9 +63,7 @@ before_install:
 install:
   - pip install ansible==2.9.9
   - pip install molecule[docker]==3.0.4
-  - pip install testinfra
   - pip install ansible-lint
-  - pip install flake8
 script:
   - molecule --version
   - ansible --version

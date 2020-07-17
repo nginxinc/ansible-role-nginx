@@ -1,7 +1,4 @@
 ---
-dependency:
-  name: shell
-  command: pip install python-nginx
 driver:
   name: docker
 lint: |
@@ -41,7 +38,5 @@ platforms:
 provisioner:
   name: ansible
   playbooks:
-    converge: ../common/playbook_template.yml
-verifier:
-  name: testinfra
-  directory: ../common/test_template
+    converge: ../common/playbooks/template_converge.yml
+    verify: ../common/playbooks/template_verify.yml

@@ -1,0 +1,17 @@
+---
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Check if NGINX is installed
+      package_facts:
+        manager: auto
+      failed_when: ansible_facts.packages.nginx is not defined
+
+    - name: Check if NGINX service is running
+      service_facts:
+      failed_when: ansible_facts.services['nginx.service'] is not defined
+
+    - name: Verify NGINX is up and running
+      uri:
+        url: http://localhost
+        status_code: 200

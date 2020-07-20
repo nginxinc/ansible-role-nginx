@@ -1,0 +1,69 @@
+---
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Check if NGINX is installed
+      package:
+        name: nginx
+      check_mode: yes
+      register: install
+      failed_when: (install is changed) or (install is failed)
+
+    - name: Check if NGINX service is running
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+      check_mode: yes
+      register: service
+      failed_when: (service is changed) or (service is failed)
+
+    - name: Verify NGINX is up and running
+      uri:
+        url: http://localhost
+        status_code: 200
+
+    - name: Check default.conf exists
+      stat:
+        path: /etc/nginx/conf.d/default.conf
+      register: stat_result
+      failed_when: not stat_result.stat.exists
+
+    - name: Check frontend_default.conf exists
+      stat:
+        path: /etc/nginx/conf.d/frontend_default.conf
+      register: stat_result
+      failed_when: not stat_result.stat.exists
+
+    - name: Check backend_default.conf exists
+      stat:
+        path: /etc/nginx/conf.d/backend_default.conf
+      register: stat_result
+      failed_when: not stat_result.stat.exists
+
+    - name: Ensure default.conf contains 'location /'
+      lineinfile:
+        path: /etc/nginx/conf.d/default.conf
+        line: "    location / {"
+        state: present
+      check_mode: yes
+      register: conf
+      failed_when: (conf is changed) or (conf is failed)
+
+    - name: Ensure default.conf contains 'location /backend'
+      lineinfile:
+        path: /etc/nginx/conf.d/default.conf
+        line: "    location /backend {"
+        state: present
+      check_mode: yes
+      register: conf
+      failed_when: (conf is changed) or (conf is failed)
+
+    - name: Ensure default.conf contains 'client_max_body_size 512k;'
+      lineinfile:
+        path: /etc/nginx/conf.d/default.conf
+        line: "    client_max_body_size 512k;"
+        state: present
+      check_mode: yes
+      register: conf
+      failed_when: (conf is changed) or (conf is failed)

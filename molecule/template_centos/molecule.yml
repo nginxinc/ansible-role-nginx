@@ -1,14 +1,10 @@
 ---
-dependency:
-  name: shell
-  command: pip install python-nginx
 driver:
   name: docker
 lint: |
   set -e
   yamllint .
   ansible-lint
-  flake8
 platforms:
   - name: centos-6
     image: centos:6
@@ -30,7 +26,5 @@ platforms:
 provisioner:
   name: ansible
   playbooks:
-    converge: ../common/playbook_template.yml
-verifier:
-  name: testinfra
-  directory: ../common/test_template
+    converge: ../common/playbooks/template_converge.yml
+    verify: ../common/playbooks/template_verify.yml

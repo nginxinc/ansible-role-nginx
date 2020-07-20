@@ -8,6 +8,6 @@
 
     nginx_branch: stable
     nginx_main_upload_enable: true
-    nginx_main_upload_src: files/nginx.conf
+    nginx_main_upload_src: ../files/nginx.conf
     nginx_http_upload_enable: true
-    nginx_http_upload_src: files/http/*.conf
+    nginx_http_upload_src: ../files/http/*.conf

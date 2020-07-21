@@ -361,9 +361,12 @@
         conf_file_location: /etc/nginx/conf.d/stream
         network_streams:
           app:
-            listen_address: 0.0.0.0
-            listen_port: 8090
-            udp_enable: false
+            listen:
+              listen_localhost:
+                ip: 0.0.0.0
+                port: 80
+                opts:
+                  - udp
             proxy_pass: backend
             proxy_timeout: 3s
             proxy_connect_timeout: 1s

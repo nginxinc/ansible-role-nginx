@@ -33,25 +33,38 @@ upstream {{ item.value.upstreams[upstream].name }} {
 {% if item.value.network_streams is defined %}
 {% for stream in item.value.network_streams %}
 server {
-{% if item.value.network_streams[stream].listen_address is defined and item.value.network_streams[stream].listen_port is defined %}
-{% if item.value.network_streams[stream].listen_address == 'localhost' %}
-{% if item.value.network_streams[stream].udp_enable %}
-    listen {{ item.value.network_streams[stream].listen_port }} udp;
-{% else %}
-    listen {{ item.value.network_streams[stream].listen_port }};
+{% for listen in item.value.network_streams[stream].listen %}
+    listen {% if item.value.network_streams[stream].listen[listen].ip is defined and item.value.network_streams[stream].listen[listen].ip | length %}{{ item.value.network_streams[stream].listen[listen].ip }}:{% endif %}{{ item.value.network_streams[stream].listen[listen].port }}{% if item.value.network_streams[stream].listen[listen].ssl is defined and item.value.network_streams[stream].listen[listen].ssl %} ssl{% endif %}{% if item.value.network_streams[stream].listen[listen].opts is defined and item.value.network_streams[stream].listen[listen].opts | length %} {{ item.value.network_streams[stream].listen[listen].opts | join(" ") }}{% endif %};
+{% endfor %}
+{% if item.value.network_streams[stream].ssl is defined and item.value.network_streams[stream].ssl %}
+    ssl_certificate {{ item.value.network_streams[stream].ssl.cert }};
+    ssl_certificate_key {{ item.value.network_streams[stream].ssl.key }};
+{% if item.value.network_streams[stream].ssl.trusted_cert is defined %}
+    ssl_trusted_certificate {{ item.value.network_streams[stream].ssl.trusted_cert }};
 {% endif %}
-{% else %}
-{% if item.value.network_streams[stream].udp_enable %}
-    listen {{ item.value.network_streams[stream].listen_address }}:{{ item.value.network_streams[stream].listen_port }} udp;
-{% else %}
-    listen {{ item.value.network_streams[stream].listen_address }}:{{ item.value.network_streams[stream].listen_port }};
+{% if item.value.network_streams[stream].ssl.dhparam is defined %}
+    ssl_dhparam {{ item.value.network_streams[stream].ssl.dhparam }};
 {% endif %}
+{% if item.value.network_streams[stream].ssl.protocols is defined and item.value.network_streams[stream].ssl.protocols %}
+    ssl_protocols {{ item.value.network_streams[stream].ssl.protocols }};
 {% endif %}
-{% elif item.value.network_streams[stream].listen_port is defined %}
-{% if item.value.network_streams[stream].udp_enable %}
-    listen {{ item.value.network_streams[stream].listen_port }} udp;
-{% else %}
-    listen {{ item.value.network_streams[stream].listen_port }};
+{% if item.value.network_streams[stream].ssl.ciphers is defined and item.value.network_streams[stream].ssl.ciphers %}
+    ssl_ciphers {{ item.value.network_streams[stream].ssl.ciphers }};
+{% endif %}
+{% if item.value.network_streams[stream].ssl.prefer_server_ciphers is defined and item.value.network_streams[stream].ssl.prefer_server_ciphers %}
+    ssl_prefer_server_ciphers on;
+{% endif %}
+{% if item.value.network_streams[stream].ssl.session_cache is defined and item.value.network_streams[stream].ssl.session_cache %}
+    ssl_session_cache {{ item.value.network_streams[stream].ssl.session_cache }};
+{% endif %}
+{% if item.value.network_streams[stream].ssl.session_timeout is defined and item.value.network_streams[stream].ssl.session_timeout %}
+    ssl_session_timeout {{ item.value.network_streams[stream].ssl.session_timeout }};
+{% endif %}
+{% if item.value.network_streams[stream].ssl.disable_session_tickets is defined and item.value.network_streams[stream].ssl.disable_session_tickets %}
+    ssl_session_tickets off;
+{% endif %}
+{% if item.value.network_streams[stream].ssl.ecdh_curve is defined and item.value.network_streams[stream].ssl.ecdh_curve %}
+    ssl_ecdh_curve {{ item.value.network_streams[stream].ssl.ecdh_curve }};
 {% endif %}
 {% endif %}
 {% if item.value.network_streams[stream].include_files is defined and item.value.network_streams[stream].include_files | length %}

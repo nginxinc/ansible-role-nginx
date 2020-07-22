@@ -58,7 +58,6 @@
       stream_enable: true
 
     nginx_status_enable: true
-    nginx_status_location: /etc/nginx/conf.d/stub_status.conf
     nginx_status_port: 8080
     nginx_status_log: true
 

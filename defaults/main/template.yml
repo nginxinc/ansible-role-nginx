@@ -317,8 +317,8 @@ nginx_http_template:
 # Note - 'status' has been deprecated since NGINX Plus R13.
 # Default is false.
 nginx_status_enable: false
-nginx_status_template_file: http/stub_status.conf.j2
-nginx_status_file_location: /etc/nginx/conf.d/stub_status.conf
+nginx_status_template_file: http/status.conf.j2
+nginx_status_file_location: /etc/nginx/conf.d/status.conf
 nginx_status_log: false
 nginx_status_port: 80
 nginx_status_allow: 127.0.0.1

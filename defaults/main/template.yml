@@ -317,9 +317,12 @@ nginx_http_template:
 # Note - 'status' has been deprecated since NGINX Plus R13.
 # Default is false.
 nginx_status_enable: false
-nginx_status_location: /etc/nginx/conf.d/stub_status.conf
-nginx_status_port: 80
+nginx_status_template_file: http/stub_status.conf.j2
+nginx_status_file_location: /etc/nginx/conf.d/stub_status.conf
 nginx_status_log: false
+nginx_status_port: 80
+nginx_status_allow: 127.0.0.1
+nginx_status_deny: all
 
 # Enable NGINX Plus REST API, write access to the REST API, and NGINX Plus dashboard.
 # Requires NGINX Plus.
@@ -327,10 +330,14 @@ nginx_status_log: false
 nginx_rest_api_enable: false
 nginx_rest_api_template_file: http/api.conf.j2
 nginx_rest_api_file_location: /etc/nginx/conf.d/api.conf
-nginx_rest_api_port: 80
 nginx_rest_api_log: false
+nginx_rest_api_port: 80
 nginx_rest_api_write: false
 nginx_rest_api_dashboard: false
+nginx_status_rest_api_allow: 127.0.0.1
+nginx_status_rest_api_deny: all
+nginx_status_rest_api_dashboard_allow: 127.0.0.1
+nginx_status_rest_api_dashboard_deny: all
 
 # Enable creating dynamic templated NGINX stream configuration files.
 # Defaults will not produce a valid configuration. Instead they are meant to showcase

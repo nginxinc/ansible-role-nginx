@@ -6,6 +6,7 @@ BREAKING CHANGES:
 
 *   The Debian and Ubuntu repositories have slightly changed. You may run into some duplication issues when running the role on a preexisting target that already has had NGINX installed using the role. To fix this, manually remove the old repository source.
 *   If you use `custom_options` you will now need to manually end each directive with a semicolon.
+*   The `status` directive is no longer supported in NGINX Plus, and the `stub_status` directive has been reworked into a template.
 *   The listen directive structure in the `stream` template has been updated to the listen directive structure found in the `http` template. You can now specify multiple `listen` directives in the same `server` block as well as include any extra `listen` options you might need.
 
     Old configuration example

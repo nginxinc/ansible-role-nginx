@@ -2,17 +2,29 @@
 
 server {
     listen {{ nginx_rest_api_port | default('80') }};
-    access_log {{ nginx_rest_api_log | ternary("on", "off") }};
+    access_log {{ nginx_rest_api_log | ternary('on', 'off') }};
     location /api {
 {% if nginx_rest_api_write %}
         api write=on;
 {% else %}
         api;
 {% endif %}
+{% if nginx_status_rest_api_allow is defined %}
+        allow {{ nginx_status_rest_api_allow }};
+{% endif %}
+{% if nginx_status_rest_api_deny is defined %}
+        deny {{ nginx_status_rest_api_deny }};
+{% endif %}
     }
 {% if nginx_rest_api_dashboard %}
     location = /dashboard.html {
         root /usr/share/nginx/html;
+{% if nginx_status_rest_api_dashboard_allow is defined %}
+        allow {{ nginx_status_rest_api_dashboard_allow }};
+{% endif %}
+{% if nginx_status_rest_api_dashboard_deny is defined %}
+        deny {{ nginx_status_rest_api_dashboard_deny }};
+{% endif %}
     }
 {% endif %}
 }

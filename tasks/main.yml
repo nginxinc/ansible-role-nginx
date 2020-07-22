@@ -1,9 +1,9 @@
 ---
-- name: "(Setup: Prerequisites)"
+- name: "(Setup: All OSs) Setup Prerequisites"
   include_tasks: "{{ role_path }}/tasks/prerequisites/setup-{{ ansible_os_family | lower }}.yml"
   tags: nginx_prerequisites
 
-- name: "(Setup: Keys)"
+- name: "(Setup: All OSs) Setup Keys"
   import_tasks: keys/setup-keys.yml
   when:
     - ansible_os_family == "Alpine"
@@ -15,35 +15,43 @@
       or nginx_unit_enable
   tags: nginx_key
 
-- name: "(Install: Debian/Ubuntu/CentOS/RedHat/FreeBSD) Install NGINX"
+- name: "(Install/Config: All OSs) Install and Configure NGINX"
   block:
 
-    - block:
-        - include_tasks: "{{ role_path }}/tasks/opensource/install-oss.yml"
+    - name: "(Install: All OSs) Install NGINX"
+      block:
+        - name: "(Install: All OSs) Install NGINX Open Source"
+          include_tasks: "{{ role_path }}/tasks/opensource/install-oss.yml"
           when: nginx_type == "opensource"
           tags: nginx_install_oss
 
-        - include_tasks: "{{ role_path }}/tasks/plus/install-plus.yml"
+        - name: "(Install: All OSs) Install NGINX Plus"
+          include_tasks: "{{ role_path }}/tasks/plus/install-plus.yml"
           when: nginx_type == "plus"
           tags: nginx_install_plus
 
-        - include_tasks: "{{ role_path }}/tasks/modules/install-modules.yml"
+        - name: "(Install: All OSs) Install NGINX Modules"
+          include_tasks: "{{ role_path }}/tasks/modules/install-modules.yml"
           when: true in nginx_modules.values()
           tags: nginx_install_modules
 
-        - include_tasks: "{{ role_path }}/tasks/plus/delete-license.yml"
+        - name: "(Install: All OSs) Delete NGINX Plus License"
+          include_tasks: "{{ role_path }}/tasks/plus/delete-license.yml"
           when:
             - nginx_type == "plus"
             - nginx_delete_license
           tags: nginx_delete_license
       when: nginx_install | bool
 
-    - block:
-        - include_tasks: "{{ role_path }}/tasks/conf/cleanup-config.yml"
+    - name: "(Config: All OSs) Configure NGINX"
+      block:
+        - name: "(Config: All OSs) Cleanup NGINX Config"
+          include_tasks: "{{ role_path }}/tasks/conf/cleanup-config.yml"
           when: nginx_cleanup_config | bool
           tags: nginx_cleanup_config
 
-        - include_tasks: "{{ role_path }}/tasks/conf/upload-config.yml"
+        - name: "(Config: All OSs) Upload NGINX Config"
+          include_tasks: "{{ role_path }}/tasks/conf/upload-config.yml"
           when: nginx_main_upload_enable
                 or nginx_http_upload_enable
                 or nginx_stream_upload_enable
@@ -51,37 +59,38 @@
                 or nginx_ssl_upload_enable
           tags: nginx_upload_config
 
-        - include_tasks: "{{ role_path }}/tasks/conf/template-config.yml"
+        - name: "(Config: All OSs) Create NGINX Config"
+          include_tasks: "{{ role_path }}/tasks/conf/template-config.yml"
           when: nginx_main_template_enable
                 or nginx_http_template_enable
                 or nginx_stream_template_enable
                 or nginx_rest_api_enable
           tags: nginx_template_config
-
-        - include_tasks: "{{ role_path }}/tasks/conf/setup-status.yml"
-          when: nginx_status_enable | bool
-          tags: nginx_setup_status
       when: nginx_configure | bool
 
     - name: "(Config: All OSs) Ensure NGINX is Running"
       meta: flush_handlers
 
-    - include_tasks: "{{ role_path }}/tasks/conf/debug-output.yml"
+    - name: "(Config: All OSs) Debug Output"
+      include_tasks: "{{ role_path }}/tasks/conf/debug-output.yml"
       when: nginx_debug_output | bool
       tags: nginx_debug_output
 
-    - include_tasks: "{{ role_path }}/tasks/conf/logrotate.yml"
+    - name: "(Config: All OSs): Configure Logrotate"
+      include_tasks: "{{ role_path }}/tasks/conf/logrotate.yml"
       when: nginx_logrotate_conf_enable | bool
       tags: nginx_logrotate_config
   when: nginx_enable | bool
 
-- include_tasks: "{{ role_path }}/tasks/amplify/install-amplify.yml"
+- name: "(Install: All OSs) Install NGINX Amplify"
+  include_tasks: "{{ role_path }}/tasks/amplify/install-amplify.yml"
   when:
     - nginx_amplify_enable | bool
     - nginx_amplify_api_key is defined
     - nginx_amplify_api_key | length > 0
   tags: nginx_install_amplify
 
-- include_tasks: "{{ role_path }}/tasks/unit/install-unit.yml"
+- name: "(Install: All OSs) Install NGINX Unit"
+  include_tasks: "{{ role_path }}/tasks/unit/install-unit.yml"
   when: nginx_unit_enable | bool
   tags: nginx_install_unit

@@ -55,6 +55,14 @@
   when: nginx_http_template_enable | bool
   notify: "(Handler: All OSs) Reload NGINX"
 
+- name: "(Setup: All NGINX) Dynamically Generate NGINX Stub Status Configuration File"
+  template:
+    src: "{{ nginx_status_template_file | default('http/status.conf.j2') }}"
+    dest: "{{ nginx_status_file_location | default('/etc/nginx/conf.d/status.conf') }}"
+    backup: yes
+  notify: "(Handler: All OSs) Reload NGINX"
+  when: nginx_status_enable | bool
+
 - name: "(Setup: All NGINX) Dynamically Generate NGINX API Configuration File"
   template:
     src: "{{ nginx_rest_api_template_file | default('http/api.conf.j2') }}"

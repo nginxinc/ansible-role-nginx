@@ -94,22 +94,21 @@
       register: openssl_result
 
 - name: "(Install: Centos/RHEL) Install PCRE Dependency From Package"
-  package:
+  yum:
     name: pcre-devel
-    state: present
+    update_cache: true
   when: nginx_install_source_pcre and ansible_os_family == "RedHat"
 
 - name: "(Install: Debian/Ubuntu) Install PCRE Dependency From Package"
   apt:
     name: libpcre3-dev
-    state: present
     update_cache: true
   when: nginx_install_source_pcre and ansible_os_family == "Debian"
 
 - name: "(Install: Alpine) Install PCRE Dependency From Package"
-  package:
+  apk:
     name: pcre-dev
-    state: present
+    update_cache: true
   when: nginx_install_source_pcre and ansible_os_family == "Alpine"
 
 - name: "(Install: Linux) Install PCRE Dependence From Source"
@@ -144,21 +143,21 @@
   when: not pcre_result.stat.exists and not nginx_install_source_pcre
 
 - name: "(Install: Centos/RHEL) Install zlib Dependency From Package"
-  package:
+  yum:
     name: zlib-devel
-    state: present
+    update_cache: true
   when: nginx_install_source_zlib and ansible_os_family == "RedHat"
 
 - name: "(Install: Debian/Ubuntu) Install zlib Dependency From Package"
-  package:
+  apt:
     name: zlib1g-dev
-    state: present
+    update_cache: true
   when: nginx_install_source_zlib and ansible_os_family == "Debian"
 
 - name: "(Install: Alpine) Install zlib Dependency From Package"
-  package:
+  apk:
     name: zlib-dev
-    state: present
+    update_cache: true
   when: nginx_install_source_zlib and ansible_os_family == "Alpine"
 
 - name: "(Install: Linux) Install zlib Dependency From Source"
@@ -193,21 +192,21 @@
   when: not zlib_result.stat.exists and not nginx_install_source_zlib
 
 - name: "(Install: Centos/RHEL) Install OpenSSL Dependency From Package"
-  package:
+  yum:
     name: openssl-devel
-    state: present
+    update_cache: true
   when: nginx_install_source_openssl and ansible_os_family == "RedHat"
 
 - name: "(Install: Debian/Ubuntu) Install OpenSSL Dependency From Package"
-  package:
+  apt:
     name: libssl-dev
-    state: present
+    update_cache: true
   when: nginx_install_source_openssl and ansible_os_family == "Debian"
 
 - name: "(Install: Alpine) Install OpenSSL Dependency From Package"
-  package:
+  apk:
     name: openssl-dev
-    state: present
+    update_cache: true
   when: nginx_install_source_openssl and ansible_os_family == "Alpine"
 
 - name: "(Install: Linux) Install OpenSSL Dependency From Source"

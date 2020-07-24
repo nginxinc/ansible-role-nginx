@@ -157,8 +157,8 @@
     name: zlib-devel
     update_cache: true
   when:
-   - nginx_install_source_zlib
-   - ansible_os_family == "RedHat"
+    - nginx_install_source_zlib
+    - ansible_os_family == "RedHat"
 
 - name: "(Install: Debian/Ubuntu) Install zlib Dependency From Package"
   apt:

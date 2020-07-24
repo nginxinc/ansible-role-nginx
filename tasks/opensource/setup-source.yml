@@ -15,7 +15,9 @@
         name: python
         path: /usr/bin/python3
         link: /usr/bin/python
-      when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "8"
+      when:
+        - ansible_os_family == "RedHat"
+        - ansible_distribution_major_version == "8"
 
     - name: "(Install: Centos/RHEL) Install Build Tools"
       yum:
@@ -97,19 +99,25 @@
   yum:
     name: pcre-devel
     update_cache: true
-  when: nginx_install_source_pcre and ansible_os_family == "RedHat"
+  when:
+    - nginx_install_source_pcre
+    - ansible_os_family == "RedHat"
 
 - name: "(Install: Debian/Ubuntu) Install PCRE Dependency From Package"
   apt:
     name: libpcre3-dev
     update_cache: true
-  when: nginx_install_source_pcre and ansible_os_family == "Debian"
+  when:
+    - nginx_install_source_pcre
+    - ansible_os_family == "Debian"
 
 - name: "(Install: Alpine) Install PCRE Dependency From Package"
   apk:
     name: pcre-dev
     update_cache: true
-  when: nginx_install_source_pcre and ansible_os_family == "Alpine"
+  when:
+    - nginx_install_source_pcre
+    - ansible_os_family == "Alpine"
 
 - name: "(Install: Linux) Install PCRE Dependence From Source"
   block:
@@ -140,25 +148,33 @@
       make:
         chdir: "/tmp/{{ pcre_version }}"
         target: install
-  when: not pcre_result.stat.exists and not nginx_install_source_pcre
+  when:
+    - not pcre_result.stat.exists
+    - not nginx_install_source_pcre
 
 - name: "(Install: Centos/RHEL) Install zlib Dependency From Package"
   yum:
     name: zlib-devel
     update_cache: true
-  when: nginx_install_source_zlib and ansible_os_family == "RedHat"
+  when:
+   - nginx_install_source_zlib
+   - ansible_os_family == "RedHat"
 
 - name: "(Install: Debian/Ubuntu) Install zlib Dependency From Package"
   apt:
     name: zlib1g-dev
     update_cache: true
-  when: nginx_install_source_zlib and ansible_os_family == "Debian"
+  when:
+    - nginx_install_source_zlib
+    - ansible_os_family == "Debian"
 
 - name: "(Install: Alpine) Install zlib Dependency From Package"
   apk:
     name: zlib-dev
     update_cache: true
-  when: nginx_install_source_zlib and ansible_os_family == "Alpine"
+  when:
+    - nginx_install_source_zlib
+    - ansible_os_family == "Alpine"
 
 - name: "(Install: Linux) Install zlib Dependency From Source"
   block:
@@ -189,25 +205,33 @@
       make:
         chdir: "/tmp/{{ zlib_version }}"
         target: install
-  when: not zlib_result.stat.exists and not nginx_install_source_zlib
+  when:
+    - not zlib_result.stat.exists
+    - not nginx_install_source_zlib
 
 - name: "(Install: Centos/RHEL) Install OpenSSL Dependency From Package"
   yum:
     name: openssl-devel
     update_cache: true
-  when: nginx_install_source_openssl and ansible_os_family == "RedHat"
+  when:
+    - nginx_install_source_openssl
+    - ansible_os_family == "RedHat"
 
 - name: "(Install: Debian/Ubuntu) Install OpenSSL Dependency From Package"
   apt:
     name: libssl-dev
     update_cache: true
-  when: nginx_install_source_openssl and ansible_os_family == "Debian"
+  when:
+    - nginx_install_source_openssl
+    - ansible_os_family == "Debian"
 
 - name: "(Install: Alpine) Install OpenSSL Dependency From Package"
   apk:
     name: openssl-dev
     update_cache: true
-  when: nginx_install_source_openssl and ansible_os_family == "Alpine"
+  when:
+    - nginx_install_source_openssl
+    - ansible_os_family == "Alpine"
 
 - name: "(Install: Linux) Install OpenSSL Dependency From Source"
   block:
@@ -238,7 +262,9 @@
       make:
         chdir: "/tmp/{{ openssl_version }}"
         target: install
-  when: not openssl_result.stat.exists and not nginx_install_source_openssl
+  when:
+    - not openssl_result.stat.exists
+    - not nginx_install_source_openssl
 
 - name: "(Install: Linux) Get NGINX Version"
   block:

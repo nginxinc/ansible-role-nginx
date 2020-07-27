@@ -7,8 +7,8 @@
     nginx_debug_output: true
 
     nginx_install_from: source
-    nginx_branch: mainline
+    nginx_branch: stable
     nginx_install_source_build_tools: true
-    nginx_install_source_pcre: false
+    nginx_install_source_pcre: true
     nginx_install_source_openssl: true
-    nginx_install_source_zlib: false
+    nginx_install_source_zlib: true

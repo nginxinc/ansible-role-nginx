@@ -4,11 +4,14 @@
     paths: "{{ item.directory }}"
     patterns: "*.conf"
     recurse: "{{ item.recurse | default(false) }}"
-  loop: "{{ nginx_cleanup_config_path }}"
+  loop: "{{ nginx_cleanup_config_paths }}"
+  when: nginx_cleanup_config_paths is defined
   register: nginx_config_files
 
 - name: "(Setup: All OSs) Remove NGINX Configuration Files"
   file:
     path: "{{ item }}"
     state: absent
-  loop: "{{ nginx_config_files.results | map(attribute='files') | sum(start=[]) | map(attribute='path') | list }}"
+  loop: >-
+    {{ nginx_config_files.results | default('') | map(attribute='files') | sum(start=[]) | map(attribute='path') | list
+    + nginx_cleanup_config_files | default('') }}

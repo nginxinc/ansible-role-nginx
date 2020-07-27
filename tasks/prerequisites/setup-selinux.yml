@@ -95,7 +95,7 @@
   changed_when: false
 
 - name: "(Setup: SELinux) Import NGINX Plus Module"
-  command: "semodule -i {{ nginx_tempdir }}/nginx-plus-module.pp"  #noqa 503
+  command: "semodule -i {{ nginx_tempdir }}/nginx-plus-module.pp"  # noqa 503
   changed_when: false
   when: nginx_selinux_module.changed
 

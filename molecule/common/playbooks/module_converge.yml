@@ -14,10 +14,12 @@
       - 443
 
     nginx_cleanup_config: true
-    nginx_cleanup_config_path:
+    nginx_cleanup_config_paths:
       - directory:
           - /etc/nginx/conf.d
         recurse: false
+    nginx_cleanup_config_files:
+      - /etc/nginx/conf.d/default.conf
 
     nginx_modules:
       njs: true

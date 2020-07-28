@@ -1,28 +1,35 @@
 ---
-- include_tasks: "{{ role_path }}/tasks/modules/install-njs.yml"
+- name: "(Install: All OSs) Install NGINX JavaScript Module"
+  include_tasks: "{{ role_path }}/tasks/modules/install-njs.yml"
   when: nginx_modules.njs | default(false)
 
-- include_tasks: "{{ role_path }}/tasks/modules/install-perl.yml"
+- name: "(Install: All OSs) Install NGINX Perl Module"
+  include_tasks: "{{ role_path }}/tasks/modules/install-perl.yml"
   when: nginx_modules.perl | default(false)
 
-- include_tasks: "{{ role_path }}/tasks/modules/install-geoip.yml"
+- name: "(Install: All OSs) Install NGINX GeoIP Module"
+  include_tasks: "{{ role_path }}/tasks/modules/install-geoip.yml"
   when:
     - nginx_modules.geoip | default(false)
     - ansible_os_family != "RedHat"
     - ansible_distribution_major_version != "8"
 
-- include_tasks: "{{ role_path }}/tasks/modules/install-image-filter.yml"
+- name: "(Install: All OSs) Install NGINX Image Filter Module"
+  include_tasks: "{{ role_path }}/tasks/modules/install-image-filter.yml"
   when: nginx_modules.image_filter | default(false)
 
-- include_tasks: "{{ role_path }}/tasks/modules/install-rtmp.yml"
+- name: "(Install: All OSs) Install NGINX RTMP Module"
+  include_tasks: "{{ role_path }}/tasks/modules/install-rtmp.yml"
   when:
     - nginx_modules.rtmp | default(false)
     - nginx_type == "plus"
 
-- include_tasks: "{{ role_path }}/tasks/modules/install-xslt.yml"
+- name: "(Install: All OSs) Install NGINX XSLT Module"
+  include_tasks: "{{ role_path }}/tasks/modules/install-xslt.yml"
   when: nginx_modules.xslt | default(false)
 
-- include_tasks: "{{ role_path }}/tasks/modules/install-waf.yml"
+- name: "(Install: All OSs) Install NGINX WAF Module"
+  include_tasks: "{{ role_path }}/tasks/modules/install-waf.yml"
   when:
     - nginx_modules.waf | default(false)
     - nginx_type == "plus"

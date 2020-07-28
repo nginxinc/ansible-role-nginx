@@ -4,12 +4,12 @@
   when: ansible_os_family == "Alpine"
   tags: nginx_apkkey
 
-- name: "(Setup: Keys) Debian"
+- name: "(Setup: Keys) Debian/Ubuntu"
   include_tasks: "{{ role_path }}/tasks/keys/apt-key.yml"
   when: ansible_os_family == "Debian"
   tags: nginx_aptkey
 
-- name: "(Setup: Keys) RedHat/Suse"
+- name: "(Setup: Keys) CentOS/RedHat/Suse"
   include_tasks: "{{ role_path }}/tasks/keys/rpm-key.yml"
   when: ansible_os_family == "RedHat"
         or ansible_os_family == "Suse"

@@ -312,9 +312,10 @@ nginx_http_template:
         # custom_options: []
       # custom_options: []
 
-# Enable NGINX status data.
-# Will enable 'stub_status' in NGINX Open Source and 'status' in NGINX Plus.
-# Note - 'status' has been deprecated since NGINX Plus R13.
+# Enable NGINX 'stub_status' data.
+# Will enable 'stub_status' in NGINX Open Source.
+# Note - NGINX Plus 'status' has been deprecated since NGINX Plus R13.
+# Use the Rest API parameter instead.
 # Default is false.
 nginx_status_enable: false
 nginx_status_template_file: http/status.conf.j2

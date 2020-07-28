@@ -68,7 +68,7 @@
         update_cache: true
       when: ansible_os_family == "Alpine"
 
-    - name: "(Install: Alpine) Enable openrc"
+    - name: "(Install: Alpine) Enable OpenRC"
       copy:
         content: ""
         dest: /run/openrc/softlevel
@@ -85,12 +85,12 @@
         path: /tmp/{{ pcre_version }}
       register: pcre_result
 
-    - name: "(Install: Linux) Check For zlib Install"
+    - name: "(Install: Linux) Check For ZLib Install"
       stat:
         path: /tmp/{{ zlib_version }}
       register: zlib_result
 
-    - name: "(Install: Linux) Check For openssl Install"
+    - name: "(Install: Linux) Check For OpenSSL Install"
       stat:
         path: /tmp/{{ openssl_version }}
       register: openssl_result
@@ -152,7 +152,7 @@
     - not pcre_result.stat.exists
     - not nginx_install_source_pcre
 
-- name: "(Install: Centos/RHEL) Install zlib Dependency From Package"
+- name: "(Install: Centos/RHEL) Install ZLib Dependency From Package"
   yum:
     name: zlib-devel
     update_cache: true
@@ -160,7 +160,7 @@
     - nginx_install_source_zlib
     - ansible_os_family == "RedHat"
 
-- name: "(Install: Debian/Ubuntu) Install zlib Dependency From Package"
+- name: "(Install: Debian/Ubuntu) Install ZLib Dependency From Package"
   apt:
     name: zlib1g-dev
     update_cache: true
@@ -168,7 +168,7 @@
     - nginx_install_source_zlib
     - ansible_os_family == "Debian"
 
-- name: "(Install: Alpine) Install zlib Dependency From Package"
+- name: "(Install: Alpine) Install ZLib Dependency From Package"
   apk:
     name: zlib-dev
     update_cache: true
@@ -176,15 +176,15 @@
     - nginx_install_source_zlib
     - ansible_os_family == "Alpine"
 
-- name: "(Install: Linux) Install zlib Dependency From Source"
+- name: "(Install: Linux) Install ZLib Dependency From Source"
   block:
-    - name: "(Install: Linux) Download zlib Dependency"
+    - name: "(Install: Linux) Download ZLib Dependency"
       get_url:
         url: "http://zlib.net/{{ zlib_version }}.tar.gz"
         dest: "/tmp/{{ zlib_version }}.tar.gz"
       register: zlib_source
 
-    - name: "(Install: Linux) Unpack zlib Dependency"
+    - name: "(Install: Linux) Unpack ZLib Dependency"
       unarchive:
         copy: no
         dest: /tmp/
@@ -197,11 +197,11 @@
         chdir: "/tmp/{{ zlib_version }}"
       register: zlib_configure
 
-    - name: "(Install: Linux) Make zlib Dependency"
+    - name: "(Install: Linux) Make ZLib Dependency"
       make:
         chdir: "/tmp/{{ zlib_version }}"
 
-    - name: "(Install: Linux) Install zlib Dependency"
+    - name: "(Install: Linux) Install ZLib Dependency"
       make:
         chdir: "/tmp/{{ zlib_version }}"
         target: install

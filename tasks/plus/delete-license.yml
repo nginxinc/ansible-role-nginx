@@ -19,9 +19,8 @@
   when: ansible_distribution == "Alpine"
 
 - include_tasks: "{{ role_path }}/tasks/plus/setup-{{ ansible_os_family | lower }}.yml"
-  when:
-    - ansible_os_family == "Alpine"
-      or ansible_os_family == "FreeBSD"
-      or ansible_os_family == "Debian"
-      or ansible_os_family == "RedHat"
-      or ansible_os_family == "Suse"
+  when: ansible_os_family == "Alpine"
+        or ansible_os_family == "FreeBSD"
+        or ansible_os_family == "Debian"
+        or ansible_os_family == "RedHat"
+        or ansible_os_family == "Suse"

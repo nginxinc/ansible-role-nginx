@@ -137,14 +137,15 @@ Debian:
   versions:
     - jessie
     - stretch
-Ubuntu:
-  versions:
-    - xenial
-    - bionic
 RedHat:
   versions:
     - 6
     - 7
+Ubuntu:
+  versions:
+    - xenial
+    - bionic
+    - focal
 ```
 
 **NGINX Unit**

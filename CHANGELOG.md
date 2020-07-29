@@ -39,6 +39,7 @@ ENHANCEMENTS:
 
 *   Molecule tests using Testinfra have been migrated to use Ansible instead.
 *   The role now uses `include_tasks` instead of `import_tasks` when possible to speed up the role's execution time.
+*   Improve configuration cleanup capabilities. You can now remove all `*.conf` files in a given directory, or specify a list of files you wish to delete.
 *   Improve configuration templating capabilities:
     *   Add support for unix upstreams.
     *   Add PID templating option.

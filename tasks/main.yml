@@ -17,7 +17,6 @@
 
 - name: "(Install/Config: All OSs) Install and Configure NGINX"
   block:
-
     - name: "(Install: All OSs) Install NGINX"
       block:
         - name: "(Install: All OSs) Install NGINX Open Source"

@@ -7,7 +7,7 @@
           - python3
           - python3-pip
           - python3-devel
-        update_cache: true
+        update_cache: yes
       when: ansible_os_family == "RedHat"
 
     - name: "(Install: Centos/RHEL) Set Python3 Default"
@@ -32,7 +32,7 @@
           - wget
           - ca-certificates
           - zlib-devel
-        update_cache: true
+        update_cache: yes
       when: ansible_os_family == "RedHat"
 
     - name: "(Install: Debian) Install Backports Repo For Buster"
@@ -50,7 +50,7 @@
           - checkinstall
           - zlib1g-dev
           - libtemplate-perl
-        update_cache: true
+        update_cache: yes
       when: ansible_os_family == "Debian"
 
     - name: "(Install: Alpine) Install Build Tools"
@@ -65,7 +65,7 @@
           - linux-headers
           - tar
           - openrc
-        update_cache: true
+        update_cache: yes
       when: ansible_os_family == "Alpine"
 
     - name: "(Install: Alpine) Enable OpenRC"
@@ -98,7 +98,7 @@
 - name: "(Install: Centos/RHEL) Install PCRE Dependency From Package"
   yum:
     name: pcre-devel
-    update_cache: true
+    update_cache: yes
   when:
     - nginx_install_source_pcre
     - ansible_os_family == "RedHat"
@@ -106,7 +106,7 @@
 - name: "(Install: Debian/Ubuntu) Install PCRE Dependency From Package"
   apt:
     name: libpcre3-dev
-    update_cache: true
+    update_cache: yes
   when:
     - nginx_install_source_pcre
     - ansible_os_family == "Debian"
@@ -114,7 +114,7 @@
 - name: "(Install: Alpine) Install PCRE Dependency From Package"
   apk:
     name: pcre-dev
-    update_cache: true
+    update_cache: yes
   when:
     - nginx_install_source_pcre
     - ansible_os_family == "Alpine"
@@ -155,7 +155,7 @@
 - name: "(Install: Centos/RHEL) Install ZLib Dependency From Package"
   yum:
     name: zlib-devel
-    update_cache: true
+    update_cache: yes
   when:
     - nginx_install_source_zlib
     - ansible_os_family == "RedHat"
@@ -171,7 +171,7 @@
 - name: "(Install: Alpine) Install ZLib Dependency From Package"
   apk:
     name: zlib-dev
-    update_cache: true
+    update_cache: yes
   when:
     - nginx_install_source_zlib
     - ansible_os_family == "Alpine"
@@ -212,7 +212,7 @@
 - name: "(Install: Centos/RHEL) Install OpenSSL Dependency From Package"
   yum:
     name: openssl-devel
-    update_cache: true
+    update_cache: yes
   when:
     - nginx_install_source_openssl
     - ansible_os_family == "RedHat"
@@ -220,7 +220,7 @@
 - name: "(Install: Debian/Ubuntu) Install OpenSSL Dependency From Package"
   apt:
     name: libssl-dev
-    update_cache: true
+    update_cache: yes
   when:
     - nginx_install_source_openssl
     - ansible_os_family == "Debian"
@@ -228,7 +228,7 @@
 - name: "(Install: Alpine) Install OpenSSL Dependency From Package"
   apk:
     name: openssl-dev
-    update_cache: true
+    update_cache: yes
   when:
     - nginx_install_source_openssl
     - ansible_os_family == "Alpine"
@@ -271,7 +271,7 @@
     - name: "(Install: Linux) Fetch NGINX Version"
       uri:
         url: https://trac.nginx.org/nginx/browser
-        return_content: true
+        return_content: yes
       register: nginx_versions
 
     - name: "(Install: Linux) Set NGINX Mainline Version"
@@ -296,7 +296,7 @@
     - name: "(Install: Linux) Check For NGINX Install"
       stat:
         path: /usr/sbin/nginx
-        follow: true
+        follow: yes
       register: nginx_result
 
 - name: "(Install: Linux) Add NGINX User"

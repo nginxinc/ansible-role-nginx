@@ -1,7 +1,6 @@
 ---
 - name: "(Setup: All OSs Besides Alpine Linux) Setup NGINX Plus License"
   block:
-
     - name: "(Setup: All OSs Besides Alpine Linux) Create SSL Directory"
       file:
         path: /etc/ssl/nginx
@@ -15,12 +14,10 @@
       loop:
         - "{{ nginx_license.certificate }}"
         - "{{ nginx_license.key }}"
-
   when: ansible_distribution != "Alpine"
 
 - name: "(Setup: Alpine Linux) Setup NGINX Plus License"
   block:
-
     - name: "(Setup: Alpine Linux) Create APK Directory"
       file:
         path: /etc/apk
@@ -37,5 +34,4 @@
         src: "{{ nginx_license.certificate }}"
         dest: /etc/apk/cert.pem
         decrypt: yes
-
   when: ansible_distribution == "Alpine"

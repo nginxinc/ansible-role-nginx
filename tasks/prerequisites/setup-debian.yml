@@ -5,4 +5,4 @@
       - apt-transport-https
       - dirmngr
       - python-apt
-    update_cache: true
+    update_cache: yes

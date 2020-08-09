@@ -416,6 +416,16 @@ server {
         add_header {{ item.value.servers[server].web_server.locations[location].add_headers[header].name }} "{{ item.value.servers[server].web_server.locations[location].add_headers[header].value }}"{% if item.value.servers[server].web_server.locations[location].add_headers[header].always is defined and item.value.servers[server].web_server.locations[location].add_headers[header].always %} always{% endif %};
 {% endfor %}
 {% endif %}
+{% if item.value.servers[server].web_server.locations[location].allows is defined %}
+{% for allow in item.value.servers[server].web_server.locations[location].allows %}
+        allow {{ allow }};
+{% endfor %}
+{% endif %}
+{% if item.value.servers[server].web_server.locations[location].denies is defined %}
+{% for deny in item.value.servers[server].web_server.locations[location].denies %}
+        deny {{ deny }};
+{% endfor %}
+{% endif %}
 {% if item.value.servers[server].web_server.locations[location].returns is defined %}
 {% for code in item.value.servers[server].web_server.locations[location].returns %}
 {% if item.value.servers[server].web_server.locations[location].returns[code] is defined %}

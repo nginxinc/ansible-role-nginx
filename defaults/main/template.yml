@@ -149,6 +149,10 @@ nginx_http_template:
               auth_basic: null
               auth_basic_user_file: null
               try_files: $uri $uri/index.html $uri.html =404
+              # allows:
+              #   - 192.168.1.0/24
+              # denies:
+              #   - all
               # auth_request: /auth
               # auth_request_set:
               #   name: $auth_user

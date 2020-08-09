@@ -323,6 +323,10 @@
                   html_file_location: /usr/share/nginx/html
                   html_file_name: backend_index.html
                   autoindex: false
+                  allows:
+                    - 192.168.1.0/24
+                  denies:
+                    - all
                 php:
                   location: ~ \.php$
                   html_file_location: /usr/share/nginx/html

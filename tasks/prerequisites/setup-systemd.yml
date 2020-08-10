@@ -14,8 +14,8 @@
     mode: 0644
   notify: "(Handler: All OSs) Systemd Daemon-Reload"
   when:
-    - not nginx_service_custom
-    - not nginx_service_clean
+    - not nginx_service_custom | bool
+    - not nginx_service_clean | bool
 
 - name: "(Setup: Linux) Customize Override For NGINX Systemd Service"
   copy:
@@ -26,8 +26,8 @@
     mode: 0644
   notify: "(Handler: All OSs) Systemd Daemon-Reload"
   when:
-    - nginx_service_custom
-    - not nginx_service_clean
+    - nginx_service_custom | bool
+    - not nginx_service_clean | bool
 
 - name: "(Setup: Linux) Remove Override For NGINX Systemd Service"
   file:

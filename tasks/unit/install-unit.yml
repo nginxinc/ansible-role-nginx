@@ -21,4 +21,4 @@
 - include_tasks: "{{ role_path }}/tasks/unit/install-modules.yml"
   when:
     - nginx_unit_modules is defined
-    - nginx_unit_modules
+    - nginx_unit_modules | bool

@@ -27,6 +27,7 @@
       worker_connections: 1024
       http_enable: true
       http_settings:
+        default_type: application/octet-stream
         access_log_format:
           - name: main
             format: |

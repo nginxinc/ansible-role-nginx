@@ -23,7 +23,7 @@
           - "unit-go"
       when: ansible_os_family == "RedHat"
   roles:
-    - role: ansible-role-nginx
+    - ansible-role-nginx
   vars:
     nginx_enable: false
     nginx_unit_enable: true

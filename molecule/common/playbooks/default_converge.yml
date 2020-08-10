@@ -22,7 +22,7 @@
       changed_when: dnf_module_enable.stdout != 'ENABLED'
       when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "8"
   roles:
-    - role: ansible-role-nginx
+    - ansible-role-nginx
   vars:
     nginx_debug_output: true
     nginx_selinux: true

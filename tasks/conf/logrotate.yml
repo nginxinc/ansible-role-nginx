@@ -31,8 +31,4 @@
   template:
     src: "logrotate/nginx.j2"
     dest: "/etc/logrotate.d/nginx"
-  register: nginx_logrotate_result
-
-- name: "(Config: All OSs) Run Logrotate"
-  command: logrotate -f /etc/logrotate.d/nginx
-  changed_when: nginx_logrotate_result.changed
+  notify: "(Config: All OSs) Run Logrotate"

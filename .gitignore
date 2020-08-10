@@ -2,7 +2,6 @@
 ############################
 *.crt
 *.key
-__pycache__
 *~
 \#*
 
@@ -13,3 +12,6 @@ Thumbs.db
 
 # Ansible specific
 *.retry
+
+# Python specific
+__pycache__

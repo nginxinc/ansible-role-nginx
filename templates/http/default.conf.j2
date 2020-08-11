@@ -491,9 +491,13 @@ server {
 {% endif %}
 
 {% if item.value.servers[server].access_log is defined %}
+{% if item.value.servers[server].access_log is sameas false or item.value.servers[server].access_log == "off" %}
+    access_log off;
+{% else %}
 {% for access_log in item.value.servers[server].access_log %}
     access_log  {{ access_log.location }}  {{ access_log.name }};
 {% endfor %}
+{% endif %}
 {% endif %}
 {% if item.value.servers[server].error_log is defined %}
     error_log {{ item.value.servers[server].error_log.location }} {{ item.value.servers[server].error_log.level }};

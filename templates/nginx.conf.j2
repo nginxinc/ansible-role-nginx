@@ -68,9 +68,15 @@ http {
     log_format  {{ access_log.name }}  {{ access_log.format }};
 {% endfor %}
 
+{% if nginx_main_template.http_settings.access_log_location is defined %}
+{% if nginx_main_template.http_settings.access_log_location is sameas false or nginx_main_template.http_settings.access_log_location == "off" %}
+    access_log off;
+{% else %}
 {% for access_log in nginx_main_template.http_settings.access_log_location %}
     access_log  {{ access_log.location }}  {{ access_log.name }};
 {% endfor %}
+{% endif %}
+{% endif %}
 
     sendfile        on;
 

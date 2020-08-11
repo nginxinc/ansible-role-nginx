@@ -95,6 +95,7 @@ nginx_http_template:
         include_files: []
         http_error_pages: {}
         error_page: /usr/share/nginx/html
+        # access_log: "off" # Cancels all access_log directives on the current level
         access_log:
           - name: main
             location: /var/log/nginx/access.log

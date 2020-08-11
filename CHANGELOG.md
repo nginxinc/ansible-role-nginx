@@ -46,6 +46,7 @@ ENHANCEMENTS:
     *   Add support for down parameter in upstreams.
     *   Add option for custom error pages.
     *   Add SSL support to `stream` contexts.
+    *   Allow setting `access_log`/`access_log_location` to `off`.
 
 BUG FIXES:
 

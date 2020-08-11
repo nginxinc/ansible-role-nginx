@@ -79,8 +79,8 @@ auth_request_set {{ item.value.auth_request_set_http.name }} {{ item.value.auth_
 {% if item.value.servers is defined %}
 {% for server in item.value.servers %}
 server {
-{% for listen in item.value.servers[server].listen %}
-    listen {% if item.value.servers[server].listen[listen].ip is defined and item.value.servers[server].listen[listen].ip | length %}{{ item.value.servers[server].listen[listen].ip }}:{% endif %}{{ item.value.servers[server].listen[listen].port }}{% if item.value.servers[server].listen[listen].ssl is defined and item.value.servers[server].listen[listen].ssl %} ssl{% endif %}{% if item.value.servers[server].listen[listen].opts is defined and item.value.servers[server].listen[listen].opts | length %} {{ item.value.servers[server].listen[listen].opts | join(" ") }}{% endif %};
+{% for listen in (item.value.servers[server].listen.values() | rejectattr("ip", "defined") | sort(attribute='port') + item.value.servers[server].listen.values() | rejectattr("ip", "undefined") | sort(attribute='port') | sort(attribute='ip')) %}
+    listen {% if listen.ip is defined and listen.ip | length %}{{ listen.ip }}:{% endif %}{{ listen.port }}{% if listen.ssl is defined and listen.ssl %} ssl{% endif %}{% if listen.opts is defined and listen.opts | length %} {{ listen.opts | join(" ") }}{% endif %};
 {% endfor %}
     server_name {{ item.value.servers[server].server_name | default('localhost') }};
 {% if item.value.servers[server].ssl is defined and item.value.servers[server].ssl %}

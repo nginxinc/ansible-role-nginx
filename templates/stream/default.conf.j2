@@ -33,8 +33,8 @@ upstream {{ item.value.upstreams[upstream].name }} {
 {% if item.value.network_streams is defined %}
 {% for stream in item.value.network_streams %}
 server {
-{% for listen in item.value.network_streams[stream].listen %}
-    listen {% if item.value.network_streams[stream].listen[listen].ip is defined and item.value.network_streams[stream].listen[listen].ip | length %}{{ item.value.network_streams[stream].listen[listen].ip }}:{% endif %}{{ item.value.network_streams[stream].listen[listen].port }}{% if item.value.network_streams[stream].listen[listen].ssl is defined and item.value.network_streams[stream].listen[listen].ssl %} ssl{% endif %}{% if item.value.network_streams[stream].listen[listen].opts is defined and item.value.network_streams[stream].listen[listen].opts | length %} {{ item.value.network_streams[stream].listen[listen].opts | join(" ") }}{% endif %};
+{% for listen in (item.value.network_streams[stream].listen.values() | rejectattr("ip", "defined") | sort(attribute='port') + item.value.network_streams[stream].listen.values() | rejectattr("ip", "undefined") | sort(attribute='port') | sort(attribute='ip')) %}
+    listen {% if listen.ip is defined and listen.ip | length %}{{ listen.ip }}:{% endif %}{{ listen.port }}{% if listen.ssl is defined and listen.ssl %} ssl{% endif %}{% if listen.opts is defined and listen.opts | length %} {{ listen.opts | join(" ") }}{% endif %};
 {% endfor %}
 {% if item.value.network_streams[stream].ssl is defined and item.value.network_streams[stream].ssl %}
     ssl_certificate {{ item.value.network_streams[stream].ssl.cert }};

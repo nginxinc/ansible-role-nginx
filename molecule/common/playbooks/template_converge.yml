@@ -76,6 +76,23 @@
                 port: 80
                 opts:
                   - default_server
+              listen_localhost_https:
+                ip: 0.0.0.0
+                port: 443
+                ssl: true
+                opts:
+                  - default_server
+              listen_localhost_ipv6:
+                ip: "[::]"
+                port: 80
+                opts:
+                  - default_server
+              listen_localhost_ipv6_https:
+                ip: "[::]"
+                port: 443
+                ssl: true
+                opts:
+                  - default_server
             server_name: localhost
             http_error_pages:
               404: /404.html

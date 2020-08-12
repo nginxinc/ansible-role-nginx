@@ -14,7 +14,7 @@
       set_fact:
         version: "-1.17.10-1.el{{ ansible_distribution_major_version }}.ngx"
       when: ansible_os_family == "RedHat"
-    - name: Enable Nginx @CentOS-AppStream dnf modules
+    - name: Enable NGINX @CentOS-AppStream dnf modules
       shell:
       args:
         cmd: dnf module info nginx | grep -q 'Stream.*\[e\]' && echo -n ENABLED || dnf module enable -y nginx  # noqa 204 303
@@ -24,7 +24,7 @@
   tasks:
     - name: Install NGINX
       include_role:
-        role: ansible-role-nginx
+        name: ansible-role-nginx
       vars:
         nginx_debug_output: true
         nginx_selinux: true

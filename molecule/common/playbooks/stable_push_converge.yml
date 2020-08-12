@@ -1,13 +1,15 @@
 ---
 - name: Converge
   hosts: all
-  roles:
-    - ansible-role-nginx
-  vars:
-    nginx_debug_output: true
+  tasks:
+    - name: Push NGINX config
+      include_roles:
+        name: ansible-role-nginx
+      vars:
+        nginx_debug_output: true
 
-    nginx_branch: stable
-    nginx_main_upload_enable: true
-    nginx_main_upload_src: ../files/nginx.conf
-    nginx_http_upload_enable: true
-    nginx_http_upload_src: ../files/http/*.conf
+        nginx_branch: stable
+        nginx_main_upload_enable: true
+        nginx_main_upload_src: ../files/nginx.conf
+        nginx_http_upload_enable: true
+        nginx_http_upload_src: ../files/http/*.conf

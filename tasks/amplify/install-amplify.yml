@@ -1,8 +1,8 @@
 ---
-- include_tasks: "{{ role_path }}/tasks/amplify/setup-{{ ansible_os_family | lower }}.yml"
-  when:
-    - ansible_os_family == "Debian"
-      or ansible_os_family == "Redhat"
+- name: "(Setup: All OSs) Configure NGINX Amplify Agent Repository"
+  include_tasks: "{{ role_path }}/tasks/amplify/setup-{{ ansible_os_family | lower }}.yml"
+  when: ansible_os_family == "Debian"
+        or ansible_os_family == "Redhat"
 
 - name: "(Install: All OSs) Install NGINX Amplify Agent"
   package:

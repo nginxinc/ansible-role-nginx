@@ -3,58 +3,58 @@ language: python
 services: docker
 jobs:
   include:
-    - name: "Install Specific Version - Debian/Ubuntu"
+    - name: "(Debian/Ubuntu) Install Specific Version"
       env:
         scenario: default
-    - name: "Install Specific Version - Alpine"
+    - name: "(Alpine) Install Specific Version"
       env:
         scenario: default_alpine
-    - name: "Install Specific Version - CentOS"
+    - name: "(CentOS) Install Specific Version"
       env:
         scenario: default_centos
-    - name: "Install Modules - Debian/Ubuntu"
+    - name: "(Debian/Ubuntu) Install Modules"
       env:
         scenario: module
-    - name: "Install Modules - Alpine"
+    - name: "(Alpine) Install Modules"
       env:
         scenario: module_alpine
-    - name: "Install Modules - CentOS"
+    - name: "(CentOS) Install Modules"
       env:
         scenario: module_centos
-    - name: "Install Stable Branch and Push Configuration - Debian/Ubuntu"
+    - name: "(Debian/Ubuntu) Install Stable Branch and Push Configuration"
       env:
         scenario: stable_push
-    - name: "Install Stable Branch and Push Configuration - Alpine"
+    - name: "(Alpine) Install Stable Branch and Push Configuration"
       env:
         scenario: stable_push_alpine
-    - name: "Install Stable Branch and Push Configuration - CentOS"
+    - name: "(CentOS) Install Stable Branch and Push Configuration"
       env:
         scenario: stable_push_centos
-    - name: "Use Template Setting - Debian/Ubuntu"
+    - name: "(Debian/Ubuntu) Use Template Setting"
       env:
         scenario: template
-    - name: "Use Template Setting - Alpine"
+    - name: "(Alpine) Use Template Setting"
       env:
         scenario: template_alpine
-    - name: "Use Template Setting - CentOS"
+    - name: "(CentOS) Use Template Setting"
       env:
         scenario: template_centos
-    - name: "Install Unit - Debian/Ubuntu"
+    - name: "(Debian/Ubuntu) Install NGINX Unit"
       env:
         scenario: unit
-    - name: "Install Unit - Alpine"
+    - name: "(Alpine) Install NGINX Unit"
       env:
         scenario: unit_alpine
-    - name: "Install Unit - CentOS"
+    - name: "(CentOS) Install NGINX Unit"
       env:
         scenario: unit_centos
-    - name: "Install from Source - Debian/Ubuntu"
+    - name: "(Debian/Ubuntu) Install from Source"
       env:
         scenario: source
-    - name: "Install from Source - Alpine"
+    - name: "(Alpine) Install from Source"
       env:
         scenario: source_alpine
-    - name: "Install from Source - CentOS"
+    - name: "(CentOS) Install from Source"
       env:
         scenario: source_centos
 before_install: sudo apt-get -qq update

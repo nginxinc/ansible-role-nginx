@@ -3,7 +3,7 @@
   hosts: all
   tasks:
     - name: Install NGINX from source
-      include_roles:
+      include_role:
         name: ansible-role-nginx
       vars:
         nginx_debug_output: true

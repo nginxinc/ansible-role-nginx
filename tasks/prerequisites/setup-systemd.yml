@@ -34,4 +34,4 @@
     path: "{{ nginx_service_overridepath }}"
     state: absent
   notify: "(Handler: All OSs) Systemd Daemon-Reload"
-  when: nginx_service_clean
+  when: nginx_service_clean | bool

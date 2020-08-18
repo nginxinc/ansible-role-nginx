@@ -105,7 +105,7 @@ nginx_cleanup_config_paths:
 # nginx_cleanup_config_files:
 #   - /etc/nginx/conf.d/default.conf
 
-# Set selinux enforcing for nginx (Centos/Redhat only) - you may need to open ports on your own
+# Set SELinux enforcing for NGINX (Centos/Redhat only) - you may need to open ports on your own
 nginx_selinux: false
 # Enable enforcing mode if true.  Permissive if false (audit only, no enforcing) globally (only works with nginx_selinux: true)
 nginx_selinux_enforcing: true

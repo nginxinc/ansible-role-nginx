@@ -1,5 +1,5 @@
 ---
-- name: "(Setup: Suse) Setup SELinux"
+- name: "(Setup: SUSE) Setup SELinux"
   include_tasks: "{{ role_path }}/tasks/prerequisites/setup-selinux.yml"
   when:
     - nginx_selinux | bool

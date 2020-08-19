@@ -2,7 +2,8 @@
 galaxy_info:
   author: Alessandro Fael Garcia
   description: Official Ansible role for NGINX
-  company: NGINX, Inc.
+  role_name: nginx
+  company: F5 Networks, Inc.
 
   license: Apache License, Version 2.0
 

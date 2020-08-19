@@ -1,31 +1,33 @@
 ---
 - name: Converge
   hosts: all
-  roles:
-    - role: ansible-role-nginx
-  vars:
-    nginx_debug_output: true
+  tasks:
+    - name: Install NGINX modules
+      include_role:
+        name: ansible-role-nginx
+      vars:
+        nginx_debug_output: true
 
-    nginx_service_modify: true
-    nginx_service_timeout: 95
-    nginx_selinux: true
-    nginx_selinux_tcp_ports:
-      - 80
-      - 443
+        nginx_service_modify: true
+        nginx_service_timeout: 95
+        nginx_selinux: true
+        nginx_selinux_tcp_ports:
+          - 80
+          - 443
 
-    nginx_cleanup_config: true
-    nginx_cleanup_config_paths:
-      - directory:
-          - /etc/nginx/conf.d
-        recurse: false
-    nginx_cleanup_config_files:
-      - /etc/nginx/conf.d/default.conf
+        nginx_cleanup_config: true
+        nginx_cleanup_config_paths:
+          - directory:
+              - /etc/nginx/conf.d
+            recurse: false
+        nginx_cleanup_config_files:
+          - /etc/nginx/conf.d/default.conf
 
-    nginx_modules:
-      njs: true
-      perl: true
-      waf: false
-      geoip: true
-      image_filter: true
-      rtmp: true
-      xslt: true
+        nginx_modules:
+          njs: true
+          perl: true
+          waf: false
+          geoip: true
+          image_filter: true
+          rtmp: true
+          xslt: true

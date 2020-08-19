@@ -1,14 +1,16 @@
 ---
 - name: Converge
   hosts: all
-  roles:
-    - role: ansible-role-nginx
-  vars:
-    nginx_debug_output: true
+  tasks:
+    - name: Install NGINX from source
+      include_role:
+        name: ansible-role-nginx
+      vars:
+        nginx_debug_output: true
 
-    nginx_install_from: source
-    nginx_branch: stable
-    nginx_install_source_build_tools: true
-    nginx_install_source_pcre: true
-    nginx_install_source_openssl: true
-    nginx_install_source_zlib: true
+        nginx_install_from: source
+        nginx_branch: stable
+        nginx_install_source_build_tools: true
+        nginx_install_source_pcre: true
+        nginx_install_source_openssl: true
+        nginx_install_source_zlib: true

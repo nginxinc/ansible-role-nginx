@@ -1,17 +1,15 @@
 ---
-# handlers file for ansible-role-nginx
 - name: "(Handler: All OSs) Check NGINX"
   command: "nginx -t"
   changed_when: false
 
-- name: "(Handler: All OSs) systemd daemon-reload"
+- name: "(Handler: All OSs) Systemd Daemon-Reload"
   systemd:
     daemon_reload: yes
   notify: "(Handler: All OSs) Start NGINX"
 
 - name: "(Handler: All OSs) Run NGINX"
   block:
-
     - name: "(Handler: All OSs) Start NGINX"
       service:
         name: nginx
@@ -22,7 +20,6 @@
     - name: "(Handler: All OSs) Reload NGINX"
       command: "nginx -s reload"
       changed_when: false
-
   when:
     - nginx_start | bool
     - not ansible_check_mode

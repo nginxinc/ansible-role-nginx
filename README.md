@@ -8,6 +8,10 @@ This role installs NGINX Open Source, NGINX Plus, the NGINX Amplify agent, or NG
 
 **Note:** This role is still in active development. There may be unidentified issues and the role variables may change as development continues.
 
+**Deprecation Warnings:**
+*   NGINX now has a separate role to manage and create NGINX configurations available [here](https://github.com/nginxinc/ansible-role-nginx-config). Any new issues or PRs related to configuring NGINX should be submitted in the new NGINX Config repository. New issues or PRs related to configuring NGINX submitted in this repository will not be worked on. The NGINX configuration functionailities included in this role will be removed in an upcoming release.
+*   NGINX Unit now has a separate role available [here](https://github.com/nginxinc/ansible-role-nginx-unit). Any new issues or PRs related to NGINX Unit should be submitted in the new NGINX Unit repository. New issues or PRs related to NGINX Unit submitted in this repository will not be worked on. The NGINX Unit functionailities included in this role will be removed in an upcoming release.
+
 Requirements
 ------------
 
@@ -208,9 +212,11 @@ Do note that if you install this repository via Ansible Galaxy, you will have to
 Other NGINX Roles
 -----------------
 
-You can find an Ansible collection of roles to help you install and configure NGINX Controller [here](https://github.com/nginxinc/ansible-collection-nginx_controller)
+You can find an Ansible role to install and configure NGINX App Protect [here](https://github.com/nginxinc/ansible-role-nginx-app-protect)
 
-You can find an Ansible role to help you install and configure NGINX App Protect [here](https://github.com/nginxinc/ansible-role-nginx-app-protect)
+You can find an Ansible collection of roles to install and configure NGINX Controller [here](https://github.com/nginxinc/ansible-collection-nginx_controller)
+
+You can find an Ansible role to install NGINX Unit [here](https://github.com/nginxinc/ansible-role-nginx-unit)
 
 License
 -------
@@ -226,4 +232,4 @@ Author Information
 
 [Tom Gamull](https://github.com/magicalyak)
 
-&copy; [NGINX, Inc.](https://www.nginx.com/) 2018 - 2020
+&copy; [F5 Networks, Inc.](https://www.f5.com/) 2018 - 2020

@@ -1,5 +1,5 @@
 ---
-- name: "(Setup: SELinux) Install Required CentOS Dependencies"
+- name: "(Setup: SELinux) Install Required CentOS/RHEL 6/7 Dependencies"
   package:
     name:
       - policycoreutils-python
@@ -9,7 +9,7 @@
     - ansible_os_family == "RedHat"
     - ansible_distribution_major_version != "8"
 
-- name: "(Setup: SELinux) Install Required RHEL8 Dependencies"
+- name: "(Setup: SELinux) Install Required CentOS/RHEL 8 Dependencies"
   package:
     name:
       - selinux-policy-targeted

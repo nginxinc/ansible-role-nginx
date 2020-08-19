@@ -2,44 +2,46 @@
 - name: Converge
   hosts: all
   pre_tasks:
-    - name: "Set repo if Alpine"
+    - name: Set repo if Alpine
       set_fact:
         version: "=1.17.10-r1"
       when: ansible_os_family == "Alpine"
-    - name: "Set repo if Debian"
+    - name: Set repo if Debian
       set_fact:
         version: "=1.17.10-1~{{ ansible_distribution_release }}"
       when: ansible_os_family == "Debian"
-    - name: "Set repo if RedHat"
+    - name: Set repo if RedHat
       set_fact:
         version: "-1.17.10-1.el{{ ansible_distribution_major_version }}.ngx"
       when: ansible_os_family == "RedHat"
-    - name: "Enable Nginx @CentOS-AppStream dnf modules"
+    - name: Enable NGINX @CentOS-AppStream dnf modules
       shell:
       args:
         cmd: dnf module info nginx | grep -q 'Stream.*\[e\]' && echo -n ENABLED || dnf module enable -y nginx  # noqa 204 303
       register: dnf_module_enable
       changed_when: dnf_module_enable.stdout != 'ENABLED'
       when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "8"
-  roles:
-    - role: ansible-role-nginx
-  vars:
-    nginx_debug_output: true
-    nginx_selinux: true
-    nginx_selinux_tcp_ports:
-      - 80
-      - 443
-    nginx_version: "{{ version }}"
-    nginx_configure: false
-    nginx_logrotate_conf_enable: true
-    nginx_logrotate_conf:
-      paths:
-        - "/var/log/nginx/*.log"
-      options:
-        - daily
-        - missingok
-        - rotate 14
-        - compress
-        - delaycompress
-        - notifempty
-        - sharedscripts
+  tasks:
+    - name: Install NGINX
+      include_role:
+        name: ansible-role-nginx
+      vars:
+        nginx_debug_output: true
+        nginx_selinux: true
+        nginx_selinux_tcp_ports:
+          - 80
+          - 443
+        nginx_version: "{{ version }}"
+        nginx_configure: false
+        nginx_logrotate_conf_enable: true
+        nginx_logrotate_conf:
+          paths:
+            - "/var/log/nginx/*.log"
+          options:
+            - daily
+            - missingok
+            - rotate 14
+            - compress
+            - delaycompress
+            - notifempty
+            - sharedscripts

@@ -11,8 +11,8 @@
       or ansible_os_family == "RedHat"
       or ansible_os_family == "Suse"
     - nginx_install_from == "nginx_repository"
-      or nginx_amplify_enable
-      or nginx_unit_enable
+      or nginx_amplify_enable | bool
+      or nginx_unit_enable | bool
   tags: nginx_key
 
 - name: "(Install/Config: All OSs) Install and Configure NGINX"
@@ -38,7 +38,7 @@
           include_tasks: "{{ role_path }}/tasks/plus/delete-license.yml"
           when:
             - nginx_type == "plus"
-            - nginx_delete_license
+            - nginx_delete_license | bool
           tags: nginx_delete_license
       when: nginx_install | bool
 
@@ -51,19 +51,19 @@
 
         - name: "(Config: All OSs) Upload NGINX Config"
           include_tasks: "{{ role_path }}/tasks/conf/upload-config.yml"
-          when: nginx_main_upload_enable
-                or nginx_http_upload_enable
-                or nginx_stream_upload_enable
-                or nginx_html_upload_enable
-                or nginx_ssl_upload_enable
+          when: nginx_main_upload_enable | bool
+                or nginx_http_upload_enable | bool
+                or nginx_stream_upload_enable | bool
+                or nginx_html_upload_enable | bool
+                or nginx_ssl_upload_enable | bool
           tags: nginx_upload_config
 
         - name: "(Config: All OSs) Create NGINX Config"
           include_tasks: "{{ role_path }}/tasks/conf/template-config.yml"
-          when: nginx_main_template_enable
-                or nginx_http_template_enable
-                or nginx_stream_template_enable
-                or nginx_rest_api_enable
+          when: nginx_main_template_enable | bool
+                or nginx_http_template_enable | bool
+                or nginx_stream_template_enable | bool
+                or nginx_rest_api_enable | bool
           tags: nginx_template_config
       when: nginx_configure | bool
 

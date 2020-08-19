@@ -3,4 +3,4 @@
 # Use a list of supported NGINX Unit modules.
 # Default is false.
 nginx_unit_enable: false
-nginx_unit_modules: null
+nginx_unit_modules: []

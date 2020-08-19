@@ -1,11 +1,13 @@
 # Changelog
 
-## 0.15.0 (Unreleased)
+## 0.15.0 (August 19, 2020)
 
 DEPRECATION WARNING:
 
-*   NGINX now has a separate role to manage and create NGINX configurations available [here](https://github.com/nginxinc/ansible-role-nginx-config). Any new issues or PRs related to configuring NGINX should be submitted in the new NGINX Config repository. New issues or PRs related to configuring NGINX submitted in this repository will not be worked on. The NGINX configuration functionailities included in this role will be removed in an upcoming release.
-*   NGINX Unit now has a separate role available [here](https://github.com/nginxinc/ansible-role-nginx-unit). Any new issues or PRs related to NGINX Unit should be submitted in the new NGINX Unit repository. New issues or PRs related to NGINX Unit submitted in this repository will not be worked on. The NGINX Unit functionailities included in this role will be removed in an upcoming release.
+With the advent of Ansible collections and to reduce the overhead of this role, the decission has been made to split this role into three smaller roles:
+*   The NGINX Ansible role will keep working as is and be used to install and setup NGINX.
+*   There now is a separate role to manage and create NGINX configurations available [here](https://github.com/nginxinc/ansible-role-nginx-config). Any new issues or PRs related to configuring NGINX should be submitted in the new NGINX Config repository. New issues or PRs related to configuring NGINX submitted in this repository will not be worked on. The NGINX configuration functionalities included in this role will be removed in an upcoming release.
+*   NGINX Unit has a separate role available [here](https://github.com/nginxinc/ansible-role-nginx-unit). Any new issues or PRs related to NGINX Unit should be submitted in the new NGINX Unit repository. New issues or PRs related to NGINX Unit submitted in this repository will not be worked on. The NGINX Unit functionalities included in this role will be removed in an upcoming release.
 
 BREAKING CHANGES:
 

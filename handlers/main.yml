@@ -40,3 +40,6 @@
     name: unitd
     state: started
     enabled: yes
+
+- name: "(Config: All OSs) Run Logrotate"
+  command: logrotate -f /etc/logrotate.d/nginx

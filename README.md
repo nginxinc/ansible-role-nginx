@@ -9,8 +9,8 @@ This role installs NGINX Open Source, NGINX Plus, the NGINX Amplify agent, or NG
 **Note:** This role is still in active development. There may be unidentified issues and the role variables may change as development continues.
 
 **Deprecation Warnings:**
-*   NGINX now has a separate role to manage and create NGINX configurations available [here](https://github.com/nginxinc/ansible-role-nginx-config). Any new issues or PRs related to configuring NGINX should be submitted in the new NGINX Config repository. New issues or PRs related to configuring NGINX submitted in this repository will not be worked on. The NGINX configuration functionailities included in this role will be removed in an upcoming release.
-*   NGINX Unit now has a separate role available [here](https://github.com/nginxinc/ansible-role-nginx-unit). Any new issues or PRs related to NGINX Unit should be submitted in the new NGINX Unit repository. New issues or PRs related to NGINX Unit submitted in this repository will not be worked on. The NGINX Unit functionailities included in this role will be removed in an upcoming release.
+*   There now is a separate role to manage and create NGINX configurations available [here](https://github.com/nginxinc/ansible-role-nginx-config). Any new issues or PRs related to configuring NGINX should be submitted in the new NGINX Config repository. New issues or PRs related to configuring NGINX submitted in this repository will not be worked on. The NGINX configuration functionalities included in this role will be removed in an upcoming release.
+*   NGINX Unit now has a separate role available [here](https://github.com/nginxinc/ansible-role-nginx-unit). Any new issues or PRs related to NGINX Unit should be submitted in the new NGINX Unit repository. New issues or PRs related to NGINX Unit submitted in this repository will not be worked on. The NGINX Unit functionalities included in this role will be removed in an upcoming release.
 
 Requirements
 ------------
@@ -23,7 +23,9 @@ Instructions on how to install Ansible can be found in the [Ansible website](htt
 
 **Molecule**
 
-Molecule is used to test the various functionailities of the role. Instructions on how to install Molecule can be found in the [Molecule website](https://molecule.readthedocs.io/en/latest/installation.html).
+Molecule is used to test the various functionalities of the role.
+
+Instructions on how to install Molecule can be found in the [Molecule website](https://molecule.readthedocs.io/en/latest/installation.html).
 
 Installation
 ------------
@@ -211,6 +213,8 @@ Do note that if you install this repository via Ansible Galaxy, you will have to
 
 Other NGINX Roles
 -----------------
+
+You can find an Ansible role to configure NGINX [here](https://github.com/nginxinc/ansible-role-nginx-config)
 
 You can find an Ansible role to install and configure NGINX App Protect [here](https://github.com/nginxinc/ansible-role-nginx-app-protect)
 

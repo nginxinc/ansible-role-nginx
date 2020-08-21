@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.x (Unreleased)
+
+ENHANCEMENTS:
+
+*   Update Ansible to `2.9.12` and Ansible Lint to `4.3.0`.
+*   Explicitly defined `mode` in relevant tasks.
+
 ## 0.15.0 (August 20, 2020)
 
 DEPRECATION WARNING:

@@ -3,6 +3,7 @@
   apt_repository:
     repo: deb [arch=amd64] https://plus-pkgs.nginx.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} nginx-plus
     filename: nginx-plus
+    mode: 0644
     update_cache: no
     state: "{{ nginx_license_status | default ('present') }}"
 
@@ -10,6 +11,7 @@
   blockinfile:
     path: /etc/apt/apt.conf.d/90nginx
     create: yes
+    mode: 0644
     block: |
       Acquire::https::plus-pkgs.nginx.com::Verify-Peer "true";
       Acquire::https::plus-pkgs.nginx.com::Verify-Host "true";

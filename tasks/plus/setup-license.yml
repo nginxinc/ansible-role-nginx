@@ -10,6 +10,7 @@
       copy:
         src: "{{ item }}"
         dest: /etc/ssl/nginx
+        mode: 0644
         decrypt: yes
       loop:
         - "{{ nginx_license.certificate }}"

@@ -80,6 +80,7 @@
   template:
     src: "{{ role_path }}/templates/selinux/nginx-plus-module.te.j2"
     dest: "{{ nginx_tempdir }}/nginx-plus-module.te"
+    mode: 0644
   register: nginx_selinux_module
 
 - name: "(Setup: SELinux) Check NGINX Plus Module"

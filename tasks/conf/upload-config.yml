@@ -3,6 +3,7 @@
   file:
     path: "{{ nginx_main_upload_dest | default('/etc/nginx/') }}"
     state: directory
+    mode: 0644
   when: nginx_main_upload_enable | bool
 
 - name: "(Setup: All NGINX) Upload NGINX Main Configuration File"
@@ -10,6 +11,7 @@
     src: "{{ nginx_main_upload_src | default('conf/nginx.conf') }}"
     dest: "{{ nginx_main_upload_dest | default('/etc/nginx/') }}"
     backup: yes
+    mode: 0644
   when: nginx_main_upload_enable | bool
   notify: "(Handler: All OSs) Reload NGINX"
 
@@ -17,6 +19,7 @@
   file:
     path: "{{ nginx_http_upload_dest | default('/etc/nginx/conf.d/') }}"
     state: directory
+    mode: 0644
   when: nginx_http_upload_enable | bool
 
 - name: "(Setup: All NGINX) Upload NGINX HTTP Configuration Files"
@@ -24,6 +27,7 @@
     src: "{{ item }}"
     dest: "{{ nginx_http_upload_dest | default('/etc/nginx/conf.d/') }}"
     backup: yes
+    mode: 0644
   with_fileglob: "{{ nginx_http_upload_src }}"
   when: nginx_http_upload_enable | bool
   notify: "(Handler: All OSs) Reload NGINX"
@@ -32,6 +36,7 @@
   file:
     path: "{{ nginx_stream_upload_dest | default('/etc/nginx/conf.d/') }}"
     state: directory
+    mode: 0644
   when: nginx_stream_upload_enable | bool
 
 - name: "(Setup: All NGINX) Upload NGINX Stream Configuration Files"
@@ -39,6 +44,7 @@
     src: "{{ item }}"
     dest: "{{ nginx_stream_upload_dest | default('/etc/nginx/conf.d/') }}"
     backup: yes
+    mode: 0644
   with_fileglob: "{{ nginx_stream_upload_src }}"
   when: nginx_stream_upload_enable | bool
   notify: "(Handler: All OSs) Reload NGINX"
@@ -47,6 +53,7 @@
   file:
     path: "{{ nginx_html_upload_dest | default('/usr/share/nginx/html') }}"
     state: directory
+    mode: 0644
   when: nginx_html_upload_enable | bool
 
 - name: "(Setup: All NGINX) Upload NGINX HTML Files"
@@ -54,6 +61,7 @@
     src: "{{ item }}"
     dest: "{{ nginx_html_upload_dest | default('/usr/share/nginx/html') }}"
     backup: yes
+    mode: 0644
   with_fileglob: "{{ nginx_html_upload_src }}"
   when: nginx_html_upload_enable | bool
   notify: "(Handler: All OSs) Reload NGINX"
@@ -62,21 +70,23 @@
   file:
     path: "{{ nginx_ssl_crt_upload_dest | default('/etc/ssl/certs/') }}"
     state: directory
+    mode: 0644
   when: nginx_ssl_upload_enable | bool
 
 - name: "(Setup: All NGINX) Ensure SSL Key Directory Exists"
   file:
     path: "{{ nginx_ssl_key_upload_dest | default('/etc/ssl/private/') }}"
     state: directory
+    mode: 0644
   when: nginx_ssl_upload_enable | bool
 
 - name: "(Setup: All NGINX) Upload NGINX SSL Certificates"
   copy:
     src: "{{ item }}"
     dest: "{{ nginx_ssl_crt_upload_dest | default('/etc/ssl/certs/') }}"
-    mode: 0640
     decrypt: yes
     backup: yes
+    mode: 0640
   with_fileglob: "{{ nginx_ssl_crt_upload_src }}"
   when: nginx_ssl_upload_enable | bool
 
@@ -84,9 +94,9 @@
   copy:
     src: "{{ item }}"
     dest: "{{ nginx_ssl_key_upload_dest | default('/etc/ssl/private/') }}"
-    mode: 0640
     decrypt: yes
     backup: yes
+    mode: 0640
   with_fileglob: "{{ nginx_ssl_key_upload_src }}"
   no_log: yes
   when: nginx_ssl_upload_enable | bool

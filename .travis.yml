@@ -59,10 +59,10 @@ jobs:
         scenario: source_centos
 before_install: sudo apt-get -qq update
 install:
-  - pip install ansible==2.9.11
+  - pip install ansible==2.9.12
   - pip install molecule==3.0.6
   - pip install docker==4.2.2
-  - pip install ansible-lint==4.2.0
+  - pip install ansible-lint==4.3.0
 script:
   - molecule --version
   - ansible --version

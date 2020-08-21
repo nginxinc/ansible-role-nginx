@@ -14,10 +14,12 @@
     remote_src: yes
     src: /etc/amplify-agent/agent.conf.default
     dest: /etc/amplify-agent/agent.conf
+    mode: 0644
 
 - name: "(Setup: All OSs) Configure NGINX Amplify Agent API Key"
   lineinfile:
     dest: /etc/amplify-agent/agent.conf
     regexp: api_key =.*
     line: "api_key = {{ nginx_amplify_api_key }}"
+    mode: 0644
   notify: "(Handler: All OSs) Start NGINX Amplify Agent"

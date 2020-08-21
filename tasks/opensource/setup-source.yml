@@ -132,6 +132,7 @@
         copy: no
         dest: /tmp/
         src: "{{ pcre_source.dest }}"
+        mode: 0644
       register: pcre_source_unpack
 
     - name: "(Install: Linux) Configure PCRE Dependency"
@@ -189,6 +190,7 @@
         copy: no
         dest: /tmp/
         src: "{{ zlib_source.dest }}"
+        mode: 0644
       register: zlib_source_unpack
 
     - name: "(Install: Linux) Configure zlib Dependency"
@@ -246,6 +248,7 @@
         copy: no
         dest: /tmp/
         src: "{{ openssl_source.dest }}"
+        mode: 0644
       register: openssl_source_unpack
 
     - name: "(Install: Linux) Configure OpenSSL Dependency"
@@ -316,6 +319,7 @@
         copy: no
         dest: /tmp/
         src: "{{ nginx_source.dest }}"
+        mode: 0644
       register: nginx_source_unpack
 
     - name: "(Install: Linux) Configure NGINX"

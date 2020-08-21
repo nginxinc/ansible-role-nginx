@@ -5,12 +5,14 @@
       file:
         path: /etc/ssl/nginx
         state: directory
+        mode: 0644
 
     - name: "(Setup: All OSs Besides Alpine Linux) Copy NGINX Plus Certificate and License Key"
       copy:
         src: "{{ item }}"
         dest: /etc/ssl/nginx
         decrypt: yes
+        mode: 0644
       loop:
         - "{{ nginx_license.certificate }}"
         - "{{ nginx_license.key }}"
@@ -22,16 +24,19 @@
       file:
         path: /etc/apk
         state: directory
+        mode: 0644
 
     - name: "(Setup: Alpine Linux) Copy NGINX Plus Key"
       copy:
         src: "{{ nginx_license.key }}"
         dest: /etc/apk/cert.key
         decrypt: yes
+        mode: 0644
 
     - name: "(Setup: Alpine Linux) Copy NGINX Plus Certificate"
       copy:
         src: "{{ nginx_license.certificate }}"
         dest: /etc/apk/cert.pem
         decrypt: yes
+        mode: 0644
   when: ansible_distribution == "Alpine"

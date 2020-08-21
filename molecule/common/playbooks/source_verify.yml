@@ -15,3 +15,4 @@
       uri:
         url: http://localhost
         status_code: 200
+      check_mode: yes

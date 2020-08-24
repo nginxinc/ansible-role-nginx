@@ -6,7 +6,7 @@
       include_role:
         name: ansible-role-nginx
       vars:
-        nginx_debug_output: true
+        # nginx_debug_output: true
 
         nginx_service_modify: true
         nginx_service_timeout: 95

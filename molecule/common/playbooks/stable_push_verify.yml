@@ -22,7 +22,6 @@
       uri:
         url: http://localhost
         status_code: 200
-      check_mode: yes
 
     - name: Check default.conf exists
       stat:

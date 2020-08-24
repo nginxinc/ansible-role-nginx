@@ -62,7 +62,7 @@ install:
   - pip install ansible==2.9.12
   - pip install molecule==3.0.6
   - pip install docker==4.2.2
-  - pip install ansible-lint==4.3.0
+  - pip install ansible-lint==4.3.1
 script:
   - molecule --version
   - ansible --version

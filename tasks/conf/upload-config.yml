@@ -1,9 +1,26 @@
 ---
+- name: "(Setup: All NGINX) Ensure NGINX HTML Directory Exists"
+  file:
+    path: "{{ nginx_html_upload_dest | default('/usr/share/nginx/html') }}"
+    state: directory
+    mode: 0755
+  when: nginx_html_upload_enable | bool
+
+- name: "(Setup: All NGINX) Upload NGINX HTML Files"
+  copy:
+    src: "{{ item }}"
+    dest: "{{ nginx_html_upload_dest | default('/usr/share/nginx/html') }}"
+    backup: yes
+    mode: 0755
+  with_fileglob: "{{ nginx_html_upload_src }}"
+  when: nginx_html_upload_enable | bool
+  notify: "(Handler: All OSs) Reload NGINX"
+
 - name: "(Setup: All NGINX) Ensure NGINX Main Directory Exists"
   file:
     path: "{{ nginx_main_upload_dest | default('/etc/nginx/') }}"
     state: directory
-    mode: 0644
+    mode: 0755
   when: nginx_main_upload_enable | bool
 
 - name: "(Setup: All NGINX) Upload NGINX Main Configuration File"
@@ -19,7 +36,7 @@
   file:
     path: "{{ nginx_http_upload_dest | default('/etc/nginx/conf.d/') }}"
     state: directory
-    mode: 0644
+    mode: 0755
   when: nginx_http_upload_enable | bool
 
 - name: "(Setup: All NGINX) Upload NGINX HTTP Configuration Files"
@@ -36,7 +53,7 @@
   file:
     path: "{{ nginx_stream_upload_dest | default('/etc/nginx/conf.d/') }}"
     state: directory
-    mode: 0644
+    mode: 0755
   when: nginx_stream_upload_enable | bool
 
 - name: "(Setup: All NGINX) Upload NGINX Stream Configuration Files"
@@ -47,23 +64,6 @@
     mode: 0644
   with_fileglob: "{{ nginx_stream_upload_src }}"
   when: nginx_stream_upload_enable | bool
-  notify: "(Handler: All OSs) Reload NGINX"
-
-- name: "(Setup: All NGINX) Ensure NGINX HTML Directory Exists"
-  file:
-    path: "{{ nginx_html_upload_dest | default('/usr/share/nginx/html') }}"
-    state: directory
-    mode: 0644
-  when: nginx_html_upload_enable | bool
-
-- name: "(Setup: All NGINX) Upload NGINX HTML Files"
-  copy:
-    src: "{{ item }}"
-    dest: "{{ nginx_html_upload_dest | default('/usr/share/nginx/html') }}"
-    backup: yes
-    mode: 0644
-  with_fileglob: "{{ nginx_html_upload_src }}"
-  when: nginx_html_upload_enable | bool
   notify: "(Handler: All OSs) Reload NGINX"
 
 - name: "(Setup: All NGINX) Ensure SSL Certificate Directory Exists"

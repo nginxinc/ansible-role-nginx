@@ -3,7 +3,7 @@
   file:
     path: "{{ item.value.html_file_location | default('/usr/share/nginx/html') }}"
     state: directory
-    mode: 0644
+    mode: 0755
   with_dict: "{{ nginx_html_demo_template }}"
   when: nginx_html_demo_template_enable | bool
 
@@ -20,7 +20,7 @@
   file:
     path: "{{ nginx_main_template.conf_file_location | default('/etc/nginx') }}"
     state: directory
-    mode: 0644
+    mode: 0755
   when: nginx_main_template_enable | bool
 
 - name: "(Setup: All NGINX) Dynamically Generate NGINX Main Configuration File"
@@ -36,7 +36,7 @@
   file:
     path: "{{ item.value.conf_file_location | default('/etc/nginx/conf.d/') }}"
     state: directory
-    mode: 0644
+    mode: 0755
   with_dict: "{{ nginx_http_template }}"
   when: nginx_http_template_enable | bool
 
@@ -45,7 +45,7 @@
     path: "{{ item.1.path }}"
     state: directory
     owner: "{{ nginx_main_template.user | default('nginx') }}"
-    mode: 0644
+    mode: 0755
   with_subelements:
     - "{{ nginx_http_template }}"
     - proxy_cache.proxy_cache_path
@@ -68,8 +68,8 @@
     dest: "{{ nginx_status_file_location | default('/etc/nginx/conf.d/status.conf') }}"
     backup: yes
     mode: 0644
-  notify: "(Handler: All OSs) Reload NGINX"
   when: nginx_status_enable | bool
+  notify: "(Handler: All OSs) Reload NGINX"
 
 - name: "(Setup: All NGINX) Dynamically Generate NGINX API Configuration File"
   template:
@@ -77,14 +77,14 @@
     dest: "{{ nginx_rest_api_file_location | default('/etc/nginx/conf.d/api.conf') }}"
     backup: yes
     mode: 0644
-  notify: "(Handler: All OSs) Reload NGINX"
   when: nginx_rest_api_enable | bool
+  notify: "(Handler: All OSs) Reload NGINX"
 
 - name: "(Setup: All NGINX) Ensure NGINX Stream Directory Exists"
   file:
     path: "{{ item.value.conf_file_location | default('/etc/nginx/conf.d/stream/') }}"
     state: directory
-    mode: 0644
+    mode: 0755
   with_dict: "{{ nginx_stream_template }}"
   when: nginx_stream_template_enable | bool
 
@@ -95,5 +95,5 @@
     backup: yes
     mode: 0644
   with_dict: "{{ nginx_stream_template }}"
-  notify: "(Handler: All OSs) Reload NGINX"
   when: nginx_stream_template_enable | bool
+  notify: "(Handler: All OSs) Reload NGINX"

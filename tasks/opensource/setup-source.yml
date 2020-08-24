@@ -312,6 +312,7 @@
       get_url:
         url: "http://nginx.org/download/{{ nginx_download_name }}.tar.gz"
         dest: "/tmp/{{ nginx_download_name }}.tar.gz"
+        mode: 0644
       register: nginx_source
 
     - name: "(Install: Linux) Unpack NGINX"
@@ -319,7 +320,7 @@
         copy: no
         dest: /tmp/
         src: "{{ nginx_source.dest }}"
-        mode: 0644
+        mode: 0755
       register: nginx_source_unpack
 
     - name: "(Install: Linux) Configure NGINX"

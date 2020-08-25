@@ -125,6 +125,7 @@
       get_url:
         url: "http://ftp.pcre.org/pub/pcre/{{ pcre_version }}.tar.gz"
         dest: "/tmp/{{ pcre_version }}.tar.gz"
+        mode: 0600
       register: pcre_source
 
     - name: "(Install: Linux) Unpack PCRE Dependency"
@@ -132,14 +133,12 @@
         copy: no
         dest: /tmp/
         src: "{{ pcre_source.dest }}"
-        mode: 0644
-      register: pcre_source_unpack
+        mode: 0700
 
     - name: "(Install: Linux) Configure PCRE Dependency"
       command: "./configure"
       args:
         chdir: "/tmp/{{ pcre_version }}"
-      register: pcre_configure
 
     - name: "(Install: Linux) Make PCRE Dependency"
       make:
@@ -183,6 +182,7 @@
       get_url:
         url: "http://zlib.net/{{ zlib_version }}.tar.gz"
         dest: "/tmp/{{ zlib_version }}.tar.gz"
+        mode: 0600
       register: zlib_source
 
     - name: "(Install: Linux) Unpack ZLib Dependency"
@@ -190,14 +190,12 @@
         copy: no
         dest: /tmp/
         src: "{{ zlib_source.dest }}"
-        mode: 0644
-      register: zlib_source_unpack
+        mode: 0700
 
     - name: "(Install: Linux) Configure zlib Dependency"
       command: "./configure"
       args:
         chdir: "/tmp/{{ zlib_version }}"
-      register: zlib_configure
 
     - name: "(Install: Linux) Make ZLib Dependency"
       make:
@@ -241,6 +239,7 @@
       get_url:
         url: "http://www.openssl.org/source/{{ openssl_version }}.tar.gz"
         dest: "/tmp/{{ openssl_version }}.tar.gz"
+        mode: 0600
       register: openssl_source
 
     - name: "(Install: Linux) Unpack OpenSSL Dependency"
@@ -248,14 +247,12 @@
         copy: no
         dest: /tmp/
         src: "{{ openssl_source.dest }}"
-        mode: 0644
-      register: openssl_source_unpack
+        mode: 0700
 
     - name: "(Install: Linux) Configure OpenSSL Dependency"
       command: "./config --prefix=/usr"
       args:
         chdir: "/tmp/{{ openssl_version }}"
-      register: openssl_configure
 
     - name: "(Install: Linux) Make OpenSSL Dependency"
       make:
@@ -312,7 +309,7 @@
       get_url:
         url: "http://nginx.org/download/{{ nginx_download_name }}.tar.gz"
         dest: "/tmp/{{ nginx_download_name }}.tar.gz"
-        mode: 0644
+        mode: 0600
       register: nginx_source
 
     - name: "(Install: Linux) Unpack NGINX"
@@ -321,7 +318,6 @@
         dest: /tmp/
         src: "{{ nginx_source.dest }}"
         mode: 0755
-      register: nginx_source_unpack
 
     - name: "(Install: Linux) Configure NGINX"
       command: >-
@@ -358,7 +354,7 @@
         dest: /lib/systemd/system/nginx.service
         owner: root
         group: root
-        mode: '0644'
+        mode: 0644
       when: ansible_service_mgr == "systemd"
 
     - name: "(Install: Linux) Enable systemd NGINX Service File"
@@ -367,8 +363,8 @@
         name: nginx
         state: restarted
         enabled: yes
-      notify: "(Handler: All OSs) Start NGINX"
       when: ansible_service_mgr == "systemd"
+      notify: "(Handler: All OSs) Start NGINX"
 
     - name: "(Install: Linux) Upload upstart NGINX Service File"
       copy:
@@ -376,7 +372,7 @@
         dest: /etc/init.d/nginx
         owner: root
         group: root
-        mode: '0755'
+        mode: 0755
       when: ansible_service_mgr == "upstart"
 
     - name: "(Install: Linux) Upload upstart NGINX Service Conf File"
@@ -385,7 +381,7 @@
         dest: /etc/init/nginx.conf
         owner: root
         group: root
-        mode: '0644'
+        mode: 0644
       when: ansible_service_mgr == "upstart"
 
     - name: "(Install: Linux) Enable upstart NGINX Service Reload"
@@ -394,8 +390,8 @@
 
     - name: "(Install: Linux) Start upstart NGINX Service Reload"
       command: "nginx"
-      notify: "(Handler: All OSs) Start NGINX"
       when: ansible_service_mgr == "upstart"
+      notify: "(Handler: All OSs) Start NGINX"
 
     - name: "(Install: Linux) Upload sysvinit NGINX Service File"
       copy:
@@ -403,9 +399,9 @@
         dest: /etc/init.d/nginx
         owner: root
         group: root
-        mode: '0755'
-      notify: "(Handler: All OSs) Start NGINX"
+        mode: 0755
       when: ansible_service_mgr == "sysvinit"
+      notify: "(Handler: All OSs) Start NGINX"
 
     - name: "(Install: Linux) Upload openrc NGINX Service File"
       copy:
@@ -413,7 +409,7 @@
         dest: /etc/init.d/nginx
         owner: root
         group: root
-        mode: '0755'
+        mode: 0755
       when: ansible_service_mgr == "openrc"
 
     - name: "(Install: Linux) Enable openrc NGINX Service"

@@ -6,6 +6,7 @@
     description: NGINX Unit Repository
     enabled: yes
     gpgcheck: yes
+    mode: 0644
   when: ansible_distribution != "Amazon"
 
 - name: "(Install: Amazon Linux) Add NGINX Unit Repository"
@@ -15,4 +16,5 @@
     description: NGINX Unit Repository
     enabled: yes
     gpgcheck: yes
+    mode: 0644
   when: ansible_distribution == "Amazon"

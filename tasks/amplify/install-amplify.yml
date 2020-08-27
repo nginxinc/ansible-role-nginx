@@ -21,5 +21,4 @@
     dest: /etc/amplify-agent/agent.conf
     regexp: api_key =.*
     line: "api_key = {{ nginx_amplify_api_key }}"
-    mode: 0644
   notify: "(Handler: All OSs) Start NGINX Amplify Agent"

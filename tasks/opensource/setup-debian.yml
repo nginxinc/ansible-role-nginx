@@ -15,7 +15,10 @@
 
 - name: "(Install: Debian/Ubuntu) Add NGINX Repository"
   apt_repository:
+    filename: nginx
     repo: "{{ item }}"
+    update_cache: yes
+    mode: 0644
   loop: "{{ repository }}"
 
 - name: "(Install: Debian/Ubuntu) Install NGINX"

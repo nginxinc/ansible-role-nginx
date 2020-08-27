@@ -9,6 +9,5 @@
     path: /etc/nginx/nginx.conf
     insertbefore: BOF
     line: load_module modules/ngx_rtmp_module.so;
-    mode: 0644
   when: not nginx_main_template_enable | bool
   notify: "(Handler: All OSs) Reload NGINX"

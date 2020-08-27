@@ -2,10 +2,23 @@
 
 ## 0.15.1 (August 25, 2020)
 
+BREAKING CHANGES:
+
+*   The Debian and Ubuntu repositories have slightly changed. You may run into some duplication issues when running the role on a preexisting target that already has had NGINX installed using the role. To fix this, manually remove the old repository source.
+
 ENHANCEMENTS:
 
-*   Update Ansible to `2.9.12` and Ansible Lint to `4.3.0`.
-*   Explicitly defined `mode` in relevant tasks.
+*   Update Ansible to `2.9.12` and Ansible Lint to `4.3.3`.
+*   Explicitly define `mode` in relevant tasks.
+*   Explictly define the `nginx` `apt_repository` filename in Debian based distros.
+
+FEATURES:
+
+*   TravisCI now always uses the latest version of Docker.
+
+BUG FIXES:
+
+*   Building OpenSSL from source should now work properly in CentOS 8.
 
 ## 0.15.0 (August 20, 2020)
 

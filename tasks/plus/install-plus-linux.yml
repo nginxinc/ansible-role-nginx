@@ -10,7 +10,7 @@
   include_tasks: "{{ role_path }}/tasks/prerequisites/setup-systemd.yml"
   when:
     - ansible_service_mgr == "systemd"
-    - nginx_service_modify
+    - nginx_service_modify | bool
 
 - name: "(Install: Linux) Install NGINX Plus"
   package:

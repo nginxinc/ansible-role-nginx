@@ -1,20 +1,21 @@
 ---
 - name: "(Install: Linux) Check For Build Tools"
   block:
-    - name: "(Install: Centos/RHEL) Install Python"
-      yum:
-        name:
-          - python3
-          - python3-pip
-          - python3-devel
-        update_cache: yes
-      when: ansible_os_family == "RedHat"
+    - name: "(Install: Centos/RHEL) Setup Python 3"
+      block:
+        - name: "(Install: Centos/RHEL) Install Python 3"
+          yum:
+            name:
+              - python3
+              - python3-pip
+              - python3-devel
+            update_cache: yes
 
-    - name: "(Install: Centos/RHEL) Set Python3 Default"
-      alternatives:
-        name: python
-        path: /usr/bin/python3
-        link: /usr/bin/python
+        - name: "(Install: Centos/RHEL) Set Python 3 Default"
+          alternatives:
+            name: python
+            path: /usr/bin/python3
+            link: /usr/bin/python
       when:
         - ansible_os_family == "RedHat"
         - ansible_distribution_major_version == "8"
@@ -37,7 +38,10 @@
 
     - name: "(Install: Debian) Install Backports Repo For Buster"
       apt_repository:
+        filename: buster-backports
         repo: deb http://ftp.us.debian.org/debian buster-backports main
+        update_cache: yes
+        mode: 0644
       when: ansible_distribution_release == "buster"
 
     - name: "(Install: Debian/Ubuntu) Install Build Tools"
@@ -76,7 +80,7 @@
         owner: root
         mode: 0644
       when: ansible_os_family == "Alpine"
-  when: nginx_install_source_build_tools
+  when: nginx_install_source_build_tools | bool
 
 - name: "(Install: Linux) Check For Source Installs"
   block:
@@ -100,7 +104,7 @@
     name: pcre-devel
     update_cache: yes
   when:
-    - nginx_install_source_pcre
+    - nginx_install_source_pcre | bool
     - ansible_os_family == "RedHat"
 
 - name: "(Install: Debian/Ubuntu) Install PCRE Dependency From Package"
@@ -108,7 +112,7 @@
     name: libpcre3-dev
     update_cache: yes
   when:
-    - nginx_install_source_pcre
+    - nginx_install_source_pcre | bool
     - ansible_os_family == "Debian"
 
 - name: "(Install: Alpine) Install PCRE Dependency From Package"
@@ -116,7 +120,7 @@
     name: pcre-dev
     update_cache: yes
   when:
-    - nginx_install_source_pcre
+    - nginx_install_source_pcre | bool
     - ansible_os_family == "Alpine"
 
 - name: "(Install: Linux) Install PCRE Dependence From Source"
@@ -149,15 +153,15 @@
         chdir: "/tmp/{{ pcre_version }}"
         target: install
   when:
-    - not pcre_result.stat.exists
-    - not nginx_install_source_pcre
+    - not pcre_result.stat.exists | bool
+    - not nginx_install_source_pcre | bool
 
 - name: "(Install: Centos/RHEL) Install ZLib Dependency From Package"
   yum:
     name: zlib-devel
     update_cache: yes
   when:
-    - nginx_install_source_zlib
+    - nginx_install_source_zlib | bool
     - ansible_os_family == "RedHat"
 
 - name: "(Install: Debian/Ubuntu) Install ZLib Dependency From Package"
@@ -165,7 +169,7 @@
     name: zlib1g-dev
     update_cache: true
   when:
-    - nginx_install_source_zlib
+    - nginx_install_source_zlib | bool
     - ansible_os_family == "Debian"
 
 - name: "(Install: Alpine) Install ZLib Dependency From Package"
@@ -173,7 +177,7 @@
     name: zlib-dev
     update_cache: yes
   when:
-    - nginx_install_source_zlib
+    - nginx_install_source_zlib | bool
     - ansible_os_family == "Alpine"
 
 - name: "(Install: Linux) Install ZLib Dependency From Source"
@@ -206,15 +210,15 @@
         chdir: "/tmp/{{ zlib_version }}"
         target: install
   when:
-    - not zlib_result.stat.exists
-    - not nginx_install_source_zlib
+    - not zlib_result.stat.exists | bool
+    - not nginx_install_source_zlib | bool
 
 - name: "(Install: Centos/RHEL) Install OpenSSL Dependency From Package"
   yum:
     name: openssl-devel
     update_cache: yes
   when:
-    - nginx_install_source_openssl
+    - nginx_install_source_openssl | bool
     - ansible_os_family == "RedHat"
 
 - name: "(Install: Debian/Ubuntu) Install OpenSSL Dependency From Package"
@@ -222,7 +226,7 @@
     name: libssl-dev
     update_cache: yes
   when:
-    - nginx_install_source_openssl
+    - nginx_install_source_openssl | bool
     - ansible_os_family == "Debian"
 
 - name: "(Install: Alpine) Install OpenSSL Dependency From Package"
@@ -230,7 +234,7 @@
     name: openssl-dev
     update_cache: yes
   when:
-    - nginx_install_source_openssl
+    - nginx_install_source_openssl | bool
     - ansible_os_family == "Alpine"
 
 - name: "(Install: Linux) Install OpenSSL Dependency From Source"
@@ -250,7 +254,7 @@
         mode: 0700
 
     - name: "(Install: Linux) Configure OpenSSL Dependency"
-      command: "./config --prefix=/usr"
+      command: "./config --prefix=/usr/local/openssl --openssldir=/usr/local/openssl shared zlib"
       args:
         chdir: "/tmp/{{ openssl_version }}"
 
@@ -263,8 +267,8 @@
         chdir: "/tmp/{{ openssl_version }}"
         target: install
   when:
-    - not openssl_result.stat.exists
-    - not nginx_install_source_openssl
+    - not openssl_result.stat.exists | bool
+    - not nginx_install_source_openssl | bool
 
 - name: "(Install: Linux) Get NGINX Version"
   block:

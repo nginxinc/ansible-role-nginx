@@ -35,7 +35,6 @@
         path: /etc/nginx/conf.d/default.conf
         line: "    location / {"
         state: present
-        mode: 0644
       check_mode: yes
       register: conf
       failed_when: (conf is changed) or (conf is failed)

@@ -22,7 +22,7 @@
       changed_when: false
   when:
     - nginx_start | bool
-    - not ansible_check_mode
+    - not ansible_check_mode | bool
 
 - name: "(Handler: All OSs) Start NGINX Amplify Agent"
   service:

@@ -8,7 +8,7 @@ BREAKING CHANGES:
 
 ENHANCEMENTS:
 
-*   Update Ansible to `2.9.12` and Ansible Lint to `4.3.3`.
+*   Update Ansible to `2.9.12` and Ansible Lint to `4.3.2`.
 *   Explicitly define `mode` in relevant tasks.
 *   Explictly define the `nginx` `apt_repository` filename in Debian based distros.
 

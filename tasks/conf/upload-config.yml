@@ -11,7 +11,7 @@
     src: "{{ item }}"
     dest: "{{ nginx_html_upload_dest | default('/usr/share/nginx/html') }}"
     backup: yes
-    mode: 0755
+    mode: 0644
   with_fileglob: "{{ nginx_html_upload_src }}"
   when: nginx_html_upload_enable | bool
   notify: "(Handler: All OSs) Reload NGINX"
@@ -70,14 +70,14 @@
   file:
     path: "{{ nginx_ssl_crt_upload_dest | default('/etc/ssl/certs/') }}"
     state: directory
-    mode: 0644
+    mode: 0755
   when: nginx_ssl_upload_enable | bool
 
 - name: "(Setup: All NGINX) Ensure SSL Key Directory Exists"
   file:
     path: "{{ nginx_ssl_key_upload_dest | default('/etc/ssl/private/') }}"
     state: directory
-    mode: 0644
+    mode: 0755
   when: nginx_ssl_upload_enable | bool
 
 - name: "(Setup: All NGINX) Upload NGINX SSL Certificates"

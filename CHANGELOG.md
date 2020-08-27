@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.15.1 (August 25, 2020)
+## 0.16.0 (August 27, 2020)
 
 BREAKING CHANGES:
 

@@ -11,7 +11,6 @@
     enabled: yes
     gpgcheck: yes
     state: "{{ nginx_license_status | default ('present') }}"
-    update_cache: yes
     mode: 0644
   when: ansible_distribution != "Amazon"
 
@@ -27,6 +26,5 @@
     enabled: yes
     gpgcheck: yes
     state: "{{ nginx_license_status | default ('present') }}"
-    update_cache: yes
     mode: 0644
   when: ansible_distribution == "Amazon"

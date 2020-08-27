@@ -6,5 +6,4 @@
     description: NGINX Amplify Agent
     enabled: yes
     gpgcheck: yes
-    update_cache: yes
     mode: 0644

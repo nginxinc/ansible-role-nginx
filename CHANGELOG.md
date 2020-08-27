@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.16.0 (August 27, 2020)
+## 0.16.0 (August 28, 2020)
 
 BREAKING CHANGES:
 
@@ -10,7 +10,7 @@ ENHANCEMENTS:
 
 *   Update Ansible to `2.9.12` and Ansible Lint to `4.3.2`.
 *   Explicitly define `mode` in relevant tasks.
-*   Explictly define the `nginx` `apt_repository` filename in Debian based distros.
+*   Explicitly define the `nginx` `apt_repository` filename in Debian based distros.
 
 FEATURES:
 

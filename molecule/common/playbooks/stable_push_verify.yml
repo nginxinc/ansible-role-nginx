@@ -26,6 +26,7 @@
     - name: Check default.conf exists
       stat:
         path: /etc/nginx/conf.d/default.conf
+      check_mode: yes
       register: stat_result
       failed_when: not stat_result.stat.exists
 

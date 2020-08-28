@@ -8,6 +8,6 @@ nginx_linux_families: ['Alpine', 'Debian', 'RedHat', 'Suse']
 nginx_plus_linux_families: ['Alpine', 'Debian', 'RedHat', 'Suse']
 
 # Default locations and versions when 'nginx_install_from; is set to 'source'
-pcre_version: pcre-8.43
+pcre_version: pcre-8.44
 zlib_version: zlib-1.2.11
-openssl_version: openssl-1.1.1c
+openssl_version: openssl-1.1.1g

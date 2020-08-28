@@ -3,10 +3,14 @@
   apt_repository:
     filename: nginx-amplify
     repo: deb [arch=amd64] http://packages.amplify.nginx.com/{{ ansible_distribution|lower }}/ {{ ansible_distribution_release|lower }} amplify-agent
+    update_cache: yes
+    mode: 0644
   when: ansible_distribution_release != "focal"
 
 - name: "(Install: Debian/Ubuntu) Add NGINX Amplify Agent Repository"
   apt_repository:
     filename: nginx-amplify
     repo: deb [arch=amd64] https://packages.amplify.nginx.com/py3/ubuntu focal amplify-agent
+    update_cache: yes
+    mode: 0644
   when: ansible_distribution_release == "focal"

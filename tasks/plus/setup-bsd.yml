@@ -10,6 +10,7 @@
       MIRROR_TYPE: SRV
       }
     state: "{{ nginx_license_status | default ('present') }}"
+    mode: 0644
 
 - name: "(Setup: FreeBSD) Setup NGINX Plus License"
   blockinfile:

@@ -9,8 +9,9 @@ This role installs NGINX Open Source, NGINX Plus, the NGINX Amplify agent, or NG
 **Note:** This role is still in active development. There may be unidentified issues and the role variables may change as development continues.
 
 **Deprecation Warnings:**
-*   There now is a separate role to manage and create NGINX configurations available [here](https://github.com/nginxinc/ansible-role-nginx-config). Any new issues or PRs related to configuring NGINX should be submitted in the new NGINX Config repository. New issues or PRs related to configuring NGINX submitted in this repository will not be worked on. The NGINX configuration functionalities included in this role will be removed in an upcoming release.
-*   NGINX Unit now has a separate role available [here](https://github.com/nginxinc/ansible-role-nginx-unit). Any new issues or PRs related to NGINX Unit should be submitted in the new NGINX Unit repository. New issues or PRs related to NGINX Unit submitted in this repository will not be worked on. The NGINX Unit functionalities included in this role will be removed in an upcoming release.
+
+*   There now is a separate role to manage and create NGINX configurations available [here](https://github.com/nginxinc/ansible-role-nginx-config). Any new issues or PRs related to configuring NGINX should be submitted in the new NGINX Config repository. New issues or PRs related to configuring NGINX submitted in this repository will not be worked on (with the exception of major bugfixes). The NGINX configuration functionalities included in this role will be removed in an upcoming release.
+*   NGINX Unit now has a separate role available [here](https://github.com/nginxinc/ansible-role-nginx-unit). Any new issues or PRs related to NGINX Unit should be submitted in the new NGINX Unit repository. New issues or PRs related to NGINX Unit submitted in this repository will not be worked on (with the exception of major bugfixes). The NGINX Unit functionalities included in this role will be removed in an upcoming release.
 
 Requirements
 ------------

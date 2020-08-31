@@ -4,7 +4,7 @@ driver:
 lint: |
   set -e
   yamllint .
-  ansible-lint
+  ansible-lint --force-color
 platforms:
   - name: centos-6
     image: centos:6

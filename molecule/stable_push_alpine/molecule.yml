@@ -4,7 +4,7 @@ driver:
 lint: |
   set -e
   yamllint .
-  ansible-lint
+  ansible-lint --force-color
 platforms:
   - name: alpine-3.8
     image: alpine:3.8

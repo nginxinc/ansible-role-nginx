@@ -63,8 +63,8 @@ before_install:
   - sudo apt-get update
   - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
 install:
-  - pip install ansible==2.9.12
-  - pip install ansible-lint==4.3.3
+  - pip install ansible==2.9.13
+  - pip install ansible-lint==4.3.4
   - pip install molecule==3.0.8
   - pip install docker==4.3.1
 script:

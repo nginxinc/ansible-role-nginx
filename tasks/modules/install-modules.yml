@@ -1,35 +1,32 @@
 ---
-- name: "(Install: All OSs) Install NGINX JavaScript Module"
-  include_tasks: "{{ role_path }}/tasks/modules/install-njs.yml"
-  when: nginx_modules.njs | default(false)
-
-- name: "(Install: All OSs) Install NGINX Perl Module"
-  include_tasks: "{{ role_path }}/tasks/modules/install-perl.yml"
-  when: nginx_modules.perl | default(false)
-
-- name: "(Install: All OSs) Install NGINX GeoIP Module"
-  include_tasks: "{{ role_path }}/tasks/modules/install-geoip.yml"
+- name: "(Install: CentOS) Install GeoIP Required CentOS Dependencies"
+  yum:
+    name: epel-release
   when:
-    - nginx_modules.geoip | default(false)
-    - ansible_os_family != "RedHat"
-    - ansible_distribution_major_version != "8"
+    - ansible_distribution == "CentOS"
+    - '"geoip" in nginx_modules'
 
-- name: "(Install: All OSs) Install NGINX Image Filter Module"
-  include_tasks: "{{ role_path }}/tasks/modules/install-image-filter.yml"
-  when: nginx_modules.image_filter | default(false)
-
-- name: "(Install: All OSs) Install NGINX RTMP Module"
-  include_tasks: "{{ role_path }}/tasks/modules/install-rtmp.yml"
+- name: "(Install: All OSs) Install NGINX Modules"
+  package:
+    name: "nginx-{{ (nginx_type == 'plus') | ternary('plus-', '') }}module-{{ item }}{{ nginx_version | default('') }}"
+    state: present
+  loop: "{{ nginx_modules }}"
   when:
-    - nginx_modules.rtmp | default(false)
-    - nginx_type == "plus"
-
-- name: "(Install: All OSs) Install NGINX XSLT Module"
-  include_tasks: "{{ role_path }}/tasks/modules/install-xslt.yml"
-  when: nginx_modules.xslt | default(false)
-
-- name: "(Install: All OSs) Install NGINX WAF Module"
-  include_tasks: "{{ role_path }}/tasks/modules/install-waf.yml"
-  when:
-    - nginx_modules.waf | default(false)
-    - nginx_type == "plus"
+    - (item in nginx_modules_list and nginx_type == 'opensource')
+      or (item in nginx_plus_modules_list and nginx_type == 'plus')
+    - not (item == "auth-spnego")
+      or not ((ansible_os_family == "Alpine" and ansible_distribution_major_version == "8"))
+    - not (item == "geoip")
+      or not ((ansible_os_family == "RedHat" and ansible_distribution_major_version == "8")
+      or (ansible_os_family == "FreeBSD"))
+    - not (item == "brotli")
+      or not ((ansible_os_family == "Alpine")
+      or (ansible_os_family == "RedHat" and ansible_distribution_major_version < "8")
+      or (ansible_os_family == "Debian" and ansible_distribution_major_version == "9")
+      or (ansible_os_family == "Suse" and ansible_distribution_major_version == "12")
+      or (ansible_distribution == "Amazon")
+      or (ansible_distribution == "OracleLinux"))
+    - not (item == "geoip2") or not (ansible_os_family == "Suse")
+    - not (item == "opentracing")
+      or not ((ansible_os_family == "Suse" and ansible_distribution_major_version == "12")
+      or (ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"))

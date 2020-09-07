@@ -49,10 +49,10 @@ The NGINX Ansible role supports all platforms supported by [NGINX Open Source](h
 ```yaml
 Alpine:
   versions:
-    - 3.8
     - 3.9
     - 3.10
     - 3.11
+    - 3.12
 CentOS:
   versions:
     - 6
@@ -87,10 +87,10 @@ Ubuntu:
 ```yaml
 Alpine:
   versions:
-    - 3.8
     - 3.9
     - 3.10
     - 3.11
+    - 3.12
 Amazon Linux:
   versions:
     - 2018.03

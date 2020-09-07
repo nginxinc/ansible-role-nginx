@@ -14,4 +14,4 @@
     state: absent
   loop: >-
     {{ nginx_config_files.results | default('') | map(attribute='files') | sum(start=[]) | map(attribute='path') | list
-    + nginx_cleanup_config_files | default('') }}
+    + nginx_cleanup_config_files | default('') | list }}

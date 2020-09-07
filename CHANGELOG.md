@@ -1,9 +1,19 @@
 # Changelog
 
-## 0.16.1 (Unreleased)
+## 0.17.0 (Unreleased)
+
+BREAKING CHANGES:
+
+*   The process to install modules has changed. You will now have to use a list variable, `nginx_modules`, instead of manually setting the modules you want to install to `true` or `false`. This change will also simplify adding future supported modules to this role. You can find a list of supported modules for NGINX and NGINX Plus in [`vars/main.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/master/vars/main.yml).
+*   Modules can no longer be added to your NGINX config using this role. Please use the [`nginx_config`](https://github.com/nginxinc/ansible-role-nginx-config) role instead.
 
 ENHANCEMENTS:
+
 *   Update Ansible to `2.9.13` and Ansible Lint to `4.3.4`.
+
+BUG FIXES:
+
+*   NGINX Plus repository data for RedHat based distros is now appropriately set.
 
 ## 0.16.0 (August 28, 2020)
 

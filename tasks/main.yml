@@ -31,7 +31,9 @@
 
         - name: "(Install: All OSs) Install NGINX Modules"
           include_tasks: "{{ role_path }}/tasks/modules/install-modules.yml"
-          when: true in nginx_modules.values()
+          when:
+            - nginx_modules is defined
+            - nginx_modules | length > 0
           tags: nginx_install_modules
 
         - name: "(Install: All OSs) Delete NGINX Plus License"

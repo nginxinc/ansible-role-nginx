@@ -81,16 +81,28 @@ nginx_license:
 # Default is false.
 nginx_delete_license: false
 
-# Install NGINX JavaScript, Perl, ModSecurity WAF (NGINX Plus only), GeoIP, Image-Filter, RTMP Media Streaming (NGINX Plus only), and/or XSLT modules.
-# Default is false.
-nginx_modules:
-  njs: false
-  perl: false
-  waf: false
-  geoip: false
-  image_filter: false
-  rtmp: false
-  xslt: false
+# Install NGINX Modules.
+# You can select any of the modules listed below. Beware of NGINX Plus only modules (these are marked).
+# Default is no modules.
+nginx_modules: []
+  # - auth-spnego  # NGINX Plus
+  # - brotli  # NGINX Plus
+  # - cookie-flag  # NGINX Plus
+  # - encrypted-session  # NGINX Plus
+  # - geoip
+  # - geoip2  # NGINX Plus
+  # - headers-more  # NGINX Plus
+  # - image-filter
+  # - lua  # NGINX Plus
+  # - njs
+  # - opentracing  # NGINX Plus
+  # - passenger  # NGINX Plus
+  # - perl  # NGINX Plus
+  # - prometheus  # NGINX Plus
+  # - rtmp
+  # - subs-filter  # NGINX Plus
+  # - waf  # NGINX Plus
+  # - xslt
 
 # Remove previously existing NGINX configuration files.
 # You can specify a list of paths you wish to remove.

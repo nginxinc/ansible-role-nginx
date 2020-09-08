@@ -24,10 +24,9 @@
           - /etc/nginx/conf.d/default.conf
 
         nginx_modules:
-          njs: true
-          perl: true
-          waf: false
-          geoip: true
-          image_filter: true
-          rtmp: true
-          xslt: true
+          - brotli
+          - geoip
+          - image-filter
+          - njs
+          - perl
+          - xslt

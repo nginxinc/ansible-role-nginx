@@ -1,1 +1,27 @@
 ---
+nginx_modules_list:
+  - geoip
+  - image-filter
+  - njs
+  - perl
+  - xslt
+
+nginx_plus_modules_list:
+  - auth-spnego
+  - brotli
+  - cookie-flag
+  - encrypted-session
+  - geoip
+  - geoip2
+  - headers-more
+  - image-filter
+  - lua
+  - modsecurity
+  - njs
+  - opentracing
+  - passenger
+  - perl
+  - prometheus
+  - rtmp
+  - subs-filter
+  - xslt

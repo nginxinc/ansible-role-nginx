@@ -198,6 +198,10 @@ This role has multiple variables. The descriptions and defaults for all these va
 -   **[defaults/main/bsd.yml](https://github.com/nginxinc/ansible-role-nginx/blob/master/defaults/main/bsd.yml):** BSD installation variables
 -   **[defaults/main/unit.yml](https://github.com/nginxinc/ansible-role-nginx/blob/master/defaults/main/unit.yml):** NGINX Unit installation variables
 
+Similarly, descriptions and defaults for preset variables can be found in the **`vars`** directory:
+
+-   **[vars/main.yml](https://github.com/nginxinc/ansible-role-nginx/blob/master/vars/main.yml):** NGINX supported modules
+
 Example Playbooks
 -----------------
 

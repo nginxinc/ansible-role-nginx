@@ -1,0 +1,31 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: Install NGINX
+      include_role:
+        name: ansible-role-nginx
+      vars:
+        nginx_type: plus
+        nginx_license:
+          certificate: ../../ansible-role-nginx/files/license/nginx-repo.crt
+          key: ../../ansible-role-nginx/files/license/nginx-repo.key
+        nginx_modules:
+          - auth-spnego
+          - brotli
+          - cookie-flag
+          - encrypted-session
+          - geoip
+          - geoip2
+          - headers-more
+          - image-filter
+          - lua
+          - modsecurity
+          - njs
+          - opentracing
+          - passenger
+          - perl
+          - prometheus
+          - rtmp
+          - subs-filter
+          - xslt

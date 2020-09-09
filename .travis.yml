@@ -65,6 +65,7 @@ before_install:
 install:
   - pip install ansible==2.9.13
   - pip install ansible-lint==4.3.4
+  - pip install yamllint==1.24.2
   - pip install molecule==3.0.8
   - pip install docker==4.3.1
 script:

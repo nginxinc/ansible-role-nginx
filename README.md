@@ -2,7 +2,7 @@ Ansible NGINX Role
 ==================
 
 [![Ansible Galaxy](https://img.shields.io/badge/galaxy-nginxinc.nginx-5bbdbf.svg)](https://galaxy.ansible.com/nginxinc/nginx)
-[![Build Status](https://travis-ci.org/nginxinc/ansible-role-nginx.svg?branch=master)](https://travis-ci.org/nginxinc/ansible-role-nginx)
+[![Build Status](https://travis-ci.org/nginxinc/ansible-role-nginx.svg?branch=main)](https://travis-ci.org/nginxinc/ansible-role-nginx)
 
 This role installs NGINX Open Source, NGINX Plus, the NGINX Amplify agent, or NGINX Unit on your target host.
 
@@ -48,141 +48,113 @@ The NGINX Ansible role supports all platforms supported by [NGINX Open Source](h
 
 ```yaml
 Alpine:
-  versions:
-    - 3.8
-    - 3.9
-    - 3.10
-    - 3.11
+  - 3.9
+  - 3.10
+  - 3.11
+  - 3.12
 CentOS:
-  versions:
-    - 6
-    - 7
-    - 8
+  - 6
+  - 7
+  - 8
 Debian:
-  versions:
-    - stretch
-    - buster
+  - stretch
+  - buster
 FreeBSD:
-  versions:
-    - 11.2+
-    - 12
+  - 11.2+
+  - 12
 RedHat:
-  versions:
-    - 6
-    - 7.4+
-    - 8
+  - 6
+  - 7.4+
+  - 8
 SUSE/SLES:
-  versions:
-    - 12
-    - 15
+  - 12
+  - 15
 Ubuntu:
-  versions:
-    - xenial
-    - bionic
-    - focal
+  - xenial
+  - bionic
+  - focal
 ```
 
 **NGINX Plus**
 
 ```yaml
 Alpine:
-  versions:
-    - 3.8
-    - 3.9
-    - 3.10
-    - 3.11
+  - 3.9
+  - 3.10
+  - 3.11
+  - 3.12
 Amazon Linux:
-  versions:
-    - 2018.03
+  - 2018.03
 Amazon Linux 2:
-  versions:
-    - any
+  - any
 CentOS:
-  versions:
-    - 6.5+
-    - 7.4+
-    - 8
+  - 6.5+
+  - 7.4+
+  - 8
 Debian:
-  versions:
-    - stretch
-    - buster
+  - stretch
+  - buster
 FreeBSD:
-  versions:
-    - 11.2+
-    - 12
+  - 11.2+
+  - 12
 Oracle Linux:
-  versions:
-    - 6.5+
-    - 7.4+
+  - 6.5+
+  - 7.4+
 RedHat:
-  versions:
-    - 6.5+
-    - 7.4+
-    - 8
+  - 6.5+
+  - 7.4+
+  - 8
 SUSE/SLES:
-  versions:
-    - 12
-    - 15
+  - 12
+  - 15
 Ubuntu:
-  versions:
-    - xenial
-    - bionic
-    - focal
+  - xenial
+  - bionic
+  - focal
 ```
 
 **NGINX Amplify Agent**
 
 ```yaml
 Amazon Linux:
-  versions:
-    - 2017.09
+  - 2017.09
 CentOS:
-  versions:
-    - 6
-    - 7
+  - 6
+  - 7
 Debian:
-  versions:
-    - jessie
-    - stretch
+  - jessie
+  - stretch
 RedHat:
-  versions:
-    - 6
-    - 7
+  - 6
+  - 7
 Ubuntu:
-  versions:
-    - xenial
-    - bionic
-    - focal
+  - xenial
+  - bionic
+  - focal
 ```
 
 **NGINX Unit**
 
 ```yaml
 Amazon Linux:
-  versions:
-    - 2018.03
+  - 2018.03
 Amazon Linux 2:
-  versions:
-    - any
+  - any
 CentOS:
-  versions:
-    - 6
-    - 7
-    - 8
+  - 6
+  - 7
+  - 8
 Debian:
-  versions:
-    - stretch
-    - buster
+  - stretch
+  - buster
 RedHat:
-  versions:
-    - 6
-    - 7
-    - 8
+  - 6
+  - 7
+  - 8
 Ubuntu:
-  versions:
-    - xenial
-    - bionic
-    - focal
+  - xenial
+  - bionic
+  - focal
 ```
 
 Role Variables
@@ -190,29 +162,29 @@ Role Variables
 
 This role has multiple variables. The descriptions and defaults for all these variables can be found in the **`defaults/main`** directory in the following files:
 
--   **[defaults/main/main.yml](https://github.com/nginxinc/ansible-role-nginx/blob/master/defaults/main/main.yml):** NGINX installation variables
--   **[defaults/main/amplify.yml](https://github.com/nginxinc/ansible-role-nginx/blob/master/defaults/main/amplify.yml):** NGINX Amplify agent installation variables
--   **[defaults/main/template.yml](https://github.com/nginxinc/ansible-role-nginx/blob/master/defaults/main/template.yml):** NGINX configuration templating variables
--   **[defaults/main/upload.yml](https://github.com/nginxinc/ansible-role-nginx/blob/master/defaults/main/upload.yml):** NGINX configuration/HTML/SSL upload variables
--   **[defaults/main/linux.yml](https://github.com/nginxinc/ansible-role-nginx/blob/master/defaults/main/linux.yml):** Linux installation variables
--   **[defaults/main/bsd.yml](https://github.com/nginxinc/ansible-role-nginx/blob/master/defaults/main/bsd.yml):** BSD installation variables
--   **[defaults/main/unit.yml](https://github.com/nginxinc/ansible-role-nginx/blob/master/defaults/main/unit.yml):** NGINX Unit installation variables
+-   **[defaults/main/main.yml](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/main.yml):** NGINX installation variables
+-   **[defaults/main/amplify.yml](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/amplify.yml):** NGINX Amplify agent installation variables
+-   **[defaults/main/template.yml](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/template.yml):** NGINX configuration templating variables
+-   **[defaults/main/upload.yml](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/upload.yml):** NGINX configuration/HTML/SSL upload variables
+-   **[defaults/main/linux.yml](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/linux.yml):** Linux installation variables
+-   **[defaults/main/bsd.yml](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/bsd.yml):** BSD installation variables
+-   **[defaults/main/unit.yml](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/unit.yml):** NGINX Unit installation variables
 
 Similarly, descriptions and defaults for preset variables can be found in the **`vars`** directory:
 
--   **[vars/main.yml](https://github.com/nginxinc/ansible-role-nginx/blob/master/vars/main.yml):** NGINX supported modules
+-   **[vars/main.yml](https://github.com/nginxinc/ansible-role-nginx/blob/main/vars/main.yml):** NGINX supported modules
 
 Example Playbooks
 -----------------
 
 Working functional playbook examples can be found in the **`molecule/common`** directory in the following files:
 
--   **[molecule/common/playbooks/default_converge.yml](https://github.com/nginxinc/ansible-role-nginx/blob/master/molecule/common/playbooks/default_converge.yml):** Install a specific version of NGINX and set up logrotate
--   **[molecule/common/playbooks/module_converge.yml](https://github.com/nginxinc/ansible-role-nginx/blob/master/molecule/common/playbooks/module_converge.yml):** Install various NGINX supported modules
--   **[molecule/common/playbooks/source_converge.yml](https://github.com/nginxinc/ansible-role-nginx/blob/master/molecule/common/playbooks/source_converge.yml):** Install NGINX from source
--   **[molecule/common/playbooks/stable_push_converge.yml](https://github.com/nginxinc/ansible-role-nginx/blob/master/molecule/common/playbooks/stable_push_converge.yml):** Install NGINX using the stable branch and push a preexisting config from your system to your NGINX instance
--   **[molecule/common/playbooks/template_converge.yml](https://github.com/nginxinc/ansible-role-nginx/blob/master/molecule/common/playbooks/template_converge.yml):** Use the NGINX configuration templating variables to create an NGINX configuration file
--   **[molecule/common/playbooks/unit_converge.yml](https://github.com/nginxinc/ansible-role-nginx/blob/master/molecule/common/playbooks/unit_converge.yml):** Install NGINX Unit
+-   **[molecule/common/playbooks/default_converge.yml](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/common/playbooks/default_converge.yml):** Install a specific version of NGINX and set up logrotate
+-   **[molecule/common/playbooks/module_converge.yml](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/common/playbooks/module_converge.yml):** Install various NGINX supported modules
+-   **[molecule/common/playbooks/source_converge.yml](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/common/playbooks/source_converge.yml):** Install NGINX from source
+-   **[molecule/common/playbooks/stable_push_converge.yml](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/common/playbooks/stable_push_converge.yml):** Install NGINX using the stable branch and push a preexisting config from your system to your NGINX instance
+-   **[molecule/common/playbooks/template_converge.yml](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/common/playbooks/template_converge.yml):** Use the NGINX configuration templating variables to create an NGINX configuration file
+-   **[molecule/common/playbooks/unit_converge.yml](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/common/playbooks/unit_converge.yml):** Install NGINX Unit
 
 Do note that if you install this repository via Ansible Galaxy, you will have to replace the role variable in the sample playbooks from `ansible-role-nginx` to `nginxinc.nginx`.
 
@@ -230,7 +202,7 @@ You can find an Ansible role to install NGINX Unit [here](https://github.com/ngi
 License
 -------
 
-[Apache License, Version 2.0](https://github.com/nginxinc/ansible-role-nginx/blob/master/LICENSE)
+[Apache License, Version 2.0](https://github.com/nginxinc/ansible-role-nginx/blob/main/LICENSE)
 
 Author Information
 ------------------

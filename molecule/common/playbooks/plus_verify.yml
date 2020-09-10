@@ -1,0 +1,17 @@
+---
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Check if NGINX service is running
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+      check_mode: yes
+      register: service
+      failed_when: (service is changed) or (service is failed)
+
+    - name: Verify NGINX is up and running
+      uri:
+        url: http://localhost
+        status_code: 200

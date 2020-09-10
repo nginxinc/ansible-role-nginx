@@ -60,7 +60,7 @@
     - name: "(Install: Alpine) Install Build Tools"
       apk:
         name:
-          - python
+          - python3
           - alpine-sdk
           - build-base
           - git

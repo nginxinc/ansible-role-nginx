@@ -7,6 +7,11 @@ BREAKING CHANGES:
 *   The process to install modules has changed. You will now have to use a list variable, `nginx_modules`, instead of manually setting the modules you want to install to `true` or `false`. This change will also simplify adding future supported modules to this role. You can find a list of supported modules for NGINX and NGINX Plus in [`vars/main.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/master/vars/main.yml).
 *   Modules can no longer be added to your NGINX config using this role. Please use the [`nginx_config`](https://github.com/nginxinc/ansible-role-nginx-config) role instead.
 
+FEATURES:
+
+*   Add Alpine 3.12 to the list of supported platforms
+*   Remove Alpine 3.8 from the list of supported platforms
+
 ENHANCEMENTS:
 
 *   Update Ansible to `2.9.13` and Ansible Lint to `4.3.4`.

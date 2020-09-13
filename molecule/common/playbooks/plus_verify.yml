@@ -6,8 +6,8 @@
       service:
         name: nginx
         state: started
-        enabled: true
-      check_mode: true
+        enabled: yes
+      check_mode: yes
       register: service
       failed_when: (service is changed) or (service is failed)
 

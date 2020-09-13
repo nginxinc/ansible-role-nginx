@@ -57,7 +57,7 @@ nginx_plus_default_repository:
 
 # Alpine dependencies
 nginx_alpine_dependencies: [
-  'openssl', 'pcre',
+  'coreutils', 'openssl', 'pcre',
 ]
 
 # Debian dependencies

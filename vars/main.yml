@@ -31,8 +31,8 @@ nginx_default_repository:
       | ternary('mainline/', '') }}{{ ansible_facts['distribution'] | lower }}/ {{ ansible_facts['distribution_release'] }} nginx
   redhat: >-
     https://nginx.org/packages/{{ (nginx_branch == 'mainline')
-    | ternary('mainline/', '') }}{{ (ansible_facts['distribution'] == "RedHat")
-    | ternary('rhel', 'centos') }}/{{ ansible_facts['distribution_major_version'] }}/$basearch/
+    | ternary('mainline/', '') }}{{ (ansible_facts['distribution'] == "CentOS")
+    | ternary('centos', 'rhel') }}/{{ ansible_facts['distribution_major_version'] }}/$basearch/
   suse: >-
     https://nginx.org/packages/{{ (nginx_branch == 'mainline')
     | ternary('mainline/', '') }}sles/{{ ansible_facts['distribution_major_version'] }}
@@ -49,8 +49,8 @@ nginx_plus_default_repository:
   freebsd: >-
     https://plus-pkgs.nginx.com/freebsd/${ABI}/latest
   redhat: >-
-    https://plus-pkgs.nginx.com/{{ (ansible_facts['distribution'] == "RedHat")
-    | ternary('rhel', 'centos') }}/{{ (ansible_facts['distribution_version'] is version('7.4', '>=')
+    https://plus-pkgs.nginx.com/{{ (ansible_facts['distribution'] == "CentOS")
+    | ternary('centos', 'rhel') }}/{{ (ansible_facts['distribution_version'] is version('7.4', '>=')
     and ansible_facts['distribution_version'] is version('8', '<')) | ternary('7.4', ansible_facts['distribution_major_version']) }}/$basearch/
   suse: >-
     https://plus-pkgs.nginx.com/sles/{{ ansible_facts['distribution_major_version'] }}?ssl_clientcert=/etc/ssl/nginx/nginx-repo-bundle.crt&ssl_verify=host

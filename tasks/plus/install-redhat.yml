@@ -16,6 +16,6 @@
     name: "nginx-plus{{ nginx_version | default('') }}"
     state: "{{ nginx_state }}"
     disablerepo: "*"
-    enablerepo: "nginx"
+    enablerepo: "nginx-plus"
     update_cache: yes
   notify: "(Handler) Start NGINX"

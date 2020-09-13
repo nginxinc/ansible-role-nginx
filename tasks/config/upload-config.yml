@@ -1,3 +1,4 @@
+## DEPRECATED -- Use nginxinc.nginx_config role instead (https://github.com/nginxinc/ansible-role-nginx-config)
 ---
 - name: "(Setup: All NGINX) Ensure NGINX HTML Directory Exists"
   file:
@@ -14,7 +15,7 @@
     mode: 0644
   with_fileglob: "{{ nginx_html_upload_src }}"
   when: nginx_html_upload_enable | bool
-  notify: "(Handler: All OSs) Reload NGINX"
+  notify: "(Handler) Reload NGINX"
 
 - name: "(Setup: All NGINX) Ensure NGINX Main Directory Exists"
   file:
@@ -30,7 +31,7 @@
     backup: yes
     mode: 0644
   when: nginx_main_upload_enable | bool
-  notify: "(Handler: All OSs) Reload NGINX"
+  notify: "(Handler) Reload NGINX"
 
 - name: "(Setup: All NGINX) Ensure NGINX HTTP Directory Exists"
   file:
@@ -47,7 +48,7 @@
     mode: 0644
   with_fileglob: "{{ nginx_http_upload_src }}"
   when: nginx_http_upload_enable | bool
-  notify: "(Handler: All OSs) Reload NGINX"
+  notify: "(Handler) Reload NGINX"
 
 - name: "(Setup: All NGINX) Ensure NGINX Stream Directory Exists"
   file:
@@ -64,7 +65,7 @@
     mode: 0644
   with_fileglob: "{{ nginx_stream_upload_src }}"
   when: nginx_stream_upload_enable | bool
-  notify: "(Handler: All OSs) Reload NGINX"
+  notify: "(Handler) Reload NGINX"
 
 - name: "(Setup: All NGINX) Ensure SSL Certificate Directory Exists"
   file:

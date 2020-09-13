@@ -1,45 +1,45 @@
 ---
-- name: "(Handler: All OSs) Check NGINX"
+- name: "(Handler) Check NGINX"
   command: "nginx -t"
   changed_when: false
 
-- name: "(Handler: All OSs) Systemd Daemon-Reload"
+- name: "(Handler) Systemd Daemon-Reload"
   systemd:
     daemon_reload: yes
-  notify: "(Handler: All OSs) Start NGINX"
+  notify: "(Handler) Start NGINX"
 
-- name: "(Handler: All OSs) Run NGINX"
+- name: "(Handler) Run NGINX"
   block:
-    - name: "(Handler: All OSs) Start NGINX"
+    - name: "(Handler) Start NGINX"
       service:
         name: nginx
         state: started
         enabled: yes
-      notify: "(Handler: All OSs) Check NGINX"
+      notify: "(Handler) Check NGINX"
 
-    - name: "(Handler: All OSs) Reload NGINX"
+    - name: "(Handler) Reload NGINX"
       command: "nginx -s reload"
       changed_when: false
   when:
     - nginx_start | bool
     - not ansible_check_mode | bool
 
-- name: "(Handler: All OSs) Start NGINX Amplify Agent"
+- name: "(Handler) Start NGINX Amplify agent"
   service:
     name: amplify-agent
     state: started
 
-- name: "(Handler: Debian/Ubuntu/CentOS/RedHat) Start NGINX Unit"
+- name: "(Handler: Debian/Ubuntu/CentOS/RedHat) Start NGINX Unit -- DEPRECATED"
   service:
     name: unit
     state: started
     enabled: yes
 
-- name: "(Handler: FreeBSD) Start NGINX Unit"
+- name: "(Handler: FreeBSD) Start NGINX Unit -- DEPRECATED"
   service:
     name: unitd
     state: started
     enabled: yes
 
-- name: "(Config: All OSs) Run Logrotate"
+- name: "(Handler) Run logrotate"
   command: logrotate -f /etc/logrotate.d/nginx

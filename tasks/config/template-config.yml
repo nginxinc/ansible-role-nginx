@@ -1,3 +1,4 @@
+## DEPRECATED -- Use nginxinc.nginx_config role instead (https://github.com/nginxinc/ansible-role-nginx-config)
 ---
 - name: "(Setup: All NGINX) Ensure HTML Directory Exists"
   file:
@@ -30,7 +31,7 @@
     backup: yes
     mode: 0644
   when: nginx_main_template_enable | bool
-  notify: "(Handler: All OSs) Reload NGINX"
+  notify: "(Handler) Reload NGINX"
 
 - name: "(Setup: All NGINX) Ensure NGINX HTTP Directory Exists"
   file:
@@ -49,7 +50,7 @@
   with_subelements:
     - "{{ nginx_http_template }}"
     - proxy_cache.proxy_cache_path
-    - skip_missing: true
+    - skip_missing: yes
   when: nginx_http_template_enable | bool
 
 - name: "(Setup: All NGINX) Dynamically Generate NGINX HTTP Configuration Files"
@@ -60,7 +61,7 @@
     mode: 0644
   with_dict: "{{ nginx_http_template }}"
   when: nginx_http_template_enable | bool
-  notify: "(Handler: All OSs) Reload NGINX"
+  notify: "(Handler) Reload NGINX"
 
 - name: "(Setup: All NGINX) Dynamically Generate NGINX Stub Status Configuration File"
   template:
@@ -69,7 +70,7 @@
     backup: yes
     mode: 0644
   when: nginx_status_enable | bool
-  notify: "(Handler: All OSs) Reload NGINX"
+  notify: "(Handler) Reload NGINX"
 
 - name: "(Setup: All NGINX) Dynamically Generate NGINX API Configuration File"
   template:
@@ -78,7 +79,7 @@
     backup: yes
     mode: 0644
   when: nginx_rest_api_enable | bool
-  notify: "(Handler: All OSs) Reload NGINX"
+  notify: "(Handler) Reload NGINX"
 
 - name: "(Setup: All NGINX) Ensure NGINX Stream Directory Exists"
   file:
@@ -96,4 +97,4 @@
     mode: 0644
   with_dict: "{{ nginx_stream_template }}"
   when: nginx_stream_template_enable | bool
-  notify: "(Handler: All OSs) Reload NGINX"
+  notify: "(Handler) Reload NGINX"

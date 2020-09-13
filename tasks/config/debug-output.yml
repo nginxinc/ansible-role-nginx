@@ -1,0 +1,14 @@
+---
+- name: "Print NGINX config"
+  debug:
+    msg: "Printing NGINX config"
+  when: nginx_debug_tasks | bool
+
+- name: "Register NGINX configuration"
+  command: nginx -T
+  changed_when: false
+  register: config
+
+- name: "Print NGINX config"
+  debug:
+    var: config.stdout_lines

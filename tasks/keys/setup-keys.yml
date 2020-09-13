@@ -1,16 +1,41 @@
 ---
-- name: "(Setup: Keys) Alpine"
-  include_tasks: "{{ role_path }}/tasks/keys/apk-key.yml"
-  when: ansible_os_family == "Alpine"
-  tags: nginx_apkkey
+- name: "Set up signing keys"
+  debug:
+    msg: "Setting up signing keys"
+  when: nginx_debug_tasks | bool
 
-- name: "(Setup: Keys) Debian/Ubuntu"
-  include_tasks: "{{ role_path }}/tasks/keys/apt-key.yml"
-  when: ansible_os_family == "Debian"
-  tags: nginx_aptkey
+- name: "(Alpine Linux) Set up signing key"
+  block:
+    - name: "(Alpine Linux) Set up NGINX signing key URL"
+      set_fact:
+        keysite: "{{ nginx_signing_key | default(nginx_default_signing_key['rsa_pub']) }}"
 
-- name: "(Setup: Keys) CentOS/RedHat/SUSE"
-  include_tasks: "{{ role_path }}/tasks/keys/rpm-key.yml"
-  when: ansible_os_family == "RedHat"
-        or ansible_os_family == "Suse"
-  tags: nginx_rpmkey
+    - name: "(Alpine Linux) Download NGINX signing key"
+      get_url:
+        url: "{{ keysite }}"
+        dest: /etc/apk/keys/nginx_signing.rsa.pub
+        mode: 0400
+  when: ansible_facts['os_family'] == "Alpine"
+
+- name: "(Debian/Red Hat/SLES OSs) Set up NGINX signing key URL"
+  set_fact:
+    keysite: "{{ nginx_signing_key | default(nginx_default_signing_key['pgp']) }}"
+  when: ansible_facts['os_family'] != "Alpine"
+
+- name: "(Debian/Ubuntu) Add NGINX signing key"
+  apt_key:
+    id: 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
+    url: "{{ keysite }}"
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: "(Amazon Linux/CentOS/Oracle Linux/RHEL/SLES) Add NGINX signing key"
+  rpm_key:
+    fingerprint: 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
+    key: "{{ keysite }}"
+    validate_certs: "{{ (ansible_facts['distribution_major_version'] | int == 6) | ternary('no', 'yes') }}"
+  when: ansible_facts['os_family'] in ['RedHat', 'Suse']
+
+- name: "Set up signing keys"
+  debug:
+    msg: "Done setting up signing keys"
+  when: nginx_debug_tasks | bool

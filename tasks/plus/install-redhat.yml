@@ -1,0 +1,21 @@
+---
+- name: "(Amazon Linux/CentOS/Oracle Linux/RHEL) Configure NGINX Plus repository"
+  yum_repository:
+    name: nginx-plus
+    baseurl: "{{ repository }}"
+    description: NGINX Plus Repository
+    sslclientcert: /etc/ssl/nginx/nginx-repo.crt
+    sslclientkey: /etc/ssl/nginx/nginx-repo.key
+    enabled: yes
+    gpgcheck: yes
+    state: "{{ nginx_license_status | default ('present') }}"
+    mode: 0644
+
+- name: "(Amazon Linux/CentOS/Oracle Linux/RHEL) Install NGINX Plus"
+  yum:
+    name: "nginx-plus{{ nginx_version | default('') }}"
+    state: "{{ nginx_state }}"
+    disablerepo: "*"
+    enablerepo: "nginx"
+    update_cache: yes
+  notify: "(Handler) Start NGINX"

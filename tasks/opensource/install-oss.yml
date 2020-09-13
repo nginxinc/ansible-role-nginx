@@ -1,8 +1,38 @@
 ---
-- name: "(Install: OSS Linux)"
-  include_tasks: "{{ role_path }}/tasks/opensource/install-oss-linux.yml"
-  when: ansible_os_family in nginx_linux_families
+- name: "Install NGINX"
+  debug:
+    msg: "Installing NGINX"
+  when: nginx_debug_tasks | bool
 
-- name: "(Install: OSS BSD)"
-  include_tasks: "{{ role_path }}/tasks/opensource/install-oss-bsd.yml"
-  when: ansible_system in nginx_bsd_systems
+- name: "Install NGINX in Linux systems"
+  block:
+    - name: "Install NGINX from repository"
+      block:
+        - name: "Set NGINX repository"
+          set_fact:
+            repository: "{{ nginx_repository | default(nginx_default_repository[ansible_facts['os_family'] | lower]) }}"
+
+        - name: "Install NGINX from repository"
+          include_tasks: "{{ role_path }}/tasks/opensource/install-{{ ansible_facts['os_family'] | lower }}.yml"
+      when: nginx_install_from == "nginx_repository"
+
+    - name: "Install NGINX from source"
+      include_tasks: "{{ role_path }}/tasks/opensource/install-source.yml"
+      when: nginx_install_from == "source"
+
+    - name: "Install NGINX from package"
+      package:
+        name: "nginx{{ nginx_version | default('') }}"
+        state: "{{ nginx_state }}"
+      when: nginx_install_from == "os_repository"
+      notify: "(Handler) Start NGINX"
+  when: ansible_facts['system'] | lower is not search('bsd')
+
+- name: "Install NGINX in Unix systems"
+  include_tasks: "{{ role_path }}/tasks/opensource/install-bsd.yml"
+  when: ansible_facts['system'] | lower is search('bsd')
+
+- name: "Install NGINX"
+  debug:
+    msg: "Done installing NGINX"
+  when: nginx_debug_tasks | bool

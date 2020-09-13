@@ -1,0 +1,38 @@
+---
+- name: "Install dependencies"
+  debug:
+    msg: "Installing dependencies"
+  when: nginx_debug_tasks | bool
+
+- name: "Install dependencies"
+  include_tasks: "{{ role_path }}/tasks/prerequisites/install-dependencies.yml"
+
+- name: "Install dependencies"
+  debug:
+    msg: "Done installing dependencies"
+  when: nginx_debug_tasks | bool
+
+- name: "Set up SELinux"
+  block:
+    - name: "Set up SELinux"
+      debug:
+        msg: "Setting up SELinux"
+      when: nginx_debug_tasks | bool
+
+    - name: "Check if SELinux is enabled"
+      debug:
+        msg: "You need to enable SELinux, if it was disabled you need to reboot"
+      when: ansible_facts['selinux'] is undefined
+
+    - name: "Configure SELinux"
+      include_tasks: "{{ role_path }}/tasks/prerequisites/setup-selinux.yml"
+      when: ansible_facts['selinux.mode'] is defined
+
+    - name: "Set up SELinux"
+      debug:
+        msg: "Done setting up SELinux"
+      when: nginx_debug_tasks | bool
+  when:
+    - nginx_selinux | bool
+    - ansible_facts['os_family'] in ['RedHat', 'Suse']
+    - ansible_facts['distribution'] not in ['Amazon', 'OracleLinux']

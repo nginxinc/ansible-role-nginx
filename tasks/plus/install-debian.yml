@@ -1,5 +1,5 @@
 ---
-- name: "(Setup: Debian/Ubuntu) Setup NGINX Plus License"
+- name: "(Debian/Ubuntu) Set up NGINX Plus license verification"
   blockinfile:
     path: /etc/apt/apt.conf.d/90nginx
     create: yes
@@ -11,10 +11,16 @@
     state: "{{ nginx_license_status | default ('present') }}"
     mode: 0444
 
-- name: "(Setup: Debian/Ubuntu) Setup NGINX Plus Repository"
+- name: "(Debian/Ubuntu) Configure NGINX Plus repository"
   apt_repository:
     filename: nginx-plus
-    repo: deb [arch=amd64] https://plus-pkgs.nginx.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} nginx-plus
+    repo: "{{ repository }}"
     update_cache: yes
     state: "{{ nginx_license_status | default ('present') }}"
     mode: 0644
+
+- name: "(Debian/Ubuntu) Install NGINX Plus"
+  apt:
+    name: "nginx-plus{{ nginx_version | default('') }}"
+    state: "{{ nginx_state }}"
+  notify: "(Handler) Start NGINX"

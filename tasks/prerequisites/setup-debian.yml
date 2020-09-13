@@ -1,7 +1,0 @@
----
-- name: "(Setup: Debian/Ubuntu) Install Required Debian and Ubuntu Dependencies"
-  apt:
-    name:
-      - apt-transport-https
-      - dirmngr
-    update_cache: yes

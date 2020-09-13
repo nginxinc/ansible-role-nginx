@@ -1,50 +1,42 @@
 ---
-- name: "(Setup: SELinux) Install Required CentOS/RHEL 6/7 Dependencies"
-  package:
-    name:
-      - policycoreutils-python
-      - setools
-    state: present
-  when:
-    - ansible_os_family == "RedHat"
-    - ansible_distribution_major_version != "8"
+- name: "(CentOS/RHEL) Install dependencies"
+  block:
+    - name: "(CentOS/RHEL 6/7) Install dependencies"
+      yum:
+        name:
+          - policycoreutils-python
+          - setools
+      when: ansible_facts['distribution_major_version'] is version('8', '!=')
 
-- name: "(Setup: SELinux) Install Required CentOS/RHEL 8 Dependencies"
-  package:
-    name:
-      - selinux-policy-targeted
-      - libselinux-utils
-      - policycoreutils
-    state: present
-  when:
-    - ansible_os_family == "RedHat"
-    - ansible_distribution_major_version == "8"
+    - name: "(CentOS/RHEL 8) Install dependencies"
+      yum:
+        name:
+          - libselinux-utils
+          - policycoreutils
+          - selinux-policy-targeted
+      when: ansible_facts['distribution_major_version'] is version('8', '==')
+  when: ansible_facts['os_family'] == "RedHat"
 
-- name: "(Setup: SELinux) Check if SELinux is Enabled"
-  debug:
-    msg: "You need to enable selinux, if it was disabled you need to reboot"
-  when: ansible_selinux is undefined
-
-- name: "(Setup: SELinux) Setup Permissive SELinux"
+- name: "Set SELinux mode to permissive"
   selinux:
     state: permissive
     policy: targeted
   changed_when: false
-  when: ansible_selinux.mode == "enforcing"
+  when: ansible_facts['selinux.mode'] == "enforcing"
 
-- name: "(Setup: SELinux) Allow HTTP Network Connection"
+- name: "Allow SELinux HTTP network connections"
   seboolean:
     name: httpd_can_network_connect
     state: yes
     persistent: yes
 
-- name: "(Setup: SELinux) Allow HTTP Relay Connection"
+- name: "Allow SELinux HTTP network connections"
   seboolean:
     name: httpd_can_network_relay
     state: yes
     persistent: yes
 
-- name: "(Setup: SELinux) Allow Status Ports"
+- name: "Allow SELinux TCP connections on status ports"
   seport:
     ports: "{{ nginx_status_port }}"
     proto: tcp
@@ -52,7 +44,7 @@
     state: present
   when: nginx_status_port is defined
 
-- name: "(Setup: SELinux) Allow Rest API Ports"
+- name: "Allow SELinux TCP connections on Rest API ports"
   seport:
     ports: "{{ nginx_rest_api_port }}"
     proto: tcp
@@ -60,7 +52,7 @@
     state: present
   when: nginx_rest_api_port is defined
 
-- name: "(Setup: SELinux) Allow Specific TCP Ports"
+- name: "Allow SELinux TCP connections on specific ports"
   seport:
     ports: "{{ nginx_selinux_tcp_ports }}"
     proto: tcp
@@ -68,7 +60,7 @@
     state: present
   when: nginx_selinux_tcp_ports is defined
 
-- name: "(Setup: SELinux) Allow Specific UDP Ports"
+- name: "Allow SELinux UDP connections on specific ports"
   seport:
     ports: "{{ nginx_selinux_udp_ports }}"
     proto: udp
@@ -76,35 +68,35 @@
     state: present
   when: nginx_selinux_udp_ports is defined
 
-- name: "(Setup: SELinux) Create NGINX Plus Module"
+- name: "Create SELinux NGINX Plus Module"
   template:
     src: "{{ role_path }}/templates/selinux/nginx-plus-module.te.j2"
-    dest: "{{ nginx_tempdir }}/nginx-plus-module.te"
+    dest: "{{ nginx_selinux_tempdir }}/nginx-plus-module.te"
     mode: 0644
   register: nginx_selinux_module
 
-- name: "(Setup: SELinux) Check NGINX Plus Module"
-  command: "checkmodule -M -m -o {{ nginx_tempdir }}/nginx-plus-module.mod {{ nginx_tempdir }}/nginx-plus-module.te"
+- name: "Check SELinux NGINX Plus Module"
+  command: "checkmodule -M -m -o {{ nginx_selinux_tempdir }}/nginx-plus-module.mod {{ nginx_selinux_tempdir }}/nginx-plus-module.te"
   args:
-    creates: "{{ nginx_tempdir }}/nginx-plus-module.mod"
+    creates: "{{ nginx_selinux_tempdir }}/nginx-plus-module.mod"
   changed_when: false
 
-- name: "(Setup: SELinux) Compile NGINX Plus Module"
-  command: "semodule_package -o {{ nginx_tempdir }}/nginx-plus-module.pp -m {{ nginx_tempdir }}/nginx-plus-module.mod"
+- name: "Compile SELinux NGINX Plus Module"
+  command: "semodule_package -o {{ nginx_selinux_tempdir }}/nginx-plus-module.pp -m {{ nginx_selinux_tempdir }}/nginx-plus-module.mod"
   args:
-    creates: "{{ nginx_tempdir }}/nginx-plus-module.pp"
+    creates: "{{ nginx_selinux_tempdir }}/nginx-plus-module.pp"
   changed_when: false
 
-- name: "(Setup: SELinux) Import NGINX Plus Module"
-  command: "semodule -i {{ nginx_tempdir }}/nginx-plus-module.pp"  # noqa 503
+- name: "Import SELinux NGINX Plus Module"
+  command: "semodule -i {{ nginx_selinux_tempdir }}/nginx-plus-module.pp"  # noqa 503
   changed_when: false
-  when: nginx_selinux_module.changed
+  when: nginx_selinux_module.changed | bool
 
-- name: "(Setup: SELinux) Enforce SELinux"
+- name: "Set SELinux mode to enforcing"
   selinux:
     state: enforcing
     policy: targeted
   changed_when: false
   when:
-    - nginx_selinux_enforcing
-    - ansible_selinux.mode == "permissive"
+    - nginx_selinux_enforcing | bool
+    - ansible_facts['selinux.mode'] == "permissive"

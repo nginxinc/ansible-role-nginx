@@ -1,11 +1,19 @@
 ---
-- name: "(Install: All OSs) Setup license"
-  include_tasks: "{{ role_path }}/tasks/plus/setup-license.yml"
+- name: "Install NGINX Plus"
+  debug:
+    msg: "Installing NGINX Plus"
+  when: nginx_debug_tasks | bool
 
-- name: "(Install: Linux) Install NGINX Plus"
-  include_tasks: "{{ role_path }}/tasks/plus/install-plus-linux.yml"
-  when: ansible_os_family in nginx_plus_linux_families
+- name: "Set NGINX Plus repository"
+  set_fact:
+    repository: >-
+      {{ nginx_repository |
+      default(nginx_plus_default_repository[(ansible_facts['distribution'] == 'Amazon') | ternary('amazon', ansible_facts['os_family'] | lower)]) }}
 
-- name: "(Install: FreeBSD) Install NGINX Plus"
-  include_tasks: "{{ role_path }}/tasks/plus/install-plus-bsd.yml"
-  when: ansible_system in nginx_plus_bsd_systems
+- name: "Install NGINX from repository"
+  include_tasks: "{{ role_path }}/tasks/plus/install-{{ ansible_facts['os_family'] | lower }}.yml"
+
+- name: "Install NGINX Plus"
+  debug:
+    msg: "Done installing NGINX Plus"
+  when: nginx_debug_tasks | bool

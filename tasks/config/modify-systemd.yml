@@ -1,11 +1,16 @@
 ---
-- name: "(Setup: Linux) Create Override Directory For NGINX Systemd Service"
+- name: "Modify systemd"
+  debug:
+    msg: "Modifying systemd"
+  when: nginx_debug_tasks | bool
+
+- name: "Create override directory for NGINX systemd service"
   file:
     path: "{{ nginx_service_overridepath }}"
     state: directory
     mode: 0755
 
-- name: "(Setup: Linux) Create Override For NGINX Systemd Service"
+- name: "Create override for NGINX systemd service"
   template:
     src: "{{ role_path }}/templates/services/nginx.service.override.conf.j2"
     dest: "{{ nginx_service_overridepath }}/{{ nginx_service_overridefilename }}"
@@ -15,9 +20,9 @@
   when:
     - not nginx_service_custom | bool
     - not nginx_service_clean | bool
-  notify: "(Handler: All OSs) Systemd Daemon-Reload"
+  notify: "(Handler) Systemd Daemon-Reload"
 
-- name: "(Setup: Linux) Customize Override For NGINX Systemd Service"
+- name: "Customize override for NGINX systemd service"
   copy:
     src: "{{ nginx_service_custom_file }}"
     dest: "{{ nginx_service_overridepath }}/{{ nginx_service_overridefilename }}"
@@ -27,11 +32,16 @@
   when:
     - nginx_service_custom | bool
     - not nginx_service_clean | bool
-  notify: "(Handler: All OSs) Systemd Daemon-Reload"
+  notify: "(Handler) Systemd Daemon-Reload"
 
-- name: "(Setup: Linux) Remove Override For NGINX Systemd Service"
+- name: "Remove override for NGINX systemd service"
   file:
     path: "{{ nginx_service_overridepath }}"
     state: absent
   when: nginx_service_clean | bool
-  notify: "(Handler: All OSs) Systemd Daemon-Reload"
+  notify: "(Handler) Systemd Daemon-Reload"
+
+- name: "Modify systemd"
+  debug:
+    msg: "Done modifying systemd"
+  when: nginx_debug_tasks | bool

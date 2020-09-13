@@ -1,3 +1,4 @@
+## DEPRECATED -- Use nginxinc.nginx_config role instead (https://github.com/nginxinc/ansible-role-nginx-config)
 ---
 - name: "(Setup: All OSs) Find NGINX Configuration Files"
   find:

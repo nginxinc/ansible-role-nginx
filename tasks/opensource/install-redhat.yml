@@ -1,0 +1,33 @@
+---
+- name: "(CentOS/RHEL 6/7) Configure NGINX repository"
+  yum_repository:
+    name: nginx
+    baseurl: "{{ repository }}"
+    description: NGINX Repository
+    enabled: yes
+    gpgcheck: yes
+    mode: 0644
+  when: ansible_facts['distribution_major_version'] is version('8', '<')
+
+- name: "(CentOS/RHEL 8) Configure NGINX repository"
+  blockinfile:
+    path: /etc/yum.repos.d/nginx.repo
+    create: yes
+    block: |
+      [nginx]
+      baseurl = {{ repository }}
+      enabled = 1
+      gpgcheck = 1
+      name = NGINX Repository
+      module_hotfixes = true
+    mode: 0644
+  when: ansible_facts['distribution_major_version'] is version('8', '==')
+
+- name: "(CentOS/RHEL) Install NGINX"
+  yum:
+    name: "nginx{{ nginx_version | default('') }}"
+    state: "{{ nginx_state }}"
+    disablerepo: "*"
+    enablerepo: "nginx"
+    update_cache: yes
+  notify: "(Handler) Start NGINX"

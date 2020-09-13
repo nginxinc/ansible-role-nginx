@@ -1,8 +1,8 @@
 ---
-- name: "(Install: Debian/Ubuntu) Add NGINX Unit Repository"
+- name: "Debian/Ubuntu) Add NGINX Unit Repository"
   apt_repository:
     repo: "{{ item }}"
     mode: 0644
   loop:
-    - deb [arch=amd64] https://packages.nginx.org/unit/{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} unit
-    - deb-src https://packages.nginx.org/unit/{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} unit
+    - deb [arch=amd64] https://packages.nginx.org/unit/{{ ansible_facts['distribution']|lower }}/ {{ ansible_facts['distribution']_release }} unit
+    - deb-src https://packages.nginx.org/unit/{{ ansible_facts['distribution']|lower }}/ {{ ansible_facts['distribution']_release }} unit

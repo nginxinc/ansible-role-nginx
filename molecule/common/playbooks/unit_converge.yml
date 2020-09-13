@@ -8,20 +8,20 @@
           - unit-perl
           - unit-php7
           - unit-python3
-      when: ansible_os_family == "Alpine"
-    - name: Set module if Debian/RedHat
+      when: ansible_facts['os_family'] == "Alpine"
+    - name: Set module if Debian
       set_fact:
         module:
           - unit-perl
           - unit-php
           - unit-ruby
-      when: ansible_os_family == "Debian"
-    - name: Set module if RedHat
+      when: ansible_facts['os_family'] == "Debian"
+    - name: Set module if Red Hat
       set_fact:
         module:
           - unit-php
           - unit-go
-      when: ansible_os_family == "RedHat"
+      when: ansible_facts['os_family'] == "RedHat"
   tasks:
     - name: Install NGINX Unit
       include_role:

@@ -15,6 +15,7 @@
           - 80
           - 443
 
+        nginx_configure: true
         nginx_cleanup_config: true
         nginx_cleanup_config_paths:
           - directory:

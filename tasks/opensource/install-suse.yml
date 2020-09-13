@@ -1,0 +1,13 @@
+---
+- name: "(SLES) Configure NGINX repository"
+  zypper_repository:
+    name: "nginx-{{ nginx_branch }}"
+    repo: "{{ repository }}"
+
+- name: "(SLES) Install NGINX"
+  zypper:
+    name: "nginx{{ nginx_version | default('') }}"
+    state: "{{ nginx_state }}"
+    disable_recommends: no
+    update_cache: yes
+  notify: "(Handler) Start NGINX"

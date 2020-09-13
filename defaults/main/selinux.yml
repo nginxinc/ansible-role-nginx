@@ -1,0 +1,15 @@
+---
+# Set SELinux enforcing for NGINX (CentOS/Red Hat only) - you may need to open ports on your own
+nginx_selinux: false
+# Enable enforcing mode if true.  Permissive if false (audit only, no enforcing) globally (only works with nginx_selinux: true)
+nginx_selinux_enforcing: true
+# List of TCP ports to add to http_port_t type (80 and 443 have this type already)
+# nginx_selinux_tcp_ports:
+#   - 80
+#   - 443
+# List of UDP ports to add to http_port_t type
+# nginx_selinux_udp_ports:
+#   - 80
+#   - 443
+# Temporary directory to hold selinux modules
+nginx_selinux_tempdir: /tmp

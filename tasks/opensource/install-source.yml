@@ -127,7 +127,7 @@
   block:
     - name: "Download PCRE dependency"
       get_url:
-        url: "http://ftp.pcre.org/pub/pcre/{{ pcre_version }}.tar.gz"
+        url: "https://ftp.pcre.org/pub/pcre/{{ pcre_version }}.tar.gz"
         dest: "/tmp/{{ pcre_version }}.tar.gz"
         mode: 0600
       register: pcre_source
@@ -184,7 +184,7 @@
   block:
     - name: "Download ZLib dependency"
       get_url:
-        url: "http://zlib.net/{{ zlib_version }}.tar.gz"
+        url: "https://zlib.net/{{ zlib_version }}.tar.gz"
         dest: "/tmp/{{ zlib_version }}.tar.gz"
         mode: 0600
       register: zlib_source
@@ -241,7 +241,7 @@
   block:
     - name: "Download OpenSSL dependency"
       get_url:
-        url: "http://www.openssl.org/source/{{ openssl_version }}.tar.gz"
+        url: "https://www.openssl.org/source/{{ openssl_version }}.tar.gz"
         dest: "/tmp/{{ openssl_version }}.tar.gz"
         mode: 0600
       register: openssl_source

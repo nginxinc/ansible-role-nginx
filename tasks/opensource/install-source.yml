@@ -18,7 +18,7 @@
             link: /usr/bin/python
       when:
         - ansible_facts['os_family'] == "RedHat"
-        - ansible_facts['distribution_major_version'] == "8"
+        - ansible_facts['distribution_major_version'] is version('8', '==')
 
     - name: "(Centos/RHEL) Install build tools"
       yum:

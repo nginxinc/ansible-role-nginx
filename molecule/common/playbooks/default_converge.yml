@@ -20,7 +20,7 @@
         cmd: dnf module info nginx | grep -q 'Stream.*\[e\]' && echo -n ENABLED || dnf module enable -y nginx  # noqa 204 303
       register: dnf_module_enable
       changed_when: dnf_module_enable.stdout != 'ENABLED'
-      when: ansible_facts['os_family'] == "RedHat" and ansible_facts['distribution_major_version'] == "8"
+      when: ansible_facts['os_family'] == "RedHat" and ansible_facts['distribution_major_version'] is version('8', '==')
   tasks:
     - name: Install NGINX
       include_role:

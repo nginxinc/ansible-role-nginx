@@ -29,13 +29,13 @@
     name: amplify-agent
     state: started
 
-- name: "(Handler: Debian/Ubuntu/CentOS/RedHat) Start NGINX Unit -- DEPRECATED"
+- name: "(Handler: Debian/Ubuntu/CentOS/RedHat) Start NGINX Unit"
   service:
     name: unit
     state: started
     enabled: yes
 
-- name: "(Handler: FreeBSD) Start NGINX Unit -- DEPRECATED"
+- name: "(Handler: FreeBSD) Start NGINX Unit"
   service:
     name: unitd
     state: started

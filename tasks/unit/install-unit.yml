@@ -1,18 +1,18 @@
 ---
-- name: "(Setup: All OSs) Configure NGINX Unit Repository"
+- name: "Configure NGINX Unit Repository"
   include_tasks: "{{ role_path }}/tasks/unit/setup-{{ ansible_facts['os_family'] | lower }}.yml"
   when: ansible_facts['os_family'] == "Debian"
         or ansible_facts['os_family'] == "RedHat"
         or ansible_facts['os_family'] == "FreeBSD"
 
-- name: "Debian/Ubuntu/CentOS/RedHat) Install NGINX Unit"
+- name: "(Debian/Ubuntu/CentOS/RedHat) Install NGINX Unit"
   package:
     name: unit
     state: present
   when: ansible_facts['os_family'] != "FreeBSD"
   notify: "(Handler: Debian/Ubuntu/CentOS/RedHat) Start NGINX Unit"
 
-- name: "FreeBSD) Install NGINX Unit"
+- name: "(FreeBSD) Install NGINX Unit"
   portinstall:
     name: unit
     state: present

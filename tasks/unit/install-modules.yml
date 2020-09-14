@@ -1,5 +1,6 @@
+## DEPRECATED -- Use nginxinc.nginx_unit role instead (https://github.com/nginxinc/ansible-role-nginx-unit)
 ---
-- name: "Debian/Ubuntu/CentOS/RedHat) Install NGINX Unit Modules"
+- name: "(Debian/Ubuntu/CentOS/RedHat) Install NGINX Unit Modules"
   package:
     name: "{{ item }}"
     state: present
@@ -7,7 +8,7 @@
   when: ansible_facts['os_family'] != "FreeBSD"
   notify: "(Handler: Debian/Ubuntu/CentOS/RedHat) Start NGINX Unit"
 
-- name: "FreeBSD) Install NGINX Unit Modules"
+- name: "(FreeBSD) Install NGINX Unit Modules"
   portinstall:
     name: "{{ item }}"
     state: present

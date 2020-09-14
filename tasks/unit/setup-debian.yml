@@ -1,5 +1,6 @@
+## DEPRECATED -- Use nginxinc.nginx_unit role instead (https://github.com/nginxinc/ansible-role-nginx-unit)
 ---
-- name: "Debian/Ubuntu) Add NGINX Unit Repository"
+- name: "(DEPRECATED) Add NGINX Unit Repository"
   apt_repository:
     repo: "{{ item }}"
     mode: 0644

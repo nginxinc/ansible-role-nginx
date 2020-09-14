@@ -1,24 +1,29 @@
+## DEPRECATED -- Use nginxinc.nginx_unit role instead (https://github.com/nginxinc/ansible-role-nginx-unit)
 ---
-- name: "Configure NGINX Unit Repository"
+- name: "Deprecation warning"
+  debug:
+    msg: "DEPRECATED TASKS -- Use nginxinc.nginx_unit role instead (https://github.com/nginxinc/ansible-role-nginx-unit)"
+
+- name: "(DEPRECATED) Configure NGINX Unit Repository"
   include_tasks: "{{ role_path }}/tasks/unit/setup-{{ ansible_facts['os_family'] | lower }}.yml"
   when: ansible_facts['os_family'] == "Debian"
         or ansible_facts['os_family'] == "RedHat"
         or ansible_facts['os_family'] == "FreeBSD"
 
-- name: "(Debian/Ubuntu/CentOS/RedHat) Install NGINX Unit"
+- name: "(DEPRECATED) Install NGINX Unit"
   package:
     name: unit
     state: present
   when: ansible_facts['os_family'] != "FreeBSD"
   notify: "(Handler: Debian/Ubuntu/CentOS/RedHat) Start NGINX Unit"
 
-- name: "(FreeBSD) Install NGINX Unit"
+- name: "(DEPRECATED) Install NGINX Unit"
   portinstall:
     name: unit
     state: present
   when: ansible_facts['os_family'] == "FreeBSD"
   notify: "(Handler: FreeBSD) Start NGINX Unit"
 
-- name: "All OSs) Install NGINX Unit modules"
+- name: "(DEPRECATED) Install NGINX Unit modules"
   include_tasks: "{{ role_path }}/tasks/unit/install-modules.yml"
   when: nginx_unit_modules is defined

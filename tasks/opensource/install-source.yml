@@ -39,7 +39,7 @@
     - name: "(Debian) Install backports repo for buster"
       apt_repository:
         filename: buster-backports
-        repo: deb http://ftp.us.debian.org/debian buster-backports main
+        repo: deb https://ftp.us.debian.org/debian buster-backports main
         update_cache: yes
         mode: 0644
       when: ansible_facts['distribution_release'] == "buster"
@@ -241,7 +241,7 @@
   block:
     - name: "Download OpenSSL dependency"
       get_url:
-        url: "http://www.openssl.org/source/{{ openssl_version }}.tar.gz"
+        url: "https://www.openssl.org/source/{{ openssl_version }}.tar.gz"
         dest: "/tmp/{{ openssl_version }}.tar.gz"
         mode: 0600
       register: openssl_source
@@ -311,7 +311,7 @@
   block:
     - name: "Download NGINX"
       get_url:
-        url: "http://nginx.org/download/{{ nginx_download_name }}.tar.gz"
+        url: "https://nginx.org/download/{{ nginx_download_name }}.tar.gz"
         dest: "/tmp/{{ nginx_download_name }}.tar.gz"
         mode: 0600
       register: nginx_source

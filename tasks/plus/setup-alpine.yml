@@ -1,7 +1,0 @@
----
-- name: "(Setup: Alpine Linux) Setup NGINX Plus Repository"
-  lineinfile:
-    path: /etc/apk/repositories
-    insertafter: EOF
-    line: "https://plus-pkgs.nginx.com/alpine/v{{ ansible_distribution_version | regex_search('^[0-9]+\\.[0-9]+') }}/main"
-    state: "{{ nginx_license_status | default ('present') }}"

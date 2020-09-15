@@ -1,9 +1,0 @@
----
-- include_tasks: "{{ role_path }}/tasks/plus/setup-bsd.yml"
-  when: ansible_os_family == "FreeBSD"
-
-- name: "(Install: FreeBSD) Install NGINX Plus"
-  pkgng:
-    name: "nginx-plus{{ nginx_version | default('') }}"
-    state: "{{ nginx_state }}"
-  notify: "(Handler: All OSs) Start NGINX"

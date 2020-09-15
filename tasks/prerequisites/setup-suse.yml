@@ -1,6 +1,0 @@
----
-- name: "(Setup: SUSE) Setup SELinux"
-  include_tasks: "{{ role_path }}/tasks/prerequisites/setup-selinux.yml"
-  when:
-    - nginx_selinux | bool
-    - ansible_selinux.mode is defined

@@ -1,5 +1,10 @@
+## DEPRECATED -- Use nginxinc.nginx_config role instead (https://github.com/nginxinc/ansible-role-nginx-config)
 ---
-- name: "(Setup: All OSs) Find NGINX Configuration Files"
+- name: "Deprecation warning"
+  debug:
+    msg: "DEPRECATED TASKS -- Use nginxinc.nginx_config role instead (https://github.com/nginxinc/ansible-role-nginx-config)"
+
+- name: "(DEPRECATED) Find NGINX Configuration Files"
   find:
     paths: "{{ item.directory }}"
     patterns: "*.conf"
@@ -8,7 +13,7 @@
   when: nginx_cleanup_config_paths is defined
   register: nginx_config_files
 
-- name: "(Setup: All OSs) Remove NGINX Configuration Files"
+- name: "(DEPRECATED) Remove NGINX Configuration Files"
   file:
     path: "{{ item }}"
     state: absent

@@ -1,3 +1,4 @@
+## DEPRECATED -- Use nginxinc.nginx_config role instead (https://github.com/nginxinc/ansible-role-nginx-config)
 ---
 # Enable creating dynamic templated NGINX HTML demo websites.
 nginx_html_demo_template_enable: false

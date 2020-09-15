@@ -6,7 +6,7 @@ jobs:
     - name: "(Debian/Ubuntu) Install Specific Version"
       env:
         scenario: default
-    - name: "(Alpine) Install Specific Version"
+    - name: "(Alpine Linux) Install Specific Version"
       env:
         scenario: default_alpine
     - name: "(CentOS) Install Specific Version"
@@ -15,7 +15,7 @@ jobs:
     - name: "(Debian/Ubuntu) Install Modules"
       env:
         scenario: module
-    - name: "(Alpine) Install Modules"
+    - name: "(Alpine Linux) Install Modules"
       env:
         scenario: module_alpine
     - name: "(CentOS) Install Modules"
@@ -24,7 +24,7 @@ jobs:
     - name: "(Debian/Ubuntu) Install Stable Branch and Push Configuration"
       env:
         scenario: stable_push
-    - name: "(Alpine) Install Stable Branch and Push Configuration"
+    - name: "(Alpine Linux) Install Stable Branch and Push Configuration"
       env:
         scenario: stable_push_alpine
     - name: "(CentOS) Install Stable Branch and Push Configuration"
@@ -33,7 +33,7 @@ jobs:
     - name: "(Debian/Ubuntu) Use Template Setting"
       env:
         scenario: template
-    - name: "(Alpine) Use Template Setting"
+    - name: "(Alpine Linux) Use Template Setting"
       env:
         scenario: template_alpine
     - name: "(CentOS) Use Template Setting"
@@ -42,7 +42,7 @@ jobs:
     - name: "(Debian/Ubuntu) Install NGINX Unit"
       env:
         scenario: unit
-    - name: "(Alpine) Install NGINX Unit"
+    - name: "(Alpine Linux) Install NGINX Unit"
       env:
         scenario: unit_alpine
     - name: "(CentOS) Install NGINX Unit"
@@ -51,7 +51,7 @@ jobs:
     - name: "(Debian/Ubuntu) Install from Source"
       env:
         scenario: source
-    - name: "(Alpine) Install from Source"
+    - name: "(Alpine Linux) Install from Source"
       env:
         scenario: source_alpine
     - name: "(CentOS) Install from Source"

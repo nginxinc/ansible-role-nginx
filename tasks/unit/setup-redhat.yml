@@ -1,20 +1,21 @@
+## DEPRECATED -- Use nginxinc.nginx_unit role instead (https://github.com/nginxinc/ansible-role-nginx-unit)
 ---
-- name: "(Install: CentOS/RedHat) Add NGINX Unit Repository"
+- name: "(DEPRECATED) Add NGINX Unit Repository"
   yum_repository:
     name: unit
-    baseurl: https://packages.nginx.org/unit/{{ (ansible_distribution == "RedHat") | ternary('rhel/', 'centos/') }}$releasever/$basearch/
+    baseurl: https://packages.nginx.org/unit/{{ (ansible_facts['distribution'] == "RedHat") | ternary('rhel/', 'centos/') }}$releasever/$basearch/
     description: NGINX Unit Repository
     enabled: yes
     gpgcheck: yes
     mode: 0644
-  when: ansible_distribution != "Amazon"
+  when: ansible_facts['distribution'] != "Amazon"
 
-- name: "(Install: Amazon Linux) Add NGINX Unit Repository"
+- name: "(DEPRECATED) Add NGINX Unit Repository"
   yum_repository:
     name: unit
-    baseurl: https://packages.nginx.org/unit/amzn{{ (ansible_distribution_version == "2") | ternary('2', '') }}/$releasever/$basearch/
+    baseurl: https://packages.nginx.org/unit/amzn{{ (ansible_facts['distribution_version'] == "2") | ternary('2', '') }}/$releasever/$basearch/
     description: NGINX Unit Repository
     enabled: yes
     gpgcheck: yes
     mode: 0644
-  when: ansible_distribution == "Amazon"
+  when: ansible_facts['distribution'] == "Amazon"

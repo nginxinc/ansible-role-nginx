@@ -10,8 +10,10 @@ This role installs NGINX Open Source, NGINX Plus, the NGINX Amplify agent, or NG
 
 **Deprecation Warnings:**
 
-*   There now is a separate role to manage and create NGINX configurations available [here](https://github.com/nginxinc/ansible-role-nginx-config). Any new issues or PRs related to configuring NGINX should be submitted in the new NGINX Config repository. New issues or PRs related to configuring NGINX submitted in this repository will not be worked on (with the exception of major bugfixes). The NGINX configuration functionalities included in this role will be removed in an upcoming release.
-*   NGINX Unit now has a separate role available [here](https://github.com/nginxinc/ansible-role-nginx-unit). Any new issues or PRs related to NGINX Unit should be submitted in the new NGINX Unit repository. New issues or PRs related to NGINX Unit submitted in this repository will not be worked on (with the exception of major bugfixes). The NGINX Unit functionalities included in this role will be removed in an upcoming release.
+With the advent of Ansible collections and to reduce the overhead of this role, the decision has been made to split this role into three smaller roles:
+*   The NGINX Ansible role will keep working as is and be used to install and setup NGINX.
+*   There now is a separate role to manage and create NGINX configurations available [here](https://github.com/nginxinc/ansible-role-nginx-config). Any new issues or PRs related to configuring NGINX should be submitted in the new NGINX Config repository. New issues or PRs related to configuring NGINX submitted in this repository will not be worked on. The NGINX configuration functionalities included in this role will be removed in an upcoming release.
+*   NGINX Unit now has a separate role available [here](https://github.com/nginxinc/ansible-role-nginx-unit). Any new issues or PRs related to NGINX Unit should be submitted in the new NGINX Unit repository. New issues or PRs related to NGINX Unit submitted in this repository will not be worked on. The NGINX Unit functionalities included in this role will be removed in an upcoming release.
 
 Requirements
 ------------
@@ -42,7 +44,7 @@ Use `git clone https://github.com/nginxinc/ansible-role-nginx.git` to pull the l
 Platforms
 ---------
 
-The NGINX Ansible role supports all platforms supported by [NGINX Open Source](https://nginx.org/en/linux_packages.html#mainline), [NGINX Plus](https://www.nginx.com/products/technical-specs/), the [NGINX Amplify agent](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-faq.md#21-what-operating-systems-are-supported), and [NGINX Unit](https://unit.nginx.org/installation/#official-packages):
+The NGINX Ansible role supports all platforms supported by [NGINX Open Source](https://nginx.org/en/linux_packages.html), [NGINX Plus](https://docs.nginx.com/nginx/technical-specs/), the [NGINX Amplify agent](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-faq.md#21-what-operating-systems-are-supported), and [NGINX Unit](https://unit.nginx.org/installation/#official-packages) (you can also use this role to compile NGINX Open Source from source or install it on BSD systems at your own risk):
 
 **NGINX Open Source**
 
@@ -54,15 +56,12 @@ Alpine:
   - 3.12
 CentOS:
   - 6
-  - 7
+  - 7.4+
   - 8
 Debian:
   - stretch
   - buster
-FreeBSD:
-  - 11.2+
-  - 12
-RedHat:
+Red Hat:
   - 6
   - 7.4+
   - 8
@@ -72,6 +71,7 @@ SUSE/SLES:
 Ubuntu:
   - xenial
   - bionic
+  - eoan
   - focal
 ```
 
@@ -82,7 +82,6 @@ Alpine:
   - 3.9
   - 3.10
   - 3.11
-  - 3.12
 Amazon Linux:
   - 2018.03
 Amazon Linux 2:
@@ -100,7 +99,7 @@ FreeBSD:
 Oracle Linux:
   - 6.5+
   - 7.4+
-RedHat:
+Red Hat:
   - 6.5+
   - 7.4+
   - 8
@@ -110,6 +109,7 @@ SUSE/SLES:
 Ubuntu:
   - xenial
   - bionic
+  - eoan
   - focal
 ```
 
@@ -124,7 +124,7 @@ CentOS:
 Debian:
   - jessie
   - stretch
-RedHat:
+Red Hat:
   - 6
   - 7
 Ubuntu:
@@ -147,7 +147,7 @@ CentOS:
 Debian:
   - stretch
   - buster
-RedHat:
+Red Hat:
   - 6
   - 7
   - 8
@@ -160,7 +160,7 @@ Ubuntu:
 Role Variables
 --------------
 
-This role has multiple variables. The descriptions and defaults for all these variables can be found in the **`defaults/main`** directory in the following files:
+This role has multiple variables. The descriptions and defaults for all these variables can be found in the **`defaults/main/`** directory in the following files:
 
 -   **[defaults/main/main.yml](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/main.yml):** NGINX installation variables
 -   **[defaults/main/amplify.yml](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/amplify.yml):** NGINX Amplify agent installation variables
@@ -170,14 +170,14 @@ This role has multiple variables. The descriptions and defaults for all these va
 -   **[defaults/main/bsd.yml](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/bsd.yml):** BSD installation variables
 -   **[defaults/main/unit.yml](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/unit.yml):** NGINX Unit installation variables
 
-Similarly, descriptions and defaults for preset variables can be found in the **`vars`** directory:
+Similarly, descriptions and defaults for preset variables can be found in the **`vars/`** directory in the following files:
 
--   **[vars/main.yml](https://github.com/nginxinc/ansible-role-nginx/blob/main/vars/main.yml):** NGINX supported modules
+-   **[vars/main.yml](https://github.com/nginxinc/ansible-role-nginx/blob/main/vars/main.yml):** List of supported NGINX platforms and modules
 
 Example Playbooks
 -----------------
 
-Working functional playbook examples can be found in the **`molecule/common`** directory in the following files:
+Working functional playbook examples can be found in the **`molecule/common/`** directory in the following files:
 
 -   **[molecule/common/playbooks/default_converge.yml](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/common/playbooks/default_converge.yml):** Install a specific version of NGINX and set up logrotate
 -   **[molecule/common/playbooks/module_converge.yml](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/common/playbooks/module_converge.yml):** Install various NGINX supported modules

@@ -4,21 +4,32 @@
 
 BREAKING CHANGES:
 
-*   The process to install modules has changed. You will now have to use a list variable, `nginx_modules`, instead of manually setting the modules you want to install to `true` or `false`. This change will also simplify adding future supported modules to this role. You can find a list of supported modules for NGINX and NGINX Plus in [`vars/main.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/master/vars/main.yml).
+*   The process to install modules has changed. You will now have to use a list variable, `nginx_modules`, instead of manually setting the modules you want to install to `true` or `false`. This change will also simplify adding future supported modules to this role. You can find a list of supported modules for NGINX and NGINX Plus in [`vars/main.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/vars/main.yml).
 *   Modules can no longer be added to your NGINX config using this role. Please use the [`nginx_config`](https://github.com/nginxinc/ansible-role-nginx-config) role instead.
+*   Changed `nginx_configure` default value from `true` to `false` to further promote the adoption of the [NGINX config](https://github.com/nginxinc/ansible-role-nginx-config) role.
 
 FEATURES:
 
-*   Add Alpine 3.12 to the list of supported platforms
-*   Remove Alpine 3.8 from the list of supported platforms
+*   Two new variables have been introduced:
+    *   `nginx_setup_license` -- Determine whether you want to use this role to upload your NGINX license to your target host.
+    *   `nginx_debug_tasks` -- Print task related information to give you a better insight into the current progress of the role.
+*   The role will now fail automatically if you try to deploy NGINX from an official repository in an unsupported distribution. You can find a list of supported distributions for NGINX and NGINX Plus in [`vars/main.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/vars/main.yml)
+*   Three new tags have been introduced -- `nginx_setup_license`, `nginx_install` and `nginx_check_support`.
+*   Add Alpine 3.12 to the list of supported platforms.
+*   Remove Alpine 3.8 from the list of supported platforms.
 
 ENHANCEMENTS:
 
+*   Major backend refactoring to reduce the number of files and tasks.
+*   You can now specify an `nginx_repository` for NGINX Plus too.
+*   Moved "constant" variables to `vars/main.yml`.
+*   Included deprecation warnings in task names and files.
+*   Improved tasks naming conventions.
 *   Update Ansible to `2.9.13` and Ansible Lint to `4.3.4`.
 
 BUG FIXES:
 
-*   NGINX Plus repository data for RedHat based distros is now appropriately set.
+*   NGINX Plus repository data for RHEL based distros is now appropriately set.
 
 ## 0.16.0 (August 28, 2020)
 
@@ -47,7 +58,7 @@ DEPRECATION WARNING:
 With the advent of Ansible collections and to reduce the overhead of this role, the decision has been made to split this role into three smaller roles:
 *   The NGINX Ansible role will keep working as is and be used to install and setup NGINX.
 *   There now is a separate role to manage and create NGINX configurations available [here](https://github.com/nginxinc/ansible-role-nginx-config). Any new issues or PRs related to configuring NGINX should be submitted in the new NGINX Config repository. New issues or PRs related to configuring NGINX submitted in this repository will not be worked on. The NGINX configuration functionalities included in this role will be removed in an upcoming release.
-*   NGINX Unit has a separate role available [here](https://github.com/nginxinc/ansible-role-nginx-unit). Any new issues or PRs related to NGINX Unit should be submitted in the new NGINX Unit repository. New issues or PRs related to NGINX Unit submitted in this repository will not be worked on. The NGINX Unit functionalities included in this role will be removed in an upcoming release.
+*   NGINX Unit now has a separate role available [here](https://github.com/nginxinc/ansible-role-nginx-unit). Any new issues or PRs related to NGINX Unit should be submitted in the new NGINX Unit repository. New issues or PRs related to NGINX Unit submitted in this repository will not be worked on. The NGINX Unit functionalities included in this role will be removed in an upcoming release.
 
 BREAKING CHANGES:
 

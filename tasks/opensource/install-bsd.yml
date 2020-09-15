@@ -1,0 +1,78 @@
+---
+- name: "(FreeBSD) Update ports"
+  block:
+    - name: "(FreeBSD) Fetch ports"
+      command: portsnap fetch --interactive
+      args:
+        creates: /var/db/portsnap/INDEX
+
+    - name: "(FreeBSD) Extract ports"
+      command: portsnap extract
+      args:
+        creates: /usr/ports
+  when:
+    - ansible_facts['system'] == "FreeBSD"
+    - nginx_bsd_update_ports | bool
+
+- name: "(FreeBSD) Install NGINX"
+  block:
+    - name: "(FreeBSD) Install NGINX package"
+      pkgng:
+        name: "www/nginx{{ nginx_version | default('') }}"
+        state: "{{ nginx_state }}"
+      when: nginx_bsd_install_packages | bool
+      notify: "(Handler) Start NGINX"
+
+    - name: "(FreeBSD) Install NGINX port"
+      portinstall:
+        name: "www/nginx{{ nginx_version | default('') }}"
+        use_packages: "{{ nginx_bsd_portinstall_use_packages | default(omit) }}"
+        state: "{{ nginx_state }}"
+      when: not nginx_bsd_install_packages | bool
+      notify: "(Handler) Start NGINX"
+  when: ansible_facts['system'] == "FreeBSD"
+
+- name: "(OpenBSD) Install NGINX"
+  block:
+    - name: "(OpenBSD) Install NGINX package"
+      openbsd_pkg:
+        name: "nginx{{ nginx_version | default('') }}"
+        build: no
+        state: "{{ nginx_state }}"
+      when: nginx_bsd_install_packages | bool
+      notify: "(Handler) Start NGINX"
+
+    - name: "(OpenBSD) Install NGINX port"
+      openbsd_pkg:
+        name: "nginx{{ nginx_version | default('') }}"
+        build: yes
+        state: "{{ nginx_state }}"
+      when: not nginx_bsd_install_packages | bool
+      notify: "(Handler) Start NGINX"
+  when: ansible_facts['system'] == "OpenBSD"
+
+- name: "(NetBSD) Install NGINX"
+  block:
+    - name: "NetBSD) Install NGINX package"
+      command: "pkg_add www/nginx{{ nginx_version | default('') }}"
+      when: nginx_bsd_install_packages | bool
+      notify: "(Handler) Start NGINX"
+
+    - name: "(NetBSD) Install NGINX port"
+      fail:
+        msg: "{{ ansible_facts['system'] }} Install NGINX port not implemented."
+      when: not nginx_bsd_install_packages | bool
+  when: ansible_facts['system'] == "NetBSD"
+
+- name: "(DragonFlyBSD/HardenedBSD) Install NGINX"
+  block:
+    - name: "Install NGINX package"
+      command: "pkg install www/nginx{{ nginx_version | default('') }}"
+      when: nginx_bsd_install_packages | bool
+      notify: "(Handler) Start NGINX"
+
+    - name: "Install NGINX port"
+      fail:
+        msg: "{{ ansible_facts['system'] }} Install NGINX port not implemented."
+      when: not nginx_bsd_install_packages | bool
+  when: ansible_facts['system'] in ['DragonFlyBSD', 'HardenedBSD']

@@ -1,16 +1,17 @@
+## DEPRECATED -- Use nginxinc.nginx_unit role instead (https://github.com/nginxinc/ansible-role-nginx-unit)
 ---
-- name: "(Install: Debian/Ubuntu/CentOS/RedHat) Install NGINX Unit Modules"
+- name: "(Debian/Ubuntu/CentOS/RedHat) Install NGINX Unit Modules"
   package:
     name: "{{ item }}"
     state: present
   loop: "{{ nginx_unit_modules }}"
-  when: ansible_os_family != "FreeBSD"
+  when: ansible_facts['os_family'] != "FreeBSD"
   notify: "(Handler: Debian/Ubuntu/CentOS/RedHat) Start NGINX Unit"
 
-- name: "(Install: FreeBSD) Install NGINX Unit Modules"
+- name: "(FreeBSD) Install NGINX Unit Modules"
   portinstall:
     name: "{{ item }}"
     state: present
   loop: "{{ nginx_unit_modules }}"
-  when: ansible_os_family == "FreeBSD"
+  when: ansible_facts['os_family'] == "FreeBSD"
   notify: "(Handler: FreeBSD) Start NGINX Unit"

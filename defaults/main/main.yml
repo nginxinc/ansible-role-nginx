@@ -8,15 +8,18 @@ nginx_enable: true
 # Default is true.
 nginx_install: true
 
+## DEPRECATED -- Use nginxinc.nginx_config role instead (https://github.com/nginxinc/ansible-role-nginx-config)
 # Enable NGINX configuration options.
 # Variables for these options can be found in `./template.yml` and `./upload.yml`.
-# Default is true.
-nginx_configure: true
+# Default is false.
+nginx_configure: false
 
 # Start NGINX service.
 # Default is true.
 nginx_start: true
 
+# Print NGINX task information to terminal during playbook execution.
+nginx_debug_tasks: false
 # Print NGINX configuration file to terminal after executing playbook.
 nginx_debug_output: false
 
@@ -28,7 +31,7 @@ nginx_type: opensource
 # Specify which version of NGINX you want to install.
 # Default is empty.
 # nginx_version: "=19-1~bionic"
-# For Plus and modules you'll need a wilcard like below (which installs plus-20 and modules)
+# For NGINX Plus and modules you'll need a wilcard like below (which installs plus-20 and modules)
 # nginx_version: "-20*"
 
 # Specify whether you want to maintain your version of NGINX, upgrade to the latest version, or remove NGINX.
@@ -60,10 +63,10 @@ nginx_install_source_zlib: false
 # Default is the official NGINX signing key host.
 # nginx_signing_key: http://nginx.org/keys/nginx_signing.key
 
-# Specify source repository for NGINX Open Source.
-# Only works if 'install_from' is set to 'nginx_repository'.
+# Specify repository for NGINX Open Source or NGINX Plus.
+# Only works if 'install_from' is set to 'nginx_repository' when installing NGINX Open Source.
 # Defaults are the official NGINX repositories.
-# nginx_repository: deb https://nginx.org/packages/mainline/debian/ stretch nginx
+# nginx_repository: deb [arch=amd64] https://nginx.org/packages/mainline/debian/ buster nginx
 
 # Specify which branch of NGINX Open Source you want to install.
 # Options are 'mainline' or 'stable'.
@@ -77,9 +80,13 @@ nginx_license:
   certificate: license/nginx-repo.crt
   key: license/nginx-repo.key
 
+# Set up NGINX Plus license before installation.
+# Default is true.
+nginx_setup_license: true
+
 # Remove NGINX Plus license and repository after installation for security purposes.
 # Default is false.
-nginx_delete_license: false
+nginx_remove_license: false
 
 # Install NGINX Modules.
 # You can select any of the modules listed below. Beware of NGINX Plus only modules (these are marked).
@@ -104,6 +111,7 @@ nginx_modules: []
   # - waf  # NGINX Plus
   # - xslt
 
+## DEPRECATED -- Use nginxinc.nginx_config role instead (https://github.com/nginxinc/ansible-role-nginx-config)
 # Remove previously existing NGINX configuration files.
 # You can specify a list of paths you wish to remove.
 # You can also choose whether to recurse through the paths specified.
@@ -116,18 +124,3 @@ nginx_cleanup_config_paths:
     recurse: false
 # nginx_cleanup_config_files:
 #   - /etc/nginx/conf.d/default.conf
-
-# Set SELinux enforcing for NGINX (Centos/Redhat only) - you may need to open ports on your own
-nginx_selinux: false
-# Enable enforcing mode if true.  Permissive if false (audit only, no enforcing) globally (only works with nginx_selinux: true)
-nginx_selinux_enforcing: true
-# List of TCP ports to add to http_port_t type (80 and 443 have this type already)
-# nginx_selinux_tcp_ports:
-#   - 80
-#   - 443
-# List of UDP ports to add to http_port_t type
-# nginx_selinux_udp_ports:
-#   - 80
-#   - 443
-# Temporary directory to hold selinux modules
-nginx_tempdir: /tmp

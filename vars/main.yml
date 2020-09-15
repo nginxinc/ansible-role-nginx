@@ -1,27 +1,97 @@
 ---
-nginx_modules_list:
-  - geoip
-  - image-filter
-  - njs
-  - perl
-  - xslt
+# Supported NGINX Open Source distributions
+# https://nginx.org/en/docs/install.html
+nginx_distributions: [
+  'Alpine', 'CentOS', 'Debian', 'FreeBSD', 'RedHat', 'SLES', 'Ubuntu',
+  'NetBSD', 'OpenBSD', 'DragonFlyBSD', 'HardenedBSD',
+]
 
-nginx_plus_modules_list:
-  - auth-spnego
-  - brotli
-  - cookie-flag
-  - encrypted-session
-  - geoip
-  - geoip2
-  - headers-more
-  - image-filter
-  - lua
-  - modsecurity
-  - njs
-  - opentracing
-  - passenger
-  - perl
-  - prometheus
-  - rtmp
-  - subs-filter
-  - xslt
+# Supported NGINX Plus distributions
+# https://docs.nginx.com/nginx/technical-specs/
+nginx_plus_distributions: [
+  'Alpine', 'Amazon', 'CentOS', 'Debian', 'FreeBSD', 'OracleLinux', 'RedHat', 'SLES', 'Ubuntu',
+]
+
+# Default NGINX signing key
+nginx_default_signing_key:
+  rsa_pub: https://nginx.org/keys/nginx_signing.rsa.pub
+  pgp: https://nginx.org/keys/nginx_signing.key
+
+# Default NGINX Open Source repositories
+nginx_default_repository:
+  alpine: >-
+    https://nginx.org/packages/{{ (nginx_branch == 'mainline')
+    | ternary('mainline/', '') }}alpine/v{{ ansible_facts['distribution_version'] | regex_search('^[0-9]+\.[0-9]+') }}/main
+  debian:
+    - >-
+      deb [arch=amd64] https://nginx.org/packages/{{ (nginx_branch == 'mainline')
+      | ternary('mainline/', '') }}{{ ansible_facts['distribution'] | lower }}/ {{ ansible_facts['distribution_release'] }} nginx
+    - >-
+      deb-src https://nginx.org/packages/{{ (nginx_branch == 'mainline')
+      | ternary('mainline/', '') }}{{ ansible_facts['distribution'] | lower }}/ {{ ansible_facts['distribution_release'] }} nginx
+  redhat: >-
+    https://nginx.org/packages/{{ (nginx_branch == 'mainline')
+    | ternary('mainline/', '') }}{{ (ansible_facts['distribution'] == "CentOS")
+    | ternary('centos', 'rhel') }}/{{ ansible_facts['distribution_major_version'] }}/$basearch/
+  suse: >-
+    https://nginx.org/packages/{{ (nginx_branch == 'mainline')
+    | ternary('mainline/', '') }}sles/{{ ansible_facts['distribution_major_version'] }}
+
+# Default NGINX Plus repositories
+nginx_plus_default_repository:
+  alpine: >-
+    https://plus-pkgs.nginx.com/alpine/v{{ ansible_facts['distribution_version'] | regex_search('^[0-9]+\.[0-9]+') }}/main
+  amazon: >-
+    https://plus-pkgs.nginx.com/amzn{{ (ansible_facts['distribution_version'] is version('2', '=='))
+    | ternary('2', '') }}/$releasever/$basearch
+  debian: >-
+    deb [arch=amd64] https://plus-pkgs.nginx.com/{{ ansible_facts['distribution'] | lower }} {{ ansible_facts['distribution_release'] }} nginx-plus
+  freebsd: >-
+    https://plus-pkgs.nginx.com/freebsd/${ABI}/latest
+  redhat: >-
+    https://plus-pkgs.nginx.com/{{ (ansible_facts['distribution'] == "CentOS")
+    | ternary('centos', 'rhel') }}/{{ (ansible_facts['distribution_version'] is version('7.4', '>=')
+    and ansible_facts['distribution_version'] is version('8', '<')) | ternary('7.4', ansible_facts['distribution_major_version']) }}/$basearch/
+  suse: >-
+    https://plus-pkgs.nginx.com/sles/{{ ansible_facts['distribution_major_version'] }}?ssl_clientcert=/etc/ssl/nginx/nginx-repo-bundle.crt&ssl_verify=host
+
+# Alpine dependencies
+nginx_alpine_dependencies: [
+  'coreutils', 'openssl', 'pcre',
+]
+
+# Debian dependencies
+nginx_debian_dependencies: [
+  'apt-transport-https', 'ca-certificates', 'dirmngr',
+]
+
+# Red Hat dependencies
+nginx_redhat_dependencies: [
+  'ca-certificates', 'openssl',
+]
+
+# SLES dependencies
+nginx_sles_dependencies: [
+  'ca-certificates',
+]
+
+# FreeBSD dependencies
+nginx_freebsd_dependencies: [
+  'security/ca_root_nss'
+]
+
+# Default locations and versions when 'nginx_install_from' is set to 'source'
+pcre_version: pcre-8.44
+zlib_version: zlib-1.2.11
+openssl_version: openssl-1.1.1g
+
+# Supported NGINX Open Source modules
+nginx_modules_list: [
+  'geoip', 'image-filter', 'njs', 'perl', 'xslt',
+]
+
+# Supported NGINX Plus modules
+nginx_plus_modules_list: [
+  'auth-spnego', 'brotli', 'cookie-flag', 'encrypted-session', 'geoip', 'geoip2', 'headers-more', 'image-filter', 'lua',
+  'modsecurity', 'njs', 'opentracing', 'passenger', 'perl', 'prometheus', 'rtmp', 'subs-filter', 'xslt',
+]

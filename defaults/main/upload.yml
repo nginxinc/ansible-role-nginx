@@ -1,3 +1,4 @@
+## DEPRECATED -- Use nginxinc.nginx_config role instead (https://github.com/nginxinc/ansible-role-nginx-config)
 ---
 # Enable uploading NGINX configuration files to your system.
 # Default for uploading files is false.

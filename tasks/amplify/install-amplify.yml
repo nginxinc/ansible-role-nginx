@@ -1,24 +1,24 @@
 ---
-- name: "(Setup: All OSs) Configure NGINX Amplify Agent Repository"
-  include_tasks: "{{ role_path }}/tasks/amplify/setup-{{ ansible_os_family | lower }}.yml"
-  when: ansible_os_family == "Debian"
-        or ansible_os_family == "Redhat"
+- name: "Configure NGINX Amplify agent repository"
+  include_tasks: "{{ role_path }}/tasks/amplify/setup-{{ ansible_facts['os_family'] | lower }}.yml"
+  when: ansible_facts['os_family'] == "Debian"
+        or ansible_facts['os_family'] == "Redhat"
 
-- name: "(Install: All OSs) Install NGINX Amplify Agent"
+- name: "Install NGINX Amplify agent"
   package:
     name: nginx-amplify-agent
     state: present
 
-- name: "(Setup: All OSs) Copy NGINX Configurator Agent Configuration Template"
+- name: "Copy NGINX configurator agent configuration template"
   copy:
     remote_src: yes
     src: /etc/amplify-agent/agent.conf.default
     dest: /etc/amplify-agent/agent.conf
     mode: 0644
 
-- name: "(Setup: All OSs) Configure NGINX Amplify Agent API Key"
+- name: "Configure NGINX Amplify agent API key"
   lineinfile:
     dest: /etc/amplify-agent/agent.conf
     regexp: api_key =.*
     line: "api_key = {{ nginx_amplify_api_key }}"
-  notify: "(Handler: All OSs) Start NGINX Amplify Agent"
+  notify: "(Handler) Start NGINX Amplify agent"

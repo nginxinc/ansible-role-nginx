@@ -1,0 +1,14 @@
+---
+- name: "(Debian/Ubuntu) Configure NGINX repository"
+  apt_repository:
+    filename: nginx
+    repo: "{{ item }}"
+    update_cache: yes
+    mode: 0644
+  loop: "{{ repository }}"
+
+- name: "(Debian/Ubuntu) Install NGINX"
+  apt:
+    name: "nginx{{ nginx_version | default('') }}"
+    state: "{{ nginx_state }}"
+  notify: "(Handler) Start NGINX"

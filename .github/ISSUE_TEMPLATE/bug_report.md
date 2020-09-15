@@ -20,7 +20,7 @@ Steps to reproduce the behavior:
 A clear and concise description of what you expected to happen.
 
 **Your environment:**
--   Version of the NGINX Role or specific commit
+-   Version of the NGINX role or specific commit
 -   Version of Ansible
 -   Target deployment platform
 

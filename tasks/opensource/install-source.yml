@@ -1,9 +1,9 @@
 ---
 - name: "Check for build tools"
   block:
-    - name: "(CentOS/RHEL 8) Setup python 3"
+    - name: "(CentOS/RHEL 8) Setup Python 3"
       block:
-        - name: "(CentOS/RHEL 8) Install python 3"
+        - name: "(CentOS/RHEL 8) Install Python 3"
           yum:
             name:
               - python3
@@ -11,7 +11,7 @@
               - python3-devel
             update_cache: yes
 
-        - name: "(Centos/RHEL 8) Set python 3 as default"
+        - name: "(Centos/RHEL 8) Set Python 3 as default"
           alternatives:
             name: python
             path: /usr/bin/python3
@@ -36,7 +36,7 @@
         update_cache: yes
       when: ansible_facts['os_family'] == "RedHat"
 
-    - name: "(Debian) Install backports repo for buster"
+    - name: "(Debian) Install backports repo for 'buster'"
       apt_repository:
         filename: buster-backports
         repo: deb http://ftp.us.debian.org/debian buster-backports main
@@ -130,6 +130,8 @@
         url: "https://ftp.pcre.org/pub/pcre/{{ pcre_version }}.tar.gz"
         dest: "/tmp/{{ pcre_version }}.tar.gz"
         mode: 0600
+        validate_certs: >-
+          {{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '==')) | ternary('no', 'yes') }}
       register: pcre_source
 
     - name: "Unpack PCRE dependency"
@@ -187,6 +189,8 @@
         url: "https://zlib.net/{{ zlib_version }}.tar.gz"
         dest: "/tmp/{{ zlib_version }}.tar.gz"
         mode: 0600
+        validate_certs: >-
+          {{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '==')) | ternary('no', 'yes') }}
       register: zlib_source
 
     - name: "Unpack ZLib dependency"
@@ -244,6 +248,8 @@
         url: "https://www.openssl.org/source/{{ openssl_version }}.tar.gz"
         dest: "/tmp/{{ openssl_version }}.tar.gz"
         mode: 0600
+        validate_certs: >-
+          {{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '==')) | ternary('no', 'yes') }}
       register: openssl_source
 
     - name: "Unpack OpenSSL dependency"
@@ -276,6 +282,8 @@
       uri:
         url: https://trac.nginx.org/nginx/browser
         return_content: yes
+        validate_certs: >-
+          {{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '==')) | ternary('no', 'yes') }}
       register: nginx_versions
 
     - name: "Set NGINX mainline version"
@@ -314,6 +322,8 @@
         url: "https://nginx.org/download/{{ nginx_download_name }}.tar.gz"
         dest: "/tmp/{{ nginx_download_name }}.tar.gz"
         mode: 0600
+        validate_certs: >-
+          {{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '==')) | ternary('no', 'yes') }}
       register: nginx_source
 
     - name: "Unpack NGINX"
@@ -379,7 +389,7 @@
         mode: 0755
       when: ansible_facts['service_mgr'] == "upstart"
 
-    - name: "Upload upstart NGINX service conf file"
+    - name: "Upload Upstart NGINX service conf file"
       copy:
         src: services/nginx.conf.upstart
         dest: /etc/init/nginx.conf
@@ -388,16 +398,16 @@
         mode: 0644
       when: ansible_facts['service_mgr'] == "upstart"
 
-    - name: "Enable upstart NGINX service reload"
+    - name: "Enable Upstart NGINX service reload"
       command: "initctl reload-configuration"
       when: ansible_facts['service_mgr'] == "upstart"
 
-    - name: "Start upstart NGINX service reload"
+    - name: "Start Upstart NGINX service reload"
       command: "nginx"
       when: ansible_facts['service_mgr'] == "upstart"
       notify: "(Handler) Start NGINX"
 
-    - name: "Upload sysvinit NGINX service file"
+    - name: "Upload SysVinit NGINX service file"
       copy:
         src: services/nginx.sysvinit
         dest: /etc/init.d/nginx
@@ -407,7 +417,7 @@
       when: ansible_facts['service_mgr'] == "sysvinit"
       notify: "(Handler) Start NGINX"
 
-    - name: "Upload openrc NGINX service file"
+    - name: "Upload OpenRC NGINX service file"
       copy:
         src: services/nginx.openrc
         dest: /etc/init.d/nginx
@@ -416,7 +426,7 @@
         mode: 0755
       when: ansible_facts['service_mgr'] == "openrc"
 
-    - name: "Enable openrc NGINX service"
+    - name: "Enable OpenRC NGINX service"
       command: rc-update add nginx default
       when: ansible_facts['service_mgr'] == "openrc"
       notify: "(Handler) Start NGINX"

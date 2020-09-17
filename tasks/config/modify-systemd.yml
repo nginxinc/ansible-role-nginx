@@ -20,7 +20,7 @@
   when:
     - not nginx_service_custom | bool
     - not nginx_service_clean | bool
-  notify: "(Handler) Systemd Daemon-Reload"
+  notify: "(Handler) Systemd daemon-reload"
 
 - name: "Customize override for NGINX systemd service"
   copy:
@@ -32,14 +32,14 @@
   when:
     - nginx_service_custom | bool
     - not nginx_service_clean | bool
-  notify: "(Handler) Systemd Daemon-Reload"
+  notify: "(Handler) Systemd daemon-reload"
 
 - name: "Remove override for NGINX systemd service"
   file:
     path: "{{ nginx_service_overridepath }}"
     state: absent
   when: nginx_service_clean | bool
-  notify: "(Handler) Systemd Daemon-Reload"
+  notify: "(Handler) Systemd daemon-reload"
 
 - name: "Modify systemd"
   debug:

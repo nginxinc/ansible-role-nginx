@@ -20,6 +20,7 @@ FEATURES:
 
 ENHANCEMENTS:
 
+*   Added handlers to check for NGINX syntax validity and fail if any errors are detected.
 *   Major backend refactoring to reduce the number of files and tasks.
 *   You can now specify an `nginx_repository` for NGINX Plus too.
 *   Moved "constant" variables to `vars/main.yml`.

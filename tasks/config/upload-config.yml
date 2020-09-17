@@ -19,7 +19,7 @@
     mode: 0644
   with_fileglob: "{{ nginx_html_upload_src }}"
   when: nginx_html_upload_enable | bool
-  notify: "(Handler) Reload NGINX"
+  notify: "(Handler) Run NGINX"
 
 - name: "(DEPRECATED) Ensure NGINX Main Directory Exists"
   file:
@@ -35,7 +35,7 @@
     backup: yes
     mode: 0644
   when: nginx_main_upload_enable | bool
-  notify: "(Handler) Reload NGINX"
+  notify: "(Handler) Run NGINX"
 
 - name: "(DEPRECATED) Ensure NGINX HTTP Directory Exists"
   file:
@@ -52,7 +52,7 @@
     mode: 0644
   with_fileglob: "{{ nginx_http_upload_src }}"
   when: nginx_http_upload_enable | bool
-  notify: "(Handler) Reload NGINX"
+  notify: "(Handler) Run NGINX"
 
 - name: "(DEPRECATED) Ensure NGINX Stream Directory Exists"
   file:
@@ -69,7 +69,7 @@
     mode: 0644
   with_fileglob: "{{ nginx_stream_upload_src }}"
   when: nginx_stream_upload_enable | bool
-  notify: "(Handler) Reload NGINX"
+  notify: "(Handler) Run NGINX"
 
 - name: "(DEPRECATED) Ensure SSL Certificate Directory Exists"
   file:

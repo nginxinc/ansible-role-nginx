@@ -10,4 +10,4 @@
     state: "{{ nginx_state }}"
     disable_recommends: no
     update_cache: yes
-  notify: "(Handler) Start NGINX"
+  notify: "(Handler) Run NGINX"

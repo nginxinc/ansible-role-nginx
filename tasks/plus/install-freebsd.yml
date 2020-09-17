@@ -25,4 +25,4 @@
   pkgng:
     name: "nginx-plus{{ nginx_version | default('') }}"
     state: "{{ nginx_state }}"
-  notify: "(Handler) Start NGINX"
+  notify: "(Handler) Run NGINX"

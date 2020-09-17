@@ -35,7 +35,7 @@
     backup: yes
     mode: 0644
   when: nginx_main_template_enable | bool
-  notify: "(Handler) Reload NGINX"
+  notify: "(Handler) Run NGINX"
 
 - name: "(DEPRECATED) Ensure NGINX HTTP Directory Exists"
   file:
@@ -65,7 +65,7 @@
     mode: 0644
   with_dict: "{{ nginx_http_template }}"
   when: nginx_http_template_enable | bool
-  notify: "(Handler) Reload NGINX"
+  notify: "(Handler) Run NGINX"
 
 - name: "(DEPRECATED) Dynamically Generate NGINX Stub Status Configuration File"
   template:
@@ -74,7 +74,7 @@
     backup: yes
     mode: 0644
   when: nginx_status_enable | bool
-  notify: "(Handler) Reload NGINX"
+  notify: "(Handler) Run NGINX"
 
 - name: "(DEPRECATED) Dynamically Generate NGINX API Configuration File"
   template:
@@ -83,7 +83,7 @@
     backup: yes
     mode: 0644
   when: nginx_rest_api_enable | bool
-  notify: "(Handler) Reload NGINX"
+  notify: "(Handler) Run NGINX"
 
 - name: "(DEPRECATED) Ensure NGINX Stream Directory Exists"
   file:
@@ -101,4 +101,4 @@
     mode: 0644
   with_dict: "{{ nginx_stream_template }}"
   when: nginx_stream_template_enable | bool
-  notify: "(Handler) Reload NGINX"
+  notify: "(Handler) Run NGINX"

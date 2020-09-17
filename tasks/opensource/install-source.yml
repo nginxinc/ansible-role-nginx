@@ -368,7 +368,7 @@
         state: restarted
         enabled: yes
       when: ansible_facts['service_mgr'] == "systemd"
-      notify: "(Handler) Start NGINX"
+      notify: "(Handler) Run NGINX"
 
     - name: "Upload upstart NGINX service file"
       copy:
@@ -395,7 +395,7 @@
     - name: "Start upstart NGINX service reload"
       command: "nginx"
       when: ansible_facts['service_mgr'] == "upstart"
-      notify: "(Handler) Start NGINX"
+      notify: "(Handler) Run NGINX"
 
     - name: "Upload sysvinit NGINX service file"
       copy:
@@ -405,7 +405,7 @@
         group: root
         mode: 0755
       when: ansible_facts['service_mgr'] == "sysvinit"
-      notify: "(Handler) Start NGINX"
+      notify: "(Handler) Run NGINX"
 
     - name: "Upload openrc NGINX service file"
       copy:
@@ -419,7 +419,7 @@
     - name: "Enable openrc NGINX service"
       command: rc-update add nginx default
       when: ansible_facts['service_mgr'] == "openrc"
-      notify: "(Handler) Start NGINX"
+      notify: "(Handler) Run NGINX"
   when: not nginx_result.stat.exists
 
 - name: "Cleanup downloads"

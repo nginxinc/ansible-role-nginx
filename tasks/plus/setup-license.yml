@@ -19,8 +19,8 @@
         decrypt: yes
         mode: 0444
       loop:
-        - "{{ nginx_license.certificate }}"
-        - "{{ nginx_license.key }}"
+        - "{{ nginx_license['certificate'] }}"
+        - "{{ nginx_license['key'] }}"
   when: ansible_facts['os_family'] != "Alpine"
 
 - name: "(Alpine Linux) Set up NGINX Plus license"
@@ -33,14 +33,14 @@
 
     - name: "(Alpine Linux) Copy NGINX Plus key"
       copy:
-        src: "{{ nginx_license.key }}"
+        src: "{{ nginx_license['key'] }}"
         dest: /etc/apk/cert.key
         decrypt: yes
         mode: 0444
 
     - name: "(Alpine Linux) Copy NGINX Plus certificate"
       copy:
-        src: "{{ nginx_license.certificate }}"
+        src: "{{ nginx_license['certificate'] }}"
         dest: /etc/apk/cert.pem
         decrypt: yes
         mode: 0444

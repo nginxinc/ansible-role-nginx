@@ -11,4 +11,4 @@
     repository: "{{ repository }}"
     state: "{{ nginx_state }}"
     update_cache: yes
-  notify: "(Handler) Start NGINX"
+  notify: "(Handler) Run NGINX"

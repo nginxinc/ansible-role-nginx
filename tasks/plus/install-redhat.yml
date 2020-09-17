@@ -18,4 +18,4 @@
     disablerepo: "*"
     enablerepo: "nginx-plus"
     update_cache: yes
-  notify: "(Handler) Start NGINX"
+  notify: "(Handler) Run NGINX"

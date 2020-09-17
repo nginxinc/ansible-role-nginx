@@ -1,28 +1,29 @@
 ---
 - name: "(Handler) Check NGINX"
   command: "nginx -t"
-  changed_when: false
+  register: config
+  ignore_errors: yes
+  listen: "(Handler) Run NGINX"
 
-- name: "(Handler) Systemd Daemon-Reload"
+- name: "(Handler) Print NGINX error if syntax check fails"
+  fail:
+    msg: "{{ config.stderr }}"
+  when: config.rc != 0
+  listen: "(Handler) Run NGINX"
+
+- name: "(Handler) Systemd daemon-reload"
   systemd:
     daemon_reload: yes
-  notify: "(Handler) Start NGINX"
 
-- name: "(Handler) Run NGINX"
-  block:
-    - name: "(Handler) Start NGINX"
-      service:
-        name: nginx
-        state: started
-        enabled: yes
-      notify: "(Handler) Check NGINX"
-
-    - name: "(Handler) Reload NGINX"
-      command: "nginx -s reload"
-      changed_when: false
+- name: "(Handler) Start/Reload NGINX"
+  service:
+    name: nginx
+    state: reloaded
+    enabled: yes
   when:
     - nginx_start | bool
     - not ansible_check_mode | bool
+  listen: "(Handler) Run NGINX"
 
 - name: "(Handler) Start NGINX Amplify agent"
   service:

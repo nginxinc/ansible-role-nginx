@@ -130,8 +130,8 @@
         url: "https://ftp.pcre.org/pub/pcre/{{ pcre_version }}.tar.gz"
         dest: "/tmp/{{ pcre_version }}.tar.gz"
         mode: 0600
-        validate_certs: >-
-          {{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '==')) | ternary('no', 'yes') }}
+        validate_certs: "{{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '=='))
+                        | ternary('no', 'yes') }}"
       register: pcre_source
 
     - name: "Unpack PCRE dependency"
@@ -189,8 +189,8 @@
         url: "https://zlib.net/{{ zlib_version }}.tar.gz"
         dest: "/tmp/{{ zlib_version }}.tar.gz"
         mode: 0600
-        validate_certs: >-
-          {{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '==')) | ternary('no', 'yes') }}
+        validate_certs: "{{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '=='))
+                        | ternary('no', 'yes') }}"
       register: zlib_source
 
     - name: "Unpack ZLib dependency"
@@ -248,9 +248,9 @@
         url: "https://www.openssl.org/source/{{ openssl_version }}.tar.gz"
         dest: "/tmp/{{ openssl_version }}.tar.gz"
         mode: 0600
-        validate_certs: >-
-          {{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '==')) | ternary('no', 'yes') }}
-      register: openssl_source
+        validate_certs: "{{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '=='))
+                        | ternary('no', 'yes') }}"
+        register: openssl_source
 
     - name: "Unpack OpenSSL dependency"
       unarchive:
@@ -282,9 +282,9 @@
       uri:
         url: https://trac.nginx.org/nginx/browser
         return_content: yes
-        validate_certs: >-
-          {{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '==')) | ternary('no', 'yes') }}
-      register: nginx_versions
+        validate_certs: "{{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '=='))
+                        | ternary('no', 'yes') }}"
+        register: nginx_versions
 
     - name: "Set NGINX mainline version"
       set_fact:
@@ -322,9 +322,9 @@
         url: "https://nginx.org/download/{{ nginx_download_name }}.tar.gz"
         dest: "/tmp/{{ nginx_download_name }}.tar.gz"
         mode: 0600
-        validate_certs: >-
-          {{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '==')) | ternary('no', 'yes') }}
-      register: nginx_source
+        validate_certs: "{{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '=='))
+                        | ternary('no', 'yes') }}"
+        register: nginx_source
 
     - name: "Unpack NGINX"
       unarchive:

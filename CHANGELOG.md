@@ -31,6 +31,7 @@ ENHANCEMENTS:
 BUG FIXES:
 
 *   NGINX Plus repository data for RHEL based distros is now appropriately set.
+*   Building NGINX from source should now work as expected in CentOS/RHEL 6 systems running Python `2.6` or earlier versions of `2.7`.
 
 ## 0.16.0 (August 28, 2020)
 

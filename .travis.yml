@@ -1,6 +1,9 @@
 ---
 language: python
 services: docker
+branches:
+  only:
+    - main
 jobs:
   include:
     - name: "(Debian/Ubuntu) Install Specific Version"
@@ -70,5 +73,6 @@ install:
   - pip install docker==4.3.1
 script:
   - travis_wait 50 molecule test -s $scenario
+
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

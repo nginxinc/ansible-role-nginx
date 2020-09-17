@@ -250,7 +250,7 @@
         mode: 0600
         validate_certs: "{{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '=='))
                         | ternary('no', 'yes') }}"
-        register: openssl_source
+      register: openssl_source
 
     - name: "Unpack OpenSSL dependency"
       unarchive:
@@ -284,7 +284,7 @@
         return_content: yes
         validate_certs: "{{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '=='))
                         | ternary('no', 'yes') }}"
-        register: nginx_versions
+      register: nginx_versions
 
     - name: "Set NGINX mainline version"
       set_fact:

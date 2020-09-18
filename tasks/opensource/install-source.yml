@@ -324,7 +324,7 @@
         mode: 0600
         validate_certs: "{{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '=='))
                         | ternary('no', 'yes') }}"
-        register: nginx_source
+      register: nginx_source
 
     - name: "Unpack NGINX"
       unarchive:

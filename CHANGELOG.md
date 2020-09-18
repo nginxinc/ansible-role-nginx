@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.17.0 (Unreleased)
+## 0.17.0 (September 18, 2020)
 
 BREAKING CHANGES:
 
@@ -10,9 +10,8 @@ BREAKING CHANGES:
 
 FEATURES:
 
-*   Two new variables have been introduced:
+*   A new variable has been introduced:
     *   `nginx_setup_license` -- Determine whether you want to use this role to upload your NGINX license to your target host.
-    *   `nginx_debug_tasks` -- Print task related information to give you a better insight into the current progress of the role.
 *   The role will now fail automatically if you try to deploy NGINX from an official repository in an unsupported distribution. You can find a list of supported distributions for NGINX and NGINX Plus in [`vars/main.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/vars/main.yml)
 *   Three new tags have been introduced -- `nginx_setup_license`, `nginx_install` and `nginx_check_support`.
 *   Add Alpine 3.12 to the list of supported platforms.

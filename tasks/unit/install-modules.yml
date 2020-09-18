@@ -6,7 +6,7 @@
     state: present
   loop: "{{ nginx_unit_modules }}"
   when: ansible_facts['os_family'] != "FreeBSD"
-  notify: "(Handler: Debian/Ubuntu/CentOS/RedHat) Start NGINX Unit"
+  notify: "(DEPRECATED Handler: Debian/Ubuntu/CentOS/RedHat) Start NGINX Unit"
 
 - name: "(FreeBSD) Install NGINX Unit Modules"
   portinstall:
@@ -14,4 +14,4 @@
     state: present
   loop: "{{ nginx_unit_modules }}"
   when: ansible_facts['os_family'] == "FreeBSD"
-  notify: "(Handler: FreeBSD) Start NGINX Unit"
+  notify: "(DEPRECATED Handler: FreeBSD) Start NGINX Unit"

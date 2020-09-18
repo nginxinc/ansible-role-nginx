@@ -19,23 +19,18 @@ nginx_default_signing_key:
 
 # Default NGINX Open Source repositories
 nginx_default_repository:
-  alpine: >-
-    https://nginx.org/packages/{{ (nginx_branch == 'mainline')
-    | ternary('mainline/', '') }}alpine/v{{ ansible_facts['distribution_version'] | regex_search('^[0-9]+\.[0-9]+') }}/main
+  alpine: "https://nginx.org/packages/{{ (nginx_branch == 'mainline')
+          | ternary('mainline/', '') }}alpine/v{{ ansible_facts['distribution_version'] | regex_search('^[0-9]+\\.[0-9]+') }}/main"
   debian:
-    - >-
-      deb [arch=amd64] https://nginx.org/packages/{{ (nginx_branch == 'mainline')
-      | ternary('mainline/', '') }}{{ ansible_facts['distribution'] | lower }}/ {{ ansible_facts['distribution_release'] }} nginx
-    - >-
-      deb-src https://nginx.org/packages/{{ (nginx_branch == 'mainline')
-      | ternary('mainline/', '') }}{{ ansible_facts['distribution'] | lower }}/ {{ ansible_facts['distribution_release'] }} nginx
-  redhat: >-
-    https://nginx.org/packages/{{ (nginx_branch == 'mainline')
-    | ternary('mainline/', '') }}{{ (ansible_facts['distribution'] == "CentOS")
-    | ternary('centos', 'rhel') }}/{{ ansible_facts['distribution_major_version'] }}/$basearch/
-  suse: >-
-    https://nginx.org/packages/{{ (nginx_branch == 'mainline')
-    | ternary('mainline/', '') }}sles/{{ ansible_facts['distribution_major_version'] }}
+    - "deb [arch=amd64] https://nginx.org/packages/{{ (nginx_branch == 'mainline')
+      | ternary('mainline/', '') }}{{ ansible_facts['distribution'] | lower }}/ {{ ansible_facts['distribution_release'] }} nginx"
+    - "deb-src https://nginx.org/packages/{{ (nginx_branch == 'mainline')
+      | ternary('mainline/', '') }}{{ ansible_facts['distribution'] | lower }}/ {{ ansible_facts['distribution_release'] }} nginx"
+  redhat: "https://nginx.org/packages/{{ (nginx_branch == 'mainline')
+          | ternary('mainline/', '') }}{{ (ansible_facts['distribution'] == 'CentOS')
+          | ternary('centos', 'rhel') }}/{{ ansible_facts['distribution_major_version'] }}/$basearch/"
+  suse: "https://nginx.org/packages/{{ (nginx_branch == 'mainline')
+        | ternary('mainline/', '') }}sles/{{ ansible_facts['distribution_major_version'] }}"
 
 # Default NGINX Plus repositories
 nginx_plus_default_repository:

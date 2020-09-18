@@ -1,9 +1,4 @@
 ---
-- name: "Install NGINX"
-  debug:
-    msg: "Installing NGINX"
-  when: nginx_debug_tasks | bool
-
 - name: "Install NGINX in Linux systems"
   block:
     - name: "Install NGINX from repository"
@@ -31,8 +26,3 @@
 - name: "Install NGINX in Unix systems"
   include_tasks: "{{ role_path }}/tasks/opensource/install-bsd.yml"
   when: ansible_facts['system'] | lower is search('bsd')
-
-- name: "Install NGINX"
-  debug:
-    msg: "Done installing NGINX"
-  when: nginx_debug_tasks | bool

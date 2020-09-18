@@ -1,9 +1,4 @@
 ---
-- name: "Modify systemd"
-  debug:
-    msg: "Modifying systemd"
-  when: nginx_debug_tasks | bool
-
 - name: "Create override directory for NGINX systemd service"
   file:
     path: "{{ nginx_service_overridepath }}"
@@ -40,8 +35,3 @@
     state: absent
   when: nginx_service_clean | bool
   notify: "(Handler) Systemd daemon-reload"
-
-- name: "Modify systemd"
-  debug:
-    msg: "Done modifying systemd"
-  when: nginx_debug_tasks | bool

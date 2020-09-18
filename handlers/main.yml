@@ -6,8 +6,9 @@
   listen: "(Handler) Run NGINX"
 
 - name: "(Handler) Print NGINX error if syntax check fails"
-  fail:
-    msg: "{{ config.stderr }}"
+  debug:
+    var: config.stderr_lines
+  failed_when: config.rc != 0
   when: config.rc != 0
   listen: "(Handler) Run NGINX"
 
@@ -30,13 +31,13 @@
     name: amplify-agent
     state: started
 
-- name: "(Handler: Debian/Ubuntu/CentOS/RedHat) Start NGINX Unit"
+- name: "(DEPRECATED Handler: Debian/Ubuntu/CentOS/RedHat) Start NGINX Unit"
   service:
     name: unit
     state: started
     enabled: yes
 
-- name: "(Handler: FreeBSD) Start NGINX Unit"
+- name: "(DEPRECATED Handler: FreeBSD) Start NGINX Unit"
   service:
     name: unitd
     state: started

@@ -1,9 +1,4 @@
 ---
-- name: "Set up signing keys"
-  debug:
-    msg: "Setting up signing keys"
-  when: nginx_debug_tasks | bool
-
 - name: "(Alpine Linux) Set up signing key"
   block:
     - name: "(Alpine Linux) Set up NGINX signing key URL"
@@ -34,8 +29,3 @@
     key: "{{ keysite }}"
     validate_certs: "{{ (ansible_facts['distribution_major_version'] is version('6', '==')) | ternary('no', 'yes') }}"
   when: ansible_facts['os_family'] in ['RedHat', 'Suse']
-
-- name: "Set up signing keys"
-  debug:
-    msg: "Done setting up signing keys"
-  when: nginx_debug_tasks | bool

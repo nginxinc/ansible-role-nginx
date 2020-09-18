@@ -1,9 +1,4 @@
 ---
-- name: "Install NGINX Plus"
-  debug:
-    msg: "Installing NGINX Plus"
-  when: nginx_debug_tasks | bool
-
 - name: "Set NGINX Plus repository"
   set_fact:
     repository: "{{ nginx_repository |
@@ -11,8 +6,3 @@
 
 - name: "Install NGINX from repository"
   include_tasks: "{{ role_path }}/tasks/plus/install-{{ ansible_facts['os_family'] | lower }}.yml"
-
-- name: "Install NGINX Plus"
-  debug:
-    msg: "Done installing NGINX Plus"
-  when: nginx_debug_tasks | bool

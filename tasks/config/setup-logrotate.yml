@@ -1,33 +1,28 @@
 ---
-- name: "Set up logrotate"
-  debug:
-    msg: "Setting up logrotate"
-  when: nginx_debug_tasks | bool
-
-- name: "(Alpine Linux OSs) Install logrotate"
+- name: "(Alpine Linux) Install logrotate"
   apk:
     name: logrotate
   when: ansible_facts['os_family'] == "Alpine"
 
-- name: "(Debian OSs) Install logrotate"
+- name: "(Debian/Ubuntu) Install logrotate"
   apt:
     name: logrotate
     state: present
   when: ansible_facts['os_family'] == "Debian"
 
-- name: "(Red Hat OSs) Install logrotate"
+- name: "(Amazon Linux/CentOS/Oracle Linux/RHEL) Install logrotate"
   yum:
     name: logrotate
     state: present
   when: ansible_facts['os_family'] == "RedHat"
 
-- name: "(SLES OSs) Set up logrotate"
+- name: "(SLES) Set up logrotate"
   block:
-    - name: "(SLES OSs) Configure logrotate repository"
+    - name: "(SLES) Configure logrotate repository"
       zypper_repository:
         repo: https://download.opensuse.org/repositories/openSUSE:Leap:42.1/standard/openSUSE:Leap:42.1.repo
 
-    - name: "(SLES OSs) Install Logrotate"
+    - name: "(SLES) Install Logrotate"
       zypper:
         name: logrotate
         state: present
@@ -39,8 +34,3 @@
     dest: "/etc/logrotate.d/nginx"
     mode: 0644
   notify: "(Handler) Run logrotate"
-
-- name: "Set up logrotate"
-  debug:
-    msg: "Done setting up logrotate"
-  when: nginx_debug_tasks | bool

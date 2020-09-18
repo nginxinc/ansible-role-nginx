@@ -18,8 +18,6 @@ nginx_configure: false
 # Default is true.
 nginx_start: true
 
-# Print NGINX task information to terminal during playbook execution.
-nginx_debug_tasks: false
 # Print NGINX configuration file to terminal after executing playbook.
 nginx_debug_output: false
 

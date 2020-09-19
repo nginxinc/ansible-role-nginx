@@ -1,5 +1,5 @@
 ---
-- name: Register NGINX configuration
+- name: Register NGINX config
   command: nginx -T
   changed_when: false
   register: config

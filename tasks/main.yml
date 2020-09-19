@@ -1,5 +1,5 @@
 ---
-- name: "Check whether you are using a supported NGINX distribution"
+- name: Check whether you are using a supported NGINX distribution
   assert:
     that: (nginx_type == "opensource" and ansible_facts['distribution'] in nginx_distributions)
           or (nginx_type == "plus" and ansible_facts['distribution'] in nginx_plus_distributions)
@@ -10,52 +10,52 @@
     - (nginx_install_from == "nginx_repository" or nginx_type == "plus")
   tags: nginx_check_support
 
-- name: "Set up prerequisites"
+- name: Set up prerequisites
   include_tasks: "{{ role_path }}/tasks/prerequisites/prerequisites.yml"
   tags: nginx_prerequisites
 
-- name: "Set up signing keys"
+- name: Set up signing keys
   include_tasks: "{{ role_path }}/tasks/keys/setup-keys.yml"
   when: (nginx_install | bool and nginx_install_from == "nginx_repository")
         or nginx_amplify_enable | bool or nginx_unit_enable | bool
   tags: nginx_key
 
-- name: "Install and Configure NGINX"
+- name: Install and Configure NGINX
   block:
-    - name: "Install NGINX"
+    - name: Install NGINX
       block:
-        - name: "Install NGINX Open Source"
+        - name: Install NGINX Open Source
           include_tasks: "{{ role_path }}/tasks/opensource/install-oss.yml"
           when: nginx_type == "opensource"
           tags: nginx_install_oss
 
-        - name: "Set up NGINX Plus license"
+        - name: Set up NGINX Plus license
           include_tasks: "{{ role_path }}/tasks/plus/setup-license.yml"
           when:
             - nginx_type == "plus"
             - nginx_setup_license | bool
           tags: nginx_setup_license
 
-        - name: "Install NGINX Plus"
+        - name: Install NGINX Plus
           include_tasks: "{{ role_path }}/tasks/plus/install-plus.yml"
           when: nginx_type == "plus"
           tags: nginx_install_plus
 
-        - name: "Install NGINX modules"
+        - name: Install NGINX modules
           include_tasks: "{{ role_path }}/tasks/modules/install-modules.yml"
           when:
             - nginx_modules is defined
             - nginx_modules | length > 0
           tags: nginx_install_modules
 
-        - name: "Remove NGINX Plus license"
+        - name: Remove NGINX Plus license
           include_tasks: "{{ role_path }}/tasks/plus/remove-license.yml"
           when:
             - nginx_type == "plus"
             - nginx_remove_license | bool
           tags: nginx_remove_license
 
-        - name: "Modify Service For Systemd"
+        - name: Modify systemd parameters
           include_tasks: "{{ role_path }}/tasks/config/modify-systemd.yml"
           when:
             - ansible_facts['service_mgr'] == "systemd"
@@ -64,14 +64,14 @@
       when: nginx_install | bool
       tags: nginx_install
 
-    - name: "(DEPRECATED) Configure NGINX"
+    - name: (DEPRECATED) Configure NGINX
       block:
-        - name: "(DEPRECATED) Cleanup NGINX Config"
+        - name: (DEPRECATED) Cleanup NGINX Config
           include_tasks: "{{ role_path }}/tasks/config/cleanup-config.yml"
           when: nginx_cleanup_config | bool
           tags: nginx_cleanup_config
 
-        - name: "(DEPRECATED) Upload NGINX Config"
+        - name: (DEPRECATED) Upload NGINX Config
           include_tasks: "{{ role_path }}/tasks/config/upload-config.yml"
           when: nginx_main_upload_enable | bool
                 or nginx_http_upload_enable | bool
@@ -80,7 +80,7 @@
                 or nginx_ssl_upload_enable | bool
           tags: nginx_upload_config
 
-        - name: "(DEPRECATED) Create NGINX Config"
+        - name: (DEPRECATED) Create NGINX Config
           include_tasks: "{{ role_path }}/tasks/config/template-config.yml"
           when: nginx_main_template_enable | bool
                 or nginx_http_template_enable | bool
@@ -89,21 +89,21 @@
           tags: nginx_template_config
       when: nginx_configure | bool
 
-    - name: "Ensure NGINX is running"
+    - name: Ensure NGINX is running
       meta: flush_handlers
 
-    - name: "Debug NGINX output"
+    - name: Debug NGINX output
       include_tasks: "{{ role_path }}/tasks/config/debug-output.yml"
       when: nginx_debug_output | bool
       tags: nginx_debug_output
 
-    - name: "Configure logrotate for NGINX"
+    - name: Configure logrotate for NGINX
       include_tasks: "{{ role_path }}/tasks/config/setup-logrotate.yml"
       when: nginx_logrotate_conf_enable | bool
       tags: nginx_logrotate_config
   when: nginx_enable | bool
 
-- name: "Install NGINX Amplify"
+- name: Install NGINX Amplify
   include_tasks: "{{ role_path }}/tasks/amplify/install-amplify.yml"
   when:
     - nginx_amplify_enable | bool
@@ -111,7 +111,7 @@
     - nginx_amplify_api_key | length > 0
   tags: nginx_install_amplify
 
-- name: "(DEPRECATED) Install NGINX Unit"
+- name: (DEPRECATED) Install NGINX Unit
   include_tasks: "{{ role_path }}/tasks/unit/install-unit.yml"
   when: nginx_unit_enable | bool
   tags: nginx_install_unit

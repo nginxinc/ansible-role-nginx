@@ -1,5 +1,5 @@
 ---
-- name: "(Debian/Ubuntu) Add NGINX Amplify agent repository"
+- name: (Debian/Ubuntu) Add NGINX Amplify agent repository
   apt_repository:
     filename: nginx-amplify
     repo: "deb [arch=amd64] https://packages.amplify.nginx.com/{{ ansible_facts['distribution'] | lower }}/
@@ -8,7 +8,7 @@
     mode: 0644
   when: ansible_facts['distribution_release'] != "focal"
 
-- name: "(Ubuntu 20.04) Add NGINX Amplify agent repository"
+- name: (Ubuntu 20.04) Add NGINX Amplify agent repository
   apt_repository:
     filename: nginx-amplify
     repo: deb [arch=amd64] https://packages.amplify.nginx.com/py3/ubuntu focal amplify-agent

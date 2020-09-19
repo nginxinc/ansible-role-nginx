@@ -1,23 +1,23 @@
 ---
-- name: "Configure NGINX Amplify agent repository"
+- name: Configure NGINX Amplify agent repository
   include_tasks: "{{ role_path }}/tasks/amplify/setup-{{ ansible_facts['os_family'] | lower }}.yml"
   when: ansible_facts['os_family'] in ['Debian', 'RedHat']
 
-- name: "Install NGINX Amplify agent"
+- name: Install NGINX Amplify agent
   package:
     name: nginx-amplify-agent
     state: present
 
-- name: "Copy NGINX configurator agent configuration template"
+- name: Copy NGINX configurator agent configuration template
   copy:
     remote_src: yes
     src: /etc/amplify-agent/agent.conf.default
     dest: /etc/amplify-agent/agent.conf
     mode: 0644
 
-- name: "Configure NGINX Amplify agent API key"
+- name: Configure NGINX Amplify agent API key
   lineinfile:
     dest: /etc/amplify-agent/agent.conf
     regexp: api_key =.*
     line: "api_key = {{ nginx_amplify_api_key }}"
-  notify: "(Handler) Start NGINX Amplify agent"
+  notify: (Handler) Start NGINX Amplify agent

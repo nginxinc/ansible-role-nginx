@@ -1,15 +1,15 @@
 ---
-- name: "Set NGINX Plus license state"
+- name: Set NGINX Plus license state
   set_fact:
     nginx_license_status: absent
 
-- name: "(Debian/Red Hat/SLES OSs) Delete NGINX Plus license"
+- name: (Debian/Red Hat/SLES OSs) Delete NGINX Plus license
   file:
     path: /etc/ssl/nginx
     state: absent
   when: ansible_facts['distribution'] != "Alpine"
 
-- name: "(Alpine Linux) Delete NGINX Plus license"
+- name: (Alpine Linux) Delete NGINX Plus license
   file:
     path: "{{ item }}"
     state: absent
@@ -18,5 +18,5 @@
     - /etc/apk/cert.pem
   when: ansible_facts['distribution'] == "Alpine"
 
-- name: "Delete NGINX Plus repository data"
+- name: Delete NGINX Plus repository data
   include_tasks: "{{ role_path }}/tasks/plus/install-plus.yml"

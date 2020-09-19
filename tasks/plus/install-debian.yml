@@ -1,5 +1,5 @@
 ---
-- name: "(Debian/Ubuntu) Set up NGINX Plus license verification"
+- name: (Debian/Ubuntu) Set up NGINX Plus license verification
   blockinfile:
     path: /etc/apt/apt.conf.d/90nginx
     create: yes
@@ -11,7 +11,7 @@
     state: "{{ nginx_license_status | default ('present') }}"
     mode: 0444
 
-- name: "(Debian/Ubuntu) Configure NGINX Plus repository"
+- name: (Debian/Ubuntu) Configure NGINX Plus repository
   apt_repository:
     filename: nginx-plus
     repo: "{{ repository }}"
@@ -19,8 +19,8 @@
     state: "{{ nginx_license_status | default ('present') }}"
     mode: 0644
 
-- name: "(Debian/Ubuntu) Install NGINX Plus"
+- name: (Debian/Ubuntu) Install NGINX Plus
   apt:
     name: "nginx-plus{{ nginx_version | default('') }}"
     state: "{{ nginx_state }}"
-  notify: "(Handler) Run NGINX"
+  notify: (Handler) Run NGINX

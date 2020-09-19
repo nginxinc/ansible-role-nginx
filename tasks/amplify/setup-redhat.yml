@@ -1,5 +1,5 @@
 ---
-- name: "(Amazon Linux/CentOS/RHEL) Add NGINX Amplify agent repository"
+- name: (Amazon Linux/CentOS/RHEL) Add NGINX Amplify agent repository
   yum_repository:
     name: nginx-amplify
     baseurl: http://packages.amplify.nginx.com/{{ (ansible_facts['distribution'] == "Amazon") | ternary('amzn/', 'centos/') }}/$releasever/$basearch/

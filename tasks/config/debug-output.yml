@@ -1,9 +1,9 @@
 ---
-- name: "Register NGINX configuration"
-  command: "nginx -T"
+- name: Register NGINX configuration
+  command: nginx -T
   changed_when: false
   register: config
 
-- name: "Print NGINX config"
+- name: Print NGINX config
   debug:
     var: config.stdout_lines

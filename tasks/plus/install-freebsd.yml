@@ -1,5 +1,5 @@
 ---
-- name: "(FreeBSD) Set up NGINX Plus license verification"
+- name: (FreeBSD) Set up NGINX Plus license verification
   blockinfile:
     path: /usr/local/etc/pkg.conf
     block: |
@@ -8,7 +8,7 @@
       SSL_CLIENT_KEY_FILE: "/etc/ssl/nginx/nginx-repo.key" }
     state: "{{ nginx_license_status | default ('present') }}"
 
-- name: "(FreeBSD) Configure NGINX Plus repository"
+- name: (FreeBSD) Configure NGINX Plus repository
   blockinfile:
     path: /etc/pkg/nginx-plus.conf
     create: yes
@@ -21,8 +21,8 @@
     state: "{{ nginx_license_status | default ('present') }}"
     mode: 0644
 
-- name: "(FreeBSD) Install NGINX Plus"
+- name: (FreeBSD) Install NGINX Plus
   pkgng:
     name: "nginx-plus{{ nginx_version | default('') }}"
     state: "{{ nginx_state }}"
-  notify: "(Handler) Run NGINX"
+  notify: (Handler) Run NGINX

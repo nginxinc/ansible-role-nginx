@@ -15,14 +15,14 @@
     name: unit
     state: present
   when: ansible_facts['os_family'] != "FreeBSD"
-  notify: "(DEPRECATED Handler: Debian/Ubuntu/CentOS/RedHat) Start NGINX Unit"
+  notify: (DEPRECATED Handler - Debian/Ubuntu/CentOS/RedHat) Start NGINX Unit
 
 - name: (DEPRECATED) Install NGINX Unit
   portinstall:
     name: unit
     state: present
   when: ansible_facts['os_family'] == "FreeBSD"
-  notify: "(DEPRECATED Handler: FreeBSD) Start NGINX Unit"
+  notify: (DEPRECATED Handler - FreeBSD) Start NGINX Unit
 
 - name: (DEPRECATED) Install NGINX Unit modules
   include_tasks: "{{ role_path }}/tasks/unit/install-modules.yml"

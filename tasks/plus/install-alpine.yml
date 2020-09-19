@@ -1,14 +1,14 @@
 ---
-- name: "(Alpine Linux) Configure NGINX Plus repository"
+- name: (Alpine Linux) Configure NGINX Plus repository
   lineinfile:
     path: /etc/apk/repositories
     insertafter: EOF
     line: "{{ repository }}"
     state: "{{ nginx_license_status | default ('present') }}"
 
-- name: "(Alpine Linux) Install NGINX Plus"
+- name: (Alpine Linux) Install NGINX Plus
   apk:
     name: "nginx-plus{{ nginx_version | default('') }}"
     repository: "{{ repository }}"
     state: "{{ nginx_state }}"
-  notify: "(Handler) Run NGINX"
+  notify: (Handler) Run NGINX

@@ -1,13 +1,13 @@
 ---
-- name: "(Debian/Red Hat/SLES OSs) Set up NGINX Plus license"
+- name: (Debian/Red Hat/SLES OSs) Set up NGINX Plus license
   block:
-    - name: "(Debian/Red Hat/SLES OSs) Create SSL directory"
+    - name: (Debian/Red Hat/SLES OSs) Create SSL directory
       file:
         path: /etc/ssl/nginx
         state: directory
         mode: 0755
 
-    - name: "(Debian/Red Hat/SLES OSs) Copy NGINX Plus certificate and license key"
+    - name: (Debian/Red Hat/SLES OSs) Copy NGINX Plus certificate and license key
       copy:
         src: "{{ item }}"
         dest: /etc/ssl/nginx
@@ -18,22 +18,22 @@
         - "{{ nginx_license['key'] }}"
   when: ansible_facts['os_family'] != "Alpine"
 
-- name: "(Alpine Linux) Set up NGINX Plus license"
+- name: (Alpine Linux) Set up NGINX Plus license
   block:
-    - name: "(Alpine Linux) Create APK directory"
+    - name: (Alpine Linux) Create APK directory
       file:
         path: /etc/apk
         state: directory
         mode: 0755
 
-    - name: "(Alpine Linux) Copy NGINX Plus key"
+    - name: (Alpine Linux) Copy NGINX Plus key
       copy:
         src: "{{ nginx_license['key'] }}"
         dest: /etc/apk/cert.key
         decrypt: yes
         mode: 0444
 
-    - name: "(Alpine Linux) Copy NGINX Plus certificate"
+    - name: (Alpine Linux) Copy NGINX Plus certificate
       copy:
         src: "{{ nginx_license['certificate'] }}"
         dest: /etc/apk/cert.pem

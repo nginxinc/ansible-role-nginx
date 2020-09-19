@@ -1,5 +1,5 @@
 ---
-- name: "(Debian/Ubuntu) Configure NGINX repository"
+- name: (Debian/Ubuntu) Configure NGINX repository
   apt_repository:
     filename: nginx
     repo: "{{ item }}"
@@ -7,8 +7,8 @@
     mode: 0644
   loop: "{{ repository }}"
 
-- name: "(Debian/Ubuntu) Install NGINX"
+- name: (Debian/Ubuntu) Install NGINX
   apt:
     name: "nginx{{ nginx_version | default('') }}"
     state: "{{ nginx_state }}"
-  notify: "(Handler) Run NGINX"
+  notify: (Handler) Run NGINX

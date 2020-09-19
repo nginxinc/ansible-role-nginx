@@ -1,11 +1,11 @@
 ## DEPRECATED -- Use nginxinc.nginx_unit role instead (https://github.com/nginxinc/ansible-role-nginx-unit)
 ---
-- name: "(DEPRECATED) Fetch Ports"
+- name: (DEPRECATED) Fetch Ports
   command: portsnap fetch --interactive
   args:
     creates: /var/db/portsnap/INDEX
 
-- name: "(DEPRECATED) Extract Ports"
+- name: (DEPRECATED) Extract Ports
   command: portsnap extract
   args:
     creates: /usr/ports

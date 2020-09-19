@@ -1,9 +1,9 @@
 ---
-- name: "Check for build tools"
+- name: Check for build tools
   block:
-    - name: "(CentOS/RHEL 8) Setup Python 3"
+    - name: (CentOS/RHEL 8) Setup Python 3
       block:
-        - name: "(CentOS/RHEL 8) Install Python 3"
+        - name: (CentOS/RHEL 8) Install Python 3
           yum:
             name:
               - python3
@@ -11,7 +11,7 @@
               - python3-devel
             update_cache: yes
 
-        - name: "(Centos/RHEL 8) Set Python 3 as default"
+        - name: (Centos/RHEL 8) Set Python 3 as default
           alternatives:
             name: python
             path: /usr/bin/python3
@@ -20,7 +20,7 @@
         - ansible_facts['os_family'] == "RedHat"
         - ansible_facts['distribution_major_version'] is version('8', '==')
 
-    - name: "(Centos/RHEL) Install build tools"
+    - name: (Centos/RHEL) Install build tools
       yum:
         name:
           - "@Development tools"
@@ -36,7 +36,7 @@
         update_cache: yes
       when: ansible_facts['os_family'] == "RedHat"
 
-    - name: "(Debian) Install backports repo for 'buster'"
+    - name: (Debian) Install backports repo for 'buster'
       apt_repository:
         filename: buster-backports
         repo: deb http://ftp.us.debian.org/debian buster-backports main
@@ -44,7 +44,7 @@
         mode: 0644
       when: ansible_facts['distribution_release'] == "buster"
 
-    - name: "(Debian/Ubuntu) Install build tools"
+    - name: (Debian/Ubuntu) Install build tools
       apt:
         name:
           - build-essential
@@ -57,7 +57,7 @@
         update_cache: yes
       when: ansible_facts['os_family'] == "Debian"
 
-    - name: "(Alpine Linux) Install build tools"
+    - name: (Alpine Linux) Install build tools
       apk:
         name:
           - alpine-sdk
@@ -72,7 +72,7 @@
         update_cache: yes
       when: ansible_facts['os_family'] == "Alpine"
 
-    - name: "(Alpine Linux) Enable OpenRC"
+    - name: (Alpine Linux) Enable OpenRC
       copy:
         content: ""
         dest: /run/openrc/softlevel
@@ -82,24 +82,24 @@
       when: ansible_facts['os_family'] == "Alpine"
   when: nginx_install_source_build_tools | bool
 
-- name: "Check for source installs"
+- name: Check for source installs
   block:
-    - name: "Check for PCRE install"
+    - name: Check for PCRE install
       stat:
         path: /tmp/{{ pcre_version }}
       register: pcre_result
 
-    - name: "Check for ZLib install"
+    - name: Check for ZLib install
       stat:
         path: /tmp/{{ zlib_version }}
       register: zlib_result
 
-    - name: "Check for OpenSSL install"
+    - name: Check for OpenSSL install
       stat:
         path: /tmp/{{ openssl_version }}
       register: openssl_result
 
-- name: "(CentOS/RHEL) Install PCRE dependency from package"
+- name: (CentOS/RHEL) Install PCRE dependency from package
   yum:
     name: pcre-devel
     update_cache: yes
@@ -107,7 +107,7 @@
     - nginx_install_source_pcre | bool
     - ansible_facts['os_family'] == "RedHat"
 
-- name: "(Debian/Ubuntu) Install PCRE dependency from package"
+- name: (Debian/Ubuntu) Install PCRE dependency from package
   apt:
     name: libpcre3-dev
     update_cache: yes
@@ -115,7 +115,7 @@
     - nginx_install_source_pcre | bool
     - ansible_facts['os_family'] == "Debian"
 
-- name: "(Alpine Linux) Install PCRE dependency from package"
+- name: (Alpine Linux) Install PCRE dependency from package
   apk:
     name: pcre-dev
     update_cache: yes
@@ -123,9 +123,9 @@
     - nginx_install_source_pcre | bool
     - ansible_facts['os_family'] == "Alpine"
 
-- name: "Install PCRE dependence from source"
+- name: Install PCRE dependence from source
   block:
-    - name: "Download PCRE dependency"
+    - name: Download PCRE dependency
       get_url:
         url: "https://ftp.pcre.org/pub/pcre/{{ pcre_version }}.tar.gz"
         dest: "/tmp/{{ pcre_version }}.tar.gz"
@@ -134,23 +134,23 @@
                         | ternary('no', 'yes') }}"
       register: pcre_source
 
-    - name: "Unpack PCRE dependency"
+    - name: Unpack PCRE dependency
       unarchive:
         copy: no
         dest: /tmp/
         src: "{{ pcre_source.dest }}"
         mode: 0700
 
-    - name: "Configure PCRE dependency"
-      command: "./configure"
+    - name: Configure PCRE dependency
+      command: ./configure
       args:
         chdir: "/tmp/{{ pcre_version }}"
 
-    - name: "Make PCRE dependency"
+    - name: Make PCRE dependency
       make:
         chdir: "/tmp/{{ pcre_version }}"
 
-    - name: "Install PCRE dependency"
+    - name: Install PCRE dependency
       make:
         chdir: "/tmp/{{ pcre_version }}"
         target: install
@@ -158,7 +158,7 @@
     - not pcre_result.stat.exists | bool
     - not nginx_install_source_pcre | bool
 
-- name: "(Centos/RHEL) Install ZLib dependency from package"
+- name: (Centos/RHEL) Install ZLib dependency from package
   yum:
     name: zlib-devel
     update_cache: yes
@@ -166,7 +166,7 @@
     - nginx_install_source_zlib | bool
     - ansible_facts['os_family'] == "RedHat"
 
-- name: "(Debian/Ubuntu) Install ZLib dependency from package"
+- name: (Debian/Ubuntu) Install ZLib dependency from package
   apt:
     name: zlib1g-dev
     update_cache: true
@@ -174,7 +174,7 @@
     - nginx_install_source_zlib | bool
     - ansible_facts['os_family'] == "Debian"
 
-- name: "(Alpine Linux) Install ZLib dependency from package"
+- name: (Alpine Linux) Install ZLib dependency from package
   apk:
     name: zlib-dev
     update_cache: yes
@@ -182,9 +182,9 @@
     - nginx_install_source_zlib | bool
     - ansible_facts['os_family'] == "Alpine"
 
-- name: "Install ZLib dependency from source"
+- name: Install ZLib dependency from source
   block:
-    - name: "Download ZLib dependency"
+    - name: Download ZLib dependency
       get_url:
         url: "https://zlib.net/{{ zlib_version }}.tar.gz"
         dest: "/tmp/{{ zlib_version }}.tar.gz"
@@ -193,23 +193,23 @@
                         | ternary('no', 'yes') }}"
       register: zlib_source
 
-    - name: "Unpack ZLib dependency"
+    - name: Unpack ZLib dependency
       unarchive:
         copy: no
         dest: /tmp/
         src: "{{ zlib_source.dest }}"
         mode: 0700
 
-    - name: "Configure ZLib dependency"
-      command: "./configure"
+    - name: Configure ZLib dependency
+      command: ./configure
       args:
         chdir: "/tmp/{{ zlib_version }}"
 
-    - name: "Make ZLib dependency"
+    - name: Make ZLib dependency
       make:
         chdir: "/tmp/{{ zlib_version }}"
 
-    - name: "Install ZLib dependency"
+    - name: Install ZLib dependency
       make:
         chdir: "/tmp/{{ zlib_version }}"
         target: install
@@ -217,7 +217,7 @@
     - not zlib_result.stat.exists | bool
     - not nginx_install_source_zlib | bool
 
-- name: "(CentOS/RHEL) Install OpenSSL dependency from package"
+- name: (CentOS/RHEL) Install OpenSSL dependency from package
   yum:
     name: openssl-devel
     update_cache: yes
@@ -225,7 +225,7 @@
     - nginx_install_source_openssl | bool
     - ansible_facts['os_family'] == "RedHat"
 
-- name: "(Debian/Ubuntu) Install OpenSSL dependency from package"
+- name: (Debian/Ubuntu) Install OpenSSL dependency from package
   apt:
     name: libssl-dev
     update_cache: yes
@@ -233,7 +233,7 @@
     - nginx_install_source_openssl | bool
     - ansible_facts['os_family'] == "Debian"
 
-- name: "(Alpine Linux) Install OpenSSL dependency from package"
+- name: (Alpine Linux) Install OpenSSL dependency from package
   apk:
     name: openssl-dev
     update_cache: yes
@@ -241,9 +241,9 @@
     - nginx_install_source_openssl | bool
     - ansible_facts['os_family'] == "Alpine"
 
-- name: "Install OpenSSL dependency from source"
+- name: Install OpenSSL dependency from source
   block:
-    - name: "Download OpenSSL dependency"
+    - name: Download OpenSSL dependency
       get_url:
         url: "https://www.openssl.org/source/{{ openssl_version }}.tar.gz"
         dest: "/tmp/{{ openssl_version }}.tar.gz"
@@ -252,23 +252,23 @@
                         | ternary('no', 'yes') }}"
       register: openssl_source
 
-    - name: "Unpack OpenSSL dependency"
+    - name: Unpack OpenSSL dependency
       unarchive:
         copy: no
         dest: /tmp/
         src: "{{ openssl_source.dest }}"
         mode: 0700
 
-    - name: "Configure OpenSSL dependency"
-      command: "./config --prefix=/usr/local/openssl --openssldir=/usr/local/openssl shared zlib"
+    - name: Configure OpenSSL dependency
+      command: ./config --prefix=/usr/local/openssl --openssldir=/usr/local/openssl shared zlib
       args:
         chdir: "/tmp/{{ openssl_version }}"
 
-    - name: "Make OpenSSL dependency"
+    - name: Make OpenSSL dependency
       make:
         chdir: "/tmp/{{ openssl_version }}"
 
-    - name: "Install OpenSSL dependency"
+    - name: Install OpenSSL dependency
       make:
         chdir: "/tmp/{{ openssl_version }}"
         target: install
@@ -276,9 +276,9 @@
     - not openssl_result.stat.exists | bool
     - not nginx_install_source_openssl | bool
 
-- name: "Get NGINX version"
+- name: Get NGINX version
   block:
-    - name: "Fetch NGINX version"
+    - name: Fetch NGINX version
       uri:
         url: https://trac.nginx.org/nginx/browser
         return_content: yes
@@ -286,38 +286,38 @@
                         | ternary('no', 'yes') }}"
       register: nginx_versions
 
-    - name: "Set NGINX mainline version"
+    - name: Set NGINX mainline version
       set_fact:
         nginx_version: "{{ nginx_versions.content | regex_search('release[^<]*') | regex_replace('release', 'nginx') }}"
       when: nginx_branch == "mainline"
 
-    - name: "Set NGINX stable version 1/2"
+    - name: Set NGINX stable version 1/2
       set_fact:
         nginx_version: "{{ nginx_versions.content | regex_search('stable[^<]*') | regex_replace('stable', 'release') }}"
       when: nginx_branch == "stable"
 
-    - name: "Set NGINX stable version 2/2"
+    - name: Set NGINX stable version 2/2
       set_fact:
         nginx_version: "{{ nginx_versions.content | regex_search(nginx_version + '[^<]*') | regex_replace('release', 'nginx') }}"
       when: nginx_branch == "stable"
 
-    - name: "Set NGINX download filename"
+    - name: Set NGINX download filename
       set_fact:
         nginx_download_name: "{{ nginx_version }}"
 
-    - name: "Check for NGINX install"
+    - name: Check for NGINX install
       stat:
         path: /usr/sbin/nginx
         follow: yes
       register: nginx_result
 
-- name: "Add NGINX user"
+- name: Add NGINX user
   user:
     name: nginx
 
-- name: "Install NGINX"
+- name: Install NGINX
   block:
-    - name: "Download NGINX"
+    - name: Download NGINX
       get_url:
         url: "https://nginx.org/download/{{ nginx_download_name }}.tar.gz"
         dest: "/tmp/{{ nginx_download_name }}.tar.gz"
@@ -326,14 +326,14 @@
                         | ternary('no', 'yes') }}"
       register: nginx_source
 
-    - name: "Unpack NGINX"
+    - name: Unpack NGINX
       unarchive:
         copy: no
         dest: /tmp/
         src: "{{ nginx_source.dest }}"
         mode: 0755
 
-    - name: "Configure NGINX"
+    - name: Configure NGINX
       command: >-
         ./configure
         --conf-path=/etc/nginx/nginx.conf
@@ -353,16 +353,16 @@
         chdir: "/tmp/{{ nginx_version }}"
       register: nginx_configure
 
-    - name: "Make NGINX"
+    - name: Make NGINX
       make:
         chdir: "/tmp/{{ nginx_version }}"
 
-    - name: "Install NGINX"
+    - name: Install NGINX
       make:
         chdir: "/tmp/{{ nginx_version }}"
         target: install
 
-    - name: "Upload systemd NGINX service file"
+    - name: Upload systemd NGINX service file
       copy:
         src: services/nginx.systemd
         dest: /lib/systemd/system/nginx.service
@@ -371,7 +371,7 @@
         mode: 0644
       when: ansible_facts['service_mgr'] == "systemd"
 
-    - name: "Enable systemd NGINX service file"
+    - name: Enable systemd NGINX service file
       systemd:
         daemon_reload: yes
         name: nginx
@@ -380,7 +380,7 @@
       when: ansible_facts['service_mgr'] == "systemd"
       notify: "(Handler) Run NGINX"
 
-    - name: "Upload upstart NGINX service file"
+    - name: Upload upstart NGINX service file
       copy:
         src: services/nginx.upstart
         dest: /etc/init.d/nginx
@@ -389,7 +389,7 @@
         mode: 0755
       when: ansible_facts['service_mgr'] == "upstart"
 
-    - name: "Upload Upstart NGINX service conf file"
+    - name: Upload Upstart NGINX service conf file
       copy:
         src: services/nginx.conf.upstart
         dest: /etc/init/nginx.conf
@@ -398,16 +398,16 @@
         mode: 0644
       when: ansible_facts['service_mgr'] == "upstart"
 
-    - name: "Enable Upstart NGINX service reload"
-      command: "initctl reload-configuration"
+    - name: Enable Upstart NGINX service reload
+      command: initctl reload-configuration
       when: ansible_facts['service_mgr'] == "upstart"
 
-    - name: "Start Upstart NGINX service reload"
-      command: "nginx"
+    - name: Start Upstart NGINX service reload
+      command: nginx
       when: ansible_facts['service_mgr'] == "upstart"
       notify: "(Handler) Run NGINX"
 
-    - name: "Upload SysVinit NGINX service file"
+    - name: Upload SysVinit NGINX service file
       copy:
         src: services/nginx.sysvinit
         dest: /etc/init.d/nginx
@@ -417,7 +417,7 @@
       when: ansible_facts['service_mgr'] == "sysvinit"
       notify: "(Handler) Run NGINX"
 
-    - name: "Upload OpenRC NGINX service file"
+    - name: Upload OpenRC NGINX service file
       copy:
         src: services/nginx.openrc
         dest: /etc/init.d/nginx
@@ -426,13 +426,13 @@
         mode: 0755
       when: ansible_facts['service_mgr'] == "openrc"
 
-    - name: "Enable OpenRC NGINX service"
+    - name: Enable OpenRC NGINX service
       command: rc-update add nginx default
       when: ansible_facts['service_mgr'] == "openrc"
-      notify: "(Handler) Run NGINX"
+      notify: (Handler) Run NGINX
   when: not nginx_result.stat.exists
 
-- name: "Cleanup downloads"
+- name: Cleanup downloads
   file:
     path: "{{ item }}"
     state: absent

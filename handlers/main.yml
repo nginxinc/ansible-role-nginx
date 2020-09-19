@@ -1,22 +1,22 @@
 ---
-- name: "(Handler) Check NGINX"
-  command: "nginx -t"
+- name: (Handler) Check NGINX
+  command: nginx -t
   register: config
   ignore_errors: yes
-  listen: "(Handler) Run NGINX"
+  listen: (Handler) Run NGINX
 
-- name: "(Handler) Print NGINX error if syntax check fails"
+- name: (Handler) Print NGINX error if syntax check fails
   debug:
     var: config.stderr_lines
   failed_when: config.rc != 0
   when: config.rc != 0
-  listen: "(Handler) Run NGINX"
+  listen: (Handler) Run NGINX
 
-- name: "(Handler) Systemd daemon-reload"
+- name: (Handler) Systemd daemon-reload
   systemd:
     daemon_reload: yes
 
-- name: "(Handler) Start/Reload NGINX"
+- name: (Handler) Start/Reload NGINX
   service:
     name: nginx
     state: reloaded
@@ -26,22 +26,22 @@
     - not ansible_check_mode | bool
   listen: "(Handler) Run NGINX"
 
-- name: "(Handler) Start NGINX Amplify agent"
+- name: (Handler) Start NGINX Amplify agent
   service:
     name: amplify-agent
     state: started
 
-- name: "(DEPRECATED Handler: Debian/Ubuntu/CentOS/RedHat) Start NGINX Unit"
+- name: (DEPRECATED Handler - Debian/Ubuntu/CentOS/RedHat) Start NGINX Unit
   service:
     name: unit
     state: started
     enabled: yes
 
-- name: "(DEPRECATED Handler: FreeBSD) Start NGINX Unit"
+- name: (DEPRECATED Handler - FreeBSD) Start NGINX Unit
   service:
     name: unitd
     state: started
     enabled: yes
 
-- name: "(Handler) Run logrotate"
+- name: (Handler) Run logrotate
   command: logrotate -f /etc/logrotate.d/nginx

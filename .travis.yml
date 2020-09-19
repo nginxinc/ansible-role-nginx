@@ -6,58 +6,58 @@ branches:
     - main
 jobs:
   include:
-    - name: "(Debian/Ubuntu) Install Specific Version"
+    - name: (Debian/Ubuntu) Install specific version
       env:
         scenario: default
-    - name: "(Alpine Linux) Install Specific Version"
+    - name: (Alpine Linux) Install specific version
       env:
         scenario: default_alpine
-    - name: "(CentOS) Install Specific Version"
+    - name: (CentOS) Install specific version
       env:
         scenario: default_centos
-    - name: "(Debian/Ubuntu) Install Modules"
+    - name: (Debian/Ubuntu) Cleanup config and try to install modules
       env:
         scenario: module
-    - name: "(Alpine Linux) Install Modules"
+    - name: (Alpine Linux) Cleanup config and try to install modules
       env:
         scenario: module_alpine
-    - name: "(CentOS) Install Modules"
+    - name: (CentOS) Cleanup config and try to install modules
       env:
         scenario: module_centos
-    - name: "(Debian/Ubuntu) Install Stable Branch and Push Configuration"
+    - name: (Debian/Ubuntu) Install stable branch and push a config
       env:
         scenario: stable_push
-    - name: "(Alpine Linux) Install Stable Branch and Push Configuration"
+    - name: (Alpine Linux) Install stable branch and push a config
       env:
         scenario: stable_push_alpine
-    - name: "(CentOS) Install Stable Branch and Push Configuration"
+    - name: (CentOS) Install stable branch and push a config
       env:
         scenario: stable_push_centos
-    - name: "(Debian/Ubuntu) Use Template Setting"
+    - name: (Debian/Ubuntu) Test config templates
       env:
         scenario: template
-    - name: "(Alpine Linux) Use Template Setting"
+    - name: (Alpine Linux) Test config templates
       env:
         scenario: template_alpine
-    - name: "(CentOS) Use Template Setting"
+    - name: (CentOS) Test config templates
       env:
         scenario: template_centos
-    - name: "(Debian/Ubuntu) Install NGINX Unit"
+    - name: (Debian/Ubuntu) Install NGINX Unit
       env:
         scenario: unit
-    - name: "(Alpine Linux) Install NGINX Unit"
+    - name: (Alpine Linux) Install NGINX Unit
       env:
         scenario: unit_alpine
-    - name: "(CentOS) Install NGINX Unit"
+    - name: (CentOS) Install NGINX Unit
       env:
         scenario: unit_centos
-    - name: "(Debian/Ubuntu) Install from Source"
+    - name: (Debian/Ubuntu) Build from source
       env:
         scenario: source
-    - name: "(Alpine Linux) Install from Source"
+    - name: (Alpine Linux) Build from source
       env:
         scenario: source_alpine
-    - name: "(CentOS) Install from Source"
+    - name: (CentOS) Build from source
       env:
         scenario: source_centos
 before_install:

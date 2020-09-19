@@ -1,36 +1,36 @@
 ---
-- name: "(Alpine Linux) Install logrotate"
+- name: (Alpine Linux) Install logrotate
   apk:
     name: logrotate
   when: ansible_facts['os_family'] == "Alpine"
 
-- name: "(Debian/Ubuntu) Install logrotate"
+- name: (Debian/Ubuntu) Install logrotate
   apt:
     name: logrotate
     state: present
   when: ansible_facts['os_family'] == "Debian"
 
-- name: "(Amazon Linux/CentOS/Oracle Linux/RHEL) Install logrotate"
+- name: (Amazon Linux/CentOS/Oracle Linux/RHEL) Install logrotate
   yum:
     name: logrotate
     state: present
   when: ansible_facts['os_family'] == "RedHat"
 
-- name: "(SLES) Set up logrotate"
+- name: (SLES) Set up logrotate
   block:
-    - name: "(SLES) Configure logrotate repository"
+    - name: (SLES) Configure logrotate repository
       zypper_repository:
         repo: https://download.opensuse.org/repositories/openSUSE:Leap:42.1/standard/openSUSE:Leap:42.1.repo
 
-    - name: "(SLES) Install Logrotate"
+    - name: (SLES) Install Logrotate
       zypper:
         name: logrotate
         state: present
   when: ansible_facts['os_family'] == "Suse"
 
-- name: "Create logrotate config"
+- name: Create logrotate config
   template:
-    src: "logrotate/nginx.j2"
-    dest: "/etc/logrotate.d/nginx"
+    src: logrotate/nginx.j2
+    dest: /etc/logrotate.d/nginx
     mode: 0644
-  notify: "(Handler) Run logrotate"
+  notify: (Handler) Run logrotate

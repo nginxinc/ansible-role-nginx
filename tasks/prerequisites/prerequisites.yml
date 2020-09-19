@@ -1,15 +1,15 @@
 ---
-- name: "Install dependencies"
+- name: Install dependencies
   include_tasks: "{{ role_path }}/tasks/prerequisites/install-dependencies.yml"
 
-- name: "Set up SELinux"
+- name: Set up SELinux
   block:
-    - name: "Check if SELinux is enabled"
+    - name: Check if SELinux is enabled
       debug:
-        msg: "You need to enable SELinux, if it was disabled you need to reboot"
+        msg: You need to enable SELinux, if it was disabled you need to reboot
       when: ansible_facts['selinux'] is undefined
 
-    - name: "Configure SELinux"
+    - name: Configure SELinux
       include_tasks: "{{ role_path }}/tasks/prerequisites/setup-selinux.yml"
       when: ansible_facts['selinux.mode'] is defined
   when:

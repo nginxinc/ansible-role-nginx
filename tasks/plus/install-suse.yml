@@ -1,19 +1,19 @@
 ---
-- name: "(SLES) Combine NGINX Plus certificate and license key"
+- name: (SLES) Combine NGINX Plus certificate and license key
   assemble:
     src: /etc/ssl/nginx
     dest: /etc/ssl/nginx/nginx-repo-bundle.crt
     mode: 0444
 
-- name: "(SLES) Configure NGINX Plus repository"
+- name: (SLES) Configure NGINX Plus repository
   zypper_repository:
     name: nginx-plus
     repo: "{{ repository }}"
     state: "{{ nginx_license_status | default ('present') }}"
 
-- name: "(SLES) Install NGINX Plus"
+- name: (SLES) Install NGINX Plus
   zypper:
     name: "nginx-plus{{ nginx_version | default('') }}"
     state: "{{ nginx_state }}"
     update_cache: yes
-  notify: "(Handler) Run NGINX"
+  notify: (Handler) Run NGINX

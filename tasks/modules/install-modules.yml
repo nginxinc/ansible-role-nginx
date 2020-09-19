@@ -1,12 +1,12 @@
 ---
-- name: "(CentOS) Install GeoIP dependencies"
+- name: (CentOS) Install GeoIP dependencies
   yum:
     name: epel-release
   when:
     - ansible_facts['distribution'] == "CentOS"
     - '"geoip" in nginx_modules'
 
-- name: "Install NGINX Modules"
+- name: Install NGINX Modules
   package:
     name: "nginx-{{ (nginx_type == 'plus') | ternary('plus-', '') }}module-{{ item }}{{ nginx_version | default('') }}"
     state: present

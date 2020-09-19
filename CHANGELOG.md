@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.17.0 (September 18, 2020)
+## 0.17.0 (September 19, 2020)
 
 BREAKING CHANGES:
 
@@ -25,7 +25,7 @@ ENHANCEMENTS:
 *   Moved "constant" variables to `vars/main.yml`.
 *   Included deprecation warnings in task names and files.
 *   Improved tasks naming conventions.
-*   Update Ansible to `2.9.13` and Ansible Lint to `4.3.4`.
+*   Update Ansible to `2.9.13` and Ansible Lint to `4.3.5`.
 
 BUG FIXES:
 

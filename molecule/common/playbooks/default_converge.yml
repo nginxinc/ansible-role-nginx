@@ -36,7 +36,7 @@
         nginx_logrotate_conf_enable: true
         nginx_logrotate_conf:
           paths:
-            - "/var/log/nginx/*.log"
+            - /var/log/nginx/*.log
           options:
             - daily
             - missingok

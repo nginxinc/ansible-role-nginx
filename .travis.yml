@@ -15,31 +15,31 @@ jobs:
     - name: (CentOS) Install specific version
       env:
         scenario: default_centos
-    - name: (Debian/Ubuntu) Install modules
+    - name: (Debian/Ubuntu) Cleanup config and try to install modules
       env:
         scenario: module
-    - name: (Alpine Linux) Install modules
+    - name: (Alpine Linux) Cleanup config and try to install modules
       env:
         scenario: module_alpine
-    - name: (CentOS) Install modules
+    - name: (CentOS) Cleanup config and try to install modules
       env:
         scenario: module_centos
-    - name: (Debian/Ubuntu) Install stable branch and push config
+    - name: (Debian/Ubuntu) Install stable branch and push a config
       env:
         scenario: stable_push
-    - name: (Alpine Linux) Install stable branch and push config
+    - name: (Alpine Linux) Install stable branch and push a config
       env:
         scenario: stable_push_alpine
-    - name: (CentOS) Install stable branch and push config
+    - name: (CentOS) Install stable branch and push a config
       env:
         scenario: stable_push_centos
-    - name: (Debian/Ubuntu) Use template setting
+    - name: (Debian/Ubuntu) Test config templates
       env:
         scenario: template
-    - name: (Alpine Linux) Use template setting
+    - name: (Alpine Linux) Test config templates
       env:
         scenario: template_alpine
-    - name: (CentOS) Use template setting
+    - name: (CentOS) Test config templates
       env:
         scenario: template_centos
     - name: (Debian/Ubuntu) Install NGINX Unit

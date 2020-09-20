@@ -24,7 +24,7 @@
   when:
     - nginx_start | bool
     - not ansible_check_mode | bool
-  listen: "(Handler) Run NGINX"
+  listen: (Handler) Run NGINX
 
 - name: (Handler) Start NGINX Amplify agent
   service:

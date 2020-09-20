@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.17.0 (September 19, 2020)
+## 0.17.0 (September 20, 2020)
 
 BREAKING CHANGES:
 
@@ -16,6 +16,7 @@ FEATURES:
 *   Three new tags have been introduced -- `nginx_setup_license`, `nginx_install` and `nginx_check_support`.
 *   Add Alpine 3.12 to the list of supported platforms.
 *   Remove Alpine 3.8 from the list of supported platforms.
+*   Add NGINX Plus tests to TravisCI
 
 ENHANCEMENTS:
 

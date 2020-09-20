@@ -44,5 +44,6 @@ platforms:
 provisioner:
   name: ansible
   playbooks:
+    prepare: ../common/playbooks/plus_prepare.yml
     converge: ../common/playbooks/plus_converge.yml
     verify: ../common/playbooks/plus_verify.yml

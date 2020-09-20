@@ -15,7 +15,7 @@
   apt_repository:
     filename: nginx-plus
     repo: "{{ repository }}"
-    update_cache: yes
+    update_cache: no
     state: "{{ nginx_license_status | default ('present') }}"
     mode: 0644
 
@@ -23,4 +23,5 @@
   apt:
     name: "nginx-plus{{ nginx_version | default('') }}"
     state: "{{ nginx_state }}"
+    update_cache: yes
   notify: (Handler) Run NGINX

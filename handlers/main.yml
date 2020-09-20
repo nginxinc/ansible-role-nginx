@@ -1,4 +1,8 @@
 ---
+- name: (Handler) Systemd daemon-reload
+  systemd:
+    daemon_reload: yes
+
 - name: (Handler) Check NGINX
   command: nginx -t
   register: config
@@ -12,10 +16,6 @@
   when: config.rc != 0
   listen: (Handler) Run NGINX
 
-- name: (Handler) Systemd daemon-reload
-  systemd:
-    daemon_reload: yes
-
 - name: (Handler) Start/Reload NGINX
   service:
     name: nginx
@@ -24,7 +24,7 @@
   when:
     - nginx_start | bool
     - not ansible_check_mode | bool
-  listen: "(Handler) Run NGINX"
+  listen: (Handler) Run NGINX
 
 - name: (Handler) Start NGINX Amplify agent
   service:

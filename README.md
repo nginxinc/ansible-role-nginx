@@ -181,6 +181,7 @@ Working functional playbook examples can be found in the **`molecule/common/`** 
 
 -   **[molecule/common/playbooks/default_converge.yml](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/common/playbooks/default_converge.yml):** Install a specific version of NGINX and set up logrotate
 -   **[molecule/common/playbooks/module_converge.yml](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/common/playbooks/module_converge.yml):** Install various NGINX supported modules
+-   **[molecule/common/playbooks/plus_converge.yml](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/common/playbooks/plus_converge.yml):** Install NGINX Plus and various NGINX Plus supported modules
 -   **[molecule/common/playbooks/source_converge.yml](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/common/playbooks/source_converge.yml):** Install NGINX from source
 -   **[molecule/common/playbooks/stable_push_converge.yml](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/common/playbooks/stable_push_converge.yml):** Install NGINX using the stable branch and push a preexisting config from your system to your NGINX instance
 -   **[molecule/common/playbooks/template_converge.yml](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/common/playbooks/template_converge.yml):** Use the NGINX configuration templating variables to create an NGINX configuration file

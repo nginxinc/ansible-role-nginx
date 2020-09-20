@@ -8,8 +8,9 @@
       vars:
         nginx_type: plus
         nginx_license:
-          certificate: ../../ansible-role-nginx/files/license/nginx-repo.crt
-          key: ../../ansible-role-nginx/files/license/nginx-repo.key
+          certificate: license/nginx-repo.crt
+          key: license/nginx-repo.key
+        nginx_remove_license: false
         nginx_modules:
           - auth-spnego
           - brotli

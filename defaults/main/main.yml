@@ -26,8 +26,8 @@ nginx_debug_output: false
 # Default is 'opensource'.
 nginx_type: opensource
 
-# Specify which version of NGINX you want to install.
-# Default is empty.
+# (Optional) Specify which version of NGINX you want to install.
+# Default is to install the latest release.
 # nginx_version: "=19-1~bionic"
 # For NGINX Plus and modules you'll need a wilcard like below (which installs plus-20 and modules)
 # nginx_version: "-20*"
@@ -57,11 +57,11 @@ nginx_install_source_pcre: false
 nginx_install_source_openssl: true
 nginx_install_source_zlib: false
 
-# Choose where to fetch the NGINX signing key from.
+# (Optional) Choose where to fetch the NGINX signing key from.
 # Default is the official NGINX signing key host.
 # nginx_signing_key: http://nginx.org/keys/nginx_signing.key
 
-# Specify repository for NGINX Open Source or NGINX Plus.
+# (Optional) Specify repository for NGINX Open Source or NGINX Plus.
 # Only works if 'install_from' is set to 'nginx_repository' when installing NGINX Open Source.
 # Defaults are the official NGINX repositories.
 # nginx_repository: deb [arch=amd64] https://nginx.org/packages/mainline/debian/ buster nginx
@@ -83,8 +83,8 @@ nginx_license:
 nginx_setup_license: true
 
 # Remove NGINX Plus license and repository after installation for security purposes.
-# Default is false.
-nginx_remove_license: false
+# Default is true.
+nginx_remove_license: true
 
 # Install NGINX Modules.
 # You can select any of the modules listed below. Beware of NGINX Plus only modules (these are marked).

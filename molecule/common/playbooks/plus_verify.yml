@@ -2,6 +2,13 @@
 - name: Verify
   hosts: all
   tasks:
+    - name: Check if NGINX is installed
+      package:
+        name: nginx-plus
+      check_mode: yes
+      register: install
+      failed_when: (install is changed) or (install is failed)
+
     - name: Check if NGINX service is running
       service:
         name: nginx

@@ -1,6 +1,7 @@
 ---
 - name: Prepare
   hosts: localhost
+  gather_facts: false
   tasks:
     - name: Create ephemeral license certificate file from b64 decoded env var
       copy:

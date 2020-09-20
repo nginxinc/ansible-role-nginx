@@ -38,7 +38,7 @@ nginx_plus_default_repository:
   amazon: "https://plus-pkgs.nginx.com/amzn{{ (ansible_facts['distribution_version'] is version('2', '==')) | ternary('2', '') }}/$releasever/$basearch"
   debian: "deb [arch=amd64] https://plus-pkgs.nginx.com/{{ ansible_facts['distribution'] | lower }} {{ ansible_facts['distribution_release'] }} nginx-plus"
   freebsd: "https://plus-pkgs.nginx.com/freebsd/${ABI}/latest"
-  redhat: "https://plus-pkgs.nginx.com/{{ (ansible_facts['distribution'] == CentOS)
+  redhat: "https://plus-pkgs.nginx.com/{{ (ansible_facts['distribution'] == 'CentOS')
           | ternary('centos', 'rhel') }}/{{ (ansible_facts['distribution_version'] is version('7.4', '>=')
           and ansible_facts['distribution_version'] is version('8', '<')) | ternary('7.4', ansible_facts['distribution_major_version']) }}/$basearch/"
   suse: "https://plus-pkgs.nginx.com/sles/{{ ansible_facts['distribution_major_version'] }}\

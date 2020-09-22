@@ -1,10 +1,11 @@
 # Changelog
 
-## 0.17.1 (Unreleased)
+## 0.17.1 (September 22, 2020)
 
 ENHANCEMENTS:
 
 *   The role will no longer fail automatically on unsupported platforms, but the error message will still be displayed.
+*   The `Check NGINX` handler now always outputs an `ok` state instead of `changed` since it's a read-only operation with no traceable changes.
 
 ## 0.17.0 (September 20, 2020)
 

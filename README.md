@@ -44,7 +44,7 @@ Use `git clone https://github.com/nginxinc/ansible-role-nginx.git` to pull the l
 Platforms
 ---------
 
-The NGINX Ansible role supports all platforms supported by [NGINX Open Source](https://nginx.org/en/linux_packages.html), [NGINX Plus](https://docs.nginx.com/nginx/technical-specs/), the [NGINX Amplify agent](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-faq.md#21-what-operating-systems-are-supported), and [NGINX Unit](https://unit.nginx.org/installation/#official-packages) (you can also use this role to compile NGINX Open Source from source or install it on BSD systems at your own risk):
+The NGINX Ansible role supports all platforms supported by [NGINX Open Source](https://nginx.org/en/linux_packages.html), [NGINX Plus](https://docs.nginx.com/nginx/technical-specs/), the [NGINX Amplify agent](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-faq.md#21-what-operating-systems-are-supported), and [NGINX Unit](https://unit.nginx.org/installation/#official-packages):
 
 **NGINX Open Source**
 
@@ -156,6 +156,8 @@ Ubuntu:
   - bionic
   - focal
 ```
+
+**Note:** You can also use this role to compile NGINX Open Source from source, install NGINX Open Source on compatible yet unsupported platforms, or install NGINX Open Source on BSD systems at your own risk.
 
 Role Variables
 --------------

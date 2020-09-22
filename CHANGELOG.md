@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.17.1 (Unreleased)
+
+ENHANCEMENTS:
+
+*   The role will no longer fail automatically on unsupported platforms, but the error message will still be displayed.
+
 ## 0.17.0 (September 20, 2020)
 
 BREAKING CHANGES:

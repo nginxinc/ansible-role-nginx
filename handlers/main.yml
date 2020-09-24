@@ -3,6 +3,16 @@
   systemd:
     daemon_reload: yes
 
+- name: (Handler) Start/reload NGINX
+  service:
+    name: nginx
+    state: reloaded
+    enabled: yes
+  when:
+    - nginx_start | bool
+    - not ansible_check_mode | bool
+  listen: (Handler) Run NGINX
+
 - name: (Handler) Check NGINX
   command: nginx -t
   register: config
@@ -15,16 +25,6 @@
     var: config.stderr_lines
   failed_when: config.rc != 0
   when: config.rc != 0
-  listen: (Handler) Run NGINX
-
-- name: (Handler) Start/reload NGINX
-  service:
-    name: nginx
-    state: reloaded
-    enabled: yes
-  when:
-    - nginx_start | bool
-    - not ansible_check_mode | bool
   listen: (Handler) Run NGINX
 
 - name: (Handler) Start NGINX Amplify agent

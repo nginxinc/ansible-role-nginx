@@ -25,12 +25,15 @@ jobs:
       env:
         scenario: module_centos
     - name: (Debian/Ubuntu) Install NGINX Plus
+      if: env(NGINX_CRT) is present and env(NGINX_KEY) is present
       env:
         scenario: plus
     - name: (Alpine Linux) Install NGINX Plus
+      if: env(NGINX_CRT) is present and env(NGINX_KEY) is present
       env:
         scenario: plus_alpine
     - name: (CentOS) Install NGINX Plus
+      if: env(NGINX_CRT) is present and env(NGINX_KEY) is present
       env:
         scenario: plus_centos
     - name: (Debian/Ubuntu) Install stable branch and push a config

@@ -5,6 +5,7 @@
 BUG FIXES:
 
 *   Fix an issue where sometimes the role handlers will fail in distros where NGINX is not started upon installation.
+*   Prevent TravisCI from trying to build (and failing) NGINX Plus images on external PRs.
 
 ## 0.17.1 (September 22, 2020)
 

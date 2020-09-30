@@ -2,6 +2,11 @@
 
 ## 0.17.3 (Unreleased)
 
+ENHANCEMENTS:
+
+*   Add survey to README.
+*   Improve README structure and use tables where relevant.
+
 BUG FIXES:
 
 *   Prevent TravisCI from trying to build (and failing) NGINX Plus images on external PRs.

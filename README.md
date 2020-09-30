@@ -19,7 +19,7 @@ With the advent of Ansible collections and to reduce the overhead of this role, 
 
 ## Requirements
 
-**Ansible**
+### Ansible
 
 *   This role was developed and tested with [maintained](https://docs.ansible.com/ansible/latest/reference_appendices/release_and_maintenance.html#release-status) versions of Ansible. Backwards compatibility is not guaranteed.
 

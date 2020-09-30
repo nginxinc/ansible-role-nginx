@@ -22,22 +22,20 @@ With the advent of Ansible collections and to reduce the overhead of this role, 
 ### Ansible
 
 *   This role was developed and tested with [maintained](https://docs.ansible.com/ansible/latest/reference_appendices/release_and_maintenance.html#release-status) versions of Ansible. Backwards compatibility is not guaranteed.
-
 *   Instructions on how to install Ansible can be found in the [Ansible website](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html).
 
-**Molecule**
+### Molecule
 
 *   Molecule is used to test the various functionalities of the role.
-
 *   Instructions on how to install Molecule can be found in the [Molecule website](https://molecule.readthedocs.io/en/latest/installation.html).
 
 ## Installation
 
-**Ansible Galaxy**
+### Ansible Galaxy
 
 Use `ansible-galaxy install nginxinc.nginx` to install the latest stable release of the role on your system.
 
-**Git**
+### Git
 
 Use `git clone https://github.com/nginxinc/ansible-role-nginx.git` to pull the latest edge commit of the role from GitHub.
 

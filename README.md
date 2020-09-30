@@ -43,7 +43,7 @@ Use `git clone https://github.com/nginxinc/ansible-role-nginx.git` to pull the l
 
 The NGINX Ansible role supports all platforms supported by [NGINX Open Source](https://nginx.org/en/linux_packages.html), [NGINX Plus](https://docs.nginx.com/nginx/technical-specs/), the [NGINX Amplify agent](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-faq.md#21-what-operating-systems-are-supported), and [NGINX Unit](https://unit.nginx.org/installation/#official-packages):
 
-**NGINX Open Source**
+### NGINX Open Source
 
 ```yaml
 Alpine:
@@ -72,7 +72,7 @@ Ubuntu:
   - focal
 ```
 
-**NGINX Plus**
+### NGINX Plus
 
 ```yaml
 Alpine:
@@ -110,7 +110,7 @@ Ubuntu:
   - focal
 ```
 
-**NGINX Amplify Agent**
+### NGINX Amplify Agent
 
 ```yaml
 Amazon Linux:
@@ -130,7 +130,7 @@ Ubuntu:
   - focal
 ```
 
-**NGINX Unit**
+### NGINX Unit
 
 ```yaml
 Amazon Linux:

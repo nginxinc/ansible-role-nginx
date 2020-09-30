@@ -194,7 +194,7 @@ Do note that if you install this repository via Ansible Galaxy, you will have to
 
 ## Other NGINX Ansible Collections and Roles
 
-You can find an Ansible collection of roles to install and configure NGINX Open Source, NGINX Plus, and NGINX App Protect [here](ttps://github.com/nginxinc/ansible-collection-nginx).
+You can find an Ansible collection of roles to install and configure NGINX Open Source, NGINX Plus, and NGINX App Protect [here](https://github.com/nginxinc/ansible-collection-nginx).
 
 You can find an Ansible role to configure NGINX [here](https://github.com/nginxinc/ansible-role-nginx-config).
 

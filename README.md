@@ -12,7 +12,7 @@ This role installs NGINX Open Source, NGINX Plus, the NGINX Amplify agent, or NG
 
 **Deprecation Warnings:**
 
-With the advent of Ansible collections and to reduce the overhead of this role, the decision has been made to split this role into three smaller roles:
+With the advent of Ansible collections and the release of the [NGINX Core Ansible collection](https://github.com/nginxinc/ansible-collection-nginx), the decision has been made to split this role into three smaller roles and reduce the overhead of this role:
 *   The NGINX Ansible role will keep working as is and be used to install and setup NGINX.
 *   **The NGINX configuration functionalities included in this role will be removed in an upcoming release at some stage after December 1st 2020.** There now is a separate role to manage and create NGINX configurations available [here](https://github.com/nginxinc/ansible-role-nginx-config). Any new issues or PRs related to configuring NGINX should be submitted in the new NGINX Config repository. New issues or PRs related to configuring NGINX submitted in this repository will not be worked on.
 *   **The NGINX Unit functionalities included in this role will be removed in an upcoming release at some stage after November 1st 2020.** There now is a separate role to install NGINX Unit available [here](https://github.com/nginxinc/ansible-role-nginx-unit). Any new issues or PRs related to NGINX Unit should be submitted in the new NGINX Unit repository. New issues or PRs related to NGINX Unit submitted in this repository will not be worked on.
@@ -194,15 +194,15 @@ Do note that if you install this repository via Ansible Galaxy, you will have to
 
 ## Other NGINX Ansible Collections and Roles
 
-You can find an Ansible collection of roles to install and configure NGINX Open Source, NGINX Plus, and NGINX App Protect [here](https://github.com/nginxinc/ansible-collection-nginx).
+You can find the Ansible NGINX Core collection of roles to install and configure NGINX Open Source, NGINX Plus, and NGINX App Protect [here](https://github.com/nginxinc/ansible-collection-nginx).
 
-You can find an Ansible role to configure NGINX [here](https://github.com/nginxinc/ansible-role-nginx-config).
+You can find the Ansible role to configure NGINX [here](https://github.com/nginxinc/ansible-role-nginx-config).
 
-You can find an Ansible role to install and configure NGINX App Protect [here](https://github.com/nginxinc/ansible-role-nginx-app-protect).
+You can find the Ansible role to install and configure NGINX App Protect [here](https://github.com/nginxinc/ansible-role-nginx-app-protect).
 
-You can find an Ansible collection of roles to install and configure NGINX Controller [here](https://github.com/nginxinc/ansible-collection-nginx_controller).
+You can find the Ansible NGINX Controller collection of roles to install and configure NGINX Controller [here](https://github.com/nginxinc/ansible-collection-nginx_controller).
 
-You can find an Ansible role to install NGINX Unit [here](https://github.com/nginxinc/ansible-role-nginx-unit).
+You can find the Ansible role to install NGINX Unit [here](https://github.com/nginxinc/ansible-role-nginx-unit).
 
 ## License
 

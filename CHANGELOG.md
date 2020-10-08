@@ -6,6 +6,7 @@ ENHANCEMENTS:
 
 *   Add survey to README.
 *   Improve README structure and use tables where relevant.
+*   Update Ansible (now Ansible base) to `2.10.2`, Ansible (now Ansible Community Distribution) to `2.10.0`, and yamllint to `1.25.0`.
 
 BUG FIXES:
 

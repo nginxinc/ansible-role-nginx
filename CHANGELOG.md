@@ -10,6 +10,7 @@ ENHANCEMENTS:
 BUG FIXES:
 
 *   Prevent TravisCI from trying to build (and failing) NGINX Plus images on external PRs.
+*   Fix naming for SELinux facts dict.
 
 ## 0.17.2 (September 24, 2020)
 

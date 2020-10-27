@@ -25,7 +25,9 @@
   debug:
     var: config.stderr_lines
   failed_when: config.rc != 0
-  when: config.stderr_lines is defined
+  when:
+    - config.stderr_lines is defined
+    - config.rc != 0
   listen: (Handler) Run NGINX
 
 - name: (Handler) Start NGINX Amplify agent

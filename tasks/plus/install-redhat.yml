@@ -18,4 +18,5 @@
     disablerepo: "*"
     enablerepo: "nginx-plus"
     update_cache: yes
+  ignore_errors: "{{ ansible_check_mode }}"
   notify: (Handler) Run NGINX

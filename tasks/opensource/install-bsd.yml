@@ -66,12 +66,12 @@
 
 - name: (DragonFlyBSD/HardenedBSD) Install NGINX
   block:
-    - name: Install NGINX package
+    - name: (DragonFlyBSD/HardenedBSD) Install NGINX package
       command: "pkg install www/nginx{{ nginx_version | default('') }}"
       when: nginx_bsd_install_packages | bool
       notify: (Handler) Run NGINX
 
-    - name: Install NGINX port
+    - name: (DragonFlyBSD/HardenedBSD) Install NGINX port
       fail:
         msg: "{{ ansible_facts['system'] }} Install NGINX port not implemented."
       when: not nginx_bsd_install_packages | bool

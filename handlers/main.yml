@@ -17,6 +17,7 @@
   command: nginx -t
   register: config
   ignore_errors: yes
+  check_mode: no
   changed_when: false
   listen: (Handler) Run NGINX
 
@@ -24,7 +25,7 @@
   debug:
     var: config.stderr_lines
   failed_when: config.rc != 0
-  when: config.rc != 0
+  when: config.stderr_lines is defined
   listen: (Handler) Run NGINX
 
 - name: (Handler) Start NGINX Amplify agent

@@ -157,6 +157,7 @@
   when:
     - not pcre_result.stat.exists | bool
     - not nginx_install_source_pcre | bool
+    - not ansible_check_mode | bool
 
 - name: (Centos/RHEL) Install ZLib dependency from package
   yum:
@@ -216,6 +217,7 @@
   when:
     - not zlib_result.stat.exists | bool
     - not nginx_install_source_zlib | bool
+    - not ansible_check_mode | bool
 
 - name: (CentOS/RHEL) Install OpenSSL dependency from package
   yum:
@@ -275,6 +277,7 @@
   when:
     - not openssl_result.stat.exists | bool
     - not nginx_install_source_openssl | bool
+    - not ansible_check_mode | bool
 
 - name: Get NGINX version
   block:
@@ -284,6 +287,7 @@
         return_content: yes
         validate_certs: "{{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '=='))
                         | ternary('no', 'yes') }}"
+      check_mode: no
       register: nginx_versions
 
     - name: Set NGINX mainline version
@@ -430,7 +434,9 @@
       command: rc-update add nginx default
       when: ansible_facts['service_mgr'] == "openrc"
       notify: (Handler) Run NGINX
-  when: not nginx_result.stat.exists
+  when:
+    - not nginx_result.stat.exists | bool
+    - not ansible_check_mode | bool
 
 - name: Cleanup downloads
   file:

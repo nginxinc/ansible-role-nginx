@@ -10,4 +10,5 @@
     state: "{{ nginx_state }}"
     disable_recommends: no
     update_cache: yes
+  ignore_errors: "{{ ansible_check_mode }}"
   notify: (Handler) Run NGINX

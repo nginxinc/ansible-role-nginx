@@ -11,8 +11,9 @@ ENHANCEMENTS:
 BUG FIXES:
 
 *   Prevent TravisCI from trying to build (and failing) NGINX Plus images on external PRs.
-*   Fix naming for SELinux facts dict.
+*   Fix naming for SELinux facts dictionary.
 *   Role now runs correctly when using Ansible's check mode.
+*   Removing the NGINX Plus license in RHEL based distros should no longer return a repository not found error.
 
 ## 0.17.2 (September 24, 2020)
 

@@ -15,16 +15,19 @@
 
 - name: (Handler) Check NGINX
   command: nginx -t
-  register: config
+  register: config_check
   ignore_errors: yes
+  check_mode: no
   changed_when: false
   listen: (Handler) Run NGINX
 
 - name: (Handler) Print NGINX error if syntax check fails
   debug:
-    var: config.stderr_lines
-  failed_when: config.rc != 0
-  when: config.rc != 0
+    var: config_check.stderr_lines
+  failed_when: config_check.rc != 0
+  when:
+    - config_check.stderr_lines is defined
+    - config_check.rc != 0
   listen: (Handler) Run NGINX
 
 - name: (Handler) Start NGINX Amplify agent

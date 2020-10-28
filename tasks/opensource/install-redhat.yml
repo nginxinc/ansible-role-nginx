@@ -30,4 +30,5 @@
     disablerepo: "*"
     enablerepo: nginx
     update_cache: yes
+  ignore_errors: "{{ ansible_check_mode }}"
   notify: (Handler) Run NGINX

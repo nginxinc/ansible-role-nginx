@@ -11,4 +11,5 @@
   apt:
     name: "nginx{{ nginx_version | default('') }}"
     state: "{{ nginx_state }}"
+  ignore_errors: "{{ ansible_check_mode }}"
   notify: (Handler) Run NGINX

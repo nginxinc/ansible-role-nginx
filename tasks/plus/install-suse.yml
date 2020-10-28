@@ -16,4 +16,5 @@
     name: "nginx-plus{{ nginx_version | default('') }}"
     state: "{{ nginx_state }}"
     update_cache: yes
+  ignore_errors: "{{ ansible_check_mode }}"
   notify: (Handler) Run NGINX

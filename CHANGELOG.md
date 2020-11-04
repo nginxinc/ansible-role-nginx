@@ -14,6 +14,7 @@ BUG FIXES:
 *   Fix naming for SELinux facts dictionary.
 *   Role now runs correctly when using Ansible's check mode.
 *   Removing the NGINX Plus license in RHEL based distros should no longer return a repository not found error.
+*   Fix issue when removing NGINX Plus license on some distributions.
 
 ## 0.17.2 (September 24, 2020)
 

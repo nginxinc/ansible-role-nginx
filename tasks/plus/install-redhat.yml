@@ -1,8 +1,8 @@
 ---
-- name: (Amazon Linux/CentOS/Oracle Linux/RHEL) Configure NGINX Plus repository
+- name: (Amazon Linux/CentOS/Oracle Linux/RHEL) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus repository
   yum_repository:
     name: nginx-plus
-    baseurl: "{{ repository }}"
+    baseurl: "{{ nginx_repository | default(lookup('vars', 'nginx_plus_default_repository_' + ((ansible_facts['distribution'] == 'Amazon') | ternary('amazon', 'redhat')))) }}"
     description: NGINX Plus Repository
     sslclientcert: /etc/ssl/nginx/nginx-repo.crt
     sslclientkey: /etc/ssl/nginx/nginx-repo.key
@@ -17,4 +17,5 @@
     state: "{{ nginx_state }}"
     update_cache: yes
   ignore_errors: "{{ ansible_check_mode }}"
+  when: nginx_license_status is not defined
   notify: (Handler) Run NGINX

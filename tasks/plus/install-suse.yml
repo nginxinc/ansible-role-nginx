@@ -4,11 +4,12 @@
     src: /etc/ssl/nginx
     dest: /etc/ssl/nginx/nginx-repo-bundle.crt
     mode: 0444
+  when: nginx_license_status is not defined
 
-- name: (SLES) Configure NGINX Plus repository
+- name: (SLES) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus repository
   zypper_repository:
     name: nginx-plus
-    repo: "{{ repository }}"
+    repo: "{{ nginx_repository | default(nginx_plus_default_repository_sles) }}"
     state: "{{ nginx_license_status | default ('present') }}"
 
 - name: (SLES) Install NGINX Plus
@@ -17,4 +18,5 @@
     state: "{{ nginx_state }}"
     update_cache: yes
   ignore_errors: "{{ ansible_check_mode }}"
+  when: nginx_license_status is not defined
   notify: (Handler) Run NGINX

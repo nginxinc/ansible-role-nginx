@@ -1,5 +1,5 @@
 ---
-- name: (FreeBSD) Set up NGINX Plus license verification
+- name: (FreeBSD) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus license verification
   blockinfile:
     path: /usr/local/etc/pkg.conf
     block: |
@@ -8,13 +8,13 @@
       SSL_CLIENT_KEY_FILE: "/etc/ssl/nginx/nginx-repo.key" }
     state: "{{ nginx_license_status | default ('present') }}"
 
-- name: (FreeBSD) Configure NGINX Plus repository
+- name: (FreeBSD) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus repository
   blockinfile:
     path: /etc/pkg/nginx-plus.conf
     create: yes
     block: |
       nginx-plus: {
-      URL: {{ repository }}
+      URL: {{ nginx_repository | default(nginx_plus_default_repository_freebsd) }}
       ENABLED: yes
       MIRROR_TYPE: SRV
       }
@@ -25,4 +25,5 @@
   pkgng:
     name: "nginx-plus{{ nginx_version | default('') }}"
     state: "{{ nginx_state }}"
+  when: nginx_license_status is not defined
   notify: (Handler) Run NGINX

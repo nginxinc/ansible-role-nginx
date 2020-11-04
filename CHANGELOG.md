@@ -7,6 +7,7 @@ ENHANCEMENTS:
 *   Add survey to README.
 *   Improve README structure and use tables where relevant.
 *   Update Ansible (now Ansible base) to `2.10.2`, Ansible (now Ansible Community Distribution) to `2.10.0`, and yamllint to `1.25.0`.
+*   Optimize NGINX Plus install/remove tasks.
 
 BUG FIXES:
 
@@ -15,6 +16,7 @@ BUG FIXES:
 *   Role now runs correctly when using Ansible's check mode.
 *   Removing the NGINX Plus license in RHEL based distros should no longer return a repository not found error.
 *   Fix issue when removing NGINX Plus license on some distributions.
+*   Fix Amazon Linux NGINX Plus install while at it.
 
 ## 0.17.2 (September 24, 2020)
 

@@ -38,7 +38,7 @@
           tags: nginx_setup_license
 
         - name: Install NGINX Plus
-          include_tasks: "{{ role_path }}/tasks/plus/install-plus.yml"
+          include_tasks: "{{ role_path }}/tasks/plus/install-{{ ansible_facts['os_family'] | lower }}.yml"
           when: nginx_type == "plus"
           tags: nginx_install_plus
 

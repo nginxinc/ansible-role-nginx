@@ -6,7 +6,7 @@ ENHANCEMENTS:
 
 *   Add survey to README.
 *   Improve README structure and use tables where relevant.
-*   Update Ansible (now Ansible base) to `2.10.2`, Ansible (now Ansible Community Distribution) to `2.10.0`, and yamllint to `1.25.0`.
+*   Update Ansible (now Ansible base) to `2.10.3`, Ansible (now Ansible Community Distribution) to `2.10.3`, Ansible Lint to `4.3.7`, Molecule to `3.1.5`, and yamllint to `1.25.0`.
 *   Optimize NGINX Plus install/remove tasks.
 
 BUG FIXES:

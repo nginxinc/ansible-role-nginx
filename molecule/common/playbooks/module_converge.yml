@@ -28,6 +28,8 @@
           - brotli
           - geoip
           - image-filter
-          - njs
+          - name: njs
+            # version: =1.19.4+0.4.4-1~bionic
+            state: present
           - perl
           - xslt

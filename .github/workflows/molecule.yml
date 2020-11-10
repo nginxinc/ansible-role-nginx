@@ -1,0 +1,63 @@
+---
+name: Molecule
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    name: ${{ matrix.scenarios.name }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        scenarios:
+          - name: (Debian/Ubuntu) Install specific version
+            scenario: default
+          - name: (Alpine Linux) Install specific version
+            scenario: default_alpine
+          - name: (CentOS) Install specific version
+            scenario: default_centos
+          - name: (Debian/Ubuntu) Cleanup config and try to install modules
+            scenario: module
+          - name: (Alpine Linux) Cleanup config and try to install modules
+            scenario: module_alpine
+          - name: (CentOS) Cleanup config and try to install modules
+            scenario: module_centos
+          - name: (Debian/Ubuntu) Install stable branch and push a config
+            scenario: stable_push
+          - name: (Alpine Linux) Install stable branch and push a config
+            scenario: stable_push_alpine
+          - name: (CentOS) Install stable branch and push a config
+            scenario: stable_push_centos
+          - name: (Debian/Ubuntu) Test config templates
+            scenario: template
+          - name: (Alpine Linux) Test config templates
+            scenario: template_alpine
+          - name: (CentOS) Test config templates
+            scenario: template_centos
+          - name: (Debian/Ubuntu) Install NGINX Unit
+            scenario: unit
+          - name: (Alpine Linux) Install NGINX Unit
+            scenario: unit_alpine
+          - name: (CentOS) Install NGINX Unit
+            scenario: unit_centos
+          - name: (Debian/Ubuntu) Build from source
+            scenario: source
+          - name: (Alpine Linux) Build from source
+            scenario: source_alpine
+          - name: (CentOS) Build from source
+            scenario: source_centos
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          path: "${{ github.repository }}"
+
+      - name: Molecule
+        uses: gofrolist/molecule-action@v2.0.1
+        with:
+          molecule_args: --scenario-name ${{ matrix.scenarios.scenario }}

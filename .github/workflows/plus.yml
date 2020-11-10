@@ -1,0 +1,34 @@
+---
+name: Molecule NGINX Plus
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    name: ${{ matrix.scenarios.name }}
+    runs-on: ubuntu-latest
+    if: "! (github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork)"
+    strategy:
+      fail-fast: false
+      matrix:
+        scenarios:
+          - name: (Debian/Ubuntu) Install NGINX Plus
+            scenario: plus
+          - name: (Alpine Linux) Install NGINX Plus
+            scenario: plus_alpine
+          - name: (CentOS) Install NGINX Plus
+            scenario: plus_centos
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          path: "${{ github.repository }}"
+
+      - name: Molecule
+        uses: gofrolist/molecule-action@v2.0.1
+        with:
+          molecule_args: --scenario-name ${{ matrix.scenarios.scenario }}

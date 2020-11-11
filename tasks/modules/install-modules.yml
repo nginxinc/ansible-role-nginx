@@ -8,7 +8,7 @@
 
 - name: Install NGINX modules
   package:
-    name: "nginx-{{ (nginx_type == 'plus') | ternary('plus-', '') }}module-{{ item.name | default(item) }}
+    name: "nginx-{{ (nginx_type == 'plus') | ternary('plus-', '') }}module-{{ item.name | default(item) }}\
           {{ item.version | default(nginx_version) | default('') }}"
     state: "{{ item.state | default('present') }}"
   loop: "{{ nginx_modules }}"

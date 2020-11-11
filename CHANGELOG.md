@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.17.4 (Unreleased)
+## 0.17.4 (November 12, 2020)
 
 ENHANCEMENTS:
 

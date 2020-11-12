@@ -111,8 +111,3 @@
     - nginx_amplify_api_key is defined
     - nginx_amplify_api_key | length > 0
   tags: nginx_install_amplify
-
-- name: (DEPRECATED) Install NGINX Unit
-  include_tasks: "{{ role_path }}/tasks/unit/install-unit.yml"
-  when: nginx_unit_enable | bool
-  tags: nginx_install_unit

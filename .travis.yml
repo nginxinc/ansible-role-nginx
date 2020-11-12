@@ -54,15 +54,6 @@ jobs:
     - name: (CentOS) Test config templates
       env:
         scenario: template_centos
-    - name: (Debian/Ubuntu) Install NGINX Unit
-      env:
-        scenario: unit
-    - name: (Alpine Linux) Install NGINX Unit
-      env:
-        scenario: unit_alpine
-    - name: (CentOS) Install NGINX Unit
-      env:
-        scenario: unit_centos
     - name: (Debian/Ubuntu) Build from source
       env:
         scenario: source

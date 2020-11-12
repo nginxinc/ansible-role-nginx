@@ -11,12 +11,12 @@ BREAKING CHANGES:
 ENHANCEMENTS:
 
 *   Implement a new syntax to specify modules to be installed. You can now use the following format if you want further fine grained control over how you install modules:
-```yaml
-- name: njs  # Required
-  state: present  # Optional
-  version: =1.19.4+0.4.4-1~bionic  # Optional
-```
-The old method of specifying modules (using a list of names) still works as expected.
+    ```yaml
+    - name: njs  # Required
+      state: present  # Optional
+      version: =1.19.4+0.4.4-1~bionic  # Optional
+    ```
+    The old method of specifying modules (using a list of names) still works as expected.
 
 ## 0.17.3 (November 9, 2020)
 

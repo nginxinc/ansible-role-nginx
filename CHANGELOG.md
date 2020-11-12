@@ -1,18 +1,34 @@
 # Changelog
 
-## 0.17.3 (Unreleased)
+## 0.17.4 (November 12, 2020)
+
+ENHANCEMENTS:
+
+*   Implement a new syntax to specify modules to be installed. You can now use the following format if you want further fine grained control over how you install modules:
+```yaml
+- name: njs  # Required
+  state: present  # Optional
+  version: =1.19.4+0.4.4-1~bionic  # Optional
+```
+The old method of specifying modules (using a list of names) still works as expected.
+
+## 0.17.3 (November 9, 2020)
 
 ENHANCEMENTS:
 
 *   Add survey to README.
 *   Improve README structure and use tables where relevant.
-*   Update Ansible (now Ansible base) to `2.10.2`, Ansible (now Ansible Community Distribution) to `2.10.0`, and yamllint to `1.25.0`.
+*   Update Ansible (now Ansible base) to `2.10.3`, Ansible (now Ansible Community Distribution) to `2.10.3`, Ansible Lint to `4.3.7`, Molecule to `3.1.5`, and yamllint to `1.25.0`.
+*   Optimize NGINX Plus install/remove tasks.
 
 BUG FIXES:
 
 *   Prevent TravisCI from trying to build (and failing) NGINX Plus images on external PRs.
-*   Fix naming for SELinux facts dict.
+*   Fix naming for SELinux facts dictionary.
 *   Role now runs correctly when using Ansible's check mode.
+*   Removing the NGINX Plus license in RHEL based distros should no longer return a repository not found error.
+*   Fix issue when removing NGINX Plus license on some distributions.
+*   Fix Amazon Linux NGINX Plus install while at it.
 
 ## 0.17.2 (September 24, 2020)
 

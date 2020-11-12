@@ -6,27 +6,28 @@
     - ansible_facts['distribution'] == "CentOS"
     - '"geoip" in nginx_modules'
 
-- name: Install NGINX Modules
+- name: Install NGINX modules
   package:
-    name: "nginx-{{ (nginx_type == 'plus') | ternary('plus-', '') }}module-{{ item }}{{ nginx_version | default('') }}"
-    state: present
+    name: "nginx-{{ (nginx_type == 'plus') | ternary('plus-', '') }}module-{{ item.name | default(item) }}\
+          {{ item.version | default(nginx_version) | default('') }}"
+    state: "{{ item.state | default('present') }}"
   loop: "{{ nginx_modules }}"
   when:
-    - (item in nginx_modules_list and nginx_type == 'opensource')
-      or (item in nginx_plus_modules_list and nginx_type == 'plus')
-    - not (item == "auth-spnego")
+    - (item.name | default(item) in nginx_modules_list and nginx_type == 'opensource')
+      or (item.name | default(item) in nginx_plus_modules_list and nginx_type == 'plus')
+    - not (item.name | default(item) == "auth-spnego")
       or not (ansible_facts['os_family'] == "Alpine" and (ansible_facts['distribution_version'] | regex_search('^[0-9]+\\.[0-9]+') is version('3.8', '==')))
-    - not (item == "geoip")
+    - not (item.name | default(item) == "geoip")
       or not ((ansible_facts['os_family'] == "RedHat" and ansible_facts['distribution_major_version'] is version('8', '=='))
       or (ansible_facts['os_family'] == "FreeBSD"))
-    - not (item == "brotli")
+    - not (item.name | default(item) == "brotli")
       or not ((ansible_facts['os_family'] == "Alpine")
       or (ansible_facts['os_family'] == "RedHat" and ansible_facts['distribution_major_version'] is version('8', '<'))
       or (ansible_facts['os_family'] == "Debian" and ansible_facts['distribution_major_version'] is version('9', '=='))
       or (ansible_facts['os_family'] == "Suse" and ansible_facts['distribution_major_version'] is version('12', '<'))
       or (ansible_facts['distribution'] == "Amazon")
       or (ansible_facts['distribution'] == "OracleLinux"))
-    - not (item == "geoip2") or not (ansible_facts['os_family'] == "Suse")
-    - not (item == "opentracing")
+    - not (item.name | default(item) == "geoip2") or not (ansible_facts['os_family'] == "Suse")
+    - not (item.name | default(item) == "opentracing")
       or not ((ansible_facts['os_family'] == "Suse" and ansible_facts['distribution_major_version'] is version('12', '=='))
       or (ansible_facts['os_family'] == "RedHat" and ansible_facts['distribution_major_version'] is version('6', '==')))

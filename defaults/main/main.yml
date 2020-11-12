@@ -88,7 +88,9 @@ nginx_remove_license: true
 
 # Install NGINX Modules.
 # You can select any of the modules listed below. Beware of NGINX Plus only modules (these are marked).
-# Default is no modules.
+# Format is list with either the module name or a dictionary (see njs for an example).
+# When using a dictionary, the default value for state is present, and for version it's nginx_version if specified.
+# Default is an empty list (no modules are installed).
 nginx_modules: []
   # - auth-spnego  # NGINX Plus
   # - brotli  # NGINX Plus
@@ -99,7 +101,9 @@ nginx_modules: []
   # - headers-more  # NGINX Plus
   # - image-filter
   # - lua  # NGINX Plus
-  # - njs
+  # - name: njs  # Required
+  #   state: present  # Optional
+  #   version: =1.19.4+0.4.4-1~bionic  # Optional
   # - opentracing  # NGINX Plus
   # - passenger  # NGINX Plus
   # - perl  # NGINX Plus

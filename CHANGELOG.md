@@ -87,7 +87,7 @@ BUG FIXES:
 
 BREAKING CHANGES:
 
-*   The Debian and Ubuntu repositories have slightly changed. You may run into some duplication issues when running the role on a preexisting target that already has had NGINX installed using the role. To fix this, manually remove the old repository source.
+The Debian and Ubuntu repositories have slightly changed. You may run into some duplication issues when running the role on a preexisting target that already has had NGINX installed using the role. To fix this, manually remove the old repository source.
 
 ENHANCEMENTS:
 
@@ -97,11 +97,11 @@ ENHANCEMENTS:
 
 FEATURES:
 
-*   TravisCI now always uses the latest version of Docker.
+TravisCI now always uses the latest version of Docker.
 
 BUG FIXES:
 
-*   Building OpenSSL from source should now work properly in CentOS 8.
+Building OpenSSL from source should now work properly in CentOS 8.
 
 ## 0.15.0 (August 20, 2020)
 
@@ -168,7 +168,7 @@ This is a relatively minor release, but it includes a potential breaking change 
 
 BREAKING CHANGES:
 
-*   The NGINX Controller agent can no longer be installed using this role. Please use the Ansible collection linked in the README.
+The NGINX Controller agent can no longer be installed using this role. Please use the Ansible collection linked in the README.
 
 FEATURES:
 
@@ -219,20 +219,20 @@ BUG FIXES:
 
 FEATURES:
 
-*   Improve NGINX http templating - following parameters are now supported:
-    *   Websockets.
-    *   Basic authentication.
-    *   Proxy cache.
-    *   Proxy redirect.
-    *   Proxy timeouts.
-    *   SSL.
-    *   Root (in server context).
-    *   Add basic NGINX stream templating.
-    *   Add support for RHEL 8 and Alpine Linux.
+Improve NGINX http templating - following parameters are now supported:
+*   Websockets.
+*   Basic authentication.
+*   Proxy cache.
+*   Proxy redirect.
+*   Proxy timeouts.
+*   SSL.
+*   Root (in server context).
+*   Add basic NGINX stream templating.
+*   Add support for RHEL 8 and Alpine Linux.
 
 BUG FIXES:
 
-*   Fix module installation tasks.
+Fix module installation tasks.
 
 ## 0.11.0 (Januray 14, 2019)
 
@@ -256,13 +256,13 @@ BUG FIXES:
 
 BUG FIXES:
 
-*   Fix HTML template to use correct variable name.
+Fix HTML template to use correct variable name.
 
 ## 0.10.0 (November 26, 2018)
 
 FEATURES:
 
-*   Improve templating support for health checks, multiple location blocks, and auto indexing.
+Improve templating support for health checks, multiple location blocks, and auto indexing.
 
 BUG FIXES:
 
@@ -287,13 +287,13 @@ FEATURES:
 
 BUG FIXES:
 
-*   Correct spelling of name in `tasks/prerequisites/setup-debian.yml`.
+Correct spelling of name in `tasks/prerequisites/setup-debian.yml`.
 
 ## 0.7.1 (August 21, 2018)
 
 FEATURES:
 
-*   Add enabled parameter to NGINX and NGINX Unit handlers.
+Add enabled parameter to NGINX and NGINX Unit handlers.
 
 ## 0.7.0 (August 4, 2018)
 
@@ -319,7 +319,7 @@ FEATURES:
 
 FEATURES:
 
-*   Add support for NGINX Unit.
+Add support for NGINX Unit.
 
 ## 0.4.0 (May 25, 2018)
 
@@ -332,17 +332,17 @@ FEATURES:
 
 FEATURES:
 
-*   Improve Travis CI testing strategy.
+Improve Travis CI testing strategy.
 
 BUG FIXES:
 
-*   Fix templating and push tasks.
+Fix templating and push tasks.
 
 ## 0.2.0 (April 12, 2018)
 
 FEATURES:
 
-*   Add support for all first party NGINX modules.
+Add support for all first party NGINX modules.
 
 BUG FIXES:
 

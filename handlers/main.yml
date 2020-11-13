@@ -35,17 +35,5 @@
     name: amplify-agent
     state: started
 
-- name: (DEPRECATED Handler - Debian/Ubuntu/CentOS/RedHat) Start NGINX Unit
-  service:
-    name: unit
-    state: started
-    enabled: yes
-
-- name: (DEPRECATED Handler - FreeBSD) Start NGINX Unit
-  service:
-    name: unitd
-    state: started
-    enabled: yes
-
 - name: (Handler) Run logrotate
   command: logrotate -f /etc/logrotate.d/nginx

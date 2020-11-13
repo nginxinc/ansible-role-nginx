@@ -6,7 +6,7 @@
 
 # Ansible NGINX Role
 
-This role installs NGINX Open Source, NGINX Plus, the NGINX Amplify agent, or NGINX Unit on your target host.
+This role installs NGINX Open Source, NGINX Plus, or the NGINX Amplify agent on your target host.
 
 **Note:** This role is still in active development. There may be unidentified issues and the role variables may change as development continues.
 

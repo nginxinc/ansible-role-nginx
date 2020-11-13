@@ -18,7 +18,7 @@
 - name: Set up signing keys
   include_tasks: "{{ role_path }}/tasks/keys/setup-keys.yml"
   when: (nginx_install | bool and nginx_install_from == "nginx_repository")
-        or nginx_amplify_enable | bool or nginx_unit_enable | bool
+        or nginx_amplify_enable | bool
   tags: nginx_key
 
 - name: Install and Configure NGINX

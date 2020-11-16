@@ -13,32 +13,30 @@ nginx_plus_distributions: [
 ]
 
 # Default NGINX signing key
-nginx_default_signing_key:
-  rsa_pub: https://nginx.org/keys/nginx_signing.rsa.pub
-  pgp: https://nginx.org/keys/nginx_signing.key
+nginx_default_signing_key_rsa_pub: https://nginx.org/keys/nginx_signing.rsa.pub
+nginx_default_signing_key_pgp: https://nginx.org/keys/nginx_signing.key
 
 # Default NGINX Open Source repositories
-nginx_default_repository:
-  alpine: "https://nginx.org/packages/{{ (nginx_branch == 'mainline')
-          | ternary('mainline/', '') }}alpine/v{{ ansible_facts['distribution_version'] | regex_search('^[0-9]+\\.[0-9]+') }}/main"
-  debian:
-    - "deb [arch=amd64] https://nginx.org/packages/{{ (nginx_branch == 'mainline')
-      | ternary('mainline/', '') }}{{ ansible_facts['distribution'] | lower }}/ {{ ansible_facts['distribution_release'] }} nginx"
-    - "deb-src https://nginx.org/packages/{{ (nginx_branch == 'mainline')
-      | ternary('mainline/', '') }}{{ ansible_facts['distribution'] | lower }}/ {{ ansible_facts['distribution_release'] }} nginx"
-  redhat: "https://nginx.org/packages/{{ (nginx_branch == 'mainline')
-          | ternary('mainline/', '') }}{{ (ansible_facts['distribution'] == 'CentOS')
-          | ternary('centos', 'rhel') }}/{{ ansible_facts['distribution_major_version'] }}/$basearch/"
-  suse: "https://nginx.org/packages/{{ (nginx_branch == 'mainline')
-        | ternary('mainline/', '') }}sles/{{ ansible_facts['distribution_major_version'] }}"
+nginx_default_repository_alpine: "https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}\
+                                  alpine/v{{ ansible_facts['distribution_version'] | regex_search('^[0-9]+\\.[0-9]+') }}/main"
+nginx_default_repository_debian:
+  - "deb [arch=amd64] https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}\
+    {{ ansible_facts['distribution'] | lower }}/ {{ ansible_facts['distribution_release'] }} nginx"
+  - "deb-src https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}\
+    {{ ansible_facts['distribution'] | lower }}/ {{ ansible_facts['distribution_release'] }} nginx"
+nginx_default_repository_redhat: "https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}\
+                                  {{ (ansible_facts['distribution'] == 'CentOS') | ternary('centos', 'rhel') }}/\
+                                  {{ ansible_facts['distribution_major_version'] }}/$basearch/"
+nginx_default_repository_sles: "https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}\
+                                sles/{{ ansible_facts['distribution_major_version'] }}"
 
 # Default NGINX Plus repositories
 nginx_plus_default_repository_alpine: "https://plus-pkgs.nginx.com/alpine/v{{ ansible_facts['distribution_version'] | regex_search('^[0-9]+\\.[0-9]+') }}/main"
 nginx_plus_default_repository_amazon: "https://plus-pkgs.nginx.com/amzn{{ (ansible_facts['distribution_major_version'] is version('2', '==')) | ternary('2', '') }}/$releasever/$basearch"
 nginx_plus_default_repository_debian: "deb [arch=amd64] https://plus-pkgs.nginx.com/{{ ansible_facts['distribution'] | lower }} {{ ansible_facts['distribution_release'] }} nginx-plus"
 nginx_plus_default_repository_freebsd: "https://plus-pkgs.nginx.com/freebsd/${ABI}/latest"
-nginx_plus_default_repository_redhat: "https://plus-pkgs.nginx.com/{{ (ansible_facts['distribution'] == 'CentOS')
-                                      | ternary('centos', 'rhel') }}/{{ (ansible_facts['distribution_version'] is version('7.4', '>=')
+nginx_plus_default_repository_redhat: "https://plus-pkgs.nginx.com/{{ (ansible_facts['distribution'] == 'CentOS') | ternary('centos', 'rhel') }}/\
+                                      {{ (ansible_facts['distribution_version'] is version('7.4', '>=')
                                       and ansible_facts['distribution_version'] is version('8', '<')) | ternary('7.4', ansible_facts['distribution_major_version']) }}/$basearch/"
 nginx_plus_default_repository_sles: "https://plus-pkgs.nginx.com/sles/{{ ansible_facts['distribution_major_version'] }}\
                                     ?ssl_clientcert=/etc/ssl/nginx/nginx-repo-bundle.crt&ssl_verify=peer"

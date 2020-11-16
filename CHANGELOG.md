@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.18.1 (Unreleased)
+
+ENHANCEMENTS:
+
+Switch NGINX keysites and OSS default repository data from a dictionary to individual variables.
+
 ## 0.18.0 (November 13, 2020)
 
 BREAKING CHANGES:

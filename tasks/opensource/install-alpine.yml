@@ -3,12 +3,12 @@
   lineinfile:
     path: /etc/apk/repositories
     insertafter: EOF
-    line: "{{ repository }}"
+    line: "{{ nginx_repository | default(nginx_default_repository_alpine) }}"
 
 - name: (Alpine Linux) Install NGINX
   apk:
     name: "nginx{{ nginx_version | default('') }}"
-    repository: "{{ repository }}"
+    repository: "{{ nginx_repository | default(nginx_default_repository_alpine) }}"
     state: "{{ nginx_state }}"
     update_cache: yes
   ignore_errors: "{{ ansible_check_mode }}"

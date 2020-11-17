@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.18.1 (November 17, 2020)
+
+ENHANCEMENTS:
+
+Switch NGINX keysites and OSS default repository data from a dictionary to individual variables to prevent potential issues arisen from Jinja2 dictionary run-time evaluations.
+
 ## 0.18.0 (November 13, 2020)
 
 BREAKING CHANGES:

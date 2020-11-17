@@ -2,7 +2,7 @@
 - name: (CentOS/RHEL 6/7) Configure NGINX repository
   yum_repository:
     name: nginx
-    baseurl: "{{ repository }}"
+    baseurl: "{{ nginx_repository | default(nginx_default_repository_redhat) }}"
     description: NGINX Repository
     enabled: yes
     gpgcheck: yes
@@ -15,7 +15,7 @@
     create: yes
     block: |
       [nginx]
-      baseurl = {{ repository }}
+      baseurl = {{ nginx_repository | default(nginx_default_repository_redhat) }}
       enabled = 1
       gpgcheck = 1
       name = NGINX Repository

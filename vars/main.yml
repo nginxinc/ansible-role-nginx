@@ -27,7 +27,7 @@ nginx_default_repository_debian:
 nginx_default_repository_redhat: "https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}\
                                   {{ (ansible_facts['distribution'] == 'CentOS') | ternary('centos', 'rhel') }}/\
                                   {{ ansible_facts['distribution_major_version'] }}/$basearch/"
-nginx_default_repository_sles: "https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}\
+nginx_default_repository_suse: "https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}\
                                 sles/{{ ansible_facts['distribution_major_version'] }}"
 
 # Default NGINX Plus repositories
@@ -38,7 +38,7 @@ nginx_plus_default_repository_freebsd: "https://plus-pkgs.nginx.com/freebsd/${AB
 nginx_plus_default_repository_redhat: "https://plus-pkgs.nginx.com/{{ (ansible_facts['distribution'] == 'CentOS') | ternary('centos', 'rhel') }}/\
                                       {{ (ansible_facts['distribution_version'] is version('7.4', '>=')
                                       and ansible_facts['distribution_version'] is version('8', '<')) | ternary('7.4', ansible_facts['distribution_major_version']) }}/$basearch/"
-nginx_plus_default_repository_sles: "https://plus-pkgs.nginx.com/sles/{{ ansible_facts['distribution_major_version'] }}\
+nginx_plus_default_repository_suse: "https://plus-pkgs.nginx.com/sles/{{ ansible_facts['distribution_major_version'] }}\
                                     ?ssl_clientcert=/etc/ssl/nginx/nginx-repo-bundle.crt&ssl_verify=peer"
 
 # Alpine dependencies

@@ -2,13 +2,7 @@
 - name: Install NGINX in Linux systems
   block:
     - name: Install NGINX from repository
-      block:
-        - name: Set NGINX repository
-          set_fact:
-            repository: "{{ nginx_repository | default(nginx_default_repository[ansible_facts['os_family'] | lower]) }}"
-
-        - name: Install NGINX from repository
-          include_tasks: "{{ role_path }}/tasks/opensource/install-{{ ansible_facts['os_family'] | lower }}.yml"
+      include_tasks: "{{ role_path }}/tasks/opensource/install-{{ ansible_facts['os_family'] | lower }}.yml"
       when: nginx_install_from == "nginx_repository"
 
     - name: Install NGINX from source

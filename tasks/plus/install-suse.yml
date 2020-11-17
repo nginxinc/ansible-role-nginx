@@ -9,7 +9,7 @@
 - name: (SLES) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus repository
   zypper_repository:
     name: nginx-plus
-    repo: "{{ nginx_repository | default(nginx_plus_default_repository_sles) }}"
+    repo: "{{ nginx_repository | default(nginx_plus_default_repository_suse) }}"
     state: "{{ nginx_license_status | default ('present') }}"
 
 - name: (SLES) Install NGINX Plus

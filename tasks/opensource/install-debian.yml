@@ -5,7 +5,7 @@
     repo: "{{ item }}"
     update_cache: yes
     mode: 0644
-  loop: "{{ repository }}"
+  loop: "{{ nginx_repository | default(nginx_default_repository_debian) }}"
 
 - name: (Debian/Ubuntu) Install NGINX
   apt:

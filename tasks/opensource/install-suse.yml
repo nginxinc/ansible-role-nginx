@@ -2,7 +2,7 @@
 - name: (SLES) Configure NGINX repository
   zypper_repository:
     name: "nginx-{{ nginx_branch }}"
-    repo: "{{ repository }}"
+    repo: "{{ nginx_repository | default(nginx_default_repository_suse) }}"
 
 - name: (SLES) Install NGINX
   zypper:

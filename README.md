@@ -6,7 +6,7 @@
 
 # Ansible NGINX Role
 
-This role installs NGINX Open Source, NGINX Plus, the NGINX Amplify agent, or NGINX Unit on your target host.
+This role installs NGINX Open Source, NGINX Plus, or the NGINX Amplify agent on your target host.
 
 **Note:** This role is still in active development. There may be unidentified issues and the role variables may change as development continues.
 
@@ -15,7 +15,7 @@ This role installs NGINX Open Source, NGINX Plus, the NGINX Amplify agent, or NG
 With the advent of Ansible collections and the release of the [NGINX Core Ansible collection](https://github.com/nginxinc/ansible-collection-nginx), the decision has been made to split this role into three smaller roles and reduce the overhead of this role:
 *   The NGINX Ansible role will keep working as is and be used to install and setup NGINX.
 *   **The NGINX configuration functionalities included in this role will be removed in an upcoming release at some stage after December 1st 2020.** There now is a separate role to manage and create NGINX configurations available [here](https://github.com/nginxinc/ansible-role-nginx-config). Any new issues or PRs related to configuring NGINX should be submitted in the new NGINX Config repository. New issues or PRs related to configuring NGINX submitted in this repository will not be worked on.
-*   **The NGINX Unit functionalities included in this role will be removed in an upcoming release at some stage after November 1st 2020.** There now is a separate role to install NGINX Unit available [here](https://github.com/nginxinc/ansible-role-nginx-unit). Any new issues or PRs related to NGINX Unit should be submitted in the new NGINX Unit repository. New issues or PRs related to NGINX Unit submitted in this repository will not be worked on.
+*   **The NGINX Unit functionalities included in this role have been removed as of release 0.18.0.** There now is a separate role to install NGINX Unit available [here](https://github.com/nginxinc/ansible-role-nginx-unit). Any new issues or PRs related to NGINX Unit should be submitted in the new NGINX Unit repository. New issues or PRs related to NGINX Unit submitted in this repository will not be worked on. This disclaimer will be removed in a future release.
 
 ## Requirements
 
@@ -41,7 +41,7 @@ Use `git clone https://github.com/nginxinc/ansible-role-nginx.git` to pull the l
 
 ## Platforms
 
-The NGINX Ansible role supports all platforms supported by [NGINX Open Source](https://nginx.org/en/linux_packages.html), [NGINX Plus](https://docs.nginx.com/nginx/technical-specs/), the [NGINX Amplify agent](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-faq.md#21-what-operating-systems-are-supported), and [NGINX Unit](https://unit.nginx.org/installation/#official-packages):
+The NGINX Ansible role supports all platforms supported by [NGINX Open Source](https://nginx.org/en/linux_packages.html), [NGINX Plus](https://docs.nginx.com/nginx/technical-specs/), and the [NGINX Amplify agent](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-faq.md#21-what-operating-systems-are-supported):
 
 ### NGINX Open Source
 
@@ -130,30 +130,6 @@ Ubuntu:
   - focal
 ```
 
-### NGINX Unit
-
-```yaml
-Amazon Linux:
-  - 2018.03
-Amazon Linux 2:
-  - any
-CentOS:
-  - 6
-  - 7
-  - 8
-Debian:
-  - stretch
-  - buster
-Red Hat:
-  - 6
-  - 7
-  - 8
-Ubuntu:
-  - xenial
-  - bionic
-  - focal
-```
-
 **Note:** You can also use this role to compile NGINX Open Source from source, install NGINX Open Source on compatible yet unsupported platforms, or install NGINX Open Source on BSD systems at your own risk.
 
 ## Role Variables
@@ -168,7 +144,6 @@ This role has multiple variables. The descriptions and defaults for all these va
 |**[`upload.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/upload.yml)**|NGINX configuration/HTML/SSL upload variables|
 |**[`linux.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/linux.yml)**|Linux installation variables|
 |**[`bsd.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/bsd.yml)**|BSD installation variables|
-|**[`unit.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/unit.yml)**|NGINX Unit installation variables|
 
 Similarly, descriptions and defaults for preset variables can be found in the **[`vars/`](https://github.com/nginxinc/ansible-role-nginx/blob/main/vars/)** folder in the following files:
 
@@ -188,7 +163,6 @@ Working functional playbook examples can be found in the **[`molecule/common/pla
 |**[`source_converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/common/playbooks/source_converge.yml)**|Install NGINX from source|
 |**[`stable_push_converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/common/playbooks/stable_push_converge.yml)**|Install NGINX using the stable branch and push a preexisting config from your system to your NGINX instance|
 |**[`template_converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/common/playbooks/template_converge.yml)**|Use the NGINX configuration templating variables to create an NGINX configuration file|
-|**[`unit_converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/common/playbooks/unit_converge.yml)**|Install NGINX Unit|
 
 Do note that if you install this repository via Ansible Galaxy, you will have to replace the role variable in the sample playbooks from `ansible-role-nginx` to `nginxinc.nginx`.
 

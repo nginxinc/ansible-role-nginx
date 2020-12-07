@@ -6,6 +6,10 @@ ENHANCEMENTS:
 
 Switch NGINX keysites and OSS default repository data from a dictionary to individual variables to prevent potential issues arisen from Jinja2 dictionary run-time evaluations.
 
+BUG FIXES:
+
+Fix issue whereas SELinux state would not be correctly set back to `enforcing` when `nginx_selinux: true`.
+
 ## 0.18.0 (November 13, 2020)
 
 BREAKING CHANGES:

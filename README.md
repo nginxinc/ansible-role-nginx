@@ -47,19 +47,16 @@ The NGINX Ansible role supports all platforms supported by [NGINX Open Source](h
 
 ```yaml
 Alpine:
-  - 3.9
   - 3.10
   - 3.11
   - 3.12
 CentOS:
-  - 6
   - 7.4+
   - 8
 Debian:
   - stretch
   - buster
 Red Hat:
-  - 6
   - 7.4+
   - 8
 SUSE/SLES:
@@ -76,15 +73,14 @@ Ubuntu:
 
 ```yaml
 Alpine:
-  - 3.9
   - 3.10
   - 3.11
+  - 3.12
 Amazon Linux:
   - 2018.03
 Amazon Linux 2:
   - any
 CentOS:
-  - 6.5+
   - 7.4+
   - 8
 Debian:
@@ -97,7 +93,6 @@ Oracle Linux:
   - 6.5+
   - 7.4+
 Red Hat:
-  - 6.5+
   - 7.4+
   - 8
 SUSE/SLES:
@@ -116,13 +111,11 @@ Ubuntu:
 Amazon Linux:
   - 2017.09
 CentOS:
-  - 6
   - 7
 Debian:
   - jessie
   - stretch
 Red Hat:
-  - 6
   - 7
 Ubuntu:
   - xenial

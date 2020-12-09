@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.18.2 (Unreleased)
+
+ENHANCEMENTS:
+
+*   Update Molecule to `3.2.0` and Docker Python SDK to `4.4.0`.
+*   Add Alpine `3.12` to supported platforms for NGINX Plus.
+*   Remove Alpine `3.9` and CentOS/RHEL `6` from supported platforms due to EOL.
+
 ## 0.18.1 (November 17, 2020)
 
 ENHANCEMENTS:

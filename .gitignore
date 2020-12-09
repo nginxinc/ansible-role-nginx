@@ -5,13 +5,16 @@
 *~
 \#*
 
-# OS Specific
+# OS Specific #
+###############
 Thumbs.db
 .DS_Store
 .vscode
 
-# Ansible specific
+# Ansible specific #
+####################
 *.retry
 
-# Python specific
+# Python specific #
+###################
 __pycache__

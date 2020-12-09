@@ -73,8 +73,8 @@ install:
   - pip install ansible==2.10.3
   - pip install ansible-lint==4.3.7
   - pip install yamllint==1.25.0
-  - pip install 'molecule[docker]'==3.1.5
-  - pip install docker==4.3.1
+  - pip install 'molecule[docker]'==3.2.0
+  - pip install docker==4.4.0
 script:
   - travis_wait 50 molecule test -s $scenario
 notifications:

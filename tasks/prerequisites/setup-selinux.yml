@@ -21,8 +21,6 @@
   selinux:
     state: permissive
     policy: targeted
-  changed_when: false
-  when: ansible_facts['selinux']['mode'] == "enforcing"
 
 - name: Allow SELinux HTTP network connections
   seboolean:
@@ -96,7 +94,4 @@
   selinux:
     state: enforcing
     policy: targeted
-  changed_when: false
-  when:
-    - nginx_selinux_enforcing | bool
-    - ansible_facts['selinux']['mode'] == "permissive"
+  when: nginx_selinux_enforcing | bool

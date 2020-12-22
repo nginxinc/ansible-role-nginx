@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.18.2 (Unreleased)
+## 0.18.2 (December 22, 2020)
 
 ENHANCEMENTS:
 

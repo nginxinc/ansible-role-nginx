@@ -1,12 +1,14 @@
 ---
-name: CI
+name: Molecule CI/CD
 on:
   pull_request:
   push:
     branches:
       - main
+  schedule:
+    - cron: "0 0 1 * *"
 jobs:
-  test:
+  molecule:
     name: Molecule
     runs-on: ubuntu-latest
     strategy:
@@ -38,7 +40,7 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install test dependencies
+      - name: Install Molecule dependencies
         run: |
           pip3 install ansible-base==2.10.3
           pip3 install ansible==2.10.3

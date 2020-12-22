@@ -1,12 +1,12 @@
 ---
-name: Release
+name: Ansible Galaxy release
 on:
   push:
     tags:
       - '*'
 jobs:
-  release:
-    name: Release
+  galaxy:
+    name: Galaxy
     runs-on: ubuntu-latest
     steps:
       - name: Check out the codebase

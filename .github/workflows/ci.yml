@@ -1,0 +1,51 @@
+---
+name: CI
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+jobs:
+  test:
+    name: Molecule
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        scenario:
+          - default
+          - default_alpine
+          - default_centos
+          - module
+          - module_alpine
+          - module_centos
+          - source
+          - source_alpine
+          - source_centos
+          - stable_push_alpine
+          - stable_push_centos
+          - template
+          - template_alpine
+          - template_centos
+    steps:
+      - name: Check out the codebase
+        uses: actions/checkout@v2
+
+      - name: Set up Python 3
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install test dependencies
+        run: |
+          pip3 install ansible-base==2.10.3
+          pip3 install ansible==2.10.3
+          pip3 install ansible-lint==4.3.7
+          pip3 install yamllint==1.25.0
+          pip3 install 'molecule[docker]'==3.2.1
+          pip3 install docker==4.4.0
+
+      - name: Run Molecule tests
+        run: molecule test -s ${{ matrix.scenario }}
+        env:
+          PY_COLORS: '1'
+          ANSIBLE_FORCE_COLOR: '1'

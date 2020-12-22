@@ -1,81 +1,81 @@
----
-language: python
-services: docker
-branches:
-  only:
-    - main
-jobs:
-  include:
-    - name: (Debian/Ubuntu) Install specific version
-      env:
-        scenario: default
-    - name: (Alpine Linux) Install specific version
-      env:
-        scenario: default_alpine
-    - name: (CentOS) Install specific version
-      env:
-        scenario: default_centos
-    - name: (Debian/Ubuntu) Cleanup config and try to install modules
-      env:
-        scenario: module
-    - name: (Alpine Linux) Cleanup config and try to install modules
-      env:
-        scenario: module_alpine
-    - name: (CentOS) Cleanup config and try to install modules
-      env:
-        scenario: module_centos
-    - name: (Debian/Ubuntu) Install NGINX Plus
-      if: not (type = "pull_request" and fork = "true")
-      env:
-        scenario: plus
-    - name: (Alpine Linux) Install NGINX Plus
-      if: not (type = "pull_request" and fork = "true")
-      env:
-        scenario: plus_alpine
-    - name: (CentOS) Install NGINX Plus
-      if: not (type = "pull_request" and fork = "true")
-      env:
-        scenario: plus_centos
-    - name: (Debian/Ubuntu) Install stable branch and push a config
-      env:
-        scenario: stable_push
-    - name: (Alpine Linux) Install stable branch and push a config
-      env:
-        scenario: stable_push_alpine
-    - name: (CentOS) Install stable branch and push a config
-      env:
-        scenario: stable_push_centos
-    - name: (Debian/Ubuntu) Test config templates
-      env:
-        scenario: template
-    - name: (Alpine Linux) Test config templates
-      env:
-        scenario: template_alpine
-    - name: (CentOS) Test config templates
-      env:
-        scenario: template_centos
-    - name: (Debian/Ubuntu) Build from source
-      env:
-        scenario: source
-    - name: (Alpine Linux) Build from source
-      env:
-        scenario: source_alpine
-    - name: (CentOS) Build from source
-      env:
-        scenario: source_centos
-before_install:
-  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-  - sudo apt-get update
-  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
-install:
-  - pip install ansible-base==2.10.3
-  - pip install ansible==2.10.3
-  - pip install ansible-lint==4.3.7
-  - pip install yamllint==1.25.0
-  - pip install 'molecule[docker]'==3.2.0
-  - pip install docker==4.4.0
-script:
-  - travis_wait 50 molecule test -s $scenario
-notifications:
-  webhooks: https://galaxy.ansible.com/api/v1/notifications/
+# ---
+# language: python
+# services: docker
+# branches:
+#   only:
+#     - main
+# jobs:
+#   include:
+#     - name: (Debian/Ubuntu) Install specific version
+#       env:
+#         scenario: default
+#     - name: (Alpine Linux) Install specific version
+#       env:
+#         scenario: default_alpine
+#     - name: (CentOS) Install specific version
+#       env:
+#         scenario: default_centos
+#     - name: (Debian/Ubuntu) Cleanup config and try to install modules
+#       env:
+#         scenario: module
+#     - name: (Alpine Linux) Cleanup config and try to install modules
+#       env:
+#         scenario: module_alpine
+#     - name: (CentOS) Cleanup config and try to install modules
+#       env:
+#         scenario: module_centos
+#     - name: (Debian/Ubuntu) Install NGINX Plus
+#       if: not (type = "pull_request" and fork = "true")
+#       env:
+#         scenario: plus
+#     - name: (Alpine Linux) Install NGINX Plus
+#       if: not (type = "pull_request" and fork = "true")
+#       env:
+#         scenario: plus_alpine
+#     - name: (CentOS) Install NGINX Plus
+#       if: not (type = "pull_request" and fork = "true")
+#       env:
+#         scenario: plus_centos
+#     - name: (Debian/Ubuntu) Install stable branch and push a config
+#       env:
+#         scenario: stable_push
+#     - name: (Alpine Linux) Install stable branch and push a config
+#       env:
+#         scenario: stable_push_alpine
+#     - name: (CentOS) Install stable branch and push a config
+#       env:
+#         scenario: stable_push_centos
+#     - name: (Debian/Ubuntu) Test config templates
+#       env:
+#         scenario: template
+#     - name: (Alpine Linux) Test config templates
+#       env:
+#         scenario: template_alpine
+#     - name: (CentOS) Test config templates
+#       env:
+#         scenario: template_centos
+#     - name: (Debian/Ubuntu) Build from source
+#       env:
+#         scenario: source
+#     - name: (Alpine Linux) Build from source
+#       env:
+#         scenario: source_alpine
+#     - name: (CentOS) Build from source
+#       env:
+#         scenario: source_centos
+# before_install:
+#   - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+#   - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+#   - sudo apt-get update
+#   - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
+# install:
+#   - pip install ansible-base==2.10.3
+#   - pip install ansible==2.10.3
+#   - pip install ansible-lint==4.3.7
+#   - pip install yamllint==1.25.0
+#   - pip install 'molecule[docker]'==3.2.0
+#   - pip install docker==4.4.0
+# script:
+#   - travis_wait 50 molecule test -s $scenario
+# notifications:
+#   webhooks: https://galaxy.ansible.com/api/v1/notifications/

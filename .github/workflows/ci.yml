@@ -49,7 +49,7 @@ jobs:
 
       - name: Run Molecule tests
         run: molecule test -s ${{ matrix.scenario }}
-        if: "contains(${{ matrix.scenario }}, 'plus') && !(github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork)"
+        if: contains(${{ matrix.scenario }}, 'plus') && !(github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork)
         env:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'

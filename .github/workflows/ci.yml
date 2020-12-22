@@ -53,3 +53,5 @@ jobs:
         env:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
+          NGINX_CRT: ${{ secrets.NGINX_CRT }}
+          NGINX_KEY: ${{ secrets.NGINX_KEY }}

@@ -6,6 +6,10 @@ BREAKING CHANGES:
 
 **The NGINX configuration functionalities included in this role have been removed as of release 0.19.0.** There now is a separate role to manage and create NGINX configurations available [here](https://github.com/nginxinc/ansible-role-nginx-config). Any new issues or PRs related to configuring NGINX should be submitted in the new NGINX configuration Ansible role repository. New issues or PRs related to configuring NGINX submitted in this repository will not be worked on.
 
+ENHANCEMENTS:
+
+The GitHub actions Molecule CI/CD workflow is no longer run on a new release (this is not necessary since it already runs on every push).
+
 ## 0.18.2 (December 22, 2020)
 
 ENHANCEMENTS:

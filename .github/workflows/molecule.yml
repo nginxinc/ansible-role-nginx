@@ -2,9 +2,13 @@
 name: Molecule CI/CD
 on:
   pull_request:
+    branches:
+      - main
   push:
     branches:
       - main
+    ignore-tags:
+      - "*"
   schedule:
     - cron: "0 0 1 * *"
 jobs:
@@ -33,7 +37,7 @@ jobs:
       - name: Set up Python 3
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x'
+          python-version: 3.x
 
       - name: Install Molecule dependencies
         run: |
@@ -41,14 +45,14 @@ jobs:
           pip3 install ansible==2.10.3
           pip3 install ansible-lint==4.3.7
           pip3 install yamllint==1.25.0
-          pip3 install 'molecule[docker]'==3.2.1
+          pip3 install "molecule[docker]"==3.2.1
           pip3 install docker==4.4.0
 
       - name: Run Molecule tests
         run: molecule test -s ${{ matrix.scenario }}
-        if: contains(${{ matrix.scenario }}, 'plus') && !(github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork)
+        if: contains(${{ matrix.scenario }}, "plus") && !(github.event_name == "pull_request" && github.event.pull_request.head.repo.fork)
         env:
-          PY_COLORS: '1'
-          ANSIBLE_FORCE_COLOR: '1'
+          PY_COLORS: "1"
+          ANSIBLE_FORCE_COLOR: "1"
           NGINX_CRT: ${{ secrets.NGINX_CRT }}
           NGINX_KEY: ${{ secrets.NGINX_KEY }}

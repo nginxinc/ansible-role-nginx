@@ -65,31 +65,6 @@
       when: nginx_install | bool
       tags: nginx_install
 
-    - name: (DEPRECATED) Configure NGINX
-      block:
-        - name: (DEPRECATED) Cleanup NGINX Config
-          include_tasks: "{{ role_path }}/tasks/config/cleanup-config.yml"
-          when: nginx_cleanup_config | bool
-          tags: nginx_cleanup_config
-
-        - name: (DEPRECATED) Upload NGINX Config
-          include_tasks: "{{ role_path }}/tasks/config/upload-config.yml"
-          when: nginx_main_upload_enable | bool
-                or nginx_http_upload_enable | bool
-                or nginx_stream_upload_enable | bool
-                or nginx_html_upload_enable | bool
-                or nginx_ssl_upload_enable | bool
-          tags: nginx_upload_config
-
-        - name: (DEPRECATED) Create NGINX Config
-          include_tasks: "{{ role_path }}/tasks/config/template-config.yml"
-          when: nginx_main_template_enable | bool
-                or nginx_http_template_enable | bool
-                or nginx_stream_template_enable | bool
-                or nginx_rest_api_enable | bool
-          tags: nginx_template_config
-      when: nginx_configure | bool
-
     - name: Ensure NGINX is running
       meta: flush_handlers
 

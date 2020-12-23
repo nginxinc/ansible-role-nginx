@@ -26,11 +26,6 @@ jobs:
           - source
           - source_alpine
           - source_centos
-          - stable_push_alpine
-          - stable_push_centos
-          - template
-          - template_alpine
-          - template_centos
     steps:
       - name: Check out the codebase
         uses: actions/checkout@v2

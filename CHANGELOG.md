@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.19.0 (Unreleased)
+
+BREAKING CHANGES:
+
+**The NGINX configuration functionalities included in this role have been removed as of release 0.19.0.** There now is a separate role to manage and create NGINX configurations available [here](https://github.com/nginxinc/ansible-role-nginx-config). Any new issues or PRs related to configuring NGINX should be submitted in the new NGINX configuration Ansible role repository. New issues or PRs related to configuring NGINX submitted in this repository will not be worked on.
+
 ## 0.18.2 (December 22, 2020)
 
 ENHANCEMENTS:
@@ -23,7 +29,7 @@ Fix issue whereas SELinux state would not be correctly set back to `enforcing` w
 
 BREAKING CHANGES:
 
-**The NGINX Unit functionalities included in this role have been removed as of release 0.18.0.** There now is a separate role to install NGINX Unit available [here](https://github.com/nginxinc/ansible-role-nginx-unit). Any new issues or PRs related to NGINX Unit should be submitted in the new NGINX Unit repository. New issues or PRs related to NGINX Unit submitted in this repository will not be worked on.
+**The NGINX Unit functionalities included in this role have been removed as of release 0.18.0.** There now is a separate role to install NGINX Unit available [here](https://github.com/nginxinc/ansible-role-nginx-unit). Any new issues or PRs related to NGINX Unit should be submitted in the new NGINX Unit Ansible role repository. New issues or PRs related to NGINX Unit submitted in this repository will not be worked on.
 
 ## 0.17.4 (November 12, 2020)
 

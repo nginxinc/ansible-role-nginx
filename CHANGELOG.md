@@ -8,7 +8,7 @@ BREAKING CHANGES:
 
 ENHANCEMENTS:
 
-The GitHub actions Molecule CI/CD (`molecule.yml`) workflow is no longer run on a new release (this is not necessary since it already runs on every push).
+The GitHub actions Molecule CI/CD workflow is no longer run on a new release (this is not necessary since it already runs on every push).
 
 ## 0.18.2 (December 22, 2020)
 

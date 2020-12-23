@@ -1,4 +1,4 @@
-----
+---
 - name: Create override directory for NGINX systemd service
   file:
     path: "{{ nginx_service_overridepath }}"

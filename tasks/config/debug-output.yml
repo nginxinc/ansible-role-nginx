@@ -1,0 +1,12 @@
+---
+- name: Register NGINX config
+  command: nginx -T
+  ignore_errors: "{{ ansible_check_mode }}"
+  check_mode: no
+  changed_when: false
+  register: config_full
+
+- name: Print NGINX config
+  debug:
+    var: config_full.stdout_lines
+  when: config_full.stdout_lines is defined

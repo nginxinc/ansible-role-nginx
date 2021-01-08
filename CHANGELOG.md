@@ -1,6 +1,12 @@
 # Changelog
 
-## 0.19.0 (Unreleased)
+## 0.19.1 (Unreleased)
+
+ENHANCEMENTS:
+
+The GitHub actions Molecule CI/CD workflow should now correctly avoid running 'plus' related tests on external PRs.
+
+## 0.19.0 (December 23, 2020)
 
 BREAKING CHANGES:
 
@@ -8,8 +14,7 @@ BREAKING CHANGES:
 
 ENHANCEMENTS:
 
-*   The GitHub actions Molecule CI/CD workflow is no longer run on a new release (this is not necessary since it already runs on every push).
-*   The GitHub actions Molecule CI/CD workflow should now correctly avoid running 'plus' related tests on external PRs.
+The GitHub actions Molecule CI/CD workflow is no longer run on a new release (this is not necessary since it already runs on every push).
 
 ## 0.18.2 (December 22, 2020)
 

@@ -1,6 +1,12 @@
 # Changelog
 
-## 0.19.0 (Unreleased)
+## 0.19.1 (Unreleased)
+
+ENHANCEMENTS:
+
+The GitHub actions Molecule CI/CD workflow should now correctly avoid running 'plus' related tests on external PRs.
+
+## 0.19.0 (December 23, 2020)
 
 BREAKING CHANGES:
 

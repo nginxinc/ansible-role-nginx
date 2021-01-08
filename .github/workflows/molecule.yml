@@ -32,14 +32,17 @@ jobs:
           - source_centos
     steps:
       - name: Check out the codebase
+        if: "!(contains(matrix.scenario, 'plus') && github.event.pull_request.head.repo.full_name != github.repository)"
         uses: actions/checkout@v2
 
       - name: Set up Python 3
+        if: "!(contains(matrix.scenario, 'plus') && github.event.pull_request.head.repo.full_name != github.repository)"
         uses: actions/setup-python@v2
         with:
           python-version: 3.x
 
       - name: Install Molecule dependencies
+        if: "!(contains(matrix.scenario, 'plus') && github.event.pull_request.head.repo.full_name != github.repository)"
         run: |
           pip3 install ansible-base==2.10.3
           pip3 install ansible==2.10.3
@@ -49,8 +52,8 @@ jobs:
           pip3 install docker==4.4.0
 
       - name: Run Molecule tests
+        if: "!(contains(matrix.scenario, 'plus') && github.event.pull_request.head.repo.full_name != github.repository)"
         run: molecule test -s ${{ matrix.scenario }}
-        if: contains(${{ matrix.scenario }}, "plus") && !(github.event_name == "pull_request" && github.event.pull_request.head.repo.fork)
         env:
           PY_COLORS: "1"
           ANSIBLE_FORCE_COLOR: "1"

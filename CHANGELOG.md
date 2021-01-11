@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.19.1 (Unreleased)
+## 0.19.1 (January 11, 2021)
 
 ENHANCEMENTS:
 

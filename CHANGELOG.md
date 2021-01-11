@@ -4,7 +4,9 @@
 
 ENHANCEMENTS:
 
-The GitHub actions Molecule CI/CD workflow should now correctly avoid running 'plus' related tests on external PRs.
+*   The GitHub actions Molecule CI/CD workflow should now correctly avoid running 'plus' related tests on external PRs.
+*   Update Ansible base to `2.10.4`, Ansible to `2.10.5`, Molecule to `3.2.2` and Docker Python SDK to `4.4.1`.
+*   Update copyright notice.
 
 ## 0.19.0 (December 23, 2020)
 

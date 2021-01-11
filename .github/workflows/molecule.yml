@@ -44,12 +44,12 @@ jobs:
       - name: Install Molecule dependencies
         if: "!(contains(matrix.scenario, 'plus') && github.event.pull_request.head.repo.full_name != github.repository)"
         run: |
-          pip3 install ansible-base==2.10.3
-          pip3 install ansible==2.10.3
+          pip3 install ansible-base==2.10.4
+          pip3 install ansible==2.10.5
           pip3 install ansible-lint==4.3.7
           pip3 install yamllint==1.25.0
-          pip3 install "molecule[docker]"==3.2.1
-          pip3 install docker==4.4.0
+          pip3 install "molecule[docker]"==3.2.2
+          pip3 install docker==4.4.1
 
       - name: Run Molecule tests
         if: "!(contains(matrix.scenario, 'plus') && github.event.pull_request.head.repo.full_name != github.repository)"

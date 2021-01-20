@@ -43,7 +43,7 @@ jobs:
 
       - name: Install Molecule dependencies
         if: "!(contains(matrix.scenario, 'plus') && github.event.pull_request.head.repo.full_name != github.repository)"
-        run: pip3 install -r .github/workflows/requirements.txt
+        run: pip3 install -r .github/workflows/requirements_molecule.txt
 
       - name: Run Molecule tests
         if: "!(contains(matrix.scenario, 'plus') && github.event.pull_request.head.repo.full_name != github.repository)"

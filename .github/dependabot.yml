@@ -5,9 +5,7 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    target-branch: "implement-dependabot"
   - package-ecosystem: "pip"
     directory: "/.github/workflows"
     schedule:
       interval: "daily"
-    target-branch: "implement-dependabot"

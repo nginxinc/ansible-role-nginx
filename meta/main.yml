@@ -30,12 +30,13 @@ galaxy_info:
     - name: FreeBSD
       versions:
         - 11.2
-        - 12.0
+        - 12.1
     - name: Ubuntu
       versions:
         - xenial
         - bionic
         - focal
+        - groovy
     - name: SLES
       versions:
         - 12

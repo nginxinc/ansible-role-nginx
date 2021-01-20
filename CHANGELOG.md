@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.19.2 (Unreleased)
+
+FEATURES:
+
+Add support for Dependabot.
+
+ENHANCEMENTS:
+
+*   Only run GitHub actions Galaxy CI/CD workflow when a new release is published.
+*   Update list of supported platforms.
+
 ## 0.19.1 (January 11, 2021)
 
 ENHANCEMENTS:

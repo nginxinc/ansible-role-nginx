@@ -2,6 +2,8 @@
 name: Ansible Galaxy import
 on:
   release:
+    types:
+      - published
 jobs:
   galaxy:
     name: Galaxy

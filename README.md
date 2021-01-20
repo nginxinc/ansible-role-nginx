@@ -65,8 +65,8 @@ SUSE/SLES:
 Ubuntu:
   - xenial
   - bionic
-  - eoan
   - focal
+  - groovy
 ```
 
 ### NGINX Plus
@@ -88,9 +88,8 @@ Debian:
   - buster
 FreeBSD:
   - 11.2+
-  - 12
+  - 12.1+
 Oracle Linux:
-  - 6.5+
   - 7.4+
 Red Hat:
   - 7.4+
@@ -101,8 +100,8 @@ SUSE/SLES:
 Ubuntu:
   - xenial
   - bionic
-  - eoan
   - focal
+  - groovy
 ```
 
 ### NGINX Amplify Agent

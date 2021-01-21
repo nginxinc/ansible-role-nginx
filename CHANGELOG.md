@@ -11,6 +11,7 @@ ENHANCEMENTS:
 *   Only run GitHub actions Galaxy CI/CD workflow when a new release is published.
 *   Specify GitHub actions Ubuntu release.
 *   Update list of supported platforms.
+*   Update Ansible base to `2.10.5`.
 
 ## 0.19.1 (January 11, 2021)
 

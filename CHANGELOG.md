@@ -9,6 +9,7 @@ Add support for Dependabot.
 ENHANCEMENTS:
 
 *   Only run GitHub actions Galaxy CI/CD workflow when a new release is published.
+*   Specify GitHub actions Ubuntu release.
 *   Update list of supported platforms.
 
 ## 0.19.1 (January 11, 2021)

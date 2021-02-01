@@ -2,7 +2,7 @@
 - name: Converge
   hosts: all
   tasks:
-    - name: Install NGINX
+    - name: Install NGINX Plus
       include_role:
         name: ansible-role-nginx
       vars:

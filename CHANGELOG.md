@@ -11,7 +11,7 @@ ENHANCEMENTS:
 *   Only run GitHub actions Galaxy CI/CD workflow when a new release is published.
 *   Specify GitHub actions Ubuntu release.
 *   Update list of supported platforms.
-*   Update Ansible base to `2.10.5`, Ansible to `2.10.6` and Molecule to `3.2.3`.
+*   Update Ansible base to `2.10.5`, Ansible to `2.10.6`, Molecule to `3.2.3` and yamllint to `1.26.0`.
 
 ## 0.19.1 (January 11, 2021)
 

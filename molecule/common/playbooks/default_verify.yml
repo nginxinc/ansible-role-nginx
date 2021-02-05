@@ -5,6 +5,7 @@
     - name: Check if NGINX is installed
       package:
         name: nginx
+        state: present
       check_mode: yes
       register: install
       failed_when: (install is changed) or (install is failed)

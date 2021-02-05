@@ -10,6 +10,7 @@ ENHANCEMENTS:
 
 *   Only run GitHub actions Galaxy CI/CD workflow when a new release is published.
 *   Specify GitHub actions Ubuntu release.
+*   Minor GitHub template tweaks, including the creation of a SECURITY doc.
 *   Update list of supported platforms.
 *   Update Ansible base to `2.10.5`, Ansible to `2.10.6` and Molecule to `3.2.3`.
 

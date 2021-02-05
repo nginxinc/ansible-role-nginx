@@ -13,6 +13,10 @@ ENHANCEMENTS:
 *   Update list of supported platforms.
 *   Update Ansible base to `2.10.5`, Ansible to `2.10.6` and Molecule to `3.2.3`.
 
+BUG FIXES:
+
+Add `state` parameter to package modules in Molecule tests.
+
 ## 0.19.1 (January 11, 2021)
 
 ENHANCEMENTS:

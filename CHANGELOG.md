@@ -16,7 +16,7 @@ ENHANCEMENTS:
 
 BUG FIXES:
 
-Add `state` parameter to package modules in Molecule tests.
+Add `state` parameter to package module in Molecule verification tests.
 
 ## 0.19.1 (January 11, 2021)
 

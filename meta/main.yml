@@ -7,7 +7,7 @@ galaxy_info:
 
   license: Apache License, Version 2.0
 
-  min_ansible_version: 2.9
+  min_ansible_version: 2.10
 
   platforms:
     - name: Alpine

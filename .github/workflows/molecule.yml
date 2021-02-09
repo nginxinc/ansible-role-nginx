@@ -45,6 +45,10 @@ jobs:
         if: "!(contains(matrix.scenario, 'plus') && github.event.pull_request.head.repo.full_name != github.repository)"
         run: pip3 install -r .github/workflows/requirements/requirements_molecule.txt
 
+      - name: Uninstall Ansible community distribution (temporary)
+        if: "!(contains(matrix.scenario, 'plus') && github.event.pull_request.head.repo.full_name != github.repository)"
+        run: pip3 uninstall ansible
+
       - name: Install Ansible base dependencies
         if: "!(contains(matrix.scenario, 'plus') && github.event.pull_request.head.repo.full_name != github.repository)"
         run: ansible-galaxy install -r .github/workflows/requirements/requirements_ansible.yml

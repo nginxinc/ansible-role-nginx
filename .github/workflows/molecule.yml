@@ -47,7 +47,7 @@ jobs:
 
       - name: Install Ansible base dependencies
         if: "!(contains(matrix.scenario, 'plus') && github.event.pull_request.head.repo.full_name != github.repository)"
-        run: ansible-galaxy install -r .github/workflows/requirements.txt
+        run: ansible-galaxy install -r .github/workflows/requirements.yml
 
       - name: Run Molecule tests
         if: "!(contains(matrix.scenario, 'plus') && github.event.pull_request.head.repo.full_name != github.repository)"

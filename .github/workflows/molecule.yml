@@ -45,6 +45,10 @@ jobs:
         if: "!(contains(matrix.scenario, 'plus') && github.event.pull_request.head.repo.full_name != github.repository)"
         run: pip3 install -r .github/workflows/requirements_molecule.txt
 
+      - name: Install Ansible base dependencies
+        if: "!(contains(matrix.scenario, 'plus') && github.event.pull_request.head.repo.full_name != github.repository)"
+        run: ansible-galaxy install -r .github/workflows/requirements.txt
+
       - name: Run Molecule tests
         if: "!(contains(matrix.scenario, 'plus') && github.event.pull_request.head.repo.full_name != github.repository)"
         run: molecule test -s ${{ matrix.scenario }}

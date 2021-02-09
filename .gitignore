@@ -13,6 +13,7 @@ Thumbs.db
 
 # Ansible specific #
 ####################
+.cache
 *.retry
 
 # Python specific #

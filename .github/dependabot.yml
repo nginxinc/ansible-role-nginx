@@ -6,6 +6,6 @@ updates:
     schedule:
       interval: "daily"
   - package-ecosystem: "pip"
-    directory: "/.github/workflows"
+    directory: "/.github/workflows/requirements"
     schedule:
       interval: "daily"

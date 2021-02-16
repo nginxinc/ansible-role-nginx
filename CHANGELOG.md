@@ -15,7 +15,7 @@ ENHANCEMENTS:
 *   Specify GitHub actions Ubuntu release.
 *   Minor GitHub template tweaks, including the creation of a SECURITY doc.
 *   Update list of supported platforms.
-*   Update Ansible base to `2.10.5`, Molecule to `3.2.3` and yamllint to `1.26.0`.
+*   Update Ansible base to `2.10.5`, Molecule to `3.2.3`, yamllint to `1.26.0` and Docker Python SDK to `4.4.2`.
 
 BUG FIXES:
 

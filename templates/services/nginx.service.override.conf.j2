@@ -5,6 +5,9 @@ TimeoutStopSec={{ nginx_service_timeoutstopsec | default(90) }}
 {% if nginx_service_restartonfailure is defined %}
 Restart=on-failure
 {% endif %}
+{% if nginx_service_restart is defined %}
+Restart={{ nginx_service_restart }}
+{% endif %}
 {% if nginx_service_restartsec is defined %}
 RestartSec={{ nginx_service_restartsec }}
 {% endif %}

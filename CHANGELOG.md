@@ -20,7 +20,8 @@ ENHANCEMENTS:
 
 BUG FIXES:
 
-Add `state` parameter to package module in Molecule verification tests.
+*   Add `state` parameter to package module in Molecule verification tests.
+*   Change the command directory when running the NGINX configuration check handler to prevent edge case errors when the handler is run from a directory that the NGINX process' user does not have access to.
 
 ## 0.19.1 (January 11, 2021)
 

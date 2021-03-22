@@ -25,7 +25,7 @@ platforms:
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/"
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
     command: "/sbin/init"
   - name: centos-7
     image: centos:7

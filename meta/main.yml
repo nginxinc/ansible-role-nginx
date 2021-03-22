@@ -3,6 +3,7 @@ galaxy_info:
   author: Alessandro Fael Garcia
   description: Official Ansible role for NGINX
   role_name: nginx
+  namespace: nginxinc  # Ansible Lint requirement
   company: F5 Networks, Inc.
 
   license: Apache License, Version 2.0

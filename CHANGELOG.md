@@ -20,7 +20,8 @@ ENHANCEMENTS:
 
 BUG FIXES:
 
-Add `state` parameter to package module in Molecule verification tests.
+*   Add `state` parameter to package module in Molecule verification tests.
+*   Change directory when running the NGINX configuration check handler to prevent edge errors related to NGINX permissions.
 
 ## 0.19.1 (January 11, 2021)
 

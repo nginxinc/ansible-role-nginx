@@ -19,17 +19,9 @@ jobs:
       matrix:
         scenario:
           - default
-          - default_alpine
-          - default_centos
           - module
-          - module_alpine
-          - module_centos
           - plus
-          - plus_alpine
-          - plus_centos
           - source
-          - source_alpine
-          - source_centos
     steps:
       - name: Check out the codebase
         if: "!(contains(matrix.scenario, 'plus') && github.event.pull_request.head.repo.full_name != github.repository)"

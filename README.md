@@ -26,9 +26,9 @@ With the advent of Ansible collections and the release of the [NGINX Core Ansibl
     ---
     collections:
       - name: community.general
-        version: 2.0.0
+        version: 2.3.0
       - name: ansible.posix
-        version: 1.1.1
+        version: 1.2.0
     ```
     **Note:** You can alternatively install the Ansible community distribution if you don't want to manage individual collections.
 *   Instructions on how to install Ansible can be found in the [Ansible website](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#upgrading-ansible-from-version-2-9-and-older-to-version-2-10-or-later).

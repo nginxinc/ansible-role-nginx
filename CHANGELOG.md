@@ -5,8 +5,14 @@
 FEATURES:
 
 *   Replace Ansible community distribution with Ansible base and add the necessary extra collections as a dependency requirement. For reference, these are:
-    *   `community.general`
-    *   `ansible.posix`
+    ```yaml
+    ---
+    collections:
+      - name: community.general
+        version: 2.3.0
+      - name: ansible.posix
+        version: 1.2.0
+    ```
 *   Explicitly list Jinja2 `2.11.3` as a requirement, as well as detail the minimum supported version (`2.11.x`).
 *   Add support for Dependabot.
 

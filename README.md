@@ -33,6 +33,10 @@ With the advent of Ansible collections and the release of the [NGINX Core Ansibl
     **Note:** You can alternatively install the Ansible community distribution if you don't want to manage individual collections.
 *   Instructions on how to install Ansible can be found in the [Ansible website](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#upgrading-ansible-from-version-2-9-and-older-to-version-2-10-or-later).
 
+### Jinja2
+
+*   This role uses Jinja2 templates. Ansible base installs Jinja2 by default, but depending on your install and/or upgrade path, you might be running an outdated version of Jinja2. The minimum required version of Jinja2 in this role is `2.11`. Instructions on how to install Jinja2 can be found in the [Jinja2 website](https://jinja.palletsprojects.com/en/2.11.x/intro/#installation).
+
 ### Molecule
 
 *   Molecule `3.x` is used to test the various functionalities of the role.

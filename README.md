@@ -21,7 +21,8 @@ With the advent of Ansible collections and the release of the [NGINX Core Ansibl
 
 ### Ansible
 
-*   This role is developed and tested with [maintained](https://docs.ansible.com/ansible/devel/reference_appendices/release_and_maintenance.html) versions of Ansible base. When using Ansible base, you will also need to install the following collections:
+*   This role is developed and tested with [maintained](https://docs.ansible.com/ansible/devel/reference_appendices/release_and_maintenance.html) versions of Ansible base (bigger than `2.10`) and Ansible (bigger than `2.9.10`).
+*   When using Ansible base, you will also need to install the following collections:
     ```yaml
     ---
     collections:
@@ -30,17 +31,17 @@ With the advent of Ansible collections and the release of the [NGINX Core Ansibl
       - name: ansible.posix
         version: 1.2.0
     ```
-    **Note:** You can alternatively install the Ansible community distribution if you don't want to manage individual collections.
+    **Note:** You can alternatively install the Ansible community distribution (what is known as the "old" Ansible) if you don't want to manage individual collections.
 *   Instructions on how to install Ansible can be found in the [Ansible website](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#upgrading-ansible-from-version-2-9-and-older-to-version-2-10-or-later).
 
 ### Jinja2
 
-*   This role uses Jinja2 templates. Ansible base installs Jinja2 by default, but depending on your install and/or upgrade path, you might be running an outdated version of Jinja2. The minimum required version of Jinja2 for this role is `2.11`.
+*   This role uses Jinja2 templates. Ansible base installs Jinja2 by default, but depending on your install and/or upgrade path, you might be running an outdated version of Jinja2. The minimum version of Jinja2 required for the role to properly function is `2.11`.
 *   Instructions on how to install Jinja2 can be found in the [Jinja2 website](https://jinja.palletsprojects.com/en/2.11.x/intro/#installation).
 
 ### Molecule
 
-*   Molecule `3.x` is used to test the various functionalities of the role.
+*   Molecule is used to test the various functionalities of the role. The recommended version of Molecule to test this role is `3.3`.
 *   Instructions on how to install Molecule can be found in the [Molecule website](https://molecule.readthedocs.io/en/latest/installation.html).
 
 ## Installation

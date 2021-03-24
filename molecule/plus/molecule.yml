@@ -7,14 +7,14 @@ lint: |
   ansible-lint --force-color
 platforms:
   - name: alpine-3.10
-    image: python:alpine3.10
+    image: alpine:3.10
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
       - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
     command: "/sbin/init"
   - name: alpine-3.11
-    image: python:alpine3.11
+    image: alpine:3.11
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
@@ -22,13 +22,6 @@ platforms:
     command: "/sbin/init"
   - name: alpine-3.12
     image: alpine:3.12
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/sbin/init"
-  - name: alpine-3.13
-    image: alpine:3.13
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:

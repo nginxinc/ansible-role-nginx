@@ -7,6 +7,7 @@ FEATURES:
 *   Replace Ansible community distribution with Ansible base and add the necessary extra collections as a dependency requirement. For reference, these are:
     *   `community.general`
     *   `ansible.posix`
+*   Explicitly list Jinja2 as a requirement, as well as detail the minimum supported version.
 *   Add support for Dependabot.
 
 ENHANCEMENTS:

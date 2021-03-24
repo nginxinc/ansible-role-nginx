@@ -20,6 +20,7 @@ A clear and concise description of what you expected to happen.
 ### Your environment:
 -   Version of the NGINX role or specific commit
 -   Version of Ansible
+-   Version of Jinja2 (if you are using any templating capability)
 -   Target deployment platform
 
 ### Additional context

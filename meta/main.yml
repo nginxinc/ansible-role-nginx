@@ -22,7 +22,6 @@ galaxy_info:
         - any
     - name: Debian
       versions:
-        - stretch
         - buster
     - name: EL
       versions:

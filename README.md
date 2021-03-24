@@ -65,11 +65,11 @@ Alpine:
   - 3.10
   - 3.11
   - 3.12
+  - 3.13
 CentOS:
   - 7.4+
   - 8
 Debian:
-  - stretch
   - buster
 Red Hat:
   - 7.4+
@@ -99,7 +99,6 @@ CentOS:
   - 7.4+
   - 8
 Debian:
-  - stretch
   - buster
 FreeBSD:
   - 11.2+

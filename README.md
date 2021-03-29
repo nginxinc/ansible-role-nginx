@@ -157,14 +157,14 @@ Similarly, descriptions and defaults for preset variables can be found in the **
 
 ## Example Playbooks
 
-Working functional playbook examples can be found in the **[`molecule/common/playbooks/`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/common/playbooks/)** folder in the following files:
+Working functional playbook examples can be found in the **[`molecule/`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/)** folder in the following files:
 
 |Name|Description|
 |----|-----------|
-|**[`default_converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/common/playbooks/default_converge.yml)**|Install a specific version of NGINX and set up logrotate|
-|**[`module_converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/common/playbooks/module_converge.yml)**|Install various NGINX supported modules|
-|**[`plus_converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/common/playbooks/plus_converge.yml)**|Install NGINX Plus and various NGINX Plus supported modules|
-|**[`source_converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/common/playbooks/source_converge.yml)**|Install NGINX from source|
+|**[`default/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/default/converge.yml)**|Install a specific version of NGINX and set up logrotate|
+|**[`module/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/module/converge.yml)**|Install various NGINX supported modules|
+|**[`plus/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/plus/converge.yml)**|Install NGINX Plus and various NGINX Plus supported modules|
+|**[`source/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/source/converge.yml)**|Install NGINX from source|
 
 Do note that if you install this repository via Ansible Galaxy, you will have to replace the role variable in the sample playbooks from `ansible-role-nginx` to `nginxinc.nginx`.
 

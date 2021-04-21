@@ -27,7 +27,7 @@ With the advent of Ansible collections and the release of the [NGINX Core Ansibl
     ---
     collections:
       - name: community.general
-        version: 2.3.0
+        version: 2.5.1
       - name: ansible.posix
         version: 1.2.0
     ```

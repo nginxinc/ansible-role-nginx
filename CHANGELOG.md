@@ -19,6 +19,7 @@ FEATURES:
 ENHANCEMENTS:
 
 *   Only run GitHub actions Galaxy CI/CD workflow when a new release is published.
+*   Add Alpine `3.13` to the list of NGINX Plus supported platforms.
 *   Specify GitHub actions Ubuntu release.
 *   Minor GitHub template tweaks, including the creation of a SECURITY doc.
 *   Add Molecule NGINX OSS tests for Alpine 3.13, remove Molecule tests for Debian stretch, and update list of supported platforms.

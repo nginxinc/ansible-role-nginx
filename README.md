@@ -48,7 +48,7 @@ With the advent of Ansible collections and the release of the [NGINX Core Ansibl
 
 ### Ansible Galaxy
 
-Use `ansible-galaxy install nginxinc.nginx` to install the latest stable release of the role on your system.
+Use `ansible-galaxy install nginxinc.nginx` to install the latest stable release of the role on your system. Alternatively, if you have already installed the role, use `ansible-galaxy install -f nginxinc.nginx` to update the role to the latest release.
 
 ### Git
 

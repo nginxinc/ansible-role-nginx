@@ -15,6 +15,7 @@ FEATURES:
     ```
 *   Explicitly list Jinja2 `2.11.3` as a requirement, as well as detail the minimum supported version (`2.11.x`).
 *   Add support for Dependabot.
+*   Initial implementation of Release Drafter.
 
 ENHANCEMENTS:
 

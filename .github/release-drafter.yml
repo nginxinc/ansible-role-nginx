@@ -34,6 +34,8 @@ version-resolver:
   default: patch
 autolabeler:
   - label: "documentation"
+    branch:
+      - "/docs\/.+/"
     files:
       - "*.md"
   - label: "bug"
@@ -43,6 +45,7 @@ autolabeler:
       - "/fix/i"
   - label: "feature"
     branch:
+      - "/feat\/.+/"
       - "/implement\/.+/"
     title:
       - "/implement/i"

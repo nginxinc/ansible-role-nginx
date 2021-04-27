@@ -91,6 +91,7 @@ Alpine:
   - 3.10
   - 3.11
   - 3.12
+  - 3.13
 Amazon Linux:
   - 2018.03
 Amazon Linux 2:

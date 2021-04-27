@@ -297,7 +297,7 @@
 
     - name: Set NGINX stable version 1/2
       set_fact:
-        nginx_version: "{{ nginx_versions.content | regex_search('stable[^ ]*') | regex_replace('stable', 'release') }}"
+        nginx_version: "{{ nginx_versions.content | regex_search('stable[^<]*') | regex_replace('stable', 'release') }}"
       when: nginx_branch == "stable"
 
     - name: Set NGINX stable version 2/2

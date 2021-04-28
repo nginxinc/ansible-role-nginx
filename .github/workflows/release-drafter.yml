@@ -6,9 +6,6 @@ on:
       - opened
       - reopened
       - synchronize
-  push:
-    branches:
-      - main
 jobs:
   update_release_draft:
     name: Update release draft

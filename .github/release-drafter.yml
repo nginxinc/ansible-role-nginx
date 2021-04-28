@@ -2,28 +2,32 @@
 name-template: "$RESOLVED_VERSION"
 tag-template: "$RESOLVED_VERSION"
 categories:
-  - title: "💣 Breaking Change"
+  - title: "💣 Breaking Changes"
     labels:
       - "breaking change"
-  - title: "🐛 Bug Fixes"
+  - title: "🔔 Deprecation Warnings"
     labels:
-      - "bug"
-  - title: "⬆️ Dependencies"
-    labels:
-      - "dependencies"
-  - title: "📝 Documentation"
-    labels:
-      - "documentation"
+      - "deprecation"
   - title: "🚀 Features"
     labels:
       - "feature"
   - title: "🎉 Enhancements"
     labels:
       - "enhancement"
+  - title: "🐛 Bug Fixes"
+    labels:
+      - "bug"
+  - title: "📝 Documentation"
+    labels:
+      - "documentation"
+  - title: "⬆️ Dependencies"
+    labels:
+      - "dependencies"
 version-resolver:
   minor:
     labels:
       - "breaking change"
+      - "deprecation"
   patch:
     labels:
       - "bug"
@@ -33,34 +37,52 @@ version-resolver:
       - "enhancement"
   default: patch
 autolabeler:
-  - label: "documentation"
+  - label: "breaking change"
+    body:
+      - "/breaking/i"
+  - label: "deprecation"
     branch:
-      - "/docs\/.+/"
-    files:
-      - "*.md"
+      - "/deprecate\/.+/"
+    title:
+      - "/deprecate/i"
+  - label: "feature"
+    branch:
+      - "/feat\/.+/"
+      - "/feature\/.+/"
+      - "/implement\/.+/"
+    title:
+      - "/feat/i"
+      - "/feature/i"
+      - "/implement/i"
+  - label: "enhancement"
+    branch:
+      - "/add\/.+/"
+      - "/enhancement\/.+/"
+    title:
+      - "/add/i"
+      - "/enhancement/i"
   - label: "bug"
     branch:
       - "/fix\/.+/"
     title:
       - "/fix/i"
-  - label: "feature"
+  - label: "documentation"
     branch:
-      - "/feat\/.+/"
-      - "/implement\/.+/"
+      - "/docs\/.+/"
+    files:
+      - "*.md"
     title:
-      - "/implement/i"
-  - label: "enhancement"
-    branch:
-      - "/add\/.+/"
-    title:
-      - "/add/i"
+      - "/docs/i"
+      - "/documentation/i"
   - label: "dependencies"
     files:
       - ".github/workflows/requirements/*"
     branch:
       - "/bump\/.+/"
+      - "/update\/.+/"
     title:
       - "/bump/i"
+      - "/update/i"
 template: |
   👾 *Help make the NGINX Ansible role better by participating in our [survey](https://forms.office.com/Pages/ResponsePage.aspx?id=L_093Ttq0UCb4L-DJ9gcUKLQ7uTJaE1PitM_37KR881UM0NCWkY5UlE5MUYyWU1aTUcxV0NRUllJSC4u)!* 👾
 

@@ -1,0 +1,82 @@
+---
+name-template: "$RESOLVED_VERSION"
+tag-template: "$RESOLVED_VERSION"
+categories:
+  - title: "💣 Breaking Change"
+    labels:
+      - "breaking change"
+  - title: "🐛 Bug Fixes"
+    labels:
+      - "bug"
+  - title: "⬆️ Dependencies"
+    labels:
+      - "dependencies"
+  - title: "📝 Documentation"
+    labels:
+      - "documentation"
+  - title: "🚀 Features"
+    labels:
+      - "feature"
+  - title: "🎉 Enhancements"
+    labels:
+      - "enhancement"
+version-resolver:
+  minor:
+    labels:
+      - "breaking change"
+  patch:
+    labels:
+      - "bug"
+      - "dependencies"
+      - "documentation"
+      - "feature"
+      - "enhancement"
+  default: patch
+autolabeler:
+  - label: "documentation"
+    branch:
+      - "/docs\/.+/"
+    files:
+      - "*.md"
+  - label: "bug"
+    branch:
+      - "/fix\/.+/"
+    title:
+      - "/fix/i"
+  - label: "feature"
+    branch:
+      - "/feat\/.+/"
+      - "/implement\/.+/"
+    title:
+      - "/implement/i"
+  - label: "enhancement"
+    branch:
+      - "/add\/.+/"
+    title:
+      - "/add/i"
+  - label: "dependencies"
+    files:
+      - ".github/workflows/requirements/*"
+    branch:
+      - "/bump\/.+/"
+    title:
+      - "/bump/i"
+template: |
+  👾 *Help make the NGINX Ansible role better by participating in our [survey](https://forms.office.com/Pages/ResponsePage.aspx?id=L_093Ttq0UCb4L-DJ9gcUKLQ7uTJaE1PitM_37KR881UM0NCWkY5UlE5MUYyWU1aTUcxV0NRUllJSC4u)!* 👾
+
+  ## What's new in NGINX's Ansible role $RESOLVED_VERSION!
+
+  $CHANGES
+
+  ## Install & Upgrade
+
+  *   To install the Ansible NGINX role on a fresh environment, run `ansible-galaxy install nginxinc.nginx`.
+  *   To upgrade the Ansible NGINX role to the latest release, run `ansible-galaxy install -f nginxinc.nginx`.
+  *   To install or upgrade to this specific Ansible NGINX role release ($RESOLVED_VERSION), run `ansible-galaxy install -f nginxinc.nginx,v$RESOLVED_VERSION`.
+
+  ## Resources
+
+  *   Functional configuration examples (check `converge.yml` under each `molecule` scenario) -- [github.com/nginxinc/ansible-role-nginx/tree/$RESOLVED_VERSION/molecule](https://github.com/nginxinc/ansible-role-nginx/tree/$RESOLVED_VERSION/molecule).
+  *   Ansible Galaxy repository -- [galaxy.ansible.com/nginxinc/nginx](https://galaxy.ansible.com/nginxinc/nginx).
+  *   NGINX Ansible role & collection introductory blog -- [nginx.com/blog/announcing-nginx-core-collection-ansible](https://www.nginx.com/blog/announcing-nginx-core-collection-ansible).
+  *   NGINX: Better with Ansible demo -- [github.com/alessfg/nginx-ansible-demo](https://github.com/alessfg/nginx-ansible-demo).

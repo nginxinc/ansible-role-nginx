@@ -23,6 +23,8 @@ categories:
   - title: "⬆️ Dependencies"
     labels:
       - "dependencies"
+exclude-labels:
+  - "skip-changelog"
 version-resolver:
   minor:
     labels:

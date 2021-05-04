@@ -72,7 +72,7 @@ autolabeler:
     branch:
       - "/docs\/.+/"
     files:
-      - "!(changelog).md"
+      - "**/!(changelog).md"
     title:
       - "/docs/i"
       - "/documentation/i"

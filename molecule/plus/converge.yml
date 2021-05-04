@@ -21,7 +21,6 @@
           - headers-more
           - image-filter
           - lua
-          - modsecurity
           - njs
           - opentracing
           - passenger

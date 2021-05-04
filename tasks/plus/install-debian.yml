@@ -4,10 +4,10 @@
     path: /etc/apt/apt.conf.d/90nginx
     create: yes
     block: |
-      Acquire::https::plus-pkgs.nginx.com::Verify-Peer "true";
-      Acquire::https::plus-pkgs.nginx.com::Verify-Host "true";
-      Acquire::https::plus-pkgs.nginx.com::SslCert     "/etc/ssl/nginx/nginx-repo.crt";
-      Acquire::https::plus-pkgs.nginx.com::SslKey      "/etc/ssl/nginx/nginx-repo.key";
+      Acquire::https::{{ (nginx_repository | default(nginx_plus_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::Verify-Peer "true";
+      Acquire::https::{{ (nginx_repository | default(nginx_plus_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::Verify-Host "true";
+      Acquire::https::{{ (nginx_repository | default(nginx_plus_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::SslCert     "/etc/ssl/nginx/nginx-repo.crt";
+      Acquire::https::{{ (nginx_repository | default(nginx_plus_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::SslKey      "/etc/ssl/nginx/nginx-repo.key";
     state: "{{ nginx_license_status | default ('present') }}"
     mode: 0444
 

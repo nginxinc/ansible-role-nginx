@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.20.0 (Unreleased)
+
+BREAKING CHANGES:
+
+*   The NGINX Plus repository has been updated. This might cause some issues when running the role on an instance that already has NGINX Plus installed. **Starting with NGINX Plus R25, you will need to install NGINX Plus using release `0.20.0`. If you are trying to install R23, please use release `0.19.2`. NGINX Plus R24 should work with both release `0.19.2` and `0.20.0`.**
+*   The NGINX Plus modsecurity module is no longer supported by this role. Until NGINX Plus R25 is released, you might keep using release `0.19.2` if you wish to install modsecurity.
+
 ## 0.19.2 (April 28, 2021)
 
 FEATURES:

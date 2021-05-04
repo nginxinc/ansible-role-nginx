@@ -31,14 +31,14 @@ nginx_default_repository_suse: "https://nginx.org/packages/{{ (nginx_branch == '
                                 sles/{{ ansible_facts['distribution_major_version'] }}"
 
 # Default NGINX Plus repositories
-nginx_plus_default_repository_alpine: "https://plus-pkgs.nginx.com/alpine/v{{ ansible_facts['distribution_version'] | regex_search('^[0-9]+\\.[0-9]+') }}/main"
-nginx_plus_default_repository_amazon: "https://plus-pkgs.nginx.com/amzn{{ (ansible_facts['distribution_major_version'] is version('2', '==')) | ternary('2', '') }}/$releasever/$basearch"
-nginx_plus_default_repository_debian: "deb [arch=amd64] https://plus-pkgs.nginx.com/{{ ansible_facts['distribution'] | lower }} {{ ansible_facts['distribution_release'] }} nginx-plus"
-nginx_plus_default_repository_freebsd: "https://plus-pkgs.nginx.com/freebsd/${ABI}/latest"
-nginx_plus_default_repository_redhat: "https://plus-pkgs.nginx.com/{{ (ansible_facts['distribution'] == 'CentOS') | ternary('centos', 'rhel') }}/\
+nginx_plus_default_repository_alpine: "https://pkgs.nginx.com/plus/alpine/v{{ ansible_facts['distribution_version'] | regex_search('^[0-9]+\\.[0-9]+') }}/main"
+nginx_plus_default_repository_amazon: "https://pkgs.nginx.com/plus/amzn{{ (ansible_facts['distribution_major_version'] is version('2', '==')) | ternary('2', '') }}/$releasever/$basearch"
+nginx_plus_default_repository_debian: "deb [arch=amd64] https://pkgs.nginx.com/plus/{{ ansible_facts['distribution'] | lower }} {{ ansible_facts['distribution_release'] }} nginx-plus"
+nginx_plus_default_repository_freebsd: "https://pkgs.nginx.com/plus/freebsd/${ABI}/latest"
+nginx_plus_default_repository_redhat: "https://pkgs.nginx.com/plus/{{ (ansible_facts['distribution'] == 'CentOS') | ternary('centos', 'rhel') }}/\
                                       {{ (ansible_facts['distribution_version'] is version('7.4', '>=')
                                       and ansible_facts['distribution_version'] is version('8', '<')) | ternary('7.4', ansible_facts['distribution_major_version']) }}/$basearch/"
-nginx_plus_default_repository_suse: "https://plus-pkgs.nginx.com/sles/{{ ansible_facts['distribution_major_version'] }}\
+nginx_plus_default_repository_suse: "https://pkgs.nginx.com/plus/sles/{{ ansible_facts['distribution_major_version'] }}\
                                     ?ssl_clientcert=/etc/ssl/nginx/nginx-repo-bundle.crt&ssl_verify=peer"
 
 # Alpine dependencies
@@ -78,6 +78,6 @@ nginx_modules_list: [
 
 # Supported NGINX Plus modules
 nginx_plus_modules_list: [
-  'auth-spnego', 'brotli', 'cookie-flag', 'encrypted-session', 'geoip', 'geoip2', 'headers-more', 'image-filter', 'lua',
-  'modsecurity', 'njs', 'opentracing', 'passenger', 'perl', 'prometheus', 'rtmp', 'subs-filter', 'xslt',
+  'auth-spnego', 'brotli', 'cookie-flag', 'encrypted-session', 'geoip', 'geoip2', 'headers-more', 'image-filter',
+  'lua', 'njs', 'opentracing', 'passenger', 'perl', 'prometheus', 'rtmp', 'subs-filter', 'xslt',
 ]

@@ -72,19 +72,13 @@ autolabeler:
     branch:
       - "/docs\/.+/"
     files:
-      - "*.md"
+      - "**/!(changelog).md"
     title:
       - "/docs/i"
       - "/documentation/i"
   - label: "dependencies"
     files:
       - ".github/workflows/requirements/*"
-    branch:
-      - "/bump\/.+/"
-      - "/update\/.+/"
-    title:
-      - "/bump/i"
-      - "/update/i"
 template: |
   👾 *Help make the NGINX Ansible role better by participating in our [survey](https://forms.office.com/Pages/ResponsePage.aspx?id=L_093Ttq0UCb4L-DJ9gcUKLQ7uTJaE1PitM_37KR881UM0NCWkY5UlE5MUYyWU1aTUcxV0NRUllJSC4u)!* 👾
 

@@ -11,6 +11,10 @@ ENHANCEMENTS:
 
 Replace Ansible base with Ansible core. Ansible core will be the "core" Ansible release moving forward from Ansible `2.11`.
 
+BUG FIXES:
+
+Change the url used to grep the latest NGINX version when installing from source. This should avoid the source install failing whenever the `stable` release is higher than the latest `mainline`.
+
 ## 0.19.2 (April 28, 2021)
 
 FEATURES:

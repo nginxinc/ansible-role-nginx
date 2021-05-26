@@ -292,7 +292,7 @@
 
     - name: Set NGINX version
       set_fact:
-        nginx_download_name: "{{ 'nginx-' + (nginx_versions.content | regex_search('([0-9]+\\.){2}[0-9]+')) }}"
+        nginx_version: "{{ 'nginx-' + (nginx_versions.content | regex_search('([0-9]+\\.){2}[0-9]+')) }}"
 
     - name: Check for NGINX install
       stat:
@@ -308,8 +308,8 @@
   block:
     - name: Download NGINX
       get_url:
-        url: "https://nginx.org/download/{{ nginx_download_name }}.tar.gz"
-        dest: "/tmp/{{ nginx_download_name }}.tar.gz"
+        url: "https://nginx.org/download/{{ nginx_version }}.tar.gz"
+        dest: "/tmp/{{ nginx_version }}.tar.gz"
         mode: 0600
         validate_certs: "{{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '=='))
                         | ternary('no', 'yes') }}"

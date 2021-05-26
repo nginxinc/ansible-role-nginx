@@ -283,31 +283,16 @@
   block:
     - name: Fetch NGINX version
       uri:
-        url: https://trac.nginx.org/nginx/browser
+        url: https://version.nginx.com/nginx/{{ nginx_branch }}
         return_content: yes
         validate_certs: "{{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '=='))
                         | ternary('no', 'yes') }}"
       check_mode: no
       register: nginx_versions
 
-    - name: Set NGINX mainline version
+    - name: Set NGINX version
       set_fact:
-        nginx_version: "{{ nginx_versions.content | regex_search('release[^<]*') | regex_replace('release', 'nginx') }}"
-      when: nginx_branch == "mainline"
-
-    - name: Set NGINX stable version 1/2
-      set_fact:
-        nginx_version: "{{ nginx_versions.content | regex_search('stable[^<]*') | regex_replace('stable', 'release') }}"
-      when: nginx_branch == "stable"
-
-    - name: Set NGINX stable version 2/2
-      set_fact:
-        nginx_version: "{{ nginx_versions.content | regex_search(nginx_version + '[^<]*') | regex_replace('release', 'nginx') }}"
-      when: nginx_branch == "stable"
-
-    - name: Set NGINX download filename
-      set_fact:
-        nginx_download_name: "{{ nginx_version }}"
+        nginx_version: "{{ 'nginx-' + (nginx_versions.content | regex_search('([0-9]+\\.){2}[0-9]+')) }}"
 
     - name: Check for NGINX install
       stat:
@@ -323,8 +308,8 @@
   block:
     - name: Download NGINX
       get_url:
-        url: "https://nginx.org/download/{{ nginx_download_name }}.tar.gz"
-        dest: "/tmp/{{ nginx_download_name }}.tar.gz"
+        url: "https://nginx.org/download/{{ nginx_version }}.tar.gz"
+        dest: "/tmp/{{ nginx_version }}.tar.gz"
         mode: 0600
         validate_certs: "{{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '=='))
                         | ternary('no', 'yes') }}"

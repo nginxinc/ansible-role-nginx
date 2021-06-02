@@ -4,6 +4,6 @@
     name: nginx-amplify
     baseurl: http://packages.amplify.nginx.com/{{ (ansible_facts['distribution'] == "Amazon") | ternary('amzn/', 'centos/') }}/$releasever/$basearch/
     description: NGINX Amplify Agent
-    enabled: yes
-    gpgcheck: yes
+    enabled: true
+    gpgcheck: true
     mode: 0644

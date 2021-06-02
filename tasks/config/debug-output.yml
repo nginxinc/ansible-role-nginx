@@ -2,7 +2,7 @@
 - name: Register NGINX config
   command: nginx -T
   ignore_errors: "{{ ansible_check_mode }}"
-  check_mode: no
+  check_mode: false
   changed_when: false
   register: config_full
 

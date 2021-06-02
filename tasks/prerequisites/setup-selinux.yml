@@ -25,14 +25,14 @@
 - name: Allow SELinux HTTP network connections
   seboolean:
     name: httpd_can_network_connect
-    state: yes
-    persistent: yes
+    state: true
+    persistent: true
 
 - name: Allow SELinux HTTP network connections
   seboolean:
     name: httpd_can_network_relay
-    state: yes
-    persistent: yes
+    state: true
+    persistent: true
 
 - name: (DEPRECATED) Allow SELinux TCP connections on status ports
   seport:

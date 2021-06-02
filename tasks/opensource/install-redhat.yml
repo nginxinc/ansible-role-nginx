@@ -4,15 +4,15 @@
     name: nginx
     baseurl: "{{ nginx_repository | default(nginx_default_repository_redhat) }}"
     description: NGINX Repository
-    enabled: yes
-    gpgcheck: yes
+    enabled: true
+    gpgcheck: true
     mode: 0644
   when: ansible_facts['distribution_major_version'] is version('8', '<')
 
 - name: (CentOS/RHEL 8) Configure NGINX repository
   blockinfile:
     path: /etc/yum.repos.d/nginx.repo
-    create: yes
+    create: true
     block: |
       [nginx]
       baseurl = {{ nginx_repository | default(nginx_default_repository_redhat) }}
@@ -29,6 +29,6 @@
     state: "{{ nginx_state }}"
     disablerepo: "*"
     enablerepo: nginx
-    update_cache: yes
+    update_cache: true
   ignore_errors: "{{ ansible_check_mode }}"
   notify: (Handler) Run NGINX

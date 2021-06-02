@@ -7,8 +7,8 @@
     description: NGINX Plus Repository
     sslclientcert: /etc/ssl/nginx/nginx-repo.crt
     sslclientkey: /etc/ssl/nginx/nginx-repo.key
-    enabled: yes
-    gpgcheck: yes
+    enabled: true
+    gpgcheck: true
     state: "{{ nginx_license_status | default ('present') }}"
     mode: 0644
 
@@ -16,7 +16,7 @@
   yum:
     name: "nginx-plus{{ nginx_version | default('') }}"
     state: "{{ nginx_state }}"
-    update_cache: yes
+    update_cache: true
   ignore_errors: "{{ ansible_check_mode }}"
   when: nginx_license_status is not defined
   notify: (Handler) Run NGINX

@@ -2,13 +2,13 @@
 - name: (Alpine Linux) Install dependencies
   apk:
     name: "{{ nginx_alpine_dependencies }}"
-    update_cache: yes
+    update_cache: true
   when: ansible_facts['os_family'] == "Alpine"
 
 - name: (Debian/Ubuntu) Install dependencies
   apt:
     name: "{{ nginx_debian_dependencies }}"
-    update_cache: yes
+    update_cache: true
   when: ansible_facts['os_family'] == "Debian"
 
 - name: (Amazon Linux/CentOS/Oracle Linux/RHEL) Install dependencies

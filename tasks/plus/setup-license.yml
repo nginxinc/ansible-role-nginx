@@ -11,7 +11,7 @@
       copy:
         src: "{{ item }}"
         dest: /etc/ssl/nginx
-        decrypt: yes
+        decrypt: true
         mode: 0444
       loop:
         - "{{ nginx_license['certificate'] }}"
@@ -30,13 +30,13 @@
       copy:
         src: "{{ nginx_license['key'] }}"
         dest: /etc/apk/cert.key
-        decrypt: yes
+        decrypt: true
         mode: 0444
 
     - name: (Alpine Linux) Copy NGINX Plus certificate
       copy:
         src: "{{ nginx_license['certificate'] }}"
         dest: /etc/apk/cert.pem
-        decrypt: yes
+        decrypt: true
         mode: 0444
   when: ansible_facts['os_family'] == "Alpine"

@@ -37,7 +37,7 @@
     - name: (OpenBSD) Install NGINX package
       openbsd_pkg:
         name: "nginx{{ nginx_version | default('') }}"
-        build: no
+        build: false
         state: "{{ nginx_state }}"
       when: nginx_bsd_install_packages | bool
       notify: (Handler) Run NGINX
@@ -45,7 +45,7 @@
     - name: (OpenBSD) Install NGINX port
       openbsd_pkg:
         name: "nginx{{ nginx_version | default('') }}"
-        build: yes
+        build: true
         state: "{{ nginx_state }}"
       when: not nginx_bsd_install_packages | bool
       notify: (Handler) Run NGINX

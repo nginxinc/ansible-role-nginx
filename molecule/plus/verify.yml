@@ -6,7 +6,7 @@
       package:
         name: nginx-plus
         state: present
-      check_mode: yes
+      check_mode: true
       register: install
       failed_when: (install is changed) or (install is failed)
 
@@ -14,8 +14,8 @@
       service:
         name: nginx
         state: started
-        enabled: yes
-      check_mode: yes
+        enabled: true
+      check_mode: true
       register: service
       failed_when: (service is changed) or (service is failed)
 

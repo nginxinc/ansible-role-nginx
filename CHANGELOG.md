@@ -9,7 +9,8 @@ BREAKING CHANGES:
 
 ENHANCEMENTS:
 
-Replace Ansible base with Ansible core. Ansible core will be the "core" Ansible release moving forward from Ansible `2.11`.
+*   Replace Ansible base with Ansible core. Ansible core will be the "core" Ansible release moving forward from Ansible `2.11`.
+*   Update GitHub actions to add a workflow dispatch option.
 
 BUG FIXES:
 

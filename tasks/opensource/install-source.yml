@@ -9,7 +9,7 @@
               - python3
               - python3-pip
               - python3-devel
-            update_cache: yes
+            update_cache: true
 
         - name: (Centos/RHEL 8) Set Python 3 as default
           alternatives:
@@ -33,14 +33,14 @@
           - perl-core
           - wget
           - zlib-devel
-        update_cache: yes
+        update_cache: true
       when: ansible_facts['os_family'] == "RedHat"
 
     - name: (Debian) Install backports repo for 'buster'
       apt_repository:
         filename: buster-backports
         repo: deb http://ftp.us.debian.org/debian buster-backports main
-        update_cache: yes
+        update_cache: true
         mode: 0644
       when: ansible_facts['distribution_release'] == "buster"
 
@@ -54,7 +54,7 @@
           - perl
           - tar
           - zlib1g-dev
-        update_cache: yes
+        update_cache: true
       when: ansible_facts['os_family'] == "Debian"
 
     - name: (Alpine Linux) Install build tools
@@ -69,14 +69,14 @@
           - linux-headers
           - tar
           - wget
-        update_cache: yes
+        update_cache: true
       when: ansible_facts['os_family'] == "Alpine"
 
     - name: (Alpine Linux) Enable OpenRC
       copy:
         content: ""
         dest: /run/openrc/softlevel
-        force: no
+        force: false
         owner: root
         mode: 0644
       when: ansible_facts['os_family'] == "Alpine"
@@ -102,7 +102,7 @@
 - name: (CentOS/RHEL) Install PCRE dependency from package
   yum:
     name: pcre-devel
-    update_cache: yes
+    update_cache: true
   when:
     - nginx_install_source_pcre | bool
     - ansible_facts['os_family'] == "RedHat"
@@ -110,7 +110,7 @@
 - name: (Debian/Ubuntu) Install PCRE dependency from package
   apt:
     name: libpcre3-dev
-    update_cache: yes
+    update_cache: true
   when:
     - nginx_install_source_pcre | bool
     - ansible_facts['os_family'] == "Debian"
@@ -118,7 +118,7 @@
 - name: (Alpine Linux) Install PCRE dependency from package
   apk:
     name: pcre-dev
-    update_cache: yes
+    update_cache: true
   when:
     - nginx_install_source_pcre | bool
     - ansible_facts['os_family'] == "Alpine"
@@ -131,12 +131,12 @@
         dest: "/tmp/{{ pcre_version }}.tar.gz"
         mode: 0600
         validate_certs: "{{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '=='))
-                        | ternary('no', 'yes') }}"
+                        | ternary('false', 'true') }}"
       register: pcre_source
 
     - name: Unpack PCRE dependency
       unarchive:
-        copy: no
+        copy: false
         dest: /tmp/
         src: "{{ pcre_source.dest }}"
         mode: 0700
@@ -162,7 +162,7 @@
 - name: (Centos/RHEL) Install ZLib dependency from package
   yum:
     name: zlib-devel
-    update_cache: yes
+    update_cache: true
   when:
     - nginx_install_source_zlib | bool
     - ansible_facts['os_family'] == "RedHat"
@@ -178,7 +178,7 @@
 - name: (Alpine Linux) Install ZLib dependency from package
   apk:
     name: zlib-dev
-    update_cache: yes
+    update_cache: true
   when:
     - nginx_install_source_zlib | bool
     - ansible_facts['os_family'] == "Alpine"
@@ -191,12 +191,12 @@
         dest: "/tmp/{{ zlib_version }}.tar.gz"
         mode: 0600
         validate_certs: "{{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '=='))
-                        | ternary('no', 'yes') }}"
+                        | ternary('false', 'true') }}"
       register: zlib_source
 
     - name: Unpack ZLib dependency
       unarchive:
-        copy: no
+        copy: false
         dest: /tmp/
         src: "{{ zlib_source.dest }}"
         mode: 0700
@@ -222,7 +222,7 @@
 - name: (CentOS/RHEL) Install OpenSSL dependency from package
   yum:
     name: openssl-devel
-    update_cache: yes
+    update_cache: true
   when:
     - nginx_install_source_openssl | bool
     - ansible_facts['os_family'] == "RedHat"
@@ -230,7 +230,7 @@
 - name: (Debian/Ubuntu) Install OpenSSL dependency from package
   apt:
     name: libssl-dev
-    update_cache: yes
+    update_cache: true
   when:
     - nginx_install_source_openssl | bool
     - ansible_facts['os_family'] == "Debian"
@@ -238,7 +238,7 @@
 - name: (Alpine Linux) Install OpenSSL dependency from package
   apk:
     name: openssl-dev
-    update_cache: yes
+    update_cache: true
   when:
     - nginx_install_source_openssl | bool
     - ansible_facts['os_family'] == "Alpine"
@@ -251,12 +251,12 @@
         dest: "/tmp/{{ openssl_version }}.tar.gz"
         mode: 0600
         validate_certs: "{{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '=='))
-                        | ternary('no', 'yes') }}"
+                        | ternary('false', 'true') }}"
       register: openssl_source
 
     - name: Unpack OpenSSL dependency
       unarchive:
-        copy: no
+        copy: false
         dest: /tmp/
         src: "{{ openssl_source.dest }}"
         mode: 0700
@@ -284,10 +284,10 @@
     - name: Fetch NGINX version
       uri:
         url: https://version.nginx.com/nginx/{{ nginx_branch }}
-        return_content: yes
+        return_content: true
         validate_certs: "{{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '=='))
-                        | ternary('no', 'yes') }}"
-      check_mode: no
+                        | ternary('false', 'true') }}"
+      check_mode: false
       register: nginx_versions
 
     - name: Set NGINX version
@@ -297,7 +297,7 @@
     - name: Check for NGINX install
       stat:
         path: /usr/sbin/nginx
-        follow: yes
+        follow: true
       register: nginx_result
 
 - name: Add NGINX user
@@ -312,12 +312,12 @@
         dest: "/tmp/{{ nginx_version }}.tar.gz"
         mode: 0600
         validate_certs: "{{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '=='))
-                        | ternary('no', 'yes') }}"
+                        | ternary('false', 'true') }}"
       register: nginx_source
 
     - name: Unpack NGINX
       unarchive:
-        copy: no
+        copy: false
         dest: /tmp/
         src: "{{ nginx_source.dest }}"
         mode: 0755
@@ -362,10 +362,10 @@
 
     - name: Enable systemd NGINX service file
       systemd:
-        daemon_reload: yes
+        daemon_reload: true
         name: nginx
         state: restarted
-        enabled: yes
+        enabled: true
       when: ansible_facts['service_mgr'] == "systemd"
       notify: "(Handler) Run NGINX"
 

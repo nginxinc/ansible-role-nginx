@@ -11,7 +11,7 @@
 - name: (FreeBSD) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus repository
   blockinfile:
     path: /etc/pkg/nginx-plus.conf
-    create: yes
+    create: true
     block: |
       nginx-plus: {
       URL: {{ nginx_repository | default(nginx_plus_default_repository_freebsd) }}

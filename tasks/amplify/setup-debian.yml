@@ -4,7 +4,7 @@
     filename: nginx-amplify
     repo: "deb [arch=amd64] https://packages.amplify.nginx.com/{{ ansible_facts['distribution'] | lower }}/
           {{ ansible_facts['distribution_release'] | lower }} amplify-agent"
-    update_cache: yes
+    update_cache: true
     mode: 0644
   when: ansible_facts['distribution_release'] != "focal"
 
@@ -12,6 +12,6 @@
   apt_repository:
     filename: nginx-amplify
     repo: deb [arch=amd64] https://packages.amplify.nginx.com/py3/ubuntu focal amplify-agent
-    update_cache: yes
+    update_cache: true
     mode: 0644
   when: ansible_facts['distribution_release'] == "focal"

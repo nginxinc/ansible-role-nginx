@@ -2,7 +2,7 @@
 - name: (Debian/Ubuntu) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus license verification
   blockinfile:
     path: /etc/apt/apt.conf.d/90nginx
-    create: yes
+    create: true
     block: |
       Acquire::https::{{ (nginx_repository | default(nginx_plus_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::Verify-Peer "true";
       Acquire::https::{{ (nginx_repository | default(nginx_plus_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::Verify-Host "true";
@@ -15,7 +15,7 @@
   apt_repository:
     filename: nginx-plus
     repo: "{{ nginx_repository | default(nginx_plus_default_repository_debian) }}"
-    update_cache: no
+    update_cache: false
     state: "{{ nginx_license_status | default ('present') }}"
     mode: 0644
 
@@ -23,7 +23,7 @@
   apt:
     name: "nginx-plus{{ nginx_version | default('') }}"
     state: "{{ nginx_state }}"
-    update_cache: yes
+    update_cache: true
   ignore_errors: "{{ ansible_check_mode }}"
   when: nginx_license_status is not defined
   notify: (Handler) Run NGINX

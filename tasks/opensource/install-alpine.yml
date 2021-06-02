@@ -10,6 +10,6 @@
     name: "nginx{{ nginx_version | default('') }}"
     repository: "{{ nginx_repository | default(nginx_default_repository_alpine) }}"
     state: "{{ nginx_state }}"
-    update_cache: yes
+    update_cache: true
   ignore_errors: "{{ ansible_check_mode }}"
   notify: (Handler) Run NGINX

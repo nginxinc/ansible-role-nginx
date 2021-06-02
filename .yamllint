@@ -10,4 +10,3 @@ rules:
     level: error
   comments-indentation: disable
   line-length: disable
-  truthy: disable

@@ -10,7 +10,7 @@
 
 - name: Copy NGINX configurator agent configuration template
   copy:
-    remote_src: yes
+    remote_src: true
     src: /etc/amplify-agent/agent.conf.default
     dest: /etc/amplify-agent/agent.conf
     mode: 0644

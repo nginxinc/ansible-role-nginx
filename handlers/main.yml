@@ -1,13 +1,13 @@
 ---
 - name: (Handler) Systemd daemon-reload
   systemd:
-    daemon_reload: yes
+    daemon_reload: true
 
 - name: (Handler) Start/reload NGINX
   service:
     name: nginx
     state: reloaded
-    enabled: yes
+    enabled: true
   when:
     - nginx_start | bool
     - not ansible_check_mode | bool
@@ -18,8 +18,8 @@
   args:
     chdir: /etc/nginx/
   register: config_check
-  ignore_errors: yes
-  check_mode: no
+  ignore_errors: true
+  check_mode: false
   changed_when: false
   listen: (Handler) Run NGINX
 

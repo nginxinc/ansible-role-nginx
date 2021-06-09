@@ -8,7 +8,7 @@
   when:
     - nginx_install | bool
     - (nginx_install_from == "nginx_repository" or nginx_type == "plus")
-  ignore_errors: true
+  ignore_errors: true  # noqa ignore-errors
   tags: nginx_check_support
 
 - name: Set up prerequisites

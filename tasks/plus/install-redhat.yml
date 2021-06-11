@@ -11,6 +11,7 @@
     gpgcheck: true
     state: "{{ nginx_license_status | default ('present') }}"
     mode: 0644
+  when: nginx_manage_repo | bool
 
 - name: (Amazon Linux/CentOS/Oracle Linux/RHEL) Install NGINX Plus
   yum:

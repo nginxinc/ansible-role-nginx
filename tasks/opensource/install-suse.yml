@@ -3,6 +3,7 @@
   zypper_repository:
     name: "nginx-{{ nginx_branch }}"
     repo: "{{ nginx_repository | default(nginx_default_repository_suse) }}"
+  when: nginx_manage_repo | bool
 
 - name: (SLES) Install NGINX
   zypper:

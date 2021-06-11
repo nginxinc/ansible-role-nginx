@@ -6,6 +6,7 @@
     update_cache: true
     mode: 0644
   loop: "{{ nginx_repository | default(nginx_default_repository_debian) }}"
+  when: nginx_manage_repo | bool
 
 - name: (Debian/Ubuntu) Install NGINX
   apt:

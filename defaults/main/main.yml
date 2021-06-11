@@ -34,6 +34,12 @@ nginx_type: opensource
 # Default is present.
 nginx_state: present
 
+# Specify whether or not you want to manage the Nginx repositories.
+# Using 'true' will manage Nginx repositories.
+# Using 'false' will not manage the Nginx repositories, allowing them to be managed through other means.
+# Default is true
+nginx_manage_repo: true
+
 # Specify repository origin for NGINX Open Source.
 # Options are 'nginx_repository', 'source' or 'os_repository'.
 # Only works if 'nginx_type' is set to 'opensource'.

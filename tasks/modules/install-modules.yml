@@ -5,6 +5,7 @@
   when:
     - ansible_facts['distribution'] == "CentOS"
     - '"geoip" in nginx_modules'
+    - nginx_install_epel_release | bool
 
 - name: Install NGINX modules
   package:

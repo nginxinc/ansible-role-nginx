@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.21.0 (Unreleased)
+
+FEATURES:
+
+*   Add a `nginx_manage_repo` feature flag which allows disabling NGINX repo management by this role.
+
 ## 0.20.0 (June 9, 2021)
 
 BREAKING CHANGES:

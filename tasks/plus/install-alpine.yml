@@ -5,6 +5,7 @@
     insertafter: EOF
     line: "{{ nginx_repository | default(nginx_plus_default_repository_alpine) }}"
     state: "{{ nginx_license_status | default ('present') }}"
+  when: nginx_manage_repo | bool
 
 - name: (Alpine Linux) Install NGINX Plus
   apk:

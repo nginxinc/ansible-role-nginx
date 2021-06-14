@@ -4,6 +4,7 @@
     path: /etc/apk/repositories
     insertafter: EOF
     line: "{{ nginx_repository | default(nginx_default_repository_alpine) }}"
+  when: nginx_manage_repo | bool
 
 - name: (Alpine Linux) Install NGINX
   apk:

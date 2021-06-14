@@ -7,7 +7,9 @@
     enabled: true
     gpgcheck: true
     mode: 0644
-  when: ansible_facts['distribution_major_version'] is version('8', '<')
+  when:
+    - ansible_facts['distribution_major_version'] is version('8', '<')
+    - nginx_manage_repo | bool
 
 - name: (CentOS/RHEL 8) Configure NGINX repository
   blockinfile:
@@ -21,7 +23,9 @@
       name = NGINX Repository
       module_hotfixes = true
     mode: 0644
-  when: ansible_facts['distribution_major_version'] is version('8', '==')
+  when:
+    - ansible_facts['distribution_major_version'] is version('8', '==')
+    - nginx_manage_repo | bool
 
 - name: (CentOS/RHEL) Install NGINX
   yum:

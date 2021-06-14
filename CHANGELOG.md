@@ -4,6 +4,7 @@
 
 FEATURES:
 
+*   Add a `nginx_manage_repo` feature flag which allows disabling NGINX repo management by this role.
 *   Add a `nginx_install_epel_release` feature flag which allows epel-release to not be installed by this role if so desired.
 
 ## 0.20.0 (June 9, 2021)

@@ -11,6 +11,7 @@
     name: nginx-plus
     repo: "{{ nginx_repository | default(nginx_plus_default_repository_suse) }}"
     state: "{{ nginx_license_status | default ('present') }}"
+  when: nginx_manage_repo | bool
 
 - name: (SLES) Install NGINX Plus
   zypper:

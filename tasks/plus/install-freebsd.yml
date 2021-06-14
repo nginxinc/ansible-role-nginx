@@ -20,6 +20,7 @@
       }
     state: "{{ nginx_license_status | default ('present') }}"
     mode: 0644
+  when: nginx_manage_repo | bool
 
 - name: (FreeBSD) Install NGINX Plus
   pkgng:

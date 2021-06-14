@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.21.0 (Unreleased)
+
+FEATURES:
+
+*   Add a `nginx_install_epel_release` feature flag which allows epel-release to not be installed by this role if so desired.
+
 ## 0.20.0 (June 9, 2021)
 
 BREAKING CHANGES:

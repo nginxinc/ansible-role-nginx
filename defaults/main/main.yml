@@ -40,6 +40,12 @@ nginx_state: present
 # Default is nginx_repository.
 nginx_install_from: nginx_repository
 
+# Specify whether or not you want this role to install the epel-release package.
+# Using 'true' will install epel-release if other criteria are met.
+# Using 'false' will not install epel-release.
+# Default is true.
+nginx_install_epel_release: true
+
 # Specify source install options for NGINX Open Source.
 # Options represent whether to install from source also or to install from packages (default).
 # These only apply if 'nginx_install_from' is set to 'source'.

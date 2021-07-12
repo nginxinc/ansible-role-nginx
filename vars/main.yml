@@ -20,7 +20,7 @@ nginx_default_signing_key_pgp: https://nginx.org/keys/nginx_signing.key
 nginx_default_repository_alpine: "https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}\
                                   alpine/v{{ ansible_facts['distribution_version'] | regex_search('^[0-9]+\\.[0-9]+') }}/main"
 nginx_default_repository_debian:
-  - "deb [arch=amd64] https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}\
+  - "deb [arch={{ (ansible_facts['architecture'] == 'aarch64') | ternary('arm64', 'amd64') }}] https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}\
     {{ ansible_facts['distribution'] | lower }}/ {{ ansible_facts['distribution_release'] }} nginx"
   - "deb-src https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}\
     {{ ansible_facts['distribution'] | lower }}/ {{ ansible_facts['distribution_release'] }} nginx"
@@ -33,7 +33,7 @@ nginx_default_repository_suse: "https://nginx.org/packages/{{ (nginx_branch == '
 # Default NGINX Plus repositories
 nginx_plus_default_repository_alpine: "https://pkgs.nginx.com/plus/alpine/v{{ ansible_facts['distribution_version'] | regex_search('^[0-9]+\\.[0-9]+') }}/main"
 nginx_plus_default_repository_amazon: "https://pkgs.nginx.com/plus/amzn{{ (ansible_facts['distribution_major_version'] is version('2', '==')) | ternary('2', '') }}/$releasever/$basearch"
-nginx_plus_default_repository_debian: "deb [arch=amd64] https://pkgs.nginx.com/plus/{{ ansible_facts['distribution'] | lower }} {{ ansible_facts['distribution_release'] }} nginx-plus"
+nginx_plus_default_repository_debian: "deb [arch={{ (ansible_facts['architecture'] == 'aarch64') | ternary('arm64', 'amd64') }}] https://pkgs.nginx.com/plus/{{ ansible_facts['distribution'] | lower }} {{ ansible_facts['distribution_release'] }} nginx-plus"
 nginx_plus_default_repository_freebsd: "https://pkgs.nginx.com/plus/freebsd/${ABI}/latest"
 nginx_plus_default_repository_redhat: "https://pkgs.nginx.com/plus/{{ (ansible_facts['distribution'] == 'CentOS') | ternary('centos', 'rhel') }}/\
                                       {{ (ansible_facts['distribution_version'] is version('7.4', '>=')

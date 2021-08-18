@@ -20,7 +20,7 @@ This role installs NGINX Open Source, NGINX Plus, or the NGINX Amplify agent on 
     ---
     collections:
       - name: community.general
-        version: 3.2.0
+        version: 3.5.0
       - name: ansible.posix
         version: 1.2.0
     ```

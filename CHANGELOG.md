@@ -11,6 +11,10 @@ FEATURES:
 *   Add a `nginx_manage_repo` feature flag which allows disabling NGINX repo management by this role.
 *   Add a `nginx_install_epel_release` feature flag which allows epel-release to not be installed by this role if so desired.
 
+ENHANCEMENTS:
+
+Bump the Ansible `community.general` collection to `3.5.0` and `community.docker` collection to `1.9.0`.
+
 ## 0.20.0 (June 9, 2021)
 
 BREAKING CHANGES:

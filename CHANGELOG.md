@@ -13,7 +13,7 @@ FEATURES:
 
 ENHANCEMENTS:
 
-Update the Ansible `community.general` collection to `3.5.0` and `community.docker` collection to `1.9.0`.
+Bump the Ansible `community.general` collection to `3.5.0` and `community.docker` collection to `1.9.0`.
 
 ## 0.20.0 (June 9, 2021)
 

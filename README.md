@@ -10,13 +10,6 @@ This role installs NGINX Open Source, NGINX Plus, or the NGINX Amplify agent on 
 
 **Note:** This role is still in active development. There may be unidentified issues and the role variables may change as development continues.
 
-**Deprecation Warnings:**
-
-With the advent of Ansible collections and the release of the [NGINX Core Ansible collection](https://github.com/nginxinc/ansible-collection-nginx), the decision has been made to split this role into three smaller roles and reduce the overhead of this role:
-*   The NGINX Ansible role will keep working as is and be used to install and setup NGINX.
-*   **The NGINX configuration functionalities included in this role have been removed as of release 0.19.0.** There now is a separate role to manage and create NGINX configurations available [here](https://github.com/nginxinc/ansible-role-nginx-config). Any new issues or PRs related to configuring NGINX should be submitted in the new NGINX configuration Ansible role repository. New issues or PRs related to configuring NGINX submitted in this repository will not be worked on. This disclaimer will be removed in the upcoming `0.21.0` release at some stage after July 2021.
-*   **The NGINX Unit functionalities included in this role have been removed as of release 0.18.0.** There now is a separate role to install NGINX Unit available [here](https://github.com/nginxinc/ansible-role-nginx-unit). Any new issues or PRs related to NGINX Unit should be submitted in the new NGINX Unit Ansible role repository. New issues or PRs related to NGINX Unit submitted in this repository will not be worked on. This disclaimer will be removed in the upcoming `0.21.0` release at some stage after July 2021.
-
 ## Requirements
 
 ### Ansible

@@ -2,6 +2,10 @@
 
 ## 0.21.0 (Unreleased)
 
+BREAKING CHANGES:
+
+Remove the deprecation warning in the README detailing the advent of the [NGINX Core Ansible collection](https://github.com/nginxinc/ansible-collection-nginx) and the subsequent splitting from this role of the [Ansible NGINX Config role](https://github.com/nginxinc/ansible-role-nginx-config) and the [Ansible NGINX Unit role](https://github.com/nginxinc/ansible-role-nginx-unit).
+
 FEATURES:
 
 *   Add a `nginx_manage_repo` feature flag which allows disabling NGINX repo management by this role.
@@ -19,7 +23,7 @@ ENHANCEMENTS:
 *   Replace Ansible base with Ansible core. Ansible core will be the "core" Ansible release moving forward from Ansible `2.11`.
 *   Update GitHub actions to add a workflow dispatch option.
 *   Replace "yes"/"no" boolean values with "true"/"false" to comply with YAML spec `1.2`.
-*   Update the Ansible `community.general` collection to `3.2.0` and `community.docker` collection to `1.7.0`.
+*   Bump the Ansible `community.general` collection to `3.2.0` and `community.docker` collection to `1.7.0`.
 
 BUG FIXES:
 
@@ -37,6 +41,8 @@ FEATURES:
         version: 3.0.0
       - name: ansible.posix
         version: 1.2.0
+      - name: community.docker  # This collection is only used as part of the Molecule testing suite
+        version: 1.5.0
     ```
 *   Explicitly list Jinja2 `2.11.3` as a requirement, as well as detail the minimum supported version (`2.11.x`).
 *   Add support for Dependabot.

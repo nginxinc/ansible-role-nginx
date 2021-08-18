@@ -4,7 +4,7 @@
 
 BREAKING CHANGES:
 
-*   Remove the deprecation warning in the README detailing the advent of the [NGINX Core Ansible collection](https://github.com/nginxinc/ansible-collection-nginx) and the subsequent splitting from this role of the [Ansible NGINX Config role](https://github.com/nginxinc/ansible-role-nginx-config) and the [Ansible NGINX Unit role](https://github.com/nginxinc/ansible-role-nginx-unit).
+Remove the deprecation warning in the README detailing the advent of the [NGINX Core Ansible collection](https://github.com/nginxinc/ansible-collection-nginx) and the subsequent splitting from this role of the [Ansible NGINX Config role](https://github.com/nginxinc/ansible-role-nginx-config) and the [Ansible NGINX Unit role](https://github.com/nginxinc/ansible-role-nginx-unit).
 
 FEATURES:
 

@@ -140,14 +140,16 @@ This role has multiple variables. The descriptions and defaults for all these va
 |----|-----------|
 |**[`main.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/main.yml)**|NGINX installation variables|
 |**[`amplify.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/amplify.yml)**|NGINX Amplify agent installation variables|
-|**[`linux.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/linux.yml)**|Linux installation variables|
 |**[`bsd.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/bsd.yml)**|BSD installation variables|
+|**[`logrotate.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/logrotate.yml)**|Logrotate configuration variables|
+|**[`selinux.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/selinux.yml)**|SELinux configuration variables|
+|**[`systemd.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/systemd.yml)**|Systemd configuration variables|
 
 Similarly, descriptions and defaults for preset variables can be found in the **[`vars/`](https://github.com/nginxinc/ansible-role-nginx/blob/main/vars/)** folder in the following files:
 
 |Name|Description|
 |----|-----------|
-|**[`main.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/vars/main.yml)**|List of supported NGINX platforms and modules|
+|**[`main.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/vars/main.yml)**|List of supported NGINX platforms, modules, and Linux installation variables|
 
 ## Example Playbooks
 

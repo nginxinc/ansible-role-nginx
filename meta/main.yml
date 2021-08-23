@@ -23,20 +23,22 @@ galaxy_info:
     - name: Debian
       versions:
         - buster
+        - bullseye
     - name: EL
       versions:
         - 7
         - 8
     - name: FreeBSD
       versions:
-        - 11.2
+        - 11.4
         - 12.1
+        - 13
     - name: Ubuntu
       versions:
         - xenial
         - bionic
         - focal
-        - groovy
+        - hirsute
     - name: SLES
       versions:
         - 12

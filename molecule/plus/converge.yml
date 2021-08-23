@@ -17,12 +17,12 @@
           - cookie-flag
           - encrypted-session
           - geoip
-          - geoip2
+          - "{{ ansible_facts['distribution'] == 'Amazon' | ternary('', 'geoip2') }}"
           - headers-more
           - image-filter
           - lua
           - njs
-          - opentracing
+          - "{{ ansible_facts['distribution'] == 'Amazon' | ternary('', 'opentracing') }}"
           - passenger
           - perl
           - prometheus

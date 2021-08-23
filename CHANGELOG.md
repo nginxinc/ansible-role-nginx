@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.21.1 (Unreleased)
+
+FEATURES:
+
+Support installing NGINX OSS in Amazon Linux.
+
+ENHANCEMENTS:
+
+*   Update the README and Ansible metadata matrix of supported distributions.
+*   Update the Molecule tests to include the newly supported distributions and remove distributions that are no longer supported.
+
 ## 0.21.0 (August 11, 2021)
 
 BREAKING CHANGES:

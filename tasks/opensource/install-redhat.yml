@@ -1,38 +1,20 @@
 ---
-- name: (CentOS/RHEL 6/7) Configure NGINX repository
+- name: (Amazon Linux/CentOS/RHEL) Configure NGINX repository
   yum_repository:
     name: nginx
-    baseurl: "{{ nginx_repository | default(nginx_default_repository_redhat) }}"
+    baseurl: "{{ nginx_repository |
+              default(lookup('vars', 'nginx_default_repository_' + ((ansible_facts['distribution'] == 'Amazon') | ternary('amazon', 'redhat')))) }}"
     description: NGINX Repository
     enabled: true
     gpgcheck: true
     mode: 0644
-  when:
-    - ansible_facts['distribution_major_version'] is version('8', '<')
-    - nginx_manage_repo | bool
+    module_hotfixes: true
+  when: nginx_manage_repo | bool
 
-- name: (CentOS/RHEL 8) Configure NGINX repository
-  blockinfile:
-    path: /etc/yum.repos.d/nginx.repo
-    create: true
-    block: |
-      [nginx]
-      baseurl = {{ nginx_repository | default(nginx_default_repository_redhat) }}
-      enabled = 1
-      gpgcheck = 1
-      name = NGINX Repository
-      module_hotfixes = true
-    mode: 0644
-  when:
-    - ansible_facts['distribution_major_version'] is version('8', '==')
-    - nginx_manage_repo | bool
-
-- name: (CentOS/RHEL) Install NGINX
+- name: (Amazon Linux/CentOS/RHEL) Install NGINX
   yum:
     name: "nginx{{ nginx_version | default('') }}"
     state: "{{ nginx_state }}"
-    disablerepo: "*"
-    enablerepo: nginx
     update_cache: true
   ignore_errors: "{{ ansible_check_mode }}"
   notify: (Handler) Run NGINX

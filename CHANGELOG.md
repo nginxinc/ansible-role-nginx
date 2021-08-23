@@ -8,7 +8,8 @@ Add support for NGINX OSS in Amazon Linux.
 
 ENHANCEMENTS:
 
-Update matrix and tests of supported platforms.
+*   Update the README and Ansible metadata matrix of supported distributions.
+*   Update the Molecule tests to include the newly supported distributions and remove distributions that are no longer supported.
 
 ## 0.21.0 (August 11, 2021)
 

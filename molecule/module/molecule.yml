@@ -6,13 +6,6 @@ lint: |
   yamllint .
   ansible-lint --force-color
 platforms:
-  - name: alpine-3.10
-    image: alpine:3.10
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/sbin/init"
   - name: alpine-3.11
     image: alpine:3.11
     dockerfile: ../common/Dockerfile.j2
@@ -34,6 +27,20 @@ platforms:
     volumes:
       - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
     command: "/sbin/init"
+  - name: alpine-3.14
+    image: alpine:3.14
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/sbin/init"
+  - name: amazonlinux
+    image: amazonlinux:2
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/usr/sbin/init"
   - name: centos-7
     image: centos:7
     dockerfile: ../common/Dockerfile.j2
@@ -55,8 +62,8 @@ platforms:
     volumes:
       - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
     command: "/sbin/init"
-  - name: ubuntu-xenial
-    image: ubuntu:xenial
+  - name: debian-bullseye
+    image: debian:bullseye-slim
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:

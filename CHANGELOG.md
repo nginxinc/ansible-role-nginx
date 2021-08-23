@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.21.1 (Unreleased)
+
+FEATURES:
+
+Add support for NGINX OSS in Amazon Linux.
+
+ENHANCEMENTS:
+
+Update matrix and tests of supported platforms.
+
 ## 0.21.0 (August 11, 2021)
 
 BREAKING CHANGES:

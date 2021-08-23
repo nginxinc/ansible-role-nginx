@@ -4,7 +4,7 @@
 
 FEATURES:
 
-Add support for installing NGINX OSS in Amazon Linux.
+Support installing NGINX OSS in Amazon Linux.
 
 ENHANCEMENTS:
 

@@ -1,4 +1,4 @@
-ansible-core==2.11.4
+ansible-core==2.11.5
 jinja2==3.0.1
 ansible-lint==5.1.3
 yamllint==1.26.3

@@ -8,15 +8,12 @@ galaxy_info:
 
   license: Apache License, Version 2.0
 
-  min_ansible_version: 2.10
+  min_ansible_version: 2.11
 
   platforms:
     - name: Alpine
       versions:
         - any
-    - name: Amazon
-      versions:
-        - 2018.03
     - name: Amazon Linux 2
       versions:
         - any
@@ -30,12 +27,10 @@ galaxy_info:
         - 8
     - name: FreeBSD
       versions:
-        - 11.4
         - 12.1
         - 13
     - name: Ubuntu
       versions:
-        - xenial
         - bionic
         - focal
         - hirsute

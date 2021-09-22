@@ -10,6 +10,7 @@ ENHANCEMENTS:
 
 * Update the README and Ansible metadata matrix of supported distributions.
 * Update the Molecule tests to include the newly supported distributions and remove distributions that are no longer supported.
+* Bump the Ansible `community.general` collection to `3.7.0`, `ansible.posix` collection to `1.3.0` and `community.docker` collection to `1.9.1`.
 
 ## 0.21.0 (August 11, 2021)
 

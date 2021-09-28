@@ -85,12 +85,10 @@ Ubuntu:
 
 ```yaml
 Alpine:
-  - 3.10
   - 3.11
   - 3.12
   - 3.13
-Amazon Linux:
-  - 2018.03
+  - 3.14
 Amazon Linux 2:
   - any
 CentOS:
@@ -98,9 +96,10 @@ CentOS:
   - 8
 Debian:
   - buster
+  - bullseye
 FreeBSD:
-  - 11.2+
   - 12.1+
+  - 13
 Oracle Linux:
   - 7.4+
 Red Hat:
@@ -110,10 +109,8 @@ SUSE/SLES:
   - 12
   - 15
 Ubuntu:
-  - xenial
   - bionic
   - focal
-  - groovy
 ```
 
 ### NGINX Amplify Agent

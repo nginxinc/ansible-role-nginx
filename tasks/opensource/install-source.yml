@@ -322,6 +322,11 @@
         src: "{{ nginx_source.dest }}"
         mode: 0755
 
+    - name: Set static modules
+      set_fact:
+        nginx_install_source_static_modules: "{{ nginx_install_source_static_modules | default('') + ' --with-' + item }}"
+      loop: "{{ nginx_static_modules }}"
+
     - name: Configure NGINX
       command: >-
         ./configure
@@ -332,12 +337,12 @@
         --modules-path=/usr/lib/nginx/modules
         --prefix=/usr
         --pid-path=/var/run/nginx.pid
-        --with-http_ssl_module
         --with-mail=dynamic
         --with-stream
         {{ nginx_install_source_pcre | ternary('', '--with-pcre=../' + pcre_version) }}
         {{ nginx_install_source_zlib | ternary('', '--with-zlib=../' + zlib_version) }}
         {{ nginx_install_source_openssl | ternary('', '--with-openssl=../' + openssl_version) }}
+        {{ nginx_install_source_static_modules | default('') }}
       args:
         chdir: "/tmp/{{ nginx_version }}"
       register: nginx_configure

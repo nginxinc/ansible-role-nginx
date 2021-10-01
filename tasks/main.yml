@@ -42,7 +42,7 @@
           when: nginx_type == "plus"
           tags: nginx_install_plus
 
-        - name: Install NGINX modules
+        - name: Install NGINX dynamic modules
           include_tasks: "{{ role_path }}/tasks/modules/install-modules.yml"
           when:
             - nginx_modules is defined

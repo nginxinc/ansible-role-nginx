@@ -4,7 +4,8 @@
 
 ENHANCEMENTS:
 
-Change Ansible Lint exceptions from using an ID identifier to a text identifier.
+* Change Ansible Lint exceptions from using an ID identifier to a text identifier.
+* Move non NGINX specific dependencies from the role into the Molecule Dockerfile.
 
 BUG FIXES:
 

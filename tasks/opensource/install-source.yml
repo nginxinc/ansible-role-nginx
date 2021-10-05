@@ -130,8 +130,6 @@
         url: "https://ftp.pcre.org/pub/pcre/{{ pcre_version }}.tar.gz"
         dest: "/tmp/{{ pcre_version }}.tar.gz"
         mode: 0600
-        validate_certs: "{{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '=='))
-                        | ternary('false', 'true') }}"
       register: pcre_source
 
     - name: Unpack PCRE dependency
@@ -190,8 +188,6 @@
         url: "https://zlib.net/{{ zlib_version }}.tar.gz"
         dest: "/tmp/{{ zlib_version }}.tar.gz"
         mode: 0600
-        validate_certs: "{{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '=='))
-                        | ternary('false', 'true') }}"
       register: zlib_source
 
     - name: Unpack ZLib dependency
@@ -250,8 +246,6 @@
         url: "https://www.openssl.org/source/{{ openssl_version }}.tar.gz"
         dest: "/tmp/{{ openssl_version }}.tar.gz"
         mode: 0600
-        validate_certs: "{{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '=='))
-                        | ternary('false', 'true') }}"
       register: openssl_source
 
     - name: Unpack OpenSSL dependency
@@ -285,8 +279,6 @@
       uri:
         url: https://version.nginx.com/nginx/{{ nginx_branch }}
         return_content: true
-        validate_certs: "{{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '=='))
-                        | ternary('false', 'true') }}"
       check_mode: false
       register: nginx_versions
 
@@ -311,8 +303,6 @@
         url: "https://nginx.org/download/{{ nginx_version }}.tar.gz"
         dest: "/tmp/{{ nginx_version }}.tar.gz"
         mode: 0600
-        validate_certs: "{{ (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('6', '=='))
-                        | ternary('false', 'true') }}"
       register: nginx_source
 
     - name: Unpack NGINX

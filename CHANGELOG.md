@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.21.2 (Unreleased)
+
+ENHANCEMENTS:
+
+Remove RHEL/CentOS 6 task specific parameters given those platforms have reached EOL.
+
 ## 0.21.1 (September 29, 2021)
 
 FEATURES:

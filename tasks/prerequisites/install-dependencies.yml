@@ -32,12 +32,14 @@
     - name: (FreeBSD) Install dependencies using package(s)
       pkgng:
         name: "{{ nginx_freebsd_dependencies }}"
+        state: latest  # noqa package-latest
       when: nginx_bsd_install_packages | bool
 
     - name: (FreeBSD) Install dependencies using port(s)
       portinstall:
         name: "{{ item }}"
         use_packages: "{{ nginx_bsd_portinstall_use_packages | default(omit) }}"
+        state: latest  # noqa package-latest
       loop: "{{ nginx_freebsd_dependencies }}"
       when: not nginx_bsd_install_packages | bool
   when: ansible_facts['distribution'] == "FreeBSD"

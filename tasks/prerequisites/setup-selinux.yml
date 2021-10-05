@@ -86,7 +86,7 @@
   changed_when: false
 
 - name: Import SELinux NGINX Plus module
-  command: "semodule -i {{ nginx_selinux_tempdir }}/nginx-plus-module.pp"  # noqa 503
+  command: "semodule -i {{ nginx_selinux_tempdir }}/nginx-plus-module.pp"  # noqa no-handler
   changed_when: false
   when: nginx_selinux_module.changed | bool
 

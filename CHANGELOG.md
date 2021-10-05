@@ -4,7 +4,13 @@
 
 ENHANCEMENTS:
 
-Remove RHEL/CentOS 6 task specific parameters given those platforms have reached EOL.
+* Remove RHEL/CentOS 6 task specific parameters given those platforms have reached EOL.
+* Change Ansible Lint exceptions from using an ID identifier to a text identifier.
+* Move non NGINX specific dependencies from the role into the Molecule Dockerfile.
+
+BUG FIXES:
+
+Always update NGINX dependencies to the latest available version to avoid outdated dependency issues (e.g. outdated CA certificates).
 
 ## 0.21.1 (September 29, 2021)
 

@@ -34,7 +34,7 @@ RUN \
     && zypper clean -a; \
   elif [ $(command -v apk) ]; then \
     apk update \
-    && apk add --no-cache bash curl openrc pcre python3 sudo vim; \
+    && apk add --no-cache bash coreutils curl openrc openssl pcre python3 sudo vim; \
     echo 'rc_provide="loopback net"' >> /etc/rc.conf; \
   elif [ $(command -v xbps-install) ]; then \
     xbps-install -Syu \

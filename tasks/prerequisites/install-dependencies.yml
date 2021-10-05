@@ -3,22 +3,28 @@
   apk:
     name: "{{ nginx_alpine_dependencies }}"
     update_cache: true
+    state: latest  # noqa package-latest
   when: ansible_facts['os_family'] == "Alpine"
 
 - name: (Debian/Ubuntu) Install dependencies
   apt:
     name: "{{ nginx_debian_dependencies }}"
     update_cache: true
+    state: latest  # noqa package-latest
   when: ansible_facts['os_family'] == "Debian"
 
 - name: (Amazon Linux/CentOS/Oracle Linux/RHEL) Install dependencies
   yum:
     name: "{{ nginx_redhat_dependencies }}"
+    update_cache: true
+    state: latest  # noqa package-latest
   when: ansible_facts['os_family'] == "RedHat"
 
 - name: (SLES) Install dependencies
   zypper:
     name: "{{ nginx_sles_dependencies }}"
+    update_cache: true
+    state: latest  # noqa package-latest
   when: ansible_facts['os_family'] == "Suse"
 
 - name: (FreeBSD) Install dependencies

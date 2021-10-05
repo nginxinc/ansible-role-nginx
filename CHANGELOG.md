@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.21.2 (Unreleased)
+
+ENHANCEMENTS:
+
+Change Ansible Lint exceptions from using an ID identifier to a text identifier.
+
+BUG FIXES:
+
+Always update NGINX dependencies to the latest available version to avoid outdated dependency issues (e.g. outdated CA certificates).
+
 ## 0.21.1 (September 29, 2021)
 
 FEATURES:

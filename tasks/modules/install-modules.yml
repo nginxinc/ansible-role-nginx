@@ -30,4 +30,4 @@
       or (ansible_facts['distribution'] == "OracleLinux"))
     - not (item.name | default(item) == "geoip2") or not (ansible_facts['os_family'] == "Suse")
     - not (item.name | default(item) == "opentracing")
-      or not ((ansible_facts['os_family'] == "Suse" and ansible_facts['distribution_major_version'] is version('12', '=='))
+      or not (ansible_facts['os_family'] == "Suse" and ansible_facts['distribution_major_version'] is version('12', '=='))

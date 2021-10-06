@@ -10,7 +10,8 @@ ENHANCEMENTS:
 
 BUG FIXES:
 
-Always update NGINX dependencies to the latest available version to avoid outdated dependency issues (e.g. outdated CA certificates).
+* Always update NGINX dependencies to the latest available version to avoid outdated dependency issues (e.g. outdated CA certificates).
+* The Check NGINX handler should now be run in the correct directory in BSD systems.
 
 ## 0.21.1 (September 29, 2021)
 

@@ -92,11 +92,18 @@ nginx_setup_license: true
 # Default is true.
 nginx_remove_license: true
 
-# Install NGINX Modules.
-# You can select any of the modules listed below. Beware of NGINX Plus only modules (these are marked).
-# Format is list with either the module name or a dictionary (see njs for an example).
+# Install NGINX Static Modules.
+# You can select any of the static modules listed on http://nginx.org/en/docs/configure.html.
+# Format is '--with-*' where '*' should be used as static module name in the list below. (see an example below).
+# Default is 'http_ssl_module'. (DO NOT remove it if you need SSL support).
+nginx_static_modules: ['http_ssl_module']
+# nginx_static_modules: ['http_v2_module']  # Example for '--with-http_v2_module'
+
+# Install NGINX Dynamic Modules.
+# You can select any of the dynamic modules listed below. Beware of NGINX Plus only dynamic modules (these are marked).
+# Format is list with either the dynamic module name or a dictionary (see njs for an example).
 # When using a dictionary, the default value for state is present, and for version it's nginx_version if specified.
-# Default is an empty list (no modules are installed).
+# Default is an empty list (no dynamic modules are installed).
 nginx_modules: []
   # - auth-spnego  # NGINX Plus
   # - brotli  # NGINX Plus

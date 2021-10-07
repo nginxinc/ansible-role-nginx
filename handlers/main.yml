@@ -16,7 +16,7 @@
 - name: (Handler) Check NGINX
   command: nginx -t
   args:
-    chdir: /etc/nginx/
+    chdir: "{{ ((ansible_facts['system'] | lower is not search('bsd')) | ternary('/etc/nginx', '/usr/local/sbin')) }}"
   register: config_check
   ignore_errors: true
   check_mode: false

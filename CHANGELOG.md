@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.21.2 (Unreleased)
+## 0.21.2 (October 7, 2021)
 
 ENHANCEMENTS:
 

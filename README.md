@@ -14,7 +14,7 @@ This role installs NGINX Open Source, NGINX Plus, or the NGINX Amplify agent on 
 
 ### Ansible
 
-* This role is developed and tested with [maintained](https://docs.ansible.com/ansible/devel/reference_appendices/release_and_maintenance.html) versions of Ansible core (above `2.11`) and Ansible (above `2.9.10`).
+* This role is developed and tested with [maintained](https://docs.ansible.com/ansible/devel/reference_appendices/release_and_maintenance.html) versions of Ansible core (above `2.11`).
 * When using Ansible base, you will also need to install the following collections:
 
     ```yaml

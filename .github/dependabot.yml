@@ -4,8 +4,8 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
   - package-ecosystem: "pip"
     directory: "/.github/workflows/requirements"
     schedule:
-      interval: "daily"
+      interval: "weekly"

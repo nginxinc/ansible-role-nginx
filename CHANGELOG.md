@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.21.3 (Unreleased)
+
+ENHANCEMENTS:
+
+* Change Dependabot frequency from daily to weekly
+* Minor touch-up of GitHub action workflows
+
 ## 0.21.2 (October 7, 2021)
 
 ENHANCEMENTS:

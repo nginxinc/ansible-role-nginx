@@ -1,6 +1,6 @@
 ---
 name: Molecule CI/CD
-"on":
+on:
   pull_request:
     branches:
       - main
@@ -46,7 +46,7 @@ jobs:
         if: "!(contains(matrix.scenario, 'plus') && github.event.pull_request.head.repo.full_name != github.repository)"
         run: molecule test -s ${{ matrix.scenario }}
         env:
-          PY_COLORS: "1"
-          ANSIBLE_FORCE_COLOR: "1"
+          PY_COLORS: 1
+          ANSIBLE_FORCE_COLOR: 1
           NGINX_CRT: ${{ secrets.NGINX_CRT }}
           NGINX_KEY: ${{ secrets.NGINX_KEY }}

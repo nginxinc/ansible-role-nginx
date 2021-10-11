@@ -28,7 +28,6 @@ galaxy_info:
     - name: FreeBSD
       versions:
         - 12.1
-        - 13
     - name: Ubuntu
       versions:
         - bionic
@@ -48,5 +47,3 @@ galaxy_info:
     - server
     - development
     - install
-
-dependencies: []

@@ -1,6 +1,6 @@
 ---
 name: Ansible Galaxy import
-on:
+"on":
   release:
     types:
       - published

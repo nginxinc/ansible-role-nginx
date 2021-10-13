@@ -12,10 +12,14 @@ This role installs NGINX Open Source, NGINX Plus, or the NGINX Amplify agent on 
 
 ## Requirements
 
+### NGINX Plus (Optional)
+
+If you wish to install NGINX Plus using this role, you will need to obtain an NGINX Plus license beforehand. _You do not need to do anything beforehand if you want to install NGINX OSS._
+
 ### Ansible
 
 * This role is developed and tested with [maintained](https://docs.ansible.com/ansible/devel/reference_appendices/release_and_maintenance.html) versions of Ansible core (above `2.11`).
-* When using Ansible base, you will also need to install the following collections:
+* When using Ansible core, you will also need to install the following collections:
 
     ```yaml
     ---
@@ -32,13 +36,22 @@ This role installs NGINX Open Source, NGINX Plus, or the NGINX Amplify agent on 
 
 ### Jinja2
 
-* This role uses Jinja2 templates. Ansible base installs Jinja2 by default, but depending on your install and/or upgrade path, you might be running an outdated version of Jinja2. The minimum version of Jinja2 required for the role to properly function is `2.11`.
+* This role uses Jinja2 templates. Ansible core installs Jinja2 by default, but depending on your install and/or upgrade path, you might be running an outdated version of Jinja2. The minimum version of Jinja2 required for the role to properly function is `2.11`.
 * Instructions on how to install Jinja2 can be found in the [Jinja2 website](https://jinja.palletsprojects.com/en/2.11.x/intro/#installation).
 
-### Molecule
+### Molecule (Optional)
 
 * Molecule is used to test the various functionalities of the role. The recommended version of Molecule to test this role is `3.3`.
-* Instructions on how to install Molecule can be found in the [Molecule website](https://molecule.readthedocs.io/en/latest/installation.html).
+* Instructions on how to install Molecule can be found in the [Molecule website](https://molecule.readthedocs.io/en/latest/installation.html). _You will also need to install the Molecule Docker driver._
+* To run the NGINX Plus Molecule tests, you must copy your NGINX Plus license to the role's [`files/license`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/files/license/) folder.
+
+You can alternatively add your NGINX Plusrepository certificate and key to the local environment. Run the following commands to export these files as base64-encoded variables and execute the Molecule tests:
+
+```bash
+export NGINX_CRT=$( cat <path to your certificate file> | base64 )
+export NGINX_KEY=$( cat <path to your key file> | base64 )
+molecule test -s plus
+```
 
 ## Installation
 
@@ -68,8 +81,8 @@ CentOS:
   - 7.4+
   - 8
 Debian:
-  - buster
-  - bullseye
+  - buster (10)
+  - bullseye (11)
 Red Hat:
   - 7.4+
   - 8
@@ -77,9 +90,9 @@ SUSE/SLES:
   - 12
   - 15
 Ubuntu:
-  - bionic
-  - focal
-  - hirsute
+  - bionic (18.04)
+  - focal (20.04)
+  - hirsute (21.04)
 ```
 
 ### NGINX Plus
@@ -96,8 +109,8 @@ CentOS:
   - 7.4+
   - 8
 Debian:
-  - buster
-  - bullseye
+  - buster (10)
+  - bullseye (11)
 FreeBSD:
   - 12.1+
   - 13
@@ -110,8 +123,8 @@ SUSE/SLES:
   - 12
   - 15
 Ubuntu:
-  - bionic
-  - focal
+  - bionic (18.04)
+  - focal (20.04)
 ```
 
 ### NGINX Amplify Agent
@@ -138,31 +151,31 @@ Ubuntu:
 
 This role has multiple variables. The descriptions and defaults for all these variables can be found in the **[`defaults/main/`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/)** folder in the following files:
 
-|Name|Description|
-|----|-----------|
-|**[`main.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/main.yml)**|NGINX installation variables|
-|**[`amplify.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/amplify.yml)**|NGINX Amplify agent installation variables|
-|**[`bsd.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/bsd.yml)**|BSD installation variables|
-|**[`logrotate.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/logrotate.yml)**|Logrotate configuration variables|
-|**[`selinux.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/selinux.yml)**|SELinux configuration variables|
-|**[`systemd.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/systemd.yml)**|Systemd configuration variables|
+| Name | Description |
+| ---- | ----------- |
+| **[`main.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/main.yml)** | NGINX installation variables |
+| **[`amplify.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/amplify.yml)** | NGINX Amplify agent installation variables |
+| **[`bsd.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/bsd.yml)** | BSD installation variables |
+| **[`logrotate.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/logrotate.yml)** | Logrotate configuration variables |
+| **[`selinux.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/selinux.yml)** | SELinux configuration variables |
+| **[`systemd.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/systemd.yml)** | Systemd configuration variables |
 
 Similarly, descriptions and defaults for preset variables can be found in the **[`vars/`](https://github.com/nginxinc/ansible-role-nginx/blob/main/vars/)** folder in the following files:
 
-|Name|Description|
-|----|-----------|
-|**[`main.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/vars/main.yml)**|List of supported NGINX platforms, modules, and Linux installation variables|
+| Name | Description |
+| ---- | ----------- |
+| **[`main.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/vars/main.yml)** | List of supported NGINX platforms, modules, and Linux installation variables |
 
 ## Example Playbooks
 
 Working functional playbook examples can be found in the **[`molecule/`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/)** folder in the following files:
 
-|Name|Description|
-|----|-----------|
-|**[`default/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/default/converge.yml)**|Install a specific version of NGINX and set up logrotate|
-|**[`module/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/module/converge.yml)**|Install various NGINX supported modules|
-|**[`plus/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/plus/converge.yml)**|Install NGINX Plus and various NGINX Plus supported modules|
-|**[`source/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/source/converge.yml)**|Install NGINX from source|
+| Name | Description |
+| ---- | ----------- |
+| **[`default/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/default/converge.yml)** | Install a specific version of NGINX and set up logrotate |
+| **[`module/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/module/converge.yml)** | Install various NGINX supported modules |
+| **[`plus/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/plus/converge.yml)** | Install NGINX Plus and various NGINX Plus supported modules |
+| **[`source/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/source/converge.yml)** | Install NGINX from source |
 
 Do note that if you install this repository via Ansible Galaxy, you will have to replace the role variable in the sample playbooks from `ansible-role-nginx` to `nginxinc.nginx`.
 
@@ -172,7 +185,7 @@ You can find the Ansible NGINX Core collection of roles to install and configure
 
 You can find the Ansible NGINX configuration role to configure NGINX [here](https://github.com/nginxinc/ansible-role-nginx-config).
 
-You can find the Ansible NGINX App Protect role to install and configure NGINX App Protect [here](https://github.com/nginxinc/ansible-role-nginx-app-protect).
+You can find the Ansible NGINX App Protect role to install and configure NGINX App Protect WAF and NGINX App Protect DoS [here](https://github.com/nginxinc/ansible-role-nginx-app-protect).
 
 You can find the Ansible NGINX Controller collection of roles to install and configure NGINX Controller [here](https://github.com/nginxinc/ansible-collection-nginx_controller).
 

@@ -88,13 +88,13 @@ template: |
 
   ## Install & Upgrade
 
-  *   To install the Ansible NGINX role on a fresh environment, run `ansible-galaxy install nginxinc.nginx`.
-  *   To upgrade the Ansible NGINX role to the latest release, run `ansible-galaxy install -f nginxinc.nginx`.
-  *   To install or upgrade to this specific Ansible NGINX role release ($RESOLVED_VERSION), run `ansible-galaxy install -f nginxinc.nginx,v$RESOLVED_VERSION`.
+  * To install the Ansible NGINX role on a fresh environment, run `ansible-galaxy install nginxinc.nginx`.
+  * To upgrade the Ansible NGINX role to the latest release, run `ansible-galaxy install -f nginxinc.nginx`.
+  * To install or upgrade to this specific Ansible NGINX role release ($RESOLVED_VERSION), run `ansible-galaxy install -f nginxinc.nginx,v$RESOLVED_VERSION`.
 
   ## Resources
 
-  *   Functional configuration examples (check `converge.yml` under each `molecule` scenario) -- [github.com/nginxinc/ansible-role-nginx/tree/$RESOLVED_VERSION/molecule](https://github.com/nginxinc/ansible-role-nginx/tree/$RESOLVED_VERSION/molecule).
-  *   Ansible Galaxy repository -- [galaxy.ansible.com/nginxinc/nginx](https://galaxy.ansible.com/nginxinc/nginx).
-  *   NGINX Ansible role & collection introductory blog -- [nginx.com/blog/announcing-nginx-core-collection-ansible](https://www.nginx.com/blog/announcing-nginx-core-collection-ansible).
-  *   NGINX: Better with Ansible demo -- [github.com/alessfg/nginx-ansible-demo](https://github.com/alessfg/nginx-ansible-demo).
+  * Functional configuration examples (check `converge.yml` under each `molecule` scenario) -- [github.com/nginxinc/ansible-role-nginx/tree/$RESOLVED_VERSION/molecule](https://github.com/nginxinc/ansible-role-nginx/tree/$RESOLVED_VERSION/molecule).
+  * Ansible Galaxy repository -- [galaxy.ansible.com/nginxinc/nginx](https://galaxy.ansible.com/nginxinc/nginx).
+  * NGINX Ansible role & collection introductory blog -- [nginx.com/blog/announcing-nginx-core-collection-ansible](https://www.nginx.com/blog/announcing-nginx-core-collection-ansible).
+  * NGINX: Better with Ansible demo -- [github.com/alessfg/nginx-ansible-demo](https://github.com/alessfg/nginx-ansible-demo).

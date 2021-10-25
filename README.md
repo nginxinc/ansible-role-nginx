@@ -25,9 +25,11 @@ If you wish to install NGINX Plus using this role, you will need to obtain an NG
     ---
     collections:
       - name: community.general
-        version: 3.7.0
+        version: 3.8.0
       - name: ansible.posix
         version: 1.3.0
+      - name: community.docker  # Only required if you plan to use Molecule (see below)
+        version: 2.0.0
     ```
 
     **Note:** You can alternatively install the Ansible community distribution (what is known as the "old" Ansible) if you don't want to manage individual collections.
@@ -45,7 +47,7 @@ If you wish to install NGINX Plus using this role, you will need to obtain an NG
 * Instructions on how to install Molecule can be found in the [Molecule website](https://molecule.readthedocs.io/en/latest/installation.html). _You will also need to install the Molecule Docker driver._
 * To run the NGINX Plus Molecule tests, you must copy your NGINX Plus license to the role's [`files/license`](https://github.com/nginxinc/ansible-role-nginx-app-protect/blob/main/files/license/) folder.
 
-You can alternatively add your NGINX Plusrepository certificate and key to the local environment. Run the following commands to export these files as base64-encoded variables and execute the Molecule tests:
+You can alternatively add your NGINX Plus repository certificate and key to the local environment. Run the following commands to export these files as base64-encoded variables and execute the Molecule tests:
 
 ```bash
 export NGINX_CRT=$( cat <path to your certificate file> | base64 )

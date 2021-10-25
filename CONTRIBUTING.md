@@ -51,7 +51,7 @@ To suggest an enhancement, please create an issue on GitHub with the label `enha
 * Fork the repo, create a branch, implement your changes, add any relevant Molecule tests, submit a PR when your changes are **tested** (using Molecule) and ready for review.
 * Fill in [our pull request template](https://github.com/nginxinc/ansible-role-nginx/blob/main/.github/pull_request_template.md).
 
-Note: if you’d like to implement a new feature, please consider creating a feature request issue first to start a discussion about the feature.
+Note: if you'd like to implement a new feature, please consider creating a feature request issue first to start a discussion about the feature.
 
 ## Code Guidelines
 

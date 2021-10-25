@@ -1,6 +1,6 @@
 ansible-core==2.11.6
 jinja2==3.0.2
-ansible-lint==5.2.0
+ansible-lint==5.2.1
 yamllint==1.26.3
 molecule[docker]==3.5.2
 docker==5.0.3

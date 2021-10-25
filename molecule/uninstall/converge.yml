@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: Uninstall NGINX
+      include_role:
+        name: ansible-role-nginx
+      vars:
+        nginx_state: absent

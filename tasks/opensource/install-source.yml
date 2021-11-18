@@ -127,7 +127,7 @@
   block:
     - name: Download PCRE dependency
       get_url:
-        url: "https://ftp.pcre.org/pub/pcre/{{ pcre_version }}.tar.gz"
+        url: "https://ftp.exim.org/pub/pcre/{{ pcre_version }}.tar.gz"
         dest: "/tmp/{{ pcre_version }}.tar.gz"
         mode: 0600
       register: pcre_source

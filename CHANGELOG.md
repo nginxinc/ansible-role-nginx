@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.21.4 (Unreleased)
+
+BUG FIXES:
+
+When building NGINX from source, the original source FTP repository `ftp.pcre.org` is not available anymore, according to <http://pcre.org>. The FTP repository has been updated to use `ftp.exim.org` instead.
+
 ## 0.21.3 (October 25, 2021)
 
 ENHANCEMENTS:

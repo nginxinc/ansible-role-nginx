@@ -20,6 +20,7 @@
 - name: (Debian/Ubuntu) Add NGINX signing key
   apt_key:
     id: 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
+    keyring: /usr/share/keyrings/nginx-archive-keyring.gpg
     url: "{{ keysite }}"
   when: ansible_facts['os_family'] == "Debian"
 

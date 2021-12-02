@@ -8,6 +8,18 @@
   loop: "{{ nginx_repository | default(nginx_default_repository_debian) }}"
   when: nginx_manage_repo | bool
 
+- name: (Debian/Ubuntu) Pin NGINX repository
+  blockinfile:
+    path: /etc/apt/preferences.d/99nginx
+    create: true
+    block: |
+      Package: *
+      Pin: origin nginx.org
+      Pin: release o=nginx
+      Pin-Priority: 900
+    mode: 0644
+  when: nginx_repository is not defined
+
 - name: (Debian/Ubuntu) Install NGINX
   apt:
     name: "nginx{{ nginx_version | default('') }}"

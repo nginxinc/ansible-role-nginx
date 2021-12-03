@@ -1,5 +1,5 @@
 ---
-- name: (Amazon Linux/CentOS/RHEL) Configure NGINX repository
+- name: (Amazon Linux/CentOS/RHEL) {{ (nginx_setup == 'uninstall') | ternary('Remove', 'Configure') }} NGINX repository
   yum_repository:
     name: nginx
     baseurl: "{{ nginx_repository |
@@ -9,9 +9,10 @@
     gpgcheck: true
     mode: 0644
     module_hotfixes: true
+    state: "{{ nginx_state }}"
   when: nginx_manage_repo | bool
 
-- name: (Amazon Linux/CentOS/RHEL) Install NGINX
+- name: (Amazon Linux/CentOS/RHEL) {{ nginx_setup | capitalize }} NGINX
   yum:
     name: "nginx{{ nginx_version | default('') }}"
     state: "{{ nginx_state }}"

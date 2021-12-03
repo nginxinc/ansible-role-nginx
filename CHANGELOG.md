@@ -1,6 +1,11 @@
 # Changelog
 
-## 0.21.4 (Unreleased)
+## 0.22.0 (Unreleased)
+
+BREAKING CHANGES:
+
+* The `nginx_state` variable has been replaced with `nginx_setup` and instead of using `present`, `absent`, `latest` you should now use `install`, `uninstall` and `update`.
+* `nginx_install` variable is no more. Use `nginx_enable` instead.
 
 FEATURES:
 
@@ -217,7 +222,7 @@ FEATURES:
 * A new variable has been introduced:
   * `nginx_setup_license` -- Determine whether you want to use this role to upload your NGINX license to your target host.
 * The role will now fail automatically if you try to deploy NGINX from an official repository in an unsupported distribution. You can find a list of supported distributions for NGINX and NGINX Plus in [`vars/main.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/vars/main.yml)
-* Three new tags have been introduced -- `nginx_setup_license`, `nginx_install` and `nginx_check_support`.
+* Three new tags have been introduced -- `nginx_setup_license`, `nginx_enable` and `nginx_check_support`.
 * Add Alpine 3.12 to the list of supported platforms.
 * Remove Alpine 3.8 from the list of supported platforms.
 * Add NGINX Plus tests to TravisCI
@@ -301,7 +306,7 @@ FEATURES:
 * Add support to configure logrotate.
 * Add support for Ubuntu Focal.
 * Add support to configure SELinux.
-* Two new variables have been introduced -- `nginx_install` and `nginx_configure` -- to let you choose whether you want to install NGINX, configure NGINX, or both.
+* Two new variables have been introduced -- `nginx_enable` and `nginx_configure` -- to let you choose whether you want to install NGINX, configure NGINX, or both.
 
 ENHANCEMENTS:
 

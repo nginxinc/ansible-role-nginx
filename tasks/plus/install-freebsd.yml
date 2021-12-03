@@ -22,7 +22,7 @@
     mode: 0644
   when: nginx_manage_repo | bool
 
-- name: (FreeBSD) Install NGINX Plus
+- name: (FreeBSD) {{ nginx_setup | capitalize }} NGINX Plus
   pkgng:
     name: "nginx-plus{{ nginx_version | default('') }}"
     state: "{{ nginx_state }}"

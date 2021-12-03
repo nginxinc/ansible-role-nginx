@@ -1,19 +1,12 @@
 ---
-- name: (SLES) Combine NGINX Plus certificate and license key
-  assemble:
-    src: /etc/ssl/nginx
-    dest: /etc/ssl/nginx/nginx-repo-bundle.crt
-    mode: 0444
-  when: nginx_license_status is not defined
-
 - name: (SLES) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus repository
   zypper_repository:
     name: nginx-plus
     repo: "{{ nginx_repository | default(nginx_plus_default_repository_suse) }}"
-    state: "{{ nginx_license_status | default ('present') }}"
+    state: "{{ nginx_license_status | default((nginx_setup == 'uninstall') | ternary('absent', 'present')) }}"
   when: nginx_manage_repo | bool
 
-- name: (SLES) Install NGINX Plus
+- name: (SLES) {{ nginx_setup | capitalize }} NGINX Plus
   zypper:
     name: "nginx-plus{{ nginx_version | default('') }}"
     state: "{{ nginx_state }}"

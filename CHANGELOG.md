@@ -17,7 +17,8 @@ Add Alpine Linux 3.15 to list of tested and supported platforms.
 
 BUG FIXES:
 
-When building NGINX from source, the original source FTP repository `ftp.pcre.org` is not available anymore, according to <http://pcre.org>. The FTP repository has been updated to use `ftp.exim.org` instead.
+* When building NGINX from source, the original source FTP repository `ftp.pcre.org` is not available anymore, according to <http://pcre.org>. The FTP repository has been updated to use `ftp.exim.org` instead.
+* Uninstalling NGINX should now work correctly under most scenarios.
 
 ## 0.21.3 (October 25, 2021)
 

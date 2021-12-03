@@ -14,7 +14,7 @@
 - name: Check that NGINX setup is an allowed value
   assert:
     that: nginx_setup in nginx_setup_vars
-    fail_msg: The value {{ nginx_setup }} you used for `nginx_setup` is not allowed. Try one of {{ nginx_setup_vars | join(, ) }}.
+    fail_msg: The value {{ nginx_setup }} you used for `nginx_setup` is not allowed. Try one of {{ nginx_setup_vars | join(', ') }}.
   when: nginx_enable | bool
   ignore_errors: true  # noqa ignore-errors
   tags: nginx_check_support

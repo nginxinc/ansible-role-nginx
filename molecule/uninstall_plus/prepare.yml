@@ -18,10 +18,13 @@
         mode: 0444
 
 - name: Install NGINX
-  include_role:
-    name: ansible-role-nginx
-  vars:
-    nginx_type: plus
-    nginx_license:
-      certificate: license/nginx-repo.crt
-      key: license/nginx-repo.key
+  hosts: all
+  tasks:
+    - name: Install NGINX
+      include_role:
+        name: ansible-role-nginx
+      vars:
+        nginx_type: plus
+        nginx_license:
+          certificate: license/nginx-repo.crt
+          key: license/nginx-repo.key

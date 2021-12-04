@@ -1,6 +1,7 @@
 ---
-- name: Install NGINX
-  hosts: all
+- name: Prepare
+  hosts: localhost
+  gather_facts: false
   tasks:
     - name: Create ephemeral license certificate file from b64 decoded env var
       copy:
@@ -16,12 +17,11 @@
         force: false
         mode: 0444
 
-    - name: Install NGINX
-      include_role:
-        name: ansible-role-nginx
-      vars:
-        nginx_type: plus
-        nginx_license:
-          certificate: license/nginx-repo.crt
-          key: license/nginx-repo.key
-      # nginx_remove_license: false
+- name: Install NGINX
+  include_role:
+    name: ansible-role-nginx
+  vars:
+    nginx_type: plus
+    nginx_license:
+      certificate: license/nginx-repo.crt
+      key: license/nginx-repo.key

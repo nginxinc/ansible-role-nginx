@@ -1,7 +1,7 @@
 ---
-# nginx_setup_vars: [
-#   'install', 'uninstall', 'update',
-# ]
+nginx_setup_vars: [
+  'install', 'uninstall', 'update',
+]
 
 nginx_default_setup: install
 

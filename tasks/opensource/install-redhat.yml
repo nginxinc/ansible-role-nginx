@@ -9,7 +9,7 @@
     gpgcheck: true
     mode: 0644
     module_hotfixes: true
-    state: "{{ nginx_state }}"
+    state: "{{ (nginx_state == 'uninstall') | ternary('absent', 'present') }}"
   when: nginx_manage_repo | bool
 
 - name: (Amazon Linux/CentOS/RHEL) {{ nginx_setup | capitalize }} NGINX

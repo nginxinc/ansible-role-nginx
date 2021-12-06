@@ -3,7 +3,7 @@
   zypper_repository:
     name: "nginx-{{ nginx_branch }}"
     repo: "{{ nginx_repository | default(nginx_default_repository_suse) }}"
-    state: "{{ nginx_state }}"
+    state: "{{ (nginx_state == 'uninstall') | ternary('absent', 'present') }}"
   when: nginx_manage_repo | bool
 
 - name: (SLES) {{ nginx_setup | capitalize }} NGINX

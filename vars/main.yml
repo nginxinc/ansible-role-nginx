@@ -1,6 +1,6 @@
 ---
 nginx_setup_vars: [
-  'install', 'uninstall', 'update',
+  'install', 'uninstall', 'upgrade',
 ]
 
 nginx_default_setup: install
@@ -8,7 +8,7 @@ nginx_default_setup: install
 nginx_state_vals:
   install: present
   uninstall: absent
-  update: latest
+  upgrade: latest
 
 nginx_state: "{{ nginx_state_vals[nginx_setup] | default(nginx_state_vals[nginx_default_setup]) }}"
 

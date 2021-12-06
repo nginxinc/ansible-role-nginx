@@ -18,11 +18,12 @@ nginx_type: opensource
 # For NGINX Plus and modules you'll need a wilcard like below (which installs plus-20 and modules)
 # nginx_version: "-20*"
 
-# Specify whether you want to maintain your version of NGINX, upgrade to the latest version, or remove NGINX.
-# Can be used with `nginx_version` to fine tune con
 # Start NGINX service.
 # Default is true.
-nginx_start: truetrol on which version of NGINX is installed/used on each playbook execution.
+nginx_start: true
+
+# Specify whether you want to maintain your version of NGINX, upgrade to the latest version, or remove NGINX.
+# Can be used with `nginx_version` to fine tune control which version of NGINX is installed/used on each playbook execution.
 # Using 'install' will install the latest version (or 'nginx_version') of NGINX on a fresh install.
 # Using 'update' will upgrade NGINX to the latest version (that matches your 'nginx_version') of NGINX on every playbook execution.
 # Using 'uninstall' will remove NGINX from your system.

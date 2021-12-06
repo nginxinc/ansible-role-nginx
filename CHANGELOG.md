@@ -4,7 +4,7 @@
 
 BREAKING CHANGES:
 
-* The `nginx_state` variable has been replaced with `nginx_setup` and instead of using `present`, `absent`, `latest` you should now use `install`, `uninstall` and `update`.
+* The `nginx_state` variable has been replaced with `nginx_setup` and instead of using `present`, `absent`, `latest` you should now use `install`, `uninstall` and `upgrade`.
 * `nginx_install` variable is no more. Use `nginx_enable` instead.
 
 FEATURES:

@@ -24,7 +24,7 @@
         url: http://localhost
         status_code: 200
 
-    - name: Verify correct version of NGINX has been installed
+    - name: Verify NGINX has been upgraded
       command: nginx -v
       args:
         chdir: "{{ ((ansible_facts['system'] | lower is not search('bsd')) | ternary('/etc/nginx', '/usr/local/sbin')) }}"

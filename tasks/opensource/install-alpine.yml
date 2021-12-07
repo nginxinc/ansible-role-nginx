@@ -1,14 +1,15 @@
 ---
-- name: (Alpine Linux) Configure NGINX repository
+- name: (Alpine Linux) {{ (nginx_setup == 'uninstall') | ternary('Remove', 'Configure') }} NGINX repository
   lineinfile:
     path: /etc/apk/repositories
     insertafter: EOF
     line: "{{ nginx_repository | default(nginx_default_repository_alpine) }}"
+    state: "{{ (nginx_state == 'uninstall') | ternary('absent', 'present') }}"
   when: nginx_manage_repo | bool
 
-- name: (Alpine Linux) Install NGINX
+- name: (Alpine Linux) {{ nginx_setup | capitalize }} NGINX
   apk:
-    name: "nginx{{ nginx_repository is not defined | ternary('@nginx', '') }}{{ nginx_version | default('') }}"
+    name: "nginx{{ (nginx_repository is not defined and nginx_setup != 'uninstall') | ternary('@nginx', '') }}{{ nginx_version | default('') }}"
     state: "{{ nginx_state }}"
     update_cache: true
   ignore_errors: "{{ ansible_check_mode }}"

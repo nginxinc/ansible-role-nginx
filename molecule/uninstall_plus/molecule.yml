@@ -1,0 +1,91 @@
+---
+driver:
+  name: docker
+lint: |
+  set -e
+  yamllint .
+  ansible-lint --force-color
+platforms:
+  - name: alpine-3.11
+    image: alpine:3.11
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/sbin/init"
+  - name: alpine-3.12
+    image: alpine:3.12
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/sbin/init"
+  - name: alpine-3.13
+    image: alpine:3.13
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/sbin/init"
+  - name: alpine-3.14
+    image: alpine:3.14
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/sbin/init"
+  - name: amazonlinux-2
+    image: amazonlinux:2
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/usr/sbin/init"
+  - name: centos-7
+    image: centos:7
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/usr/sbin/init"
+  - name: centos-8
+    image: centos:8
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/usr/sbin/init"
+  - name: debian-buster
+    image: debian:buster-slim
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/sbin/init"
+  - name: debian-bullseye
+    image: debian:bullseye-slim
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/sbin/init"
+  - name: ubuntu-bionic
+    image: ubuntu:bionic
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/sbin/init"
+  - name: ubuntu-focal
+    image: ubuntu:focal
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/sbin/init"
+provisioner:
+  name: ansible
+  playbooks:
+    prepare: prepare.yml
+    converge: converge.yml
+    verify: verify.yml

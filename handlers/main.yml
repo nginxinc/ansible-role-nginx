@@ -10,6 +10,7 @@
     enabled: true
   when:
     - nginx_start | bool
+    - nginx_state != "absent"
     - not ansible_check_mode | bool
   listen: (Handler) Run NGINX
 
@@ -21,6 +22,7 @@
   ignore_errors: true
   check_mode: false
   changed_when: false
+  when: nginx_state != "absent"
   listen: (Handler) Run NGINX
 
 - name: (Handler) Print NGINX error if syntax check fails
@@ -30,6 +32,7 @@
   when:
     - config_check.stderr_lines is defined
     - config_check.rc != 0
+    - nginx_state != "absent"
   listen: (Handler) Run NGINX
 
 - name: (Handler) Start NGINX Amplify agent

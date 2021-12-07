@@ -1,0 +1,7 @@
+---
+- name: Prepare
+  hosts: all
+  tasks:
+    - name: Install NGINX
+      include_role:
+        name: ansible-role-nginx

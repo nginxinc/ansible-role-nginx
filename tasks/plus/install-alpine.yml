@@ -4,10 +4,10 @@
     path: /etc/apk/repositories
     insertafter: EOF
     line: "{{ nginx_repository | default(nginx_plus_default_repository_alpine) }}"
-    state: "{{ nginx_license_status | default ('present') }}"
+    state: "{{ nginx_license_status | default((nginx_setup == 'uninstall') | ternary('absent', 'present')) }}"
   when: nginx_manage_repo | bool
 
-- name: (Alpine Linux) Install NGINX Plus
+- name: (Alpine Linux) {{ nginx_setup | capitalize }} NGINX Plus
   apk:
     name: "nginx-plus{{ nginx_version | default('') }}"
     repository: "{{ nginx_repository | default(nginx_plus_default_repository_alpine) }}"

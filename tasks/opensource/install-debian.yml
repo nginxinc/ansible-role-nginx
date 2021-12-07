@@ -1,14 +1,15 @@
 ---
-- name: (Debian/Ubuntu) Configure NGINX repository
+- name: (Debian/Ubuntu) {{ (nginx_setup == 'uninstall') | ternary('Remove', 'Configure') }} NGINX repository
   apt_repository:
     filename: nginx
     repo: "{{ item }}"
     update_cache: true
     mode: 0644
+    state: "{{ (nginx_state == 'uninstall') | ternary('absent', 'present') }}"
   loop: "{{ nginx_repository | default(nginx_default_repository_debian) }}"
   when: nginx_manage_repo | bool
 
-- name: (Debian/Ubuntu) Pin NGINX repository
+- name: (Debian/Ubuntu) {{ (nginx_setup == 'uninstall') | ternary('Unpin', 'Pin') }} NGINX repository
   blockinfile:
     path: /etc/apt/preferences.d/99nginx
     create: true
@@ -18,9 +19,10 @@
       Pin: release o=nginx
       Pin-Priority: 900
     mode: 0644
+    state: "{{ (nginx_state == 'uninstall') | ternary('absent', 'present') }}"
   when: nginx_repository is not defined
 
-- name: (Debian/Ubuntu) Install NGINX
+- name: (Debian/Ubuntu) {{ nginx_setup | capitalize }} NGINX
   apt:
     name: "nginx{{ nginx_version | default('') }}"
     state: "{{ nginx_state }}"

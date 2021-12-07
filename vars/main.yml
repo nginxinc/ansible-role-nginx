@@ -1,4 +1,17 @@
 ---
+nginx_setup_vars: [
+  'install', 'uninstall', 'upgrade',
+]
+
+nginx_default_setup: install
+
+nginx_state_vals:
+  install: present
+  uninstall: absent
+  upgrade: latest
+
+nginx_state: "{{ nginx_state_vals[nginx_setup] | default(nginx_state_vals[nginx_default_setup]) }}"
+
 # Supported NGINX Open Source distributions
 # https://nginx.org/en/docs/install.html
 nginx_distributions: [

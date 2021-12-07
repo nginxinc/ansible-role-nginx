@@ -7,7 +7,7 @@
     - '"geoip" in nginx_modules'
     - nginx_install_epel_release | bool
 
-- name: Install NGINX modules
+- name: Setup NGINX modules
   package:
     name: "nginx-{{ (nginx_type == 'plus') | ternary('plus-', '') }}module-{{ item.name | default(item) }}\
           {{ item.version | default(nginx_version) | default('') }}{{ (nginx_repository is not defined and ansible_facts['os_family'] == 'Alpine' and nginx_type != 'plus') | ternary('@nginx', '') }}"

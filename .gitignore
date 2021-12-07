@@ -19,3 +19,7 @@ Thumbs.db
 # Python specific #
 ###################
 __pycache__
+
+# Logs #
+########
+*.log

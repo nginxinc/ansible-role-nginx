@@ -1,11 +1,12 @@
 ---
-- name: (SLES) Configure NGINX repository
+- name: (SLES) {{ (nginx_setup == 'uninstall') | ternary('Remove', 'Configure') }} NGINX repository
   zypper_repository:
     name: "nginx-{{ nginx_branch }}"
     repo: "{{ nginx_repository | default(nginx_default_repository_suse) }}"
+    state: "{{ (nginx_state == 'uninstall') | ternary('absent', 'present') }}"
   when: nginx_manage_repo | bool
 
-- name: (SLES) Install NGINX
+- name: (SLES) {{ nginx_setup | capitalize }} NGINX
   zypper:
     name: "nginx{{ nginx_version | default('') }}"
     state: "{{ nginx_state }}"

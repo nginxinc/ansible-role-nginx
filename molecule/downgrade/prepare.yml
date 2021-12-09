@@ -1,0 +1,29 @@
+---
+- name: Prepare
+  hosts: all
+  pre_tasks:
+    - name: Set repo if Alpine
+      set_fact:
+        version: "=1.21.4-r1"
+      when: ansible_facts['os_family'] == "Alpine"
+    - name: Set repo if Debian
+      set_fact:
+        version: "=1.21.4-1~{{ ansible_facts['distribution_release'] }}"
+      when: ansible_facts['os_family'] == "Debian"
+    - name: Set repo if Red Hat
+      set_fact:
+        version: "-1.21.4-1.{{ (ansible_facts['distribution']=='Amazon') | ternary('amzn2', ('el' + ansible_facts['distribution_major_version'] | string)) }}.ngx"
+      when: ansible_facts['os_family'] == "RedHat"
+    - name: Enable NGINX @CentOS-AppStream dnf modules
+      shell:
+      args:
+        cmd: dnf module info nginx | grep -q 'Stream.*\[e\]' && echo -n ENABLED || dnf module enable -y nginx  # noqa command-instead-of-module
+      register: dnf_module_enable
+      changed_when: dnf_module_enable.stdout != 'ENABLED'
+      when: ansible_facts['os_family'] == "RedHat" and ansible_facts['distribution_major_version'] is version('8', '==')
+  tasks:
+    - name: Install NGINX
+      include_role:
+        name: ansible-role-nginx
+      vars:
+        nginx_version: "{{ version }}"

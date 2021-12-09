@@ -1,0 +1,23 @@
+---
+- name: Converge
+  hosts: all
+  pre_tasks:
+    - name: Set repo if Alpine
+      set_fact:
+        version: "=1.20.2-r1"
+      when: ansible_facts['os_family'] == "Alpine"
+    - name: Set repo if Debian
+      set_fact:
+        version: "=1.20.2-1~{{ ansible_facts['distribution_release'] }}"
+      when: ansible_facts['os_family'] == "Debian"
+    - name: Set repo if Red Hat
+      set_fact:
+        version: "-1.20.2-1.{{ (ansible_facts['distribution']=='Amazon') | ternary('amzn2', ('el' + ansible_facts['distribution_major_version'] | string)) }}.ngx"
+      when: ansible_facts['os_family'] == "RedHat"
+  tasks:
+    - name: Install NGINX
+      include_role:
+        name: ansible-role-nginx
+      vars:
+        nginx_version: "{{ version }}"
+        nginx_branch: stable

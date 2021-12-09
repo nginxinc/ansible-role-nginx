@@ -6,10 +6,12 @@ BREAKING CHANGES:
 
 * The `nginx_state` variable has been replaced with `nginx_setup` and instead of using `present`, `absent`, `latest` you should now use `install`, `uninstall` and `upgrade`.
 * `nginx_install` variable is no more. Use `nginx_enable` instead.
+* Ansible core `2.12` is now a minimum requirement for the role.
 
 FEATURES:
 
-Pin repository data when installing NGINX OSS on Alpine and Debian distributions.
+* Pin repository data when installing NGINX OSS on Alpine and Debian distributions.
+* You can now downgrade versions of NGINX and switch from stable to mainline and viceversa. You will need to specify the NGINX branch and version you wish to install when tweaking versions.
 
 ENHANCEMENTS:
 

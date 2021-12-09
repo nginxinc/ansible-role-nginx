@@ -1,0 +1,33 @@
+---
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Check if NGINX is installed
+      package:
+        name: nginx
+        state: present
+      check_mode: true
+      register: install
+      failed_when: (install is changed) or (install is failed)
+
+    - name: Check if NGINX service is running
+      service:
+        name: nginx
+        state: started
+        enabled: true
+      check_mode: true
+      register: service
+      failed_when: (service is changed) or (service is failed)
+
+    - name: Verify NGINX is up and running
+      uri:
+        url: http://localhost
+        status_code: 200
+
+    # - name: Verify NGINX has been downgraded
+    #   command: nginx -v
+    #   args:
+    #     chdir: "{{ ((ansible_facts['system'] | lower is not search('bsd')) | ternary('/etc/nginx', '/usr/local/sbin')) }}"
+    #   changed_when: false
+    #   register: version
+    #   failed_when: version is not search('1.21.3')

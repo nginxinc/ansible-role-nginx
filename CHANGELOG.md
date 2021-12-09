@@ -15,7 +15,8 @@ FEATURES:
 
 ENHANCEMENTS:
 
-Add Alpine Linux 3.15 to list of tested and supported platforms.
+* Add Alpine Linux 3.15 to list of tested and supported platforms.
+* Bump the Ansible `community.general` collection to `4.2.0` and `community.docker` collection to `2.0.2`.
 
 BUG FIXES:
 

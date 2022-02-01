@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.23.0 (Unreleased)
+
+BREAKING CHANGES:
+
+CentOS 8 has reached EoL and has thus been removed from the list of supported platforms.
+
+BUG FIXES:
+
+The Molecule `upgrade` scenario verification test no longer has to be updated on each new NGINX OSS release.
+
 ## 0.22.0 (December 9, 2021)
 
 BREAKING CHANGES:

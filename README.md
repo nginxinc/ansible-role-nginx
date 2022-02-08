@@ -81,7 +81,6 @@ Amazon Linux:
   - 2
 CentOS:
   - 7.4+
-  - 8
 Debian:
   - buster (10)
   - bullseye (11)
@@ -109,7 +108,6 @@ Amazon Linux 2:
   - any
 CentOS:
   - 7.4+
-  - 8
 Debian:
   - buster (10)
   - bullseye (11)

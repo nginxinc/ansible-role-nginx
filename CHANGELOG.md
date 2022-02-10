@@ -6,6 +6,10 @@ BREAKING CHANGES:
 
 CentOS 8 has reached EoL and has thus been removed from the list of supported platforms.
 
+FEATURES:
+
+Support for ansible-base (ansible-core `<2.12`).
+
 BUG FIXES:
 
 The Molecule `upgrade` scenario verification test no longer has to be updated on each new NGINX OSS release.

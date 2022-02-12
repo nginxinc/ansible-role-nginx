@@ -13,6 +13,7 @@ Support for ansible-base (ansible-core `<2.12`).
 BUG FIXES:
 
 The Molecule `upgrade` scenario verification test no longer has to be updated on each new NGINX OSS release.
+Add GPG key for Ubuntu Focal during APT repository setup.
 
 ## 0.22.0 (December 9, 2021)
 

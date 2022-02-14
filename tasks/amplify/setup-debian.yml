@@ -1,4 +1,12 @@
 ---
+
+- name: (Ubuntu 20.04) Add NGINX Amplify apt key
+  apt_key:
+    url: https://nginx.org/keys/nginx_signing.key
+    state: present
+  become: true
+  when: ansible_facts['distribution_release'] == "focal"
+
 - name: (Debian/Ubuntu) Add NGINX Amplify agent repository
   apt_repository:
     filename: nginx-amplify

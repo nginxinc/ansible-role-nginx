@@ -26,8 +26,8 @@ nginx_plus_distributions: [
 ]
 
 # Default NGINX signing key
-nginx_default_signing_key_rsa_pub: https://nginx.org/keys/nginx_signing.rsa.pub
 nginx_default_signing_key_pgp: https://nginx.org/keys/nginx_signing.key
+nginx_default_signing_key_rsa_pub: https://nginx.org/keys/nginx_signing.rsa.pub
 
 # Default NGINX Open Source repositories
 nginx_default_repository_alpine: "@nginx http://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}\
@@ -81,9 +81,9 @@ nginx_freebsd_dependencies: [
 ]
 
 # Default locations and versions when 'nginx_install_from' is set to 'source'
-pcre_version: pcre-8.44
+pcre_version: pcre-8.45
 zlib_version: zlib-1.2.11
-openssl_version: openssl-1.1.1g
+openssl_version: openssl-1.1.1m
 
 # Supported NGINX Open Source dynamic modules
 nginx_modules_list: [

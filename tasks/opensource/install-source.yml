@@ -338,6 +338,7 @@
         {{ nginx_install_source_static_modules | default('') }}
       args:
         chdir: "/tmp/{{ nginx_version }}"
+        creates: "/tmp/makefile"
       register: nginx_configure
 
     - name: Make NGINX

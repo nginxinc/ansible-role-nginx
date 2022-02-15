@@ -4,7 +4,8 @@
 
 BREAKING CHANGES:
 
-CentOS 8 has reached EoL and has thus been removed from the list of supported platforms.
+* CentOS 8 has reached EoL and has thus been removed from the list of supported platforms.
+* The NGINX Plus `cookie-flag` module is no longer supported as of R26 and has been removed.
 
 FEATURES:
 

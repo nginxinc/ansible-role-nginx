@@ -14,7 +14,6 @@
         nginx_modules:
           - auth-spnego
           - brotli
-          - cookie-flag
           - encrypted-session
           - geoip
           - "{{ ansible_facts['distribution'] == 'Amazon' | ternary('', 'geoip2') }}"

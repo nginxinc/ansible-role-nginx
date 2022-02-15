@@ -57,7 +57,7 @@ nginx_plus_default_repository_suse: "https://pkgs.nginx.com/plus/sles/{{ ansible
 
 # Alpine dependencies
 nginx_alpine_dependencies: [
-  'ca-certificates', 'coreutils', 'openssl', 'pcre',
+  'ca-certificates', 'coreutils', 'openssl', 'pcre2',
 ]
 
 # Debian dependencies

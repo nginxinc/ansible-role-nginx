@@ -16,12 +16,12 @@
           - brotli
           - encrypted-session
           - geoip
-          - "{{ ansible_facts['distribution'] == 'Amazon' | ternary('', 'geoip2') }}"
+          - geoip2
           - headers-more
           - image-filter
           - lua
           - njs
-          - "{{ ansible_facts['distribution'] == 'Amazon' | ternary('', 'opentracing') }}"
+          - opentracing
           - passenger
           - perl
           - prometheus

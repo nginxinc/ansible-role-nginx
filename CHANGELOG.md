@@ -9,7 +9,12 @@ BREAKING CHANGES:
 
 FEATURES:
 
-Support for ansible-base (ansible-core `<2.12`).
+Backwards support for older versions of Ansible (e.g. Ansible `<2.12`).
+
+ENHANCEMENTS:
+
+* Add Alpine Linux 3.15 to the NGINX Plus list of tested and supported platforms (and remove Alpine Linux 3.11).
+* Use `pcre2` by default when possible.
 
 BUG FIXES:
 
@@ -31,8 +36,8 @@ FEATURES:
 
 ENHANCEMENTS:
 
-* Add Alpine Linux 3.15 to list of tested and supported platforms.
-* Bump the Ansible `community.general` collection to `4.2.0` and `community.docker` collection to `2.0.2`.
+* Add Alpine Linux 3.15 to the NGINX OSS list of tested and supported platforms (and remove Alpine Linux 3.11).
+* Bump the Ansible `community.general` collection to `4.1.0` and `community.docker` collection to `2.0.2`.
 
 BUG FIXES:
 

@@ -9,7 +9,8 @@ BREAKING CHANGES:
 
 FEATURES:
 
-Backwards support for older versions of Ansible (e.g. Ansible `<2.12`).
+* Backwards support for older versions of Ansible (e.g. Ansible `<2.12`).
+* Update NGINX Amplify repositories to use Python 3 when possible.
 
 ENHANCEMENTS:
 

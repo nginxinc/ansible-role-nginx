@@ -8,7 +8,7 @@
     name: nginx-amplify-agent
     state: present
 
-- name: Copy NGINX configurator agent configuration template
+- name: Copy NGINX Amplify configurator agent configuration template
   copy:
     remote_src: true
     src: /etc/amplify-agent/agent.conf.default

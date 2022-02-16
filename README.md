@@ -130,17 +130,16 @@ Ubuntu:
 ### NGINX Amplify Agent
 
 ```yaml
-Amazon Linux:
-  - 2017.09
+Amazon Linux 2:
+  - any
 CentOS:
   - 7
 Debian:
-  - jessie
-  - stretch
+  - buster (10)
+  - bullseye (11)
 Red Hat:
-  - 7
+  - 8
 Ubuntu:
-  - xenial
   - bionic
   - focal
 ```

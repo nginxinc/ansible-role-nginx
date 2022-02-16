@@ -15,6 +15,7 @@ ENHANCEMENTS:
 
 * Add Alpine Linux 3.15 to the NGINX Plus list of tested and supported platforms (and remove Alpine Linux 3.11).
 * Use `pcre2` by default when possible.
+* Bump the Ansible `community.general` collection to `4.4.0` and `community.docker` collection to `2.1.1`.
 
 BUG FIXES:
 

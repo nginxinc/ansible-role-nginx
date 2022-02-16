@@ -14,7 +14,7 @@ This role installs NGINX Open Source, NGINX Plus, or the NGINX Amplify agent on 
 
 ### NGINX Plus (Optional)
 
-If you wish to install NGINX Plus using this role, you will need to obtain an NGINX Plus license beforehand. _You do not need to do anything beforehand if you want to install NGINX OSS._
+If you wish to install NGINX Plus using this role, you will need to obtain an NGINX Plus license beforehand. *You do not need to do anything beforehand if you want to install NGINX OSS.*
 
 ### Ansible
 
@@ -25,11 +25,11 @@ If you wish to install NGINX Plus using this role, you will need to obtain an NG
     ---
     collections:
       - name: community.general
-        version: 4.1.0
+        version: 4.4.0
       - name: ansible.posix
         version: 1.3.0
       - name: community.docker  # Only required if you plan to use Molecule (see below)
-        version: 2.0.2
+        version: 2.1.1
     ```
 
     **Note:** You can alternatively install the Ansible community distribution (what is known as the "old" Ansible) if you don't want to manage individual collections.
@@ -44,7 +44,7 @@ If you wish to install NGINX Plus using this role, you will need to obtain an NG
 ### Molecule (Optional)
 
 * Molecule is used to test the various functionalities of the role. The recommended version of Molecule to test this role is `3.3`.
-* Instructions on how to install Molecule can be found in the [Molecule website](https://molecule.readthedocs.io/en/latest/installation.html). _You will also need to install the Molecule Docker driver._
+* Instructions on how to install Molecule can be found in the [Molecule website](https://molecule.readthedocs.io/en/latest/installation.html). *You will also need to install the Molecule Docker driver.*
 * To run the NGINX Plus Molecule tests, you must copy your NGINX Plus license to the role's [`files/license`](https://github.com/nginxinc/ansible-role-nginx/blob/main/files/license/) folder.
 
 You can alternatively add your NGINX Plus repository certificate and key to the local environment. Run the following commands to export these files as base64-encoded variables and execute the Molecule tests:
@@ -93,17 +93,17 @@ SUSE/SLES:
 Ubuntu:
   - bionic (18.04)
   - focal (20.04)
-  - hirsute (21.04)
+  - impish (21.10)
 ```
 
 ### NGINX Plus
 
 ```yaml
 Alpine:
-  - 3.11
   - 3.12
   - 3.13
   - 3.14
+  - 3.15
 Amazon Linux 2:
   - any
 CentOS:
@@ -203,4 +203,4 @@ You can find the Ansible NGINX Unit role to install NGINX Unit [here](https://gi
 
 [Tom Gamull](https://github.com/magicalyak)
 
-&copy; [F5 Networks, Inc.](https://www.f5.com/) 2018 - 2021
+&copy; [F5 Networks, Inc.](https://www.f5.com/) 2018 - 2022

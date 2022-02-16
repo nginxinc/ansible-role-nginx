@@ -143,6 +143,7 @@
       command: ./configure
       args:
         chdir: "/tmp/{{ pcre_version }}"
+        creates: "/tmp/makefile"
 
     - name: Make PCRE dependency
       make:
@@ -201,6 +202,7 @@
       command: ./configure
       args:
         chdir: "/tmp/{{ zlib_version }}"
+        creates: "/tmp/makefile"
 
     - name: Make ZLib dependency
       make:
@@ -259,6 +261,7 @@
       command: ./config --prefix=/usr/local/openssl --openssldir=/usr/local/openssl shared zlib
       args:
         chdir: "/tmp/{{ openssl_version }}"
+        creates: "/tmp/makefile"
 
     - name: Make OpenSSL dependency
       make:
@@ -335,6 +338,7 @@
         {{ nginx_install_source_static_modules | default('') }}
       args:
         chdir: "/tmp/{{ nginx_version }}"
+        creates: "/tmp/makefile"
       register: nginx_configure
 
     - name: Make NGINX

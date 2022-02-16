@@ -8,7 +8,7 @@
           - setools
       when: ansible_facts['distribution_major_version'] is version('8', '!=')
 
-    - name: (CentOS/RHEL 8) Install dependencies
+    - name: (RHEL 8) Install dependencies
       yum:
         name:
           - libselinux-utils
@@ -33,22 +33,6 @@
     name: httpd_can_network_relay
     state: true
     persistent: true
-
-- name: (DEPRECATED) Allow SELinux TCP connections on status ports
-  seport:
-    ports: "{{ nginx_status_port }}"
-    proto: tcp
-    setype: http_port_t
-    state: present
-  when: nginx_status_port is defined
-
-- name: (DEPRECATED) Allow SELinux TCP connections on Rest API ports
-  seport:
-    ports: "{{ nginx_rest_api_port }}"
-    proto: tcp
-    setype: http_port_t
-    state: present
-  when: nginx_rest_api_port is defined
 
 - name: Allow SELinux TCP connections on specific ports
   seport:

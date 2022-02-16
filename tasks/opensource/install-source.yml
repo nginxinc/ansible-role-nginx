@@ -1,9 +1,9 @@
 ---
 - name: Check for build tools
   block:
-    - name: (CentOS/RHEL 8) Setup Python 3
+    - name: (RHEL 8) Setup Python 3
       block:
-        - name: (CentOS/RHEL 8) Install Python 3
+        - name: (RHEL 8) Install Python 3
           yum:
             name:
               - python3
@@ -11,7 +11,7 @@
               - python3-devel
             update_cache: true
 
-        - name: (Centos/RHEL 8) Set Python 3 as default
+        - name: (RHEL 8) Set Python 3 as default
           alternatives:
             name: python
             path: /usr/bin/python3
@@ -20,7 +20,7 @@
         - ansible_facts['os_family'] == "RedHat"
         - ansible_facts['distribution_major_version'] is version('8', '==')
 
-    - name: (Centos/RHEL) Install build tools
+    - name: (CentOS/RHEL) Install build tools
       yum:
         name:
           - "@Development tools"
@@ -158,7 +158,7 @@
     - not nginx_install_source_pcre | bool
     - not ansible_check_mode | bool
 
-- name: (Centos/RHEL) Install ZLib dependency from package
+- name: (CentOS/RHEL) Install ZLib dependency from package
   yum:
     name: zlib-devel
     update_cache: true

@@ -1,11 +1,12 @@
 # Changelog
 
-## 0.23.0 (Unreleased)
+## 0.23.0 (February 16, 2022)
 
 BREAKING CHANGES:
 
 * CentOS 8 has reached EoL and has thus been removed from the list of supported platforms.
 * The NGINX Plus `cookie-flag` module is no longer supported as of R26 and has been removed.
+* Remove SELinux parameters deprecated since `0.17`.
 
 FEATURES:
 

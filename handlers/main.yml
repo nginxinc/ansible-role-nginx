@@ -31,6 +31,7 @@
   failed_when: config_check.rc != 0
   when:
     - config_check.stderr_lines is defined
+    - config_check.stderr_lines != []
     - config_check.rc != 0
     - nginx_state != "absent"
   listen: (Handler) Run NGINX

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.23.1 (Unreleased)
+
+BUG FIXES:
+
+Ansible check mode runs will no longer fail if NGINX has not yet been installed.
+
 ## 0.23.0 (February 16, 2022)
 
 BREAKING CHANGES:

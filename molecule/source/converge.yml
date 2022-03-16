@@ -6,8 +6,6 @@
       include_role:
         name: ansible-role-nginx
       vars:
-        nginx_debug_output: true
-
         nginx_install_from: source
         nginx_branch: stable
         nginx_static_modules: ['http_ssl_module']

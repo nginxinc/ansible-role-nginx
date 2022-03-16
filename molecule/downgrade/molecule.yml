@@ -27,6 +27,13 @@ platforms:
     volumes:
       - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
     command: "/sbin/init"
+  - name: alpine-3.15
+    image: alpine:3.15
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/sbin/init"
   - name: amazonlinux-2
     image: amazonlinux:2
     dockerfile: ../common/Dockerfile.j2
@@ -36,6 +43,20 @@ platforms:
     command: "/usr/sbin/init"
   - name: centos-7
     image: centos:7
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/usr/sbin/init"
+  - name: rhel-7
+    image: registry.access.redhat.com/ubi7/ubi:7.9
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/usr/sbin/init"
+  - name: rhel-8
+    image: registry.access.redhat.com/ubi8/ubi:8.5
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:

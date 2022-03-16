@@ -6,21 +6,11 @@
       include_role:
         name: ansible-role-nginx
       vars:
-        nginx_debug_output: true
-
-        nginx_service_modify: true
-        nginx_service_timeout: 95
-        nginx_selinux: true
-        nginx_selinux_tcp_ports:
-          - 80
-          - 443
-
         nginx_modules:
           - brotli
           - geoip
           - image-filter
           - name: njs
-            # version: =1.19.4+0.4.4-1~bionic
             state: present
           - perl
           - xslt

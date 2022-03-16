@@ -6,6 +6,6 @@
       include_role:
         name: ansible-role-nginx
       vars:
-        nginx_setup: uninstall
         nginx_type: plus
         nginx_setup_license: false
+        nginx_setup: uninstall

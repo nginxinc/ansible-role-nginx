@@ -2,6 +2,10 @@
 
 ## 0.23.1 (Unreleased)
 
+FEATURES:
+
+Add Molecule testing infrastructure for RHEL 7/8.
+
 BUG FIXES:
 
 Ansible check mode runs will no longer fail if NGINX has not yet been installed.

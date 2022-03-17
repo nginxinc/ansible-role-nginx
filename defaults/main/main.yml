@@ -42,12 +42,6 @@ nginx_manage_repo: true
 # Default is nginx_repository.
 nginx_install_from: nginx_repository
 
-# Specify whether or not you want this role to install the epel-release package.
-# Using 'true' will install epel-release if other criteria are met.
-# Using 'false' will not install epel-release.
-# Default is true.
-nginx_install_epel_release: true
-
 # Specify source install options for NGINX Open Source.
 # Options represent whether to install from source also or to install from packages (default).
 # These only apply if 'nginx_install_from' is set to 'source'.
@@ -58,6 +52,13 @@ nginx_install_source_build_tools: true
 nginx_install_source_pcre: false
 nginx_install_source_openssl: true
 nginx_install_source_zlib: false
+
+# Specify source install module for NGINX Open Source.
+# You can select any of the static modules listed on http://nginx.org/en/docs/configure.html.
+# Format is '--with-*' where '*' should be used as static module name in the list below. (see an example below).
+# Default is 'http_ssl_module'. (DO NOT remove it if you need SSL support).
+nginx_static_modules: ['http_ssl_module']
+# nginx_static_modules: ['http_v2_module']  # Example for '--with-http_v2_module'
 
 # (Optional) Choose where to fetch the NGINX signing key from.
 # Default is the official NGINX signing key host.
@@ -88,12 +89,11 @@ nginx_setup_license: true
 # Default is true.
 nginx_remove_license: true
 
-# Install NGINX Static Modules.
-# You can select any of the static modules listed on http://nginx.org/en/docs/configure.html.
-# Format is '--with-*' where '*' should be used as static module name in the list below. (see an example below).
-# Default is 'http_ssl_module'. (DO NOT remove it if you need SSL support).
-nginx_static_modules: ['http_ssl_module']
-# nginx_static_modules: ['http_v2_module']  # Example for '--with-http_v2_module'
+# Specify whether or not you want this role to install the EPEL package when installing certain NGINX Plus modules.
+# Using 'true' will install EPEL.
+# Using 'false' will not install EPEL.
+# Default is true.
+nginx_install_epel_release: true
 
 # Install NGINX Dynamic Modules.
 # You can select any of the dynamic modules listed below. Beware of NGINX Plus only dynamic modules (these are marked).

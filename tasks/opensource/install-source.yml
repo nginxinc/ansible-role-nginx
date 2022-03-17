@@ -23,14 +23,16 @@
     - name: (CentOS/RHEL) Install build tools
       yum:
         name:
-          - "@Development tools"
           - ca-certificates
           - gcc
           - gd
           - gd-devel
           - glibc
           - glibc-common
+          - make
           - perl-core
+          - tar
+          - unzip
           - wget
           - zlib-devel
         update_cache: true

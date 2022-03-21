@@ -2,12 +2,12 @@
 - name: (FreeBSD) Update ports
   block:
     - name: (FreeBSD) Fetch ports
-      command: portsnap fetch --interactive
+      ansible.builtin.command: portsnap fetch --interactive
       args:
         creates: /var/db/portsnap/INDEX
 
     - name: (FreeBSD) Extract ports
-      command: portsnap extract
+      ansible.builtin.command: portsnap extract
       args:
         creates: /usr/ports
   when:
@@ -54,12 +54,12 @@
 - name: (NetBSD) {{ nginx_setup | capitalize }} NGINX
   block:
     - name: (NetBSD) {{ nginx_setup | capitalize }} NGINX package
-      command: "pkg_add www/nginx{{ nginx_version | default('') }}"
+      ansible.builtin.command: "pkg_add www/nginx{{ nginx_version | default('') }}"
       when: nginx_bsd_install_packages | bool
       notify: (Handler) Run NGINX
 
     - name: (NetBSD) {{ nginx_setup | capitalize }} NGINX port
-      fail:
+      ansible.builtin.fail:
         msg: "{{ ansible_facts['system'] }} {{ nginx_setup | capitalize }} NGINX port not implemented."
       when: not nginx_bsd_install_packages | bool
   when: ansible_facts['system'] == "NetBSD"
@@ -67,12 +67,12 @@
 - name: (DragonFlyBSD/HardenedBSD) {{ nginx_setup | capitalize }} NGINX
   block:
     - name: (DragonFlyBSD/HardenedBSD) {{ nginx_setup | capitalize }} NGINX package
-      command: "pkg install www/nginx{{ nginx_version | default('') }}"
+      ansible.builtin.command: "pkg install www/nginx{{ nginx_version | default('') }}"
       when: nginx_bsd_install_packages | bool
       notify: (Handler) Run NGINX
 
     - name: (DragonFlyBSD/HardenedBSD) {{ nginx_setup | capitalize }} NGINX port
-      fail:
+      ansible.builtin.fail:
         msg: "{{ ansible_facts['system'] }} {{ nginx_setup | capitalize }} NGINX port not implemented."
       when: not nginx_bsd_install_packages | bool
   when: ansible_facts['system'] in ['DragonFlyBSD', 'HardenedBSD']

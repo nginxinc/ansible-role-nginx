@@ -1,10 +1,10 @@
 ---
 - name: (Handler) Systemd daemon-reload
-  systemd:
+  ansible.builtin.systemd:
     daemon_reload: true
 
 - name: (Handler) Start/reload NGINX
-  service:
+  ansible.builtin.service:
     name: nginx
     state: reloaded
     enabled: true
@@ -15,7 +15,7 @@
   listen: (Handler) Run NGINX
 
 - name: (Handler) Check NGINX
-  command: nginx -t
+  ansible.builtin.command: nginx -t
   args:
     chdir: "{{ ((ansible_facts['system'] | lower is not search('bsd')) | ternary('/etc/nginx', '/usr/local/sbin')) }}"
   register: config_check
@@ -26,7 +26,7 @@
   listen: (Handler) Run NGINX
 
 - name: (Handler) Print NGINX error if syntax check fails
-  debug:
+  ansible.builtin.debug:
     var: config_check.stderr_lines
   failed_when: config_check.rc != 0
   when:
@@ -37,9 +37,9 @@
   listen: (Handler) Run NGINX
 
 - name: (Handler) Start NGINX Amplify agent
-  service:
+  ansible.builtin.service:
     name: amplify-agent
     state: started
 
 - name: (Handler) Run logrotate
-  command: logrotate -f /etc/logrotate.d/nginx
+  ansible.builtin.command: logrotate -f /etc/logrotate.d/nginx

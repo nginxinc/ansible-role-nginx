@@ -1,6 +1,6 @@
 ---
 - name: (Amazon Linux/CentOS/RHEL) {{ (nginx_setup == 'uninstall') | ternary('Remove', 'Configure') }} NGINX repository
-  yum_repository:
+  ansible.builtin.yum_repository:
     name: nginx
     baseurl: "{{ nginx_repository |
               default(lookup('vars', 'nginx_default_repository_' + ((ansible_facts['distribution'] == 'Amazon') | ternary('amazon', 'redhat')))) }}"
@@ -13,7 +13,7 @@
   when: nginx_manage_repo | bool
 
 - name: (Amazon Linux/CentOS/RHEL) {{ nginx_setup | capitalize }} NGINX
-  yum:
+  ansible.builtin.yum:
     name: "nginx{{ nginx_version | default('') }}"
     state: "{{ nginx_state }}"
     update_cache: true

@@ -3,7 +3,7 @@
   hosts: all
   tasks:
     - name: Install NGINX Plus
-      include_role:
+      ansible.builtin.include_role:
         name: ansible-role-nginx
       vars:
         nginx_type: plus

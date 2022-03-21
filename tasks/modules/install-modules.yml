@@ -1,6 +1,6 @@
 ---
 - name: (CentOS) Install GeoIP EPEL dependencies
-  yum:
+  ansible.builtin.yum:
     name: epel-release
   when:
     - ansible_facts['distribution'] == "CentOS"
@@ -10,12 +10,12 @@
 - name: (RHEL) Install GeoIP2 and/or OpenTracing EPEL dependencies
   block:
     - name: (RHEL) Import EPEL GPG key
-      rpm_key:
+      ansible.builtin.rpm_key:
         state: present
         key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_facts['distribution_major_version'] }}
 
     - name: (RHEL) Install package dependencies
-      yum:
+      ansible.builtin.yum:
         name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_facts['distribution_major_version'] }}.noarch.rpm
   when:
     - ansible_facts['distribution'] == "RedHat"
@@ -24,7 +24,7 @@
     - nginx_install_epel_release | bool
 
 - name: Setup NGINX modules
-  package:
+  ansible.builtin.package:
     name: "nginx-{{ (nginx_type == 'plus') | ternary('plus-', '') }}module-{{ item.name | default(item) }}\
           {{ item.version | default(nginx_version) | default('') }}{{ (nginx_repository is not defined and ansible_facts['os_family'] == 'Alpine' and nginx_type != 'plus') | ternary('@nginx', '') }}"
     state: "{{ item.state | default('present') }}"

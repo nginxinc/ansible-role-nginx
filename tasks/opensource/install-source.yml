@@ -4,7 +4,7 @@
     - name: (RHEL 8) Setup Python 3
       block:
         - name: (RHEL 8) Install Python 3
-          yum:
+          ansible.builtin.yum:
             name:
               - python3
               - python3-pip
@@ -21,7 +21,7 @@
         - ansible_facts['distribution_major_version'] is version('8', '==')
 
     - name: (CentOS/RHEL) Install build tools
-      yum:
+      ansible.builtin.yum:
         name:
           - ca-certificates
           - gcc
@@ -39,7 +39,7 @@
       when: ansible_facts['os_family'] == "RedHat"
 
     - name: (Debian) Install backports repo for 'buster'
-      apt_repository:
+      ansible.builtin.apt_repository:
         filename: buster-backports
         repo: deb http://ftp.us.debian.org/debian buster-backports main
         update_cache: true
@@ -47,7 +47,7 @@
       when: ansible_facts['distribution_release'] == "buster"
 
     - name: (Debian/Ubuntu) Install build tools
-      apt:
+      ansible.builtin.apt:
         name:
           - build-essential
           - checkinstall
@@ -75,7 +75,7 @@
       when: ansible_facts['os_family'] == "Alpine"
 
     - name: (Alpine Linux) Enable OpenRC
-      copy:
+      ansible.builtin.copy:
         content: ""
         dest: /run/openrc/softlevel
         force: false
@@ -87,22 +87,22 @@
 - name: Check for source installs
   block:
     - name: Check for PCRE install
-      stat:
+      ansible.builtin.stat:
         path: /tmp/{{ pcre_version }}
       register: pcre_result
 
     - name: Check for ZLib install
-      stat:
+      ansible.builtin.stat:
         path: /tmp/{{ zlib_version }}
       register: zlib_result
 
     - name: Check for OpenSSL install
-      stat:
+      ansible.builtin.stat:
         path: /tmp/{{ openssl_version }}
       register: openssl_result
 
 - name: (CentOS/RHEL) Install PCRE dependency from package
-  yum:
+  ansible.builtin.yum:
     name: pcre-devel
     update_cache: true
   when:
@@ -110,7 +110,7 @@
     - ansible_facts['os_family'] == "RedHat"
 
 - name: (Debian/Ubuntu) Install PCRE dependency from package
-  apt:
+  ansible.builtin.apt:
     name: libpcre3-dev
     update_cache: true
   when:
@@ -128,21 +128,21 @@
 - name: Install PCRE dependence from source
   block:
     - name: Download PCRE dependency
-      get_url:
+      ansible.builtin.get_url:
         url: "https://ftp.exim.org/pub/pcre/{{ pcre_version }}.tar.gz"
         dest: "/tmp/{{ pcre_version }}.tar.gz"
         mode: 0600
       register: pcre_source
 
     - name: Unpack PCRE dependency
-      unarchive:
+      ansible.builtin.unarchive:
         copy: false
         dest: /tmp/
         src: "{{ pcre_source.dest }}"
         mode: 0700
 
     - name: Configure PCRE dependency
-      command: ./configure
+      ansible.builtin.command: ./configure
       args:
         chdir: "/tmp/{{ pcre_version }}"
         creates: "/tmp/makefile"
@@ -161,7 +161,7 @@
     - not ansible_check_mode | bool
 
 - name: (CentOS/RHEL) Install ZLib dependency from package
-  yum:
+  ansible.builtin.yum:
     name: zlib-devel
     update_cache: true
   when:
@@ -169,7 +169,7 @@
     - ansible_facts['os_family'] == "RedHat"
 
 - name: (Debian/Ubuntu) Install ZLib dependency from package
-  apt:
+  ansible.builtin.apt:
     name: zlib1g-dev
     update_cache: true
   when:
@@ -187,21 +187,21 @@
 - name: Install ZLib dependency from source
   block:
     - name: Download ZLib dependency
-      get_url:
+      ansible.builtin.get_url:
         url: "https://zlib.net/{{ zlib_version }}.tar.gz"
         dest: "/tmp/{{ zlib_version }}.tar.gz"
         mode: 0600
       register: zlib_source
 
     - name: Unpack ZLib dependency
-      unarchive:
+      ansible.builtin.unarchive:
         copy: false
         dest: /tmp/
         src: "{{ zlib_source.dest }}"
         mode: 0700
 
     - name: Configure ZLib dependency
-      command: ./configure
+      ansible.builtin.command: ./configure
       args:
         chdir: "/tmp/{{ zlib_version }}"
         creates: "/tmp/makefile"
@@ -220,7 +220,7 @@
     - not ansible_check_mode | bool
 
 - name: (CentOS/RHEL) Install OpenSSL dependency from package
-  yum:
+  ansible.builtin.yum:
     name: openssl-devel
     update_cache: true
   when:
@@ -228,7 +228,7 @@
     - ansible_facts['os_family'] == "RedHat"
 
 - name: (Debian/Ubuntu) Install OpenSSL dependency from package
-  apt:
+  ansible.builtin.apt:
     name: libssl-dev
     update_cache: true
   when:
@@ -246,21 +246,21 @@
 - name: Install OpenSSL dependency from source
   block:
     - name: Download OpenSSL dependency
-      get_url:
+      ansible.builtin.get_url:
         url: "https://www.openssl.org/source/{{ openssl_version }}.tar.gz"
         dest: "/tmp/{{ openssl_version }}.tar.gz"
         mode: 0600
       register: openssl_source
 
     - name: Unpack OpenSSL dependency
-      unarchive:
+      ansible.builtin.unarchive:
         copy: false
         dest: /tmp/
         src: "{{ openssl_source.dest }}"
         mode: 0700
 
     - name: Configure OpenSSL dependency
-      command: ./config --prefix=/usr/local/openssl --openssldir=/usr/local/openssl shared zlib
+      ansible.builtin.command: ./config --prefix=/usr/local/openssl --openssldir=/usr/local/openssl shared zlib
       args:
         chdir: "/tmp/{{ openssl_version }}"
         creates: "/tmp/makefile"
@@ -281,49 +281,49 @@
 - name: Get NGINX version
   block:
     - name: Fetch NGINX version
-      uri:
+      ansible.builtin.uri:
         url: https://version.nginx.com/nginx/{{ nginx_branch }}
         return_content: true
       check_mode: false
       register: nginx_versions
 
     - name: Set NGINX version
-      set_fact:
+      ansible.builtin.set_fact:
         nginx_version: "{{ 'nginx-' + (nginx_versions.content | regex_search('([0-9]+\\.){2}[0-9]+')) }}"
 
     - name: Check for NGINX install
-      stat:
+      ansible.builtin.stat:
         path: /usr/sbin/nginx
         follow: true
       register: nginx_result
 
 - name: Add NGINX user
-  user:
+  ansible.builtin.user:
     name: nginx
 
 - name: Install NGINX
   block:
     - name: Download NGINX
-      get_url:
+      ansible.builtin.get_url:
         url: "https://nginx.org/download/{{ nginx_version }}.tar.gz"
         dest: "/tmp/{{ nginx_version }}.tar.gz"
         mode: 0600
       register: nginx_source
 
     - name: Unpack NGINX
-      unarchive:
+      ansible.builtin.unarchive:
         copy: false
         dest: /tmp/
         src: "{{ nginx_source.dest }}"
         mode: 0755
 
     - name: Set static modules
-      set_fact:
+      ansible.builtin.set_fact:
         nginx_install_source_static_modules: "{{ nginx_install_source_static_modules | default('') + ' --with-' + item }}"
       loop: "{{ nginx_static_modules }}"
 
     - name: Configure NGINX
-      command: >-
+      ansible.builtin.command: >-
         ./configure
         --conf-path=/etc/nginx/nginx.conf
         --error-log-path=/var/log/nginx/error.log
@@ -353,7 +353,7 @@
         target: install
 
     - name: Upload systemd NGINX service file
-      copy:
+      ansible.builtin.copy:
         src: services/nginx.systemd
         dest: /lib/systemd/system/nginx.service
         owner: root
@@ -362,7 +362,7 @@
       when: ansible_facts['service_mgr'] == "systemd"
 
     - name: Enable systemd NGINX service file
-      systemd:
+      ansible.builtin.systemd:
         daemon_reload: true
         name: nginx
         state: restarted
@@ -371,7 +371,7 @@
       notify: "(Handler) Run NGINX"
 
     - name: Upload upstart NGINX service file
-      copy:
+      ansible.builtin.copy:
         src: services/nginx.upstart
         dest: /etc/init.d/nginx
         owner: root
@@ -380,7 +380,7 @@
       when: ansible_facts['service_mgr'] == "upstart"
 
     - name: Upload Upstart NGINX service conf file
-      copy:
+      ansible.builtin.copy:
         src: services/nginx.conf.upstart
         dest: /etc/init/nginx.conf
         owner: root
@@ -389,16 +389,16 @@
       when: ansible_facts['service_mgr'] == "upstart"
 
     - name: Enable Upstart NGINX service reload
-      command: initctl reload-configuration
+      ansible.builtin.command: initctl reload-configuration
       when: ansible_facts['service_mgr'] == "upstart"
 
     - name: Start Upstart NGINX service reload
-      command: nginx
+      ansible.builtin.command: nginx
       when: ansible_facts['service_mgr'] == "upstart"
       notify: "(Handler) Run NGINX"
 
     - name: Upload SysVinit NGINX service file
-      copy:
+      ansible.builtin.copy:
         src: services/nginx.sysvinit
         dest: /etc/init.d/nginx
         owner: root
@@ -408,7 +408,7 @@
       notify: "(Handler) Run NGINX"
 
     - name: Upload OpenRC NGINX service file
-      copy:
+      ansible.builtin.copy:
         src: services/nginx.openrc
         dest: /etc/init.d/nginx
         owner: root
@@ -417,7 +417,7 @@
       when: ansible_facts['service_mgr'] == "openrc"
 
     - name: Enable OpenRC NGINX service
-      command: rc-update add nginx default
+      ansible.builtin.command: rc-update add nginx default
       when: ansible_facts['service_mgr'] == "openrc"
       notify: (Handler) Run NGINX
   when:
@@ -425,7 +425,7 @@
     - not ansible_check_mode | bool
 
 - name: Cleanup downloads
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: absent
   loop:

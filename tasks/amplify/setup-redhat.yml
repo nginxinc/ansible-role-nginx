@@ -1,6 +1,6 @@
 ---
 - name: (Amazon Linux/CentOS/RHEL) Add NGINX Amplify agent repository
-  yum_repository:
+  ansible.builtin.yum_repository:
     name: nginx-amplify
     baseurl: https://packages.amplify.nginx.com/{{ (ansible_facts['distribution_major_version'] == "7") | ternary('', 'py3/') }}{{ (ansible_facts['distribution'] == "Amazon") | ternary('amzn', 'centos') }}/$releasever/$basearch/
     description: NGINX Amplify Agent

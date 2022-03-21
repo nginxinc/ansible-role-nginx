@@ -1,6 +1,6 @@
 ---
 - name: (Amazon Linux/CentOS/Oracle Linux/RHEL) {{ (nginx_license_status is defined or nginx_setup == 'uninstall') | ternary('Remove', 'Configure') }} NGINX Plus repository
-  yum_repository:
+  ansible.builtin.yum_repository:
     name: nginx-plus
     baseurl: "{{ nginx_repository |
               default(lookup('vars', 'nginx_plus_default_repository_' + ((ansible_facts['distribution'] == 'Amazon') | ternary('amazon', 'redhat')))) }}"
@@ -14,7 +14,7 @@
   when: nginx_manage_repo | bool
 
 - name: (Amazon Linux/CentOS/Oracle Linux/RHEL) {{ nginx_setup | capitalize }} NGINX Plus
-  yum:
+  ansible.builtin.yum:
     name: "nginx-plus{{ nginx_version | default('') }}"
     state: "{{ nginx_state }}"
     update_cache: true

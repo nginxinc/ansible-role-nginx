@@ -2,11 +2,11 @@
 - name: "{{ nginx_setup | capitalize }} NGINX in Linux systems"
   block:
     - name: "{{ nginx_setup | capitalize }} NGINX from repository"
-      include_tasks: "{{ role_path }}/tasks/opensource/install-{{ ansible_facts['os_family'] | lower }}.yml"
+      ansible.builtin.include_tasks: "{{ role_path }}/tasks/opensource/install-{{ ansible_facts['os_family'] | lower }}.yml"
       when: nginx_install_from == "nginx_repository"
 
     - name: "{{ nginx_setup | capitalize }} NGINX from source"
-      include_tasks: "{{ role_path }}/tasks/opensource/install-source.yml"
+      ansible.builtin.include_tasks: "{{ role_path }}/tasks/opensource/install-source.yml"
       when: nginx_install_from == "source"
 
     - name: "{{ nginx_setup | capitalize }} NGINX from package"
@@ -18,5 +18,5 @@
   when: ansible_facts['system'] | lower is not search('bsd')
 
 - name: "{{ nginx_setup | capitalize }} NGINX in Unix systems"
-  include_tasks: "{{ role_path }}/tasks/opensource/install-bsd.yml"
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/opensource/install-bsd.yml"
   when: ansible_facts['system'] | lower is search('bsd')

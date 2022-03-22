@@ -1,6 +1,6 @@
 ---
 - name: Install dependencies
-  include_tasks: "{{ role_path }}/tasks/prerequisites/install-dependencies.yml"
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/prerequisites/install-dependencies.yml"
 
 - name: Set up SELinux
   block:
@@ -10,7 +10,7 @@
       when: ansible_facts['selinux'] is undefined
 
     - name: Configure SELinux
-      include_tasks: "{{ role_path }}/tasks/prerequisites/setup-selinux.yml"
+      ansible.builtin.include_tasks: "{{ role_path }}/tasks/prerequisites/setup-selinux.yml"
       when: ansible_facts['selinux']['mode'] is defined
   when:
     - nginx_selinux | bool

@@ -19,4 +19,4 @@
   when: ansible_facts['distribution'] == "Alpine"
 
 - name: Remove NGINX Plus repository data
-  include_tasks: "{{ role_path }}/tasks/plus/install-{{ ansible_facts['os_family'] | lower }}.yml"
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/plus/install-{{ ansible_facts['os_family'] | lower }}.yml"

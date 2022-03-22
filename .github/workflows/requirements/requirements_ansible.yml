@@ -1,8 +1,8 @@
 ---
 collections:
   - name: community.general
-    version: 4.4.0
+    version: 4.6.1
   - name: ansible.posix
     version: 1.3.0
   - name: community.docker
-    version: 2.1.1
+    version: 2.2.1

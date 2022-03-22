@@ -49,6 +49,5 @@ galaxy_info:
     - install
 
 collections:
-  - community.general
-  - ansible.builtin
   - ansible.posix
+  - community.general

@@ -7,6 +7,10 @@ FEATURES:
 * Add Molecule testing infrastructure for RHEL 7/8.
 * Rename all modules to use the fully qualified collection name (FQCN) per Ansible guidelines.
 
+ENHANCEMENTS:
+
+Bump the Ansible `community.general` collection to `4.6.1` and `community.docker` collection to `2.2.1`.
+
 BUG FIXES:
 
 Ansible check mode runs will no longer fail if NGINX has not yet been installed.

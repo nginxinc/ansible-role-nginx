@@ -17,14 +17,14 @@
 - name: (FreeBSD) {{ nginx_setup | capitalize }} NGINX
   block:
     - name: (FreeBSD) {{ nginx_setup | capitalize }} NGINX package
-      pkgng:
+      community.general.pkgng:
         name: "www/nginx{{ nginx_version | default('') }}"
         state: "{{ nginx_state }}"
       when: nginx_bsd_install_packages | bool
       notify: (Handler) Run NGINX
 
     - name: (FreeBSD) {{ nginx_setup | capitalize }} NGINX port
-      portinstall:
+      community.general.portinstall:
         name: "www/nginx{{ nginx_version | default('') }}"
         use_packages: "{{ nginx_bsd_portinstall_use_packages | default(omit) }}"
         state: "{{ nginx_state }}"
@@ -35,7 +35,7 @@
 - name: (OpenBSD) {{ nginx_setup | capitalize }} NGINX
   block:
     - name: (OpenBSD) {{ nginx_setup | capitalize }} NGINX package
-      openbsd_pkg:
+      community.general.openbsd_pkg:
         name: "nginx{{ nginx_version | default('') }}"
         build: false
         state: "{{ nginx_state }}"
@@ -43,7 +43,7 @@
       notify: (Handler) Run NGINX
 
     - name: (OpenBSD) {{ nginx_setup | capitalize }} NGINX port
-      openbsd_pkg:
+      community.general.openbsd_pkg:
         name: "nginx{{ nginx_version | default('') }}"
         build: true
         state: "{{ nginx_state }}"

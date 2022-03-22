@@ -1,6 +1,6 @@
 ---
 - name: (Alpine Linux) Install dependencies
-  apk:
+  community.general.apk:
     name: "{{ nginx_alpine_dependencies }}"
     update_cache: true
     state: latest  # noqa package-latest
@@ -21,7 +21,7 @@
   when: ansible_facts['os_family'] == "RedHat"
 
 - name: (SLES) Install dependencies
-  zypper:
+  community.general.zypper:
     name: "{{ nginx_sles_dependencies }}"
     update_cache: true
     state: latest  # noqa package-latest
@@ -30,13 +30,13 @@
 - name: (FreeBSD) Install dependencies
   block:
     - name: (FreeBSD) Install dependencies using package(s)
-      pkgng:
+      community.general.pkgng:
         name: "{{ nginx_freebsd_dependencies }}"
         state: latest  # noqa package-latest
       when: nginx_bsd_install_packages | bool
 
     - name: (FreeBSD) Install dependencies using port(s)
-      portinstall:
+      community.general.portinstall:
         name: "{{ item }}"
         use_packages: "{{ nginx_bsd_portinstall_use_packages | default(omit) }}"
         state: latest  # noqa package-latest

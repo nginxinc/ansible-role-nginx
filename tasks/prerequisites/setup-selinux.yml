@@ -18,24 +18,24 @@
   when: ansible_facts['os_family'] == "RedHat"
 
 - name: Set SELinux mode to permissive
-  selinux:
+  ansible.builtin.selinux:
     state: permissive
     policy: targeted
 
 - name: Allow SELinux HTTP network connections
-  seboolean:
+  ansible.builtin.seboolean:
     name: httpd_can_network_connect
     state: true
     persistent: true
 
 - name: Allow SELinux HTTP network connections
-  seboolean:
+  ansible.builtin.seboolean:
     name: httpd_can_network_relay
     state: true
     persistent: true
 
 - name: Allow SELinux TCP connections on specific ports
-  seport:
+  community.general.seport:
     ports: "{{ nginx_selinux_tcp_ports }}"
     proto: tcp
     setype: http_port_t
@@ -43,7 +43,7 @@
   when: nginx_selinux_tcp_ports is defined
 
 - name: Allow SELinux UDP connections on specific ports
-  seport:
+  community.general.seport:
     ports: "{{ nginx_selinux_udp_ports }}"
     proto: udp
     setype: http_port_t
@@ -75,7 +75,7 @@
   when: nginx_selinux_module.changed | bool
 
 - name: Set SELinux mode to enforcing
-  selinux:
+  ansible.builtin.selinux:
     state: enforcing
     policy: targeted
   when: nginx_selinux_enforcing | bool

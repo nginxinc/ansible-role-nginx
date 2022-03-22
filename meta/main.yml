@@ -47,3 +47,8 @@ galaxy_info:
     - server
     - development
     - install
+
+collections:
+  - community.general
+  - ansible.builtin
+  - ansible.posix

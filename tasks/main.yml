@@ -1,6 +1,6 @@
 ---
 - name: Check whether you are using a supported NGINX distribution
-  assert:
+  ansible.builtin.assert:
     that: (nginx_type == "opensource" and ansible_facts['distribution'] in nginx_distributions)
           or (nginx_type == "plus" and ansible_facts['distribution'] in nginx_plus_distributions)
     success_msg: "Your OS, {{ ansible_facts['distribution'] }} is supported by NGINX {{ (nginx_type=='plus') | ternary('Plus', 'Open Source') }}"
@@ -12,7 +12,7 @@
   tags: nginx_check_support
 
 - name: Check that NGINX setup is an allowed value
-  assert:
+  ansible.builtin.assert:
     that: nginx_setup in nginx_setup_vars
     fail_msg: The value {{ nginx_setup }} you used for `nginx_setup` is not allowed. Try one of {{ nginx_setup_vars | join(', ') }}.
   when: nginx_enable | bool
@@ -20,12 +20,12 @@
   tags: nginx_check_support
 
 - name: Set up prerequisites
-  include_tasks: "{{ role_path }}/tasks/prerequisites/prerequisites.yml"
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/prerequisites/prerequisites.yml"
   when: nginx_state != "absent"
   tags: nginx_prerequisites
 
 - name: Set up signing keys
-  include_tasks: "{{ role_path }}/tasks/keys/setup-keys.yml"
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/keys/setup-keys.yml"
   when: (nginx_enable | bool and nginx_install_from == "nginx_repository")
         or nginx_amplify_enable | bool
   tags: nginx_key
@@ -33,38 +33,38 @@
 - name: "{{ nginx_setup | capitalize }} NGINX"
   block:
     - name: "{{ nginx_setup | capitalize }} NGINX Open Source"
-      include_tasks: "{{ role_path }}/tasks/opensource/install-oss.yml"
+      ansible.builtin.include_tasks: "{{ role_path }}/tasks/opensource/install-oss.yml"
       when: nginx_type == "opensource"
       tags: nginx_install_oss
 
     - name: Set up NGINX Plus license
-      include_tasks: "{{ role_path }}/tasks/plus/setup-license.yml"
+      ansible.builtin.include_tasks: "{{ role_path }}/tasks/plus/setup-license.yml"
       when:
         - nginx_type == "plus"
         - nginx_setup_license | bool
       tags: nginx_setup_license
 
     - name: "{{ nginx_setup | capitalize }} NGINX Plus"
-      include_tasks: "{{ role_path }}/tasks/plus/install-{{ ansible_facts['os_family'] | lower }}.yml"
+      ansible.builtin.include_tasks: "{{ role_path }}/tasks/plus/install-{{ ansible_facts['os_family'] | lower }}.yml"
       when: nginx_type == "plus"
       tags: nginx_install_plus
 
     - name: "{{ nginx_setup | capitalize }} NGINX dynamic modules"
-      include_tasks: "{{ role_path }}/tasks/modules/install-modules.yml"
+      ansible.builtin.include_tasks: "{{ role_path }}/tasks/modules/install-modules.yml"
       when:
         - nginx_modules is defined
         - nginx_modules | length > 0
       tags: nginx_install_modules
 
     - name: Remove NGINX Plus license
-      include_tasks: "{{ role_path }}/tasks/plus/remove-license.yml"
+      ansible.builtin.include_tasks: "{{ role_path }}/tasks/plus/remove-license.yml"
       when:
         - nginx_type == "plus"
         - nginx_remove_license | bool
       tags: nginx_remove_license
 
     - name: Modify systemd parameters
-      include_tasks: "{{ role_path }}/tasks/config/modify-systemd.yml"
+      ansible.builtin.include_tasks: "{{ role_path }}/tasks/config/modify-systemd.yml"
       when:
         - ansible_facts['service_mgr'] == "systemd"
         - nginx_service_modify | bool
@@ -73,24 +73,24 @@
   tags: nginx_enable
 
 - name: Trigger handlers if necessary
-  meta: flush_handlers
+  ansible.builtin.meta: flush_handlers
 
 - name: Debug NGINX output
-  include_tasks: "{{ role_path }}/tasks/config/debug-output.yml"
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/config/debug-output.yml"
   when:
     - nginx_debug_output | bool
     - nginx_state != "absent"
   tags: nginx_debug_output
 
 - name: Configure logrotate for NGINX
-  include_tasks: "{{ role_path }}/tasks/config/setup-logrotate.yml"
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/config/setup-logrotate.yml"
   when:
     - nginx_logrotate_conf_enable | bool
     - nginx_state != "absent"
   tags: nginx_logrotate_config
 
 - name: Install NGINX Amplify
-  include_tasks: "{{ role_path }}/tasks/amplify/install-amplify.yml"
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/amplify/install-amplify.yml"
   when:
     - nginx_amplify_enable | bool
     - nginx_amplify_api_key is defined

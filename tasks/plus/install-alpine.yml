@@ -1,6 +1,6 @@
 ---
 - name: (Alpine Linux) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus repository
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/apk/repositories
     insertafter: EOF
     line: "{{ nginx_repository | default(nginx_plus_default_repository_alpine) }}"

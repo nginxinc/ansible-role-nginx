@@ -7,14 +7,14 @@
   when: ansible_facts['os_family'] == "Alpine"
 
 - name: (Debian/Ubuntu) Install dependencies
-  apt:
+  ansible.builtin.apt:
     name: "{{ nginx_debian_dependencies }}"
     update_cache: true
     state: latest  # noqa package-latest
   when: ansible_facts['os_family'] == "Debian"
 
 - name: (Amazon Linux/CentOS/Oracle Linux/RHEL) Install dependencies
-  yum:
+  ansible.builtin.yum:
     name: "{{ nginx_redhat_dependencies }}"
     update_cache: true
     state: latest  # noqa package-latest

@@ -1,16 +1,16 @@
 ---
 - name: Install dependencies
-  include_tasks: "{{ role_path }}/tasks/prerequisites/install-dependencies.yml"
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/prerequisites/install-dependencies.yml"
 
 - name: Set up SELinux
   block:
     - name: Check if SELinux is enabled
-      debug:
+      ansible.builtin.debug:
         msg: You need to enable SELinux, if it was disabled you need to reboot
       when: ansible_facts['selinux'] is undefined
 
     - name: Configure SELinux
-      include_tasks: "{{ role_path }}/tasks/prerequisites/setup-selinux.yml"
+      ansible.builtin.include_tasks: "{{ role_path }}/tasks/prerequisites/setup-selinux.yml"
       when: ansible_facts['selinux']['mode'] is defined
   when:
     - nginx_selinux | bool

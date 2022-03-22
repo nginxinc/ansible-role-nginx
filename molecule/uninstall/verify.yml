@@ -3,7 +3,7 @@
   hosts: all
   tasks:
     - name: Check if NGINX is installed
-      package:
+      ansible.builtin.package:
         name: nginx
         state: absent
       check_mode: true

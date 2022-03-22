@@ -1,6 +1,6 @@
 ---
 - name: (Debian/Ubuntu) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus license verification
-  blockinfile:
+  ansible.builtin.blockinfile:
     path: /etc/apt/apt.conf.d/90nginx
     create: true
     block: |
@@ -12,7 +12,7 @@
     mode: 0444
 
 - name: (Debian/Ubuntu) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus repository
-  apt_repository:
+  ansible.builtin.apt_repository:
     filename: nginx-plus
     repo: "{{ nginx_repository | default(nginx_plus_default_repository_debian) }}"
     update_cache: false
@@ -21,7 +21,7 @@
   when: nginx_manage_repo | bool
 
 - name: (Debian/Ubuntu) {{ nginx_setup | capitalize }} NGINX Plus
-  apt:
+  ansible.builtin.apt:
     name: "nginx-plus{{ nginx_version | default('') }}"
     state: "{{ nginx_state }}"
     update_cache: true

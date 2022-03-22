@@ -1,6 +1,6 @@
 ---
 - name: (FreeBSD) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus license verification
-  blockinfile:
+  ansible.builtin.blockinfile:
     path: /usr/local/etc/pkg.conf
     block: |
       PKG_ENV: { SSL_NO_VERIFY_PEER: "1",
@@ -9,7 +9,7 @@
     state: "{{ nginx_license_status | default ('present') }}"
 
 - name: (FreeBSD) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus repository
-  blockinfile:
+  ansible.builtin.blockinfile:
     path: /etc/pkg/nginx-plus.conf
     create: true
     block: |

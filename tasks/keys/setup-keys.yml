@@ -2,30 +2,30 @@
 - name: (Alpine Linux) Set up signing key
   block:
     - name: (Alpine Linux) Set up NGINX signing key URL
-      set_fact:
+      ansible.builtin.set_fact:
         keysite: "{{ nginx_signing_key | default(nginx_default_signing_key_rsa_pub) }}"
 
     - name: (Alpine Linux) Download NGINX signing key
-      get_url:
+      ansible.builtin.get_url:
         url: "{{ keysite }}"
         dest: /etc/apk/keys/nginx_signing.rsa.pub
         mode: 0400
   when: ansible_facts['os_family'] == "Alpine"
 
 - name: (Debian/Red Hat/SLES OSs) Set up NGINX signing key URL
-  set_fact:
+  ansible.builtin.set_fact:
     keysite: "{{ nginx_signing_key | default(nginx_default_signing_key_pgp) }}"
   when: ansible_facts['os_family'] != "Alpine"
 
 - name: (Debian/Ubuntu) Add NGINX signing key
-  apt_key:
+  ansible.builtin.apt_key:
     id: 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
     keyring: /usr/share/keyrings/nginx-archive-keyring.gpg
     url: "{{ keysite }}"
   when: ansible_facts['os_family'] == "Debian"
 
 - name: (Amazon Linux/CentOS/Oracle Linux/RHEL/SLES) Add NGINX signing key
-  rpm_key:
+  ansible.builtin.rpm_key:
     fingerprint: 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
     key: "{{ keysite }}"
   when: ansible_facts['os_family'] in ['RedHat', 'Suse']

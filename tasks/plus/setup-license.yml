@@ -2,13 +2,13 @@
 - name: (Debian/Red Hat/SLES OSs) Set up NGINX Plus license
   block:
     - name: (Debian/Red Hat/SLES OSs) Create SSL directory
-      file:
+      ansible.builtin.file:
         path: /etc/ssl/nginx
         state: directory
         mode: 0755
 
     - name: (Debian/Red Hat/SLES OSs) Copy NGINX Plus certificate and license key
-      copy:
+      ansible.builtin.copy:
         src: "{{ item }}"
         dest: /etc/ssl/nginx
         decrypt: true
@@ -21,20 +21,20 @@
 - name: (Alpine Linux) Set up NGINX Plus license
   block:
     - name: (Alpine Linux) Create APK directory
-      file:
+      ansible.builtin.file:
         path: /etc/apk
         state: directory
         mode: 0755
 
     - name: (Alpine Linux) Copy NGINX Plus key
-      copy:
+      ansible.builtin.copy:
         src: "{{ nginx_license['key'] }}"
         dest: /etc/apk/cert.key
         decrypt: true
         mode: 0444
 
     - name: (Alpine Linux) Copy NGINX Plus certificate
-      copy:
+      ansible.builtin.copy:
         src: "{{ nginx_license['certificate'] }}"
         dest: /etc/apk/cert.pem
         decrypt: true
@@ -42,7 +42,7 @@
   when: ansible_facts['os_family'] == "Alpine"
 
 - name: (SLES) Combine NGINX Plus certificate and license key
-  assemble:
+  ansible.builtin.assemble:
     src: /etc/ssl/nginx
     dest: /etc/ssl/nginx/nginx-repo-bundle.crt
     mode: 0444

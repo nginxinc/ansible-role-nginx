@@ -1,6 +1,6 @@
 ---
 - name: (Alpine Linux) {{ (nginx_setup == 'uninstall') | ternary('Remove', 'Configure') }} NGINX repository
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/apk/repositories
     insertafter: EOF
     line: "{{ nginx_repository | default(nginx_default_repository_alpine) }}"

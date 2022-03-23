@@ -8,7 +8,7 @@
   when: nginx_manage_repo | bool
 
 - name: (Alpine Linux) {{ nginx_setup | capitalize }} NGINX
-  apk:
+  community.general.apk:
     name: "nginx{{ (nginx_repository is not defined and nginx_setup != 'uninstall') | ternary('@nginx', '') }}{{ nginx_version | default('') }}"
     state: "{{ nginx_state }}"
     update_cache: true

@@ -23,7 +23,7 @@
   when: nginx_manage_repo | bool
 
 - name: (FreeBSD) {{ nginx_setup | capitalize }} NGINX Plus
-  pkgng:
+  community.general.pkgng:
     name: "nginx-plus{{ nginx_version | default('') }}"
     state: "{{ nginx_state }}"
   when: nginx_license_status is not defined

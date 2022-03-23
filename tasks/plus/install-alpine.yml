@@ -8,7 +8,7 @@
   when: nginx_manage_repo | bool
 
 - name: (Alpine Linux) {{ nginx_setup | capitalize }} NGINX Plus
-  apk:
+  community.general.apk:
     name: "nginx-plus{{ nginx_version | default('') }}"
     repository: "{{ nginx_repository | default(nginx_plus_default_repository_alpine) }}"
     state: "{{ nginx_state }}"

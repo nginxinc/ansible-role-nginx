@@ -12,7 +12,7 @@
             update_cache: true
 
         - name: (RHEL 8) Set Python 3 as default
-          alternatives:
+          community.general.alternatives:
             name: python
             path: /usr/bin/python3
             link: /usr/bin/python
@@ -60,7 +60,7 @@
       when: ansible_facts['os_family'] == "Debian"
 
     - name: (Alpine Linux) Install build tools
-      apk:
+      community.general.apk:
         name:
           - alpine-sdk
           - build-base
@@ -118,7 +118,7 @@
     - ansible_facts['os_family'] == "Debian"
 
 - name: (Alpine Linux) Install PCRE dependency from package
-  apk:
+  community.general.apk:
     name: pcre-dev
     update_cache: true
   when:
@@ -148,11 +148,11 @@
         creates: "/tmp/makefile"
 
     - name: Make PCRE dependency
-      make:
+      community.general.make:
         chdir: "/tmp/{{ pcre_version }}"
 
     - name: Install PCRE dependency
-      make:
+      community.general.make:
         chdir: "/tmp/{{ pcre_version }}"
         target: install
   when:
@@ -177,7 +177,7 @@
     - ansible_facts['os_family'] == "Debian"
 
 - name: (Alpine Linux) Install ZLib dependency from package
-  apk:
+  community.general.apk:
     name: zlib-dev
     update_cache: true
   when:
@@ -207,11 +207,11 @@
         creates: "/tmp/makefile"
 
     - name: Make ZLib dependency
-      make:
+      community.general.make:
         chdir: "/tmp/{{ zlib_version }}"
 
     - name: Install ZLib dependency
-      make:
+      community.general.make:
         chdir: "/tmp/{{ zlib_version }}"
         target: install
   when:
@@ -236,7 +236,7 @@
     - ansible_facts['os_family'] == "Debian"
 
 - name: (Alpine Linux) Install OpenSSL dependency from package
-  apk:
+  community.general.apk:
     name: openssl-dev
     update_cache: true
   when:
@@ -266,11 +266,11 @@
         creates: "/tmp/makefile"
 
     - name: Make OpenSSL dependency
-      make:
+      community.general.make:
         chdir: "/tmp/{{ openssl_version }}"
 
     - name: Install OpenSSL dependency
-      make:
+      community.general.make:
         chdir: "/tmp/{{ openssl_version }}"
         target: install
   when:
@@ -344,11 +344,11 @@
       register: nginx_configure
 
     - name: Make NGINX
-      make:
+      community.general.make:
         chdir: "/tmp/{{ nginx_version }}"
 
     - name: Install NGINX
-      make:
+      community.general.make:
         chdir: "/tmp/{{ nginx_version }}"
         target: install
 

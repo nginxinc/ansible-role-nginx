@@ -1,6 +1,6 @@
 ---
 - name: (Alpine Linux) Install logrotate
-  apk:
+  community.general.apk:
     name: logrotate
   when: ansible_facts['os_family'] == "Alpine"
 
@@ -19,11 +19,11 @@
 - name: (SLES) Set up logrotate
   block:
     - name: (SLES) Configure logrotate repository
-      zypper_repository:
+      community.general.zypper_repository:
         repo: https://download.opensuse.org/repositories/openSUSE:Leap:42.1/standard/openSUSE:Leap:42.1.repo
 
     - name: (SLES) Install Logrotate
-      zypper:
+      community.general.zypper:
         name: logrotate
         state: present
   when: ansible_facts['os_family'] == "Suse"

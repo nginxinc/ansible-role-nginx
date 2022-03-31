@@ -9,4 +9,4 @@ Before creating a PR, run through this checklist and mark each as complete.
 - [ ] I have read the [CONTRIBUTING](https://github.com/nginxinc/ansible-role-nginx/blob/main/CONTRIBUTING.md) document
 - [ ] I have added Molecule tests that prove my fix is effective or that my feature works
 - [ ] I have checked that any relevant Molecule tests pass after adding my changes
-- [ ] I have updated any relevant documentation (`defaults/main/*.yml`, `README.md` and `CHANGELOG.md`)
+- [ ] I have updated any relevant documentation ([`defaults/main/*.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/), [`README.md`](https://github.com/nginxinc/ansible-role-nginx/blob/main/README.md) and [`CHANGELOG.md`](https://github.com/nginxinc/ansible-role-nginx/blob/main/CHANGELOG.md))

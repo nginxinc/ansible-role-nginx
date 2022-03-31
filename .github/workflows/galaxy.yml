@@ -4,6 +4,7 @@ name: Ansible Galaxy import
   release:
     types:
       - published
+  workflow_dispatch:
 jobs:
   galaxy:
     name: Galaxy

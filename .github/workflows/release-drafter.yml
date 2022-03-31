@@ -9,6 +9,7 @@ name: Release Drafter
   push:
     branches:
       - main
+  workflow_dispatch:
 jobs:
   update_release_draft:
     name: Update release draft

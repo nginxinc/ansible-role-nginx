@@ -1,38 +1,25 @@
 ---
 - name: (CentOS/RHEL) Install dependencies
-  block:
-    - name: (CentOS/RHEL 7) Install dependencies
-      ansible.builtin.yum:
-        name:
-          - policycoreutils-python
-          - setools
-      when: ansible_facts['distribution_major_version'] is version('8', '!=')
-
-    - name: (RHEL 8) Install dependencies
-      ansible.builtin.yum:
-        name:
-          - libselinux-utils
-          - policycoreutils
-          - selinux-policy-targeted
-      when: ansible_facts['distribution_major_version'] is version('8', '==')
+  ansible.builtin.yum:
+    name:
+      - libselinux-utils
+      - policycoreutils
+      - selinux-policy-targeted
   when: ansible_facts['os_family'] == "RedHat"
 
 - name: Set SELinux mode to permissive
-  ansible.builtin.selinux:
+  ansible.posix.selinux:
     state: permissive
     policy: targeted
 
 - name: Allow SELinux HTTP network connections
-  ansible.builtin.seboolean:
-    name: httpd_can_network_connect
+  ansible.posix.seboolean:
+    name: "{{ item }}"
     state: true
     persistent: true
-
-- name: Allow SELinux HTTP network connections
-  ansible.builtin.seboolean:
-    name: httpd_can_network_relay
-    state: true
-    persistent: true
+  loop:
+    - httpd_can_network_connect
+    - httpd_can_network_relay
 
 - name: Allow SELinux TCP connections on specific ports
   community.general.seport:
@@ -75,7 +62,7 @@
   when: nginx_selinux_module.changed | bool
 
 - name: Set SELinux mode to enforcing
-  ansible.builtin.selinux:
+  ansible.posix.selinux:
     state: enforcing
     policy: targeted
   when: nginx_selinux_enforcing | bool

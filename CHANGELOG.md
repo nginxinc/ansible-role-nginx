@@ -9,7 +9,8 @@ FEATURES:
 
 ENHANCEMENTS:
 
-Bump the Ansible `community.general` collection to `4.6.1` and `community.docker` collection to `2.2.1`.
+* Bump the Ansible `community.general` collection to `4.6.1` and `community.docker` collection to `2.2.1`.
+* Streamline configuring SELinux.
 
 BUG FIXES:
 

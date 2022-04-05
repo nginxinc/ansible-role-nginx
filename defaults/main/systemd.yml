@@ -14,10 +14,12 @@ nginx_service_overridepath: /etc/systemd/system/nginx.service.d
 # Default is override.conf
 nginx_service_overridefilename: override.conf
 
-# Set service timeout for systemd systems in seconds (default: 90)
+# Set service timeout for systemd systems in seconds
 # [Service]
+# TimeoutStartSec=90
 # TimeoutStopSec=90
 # Default is to comment this out
+# nginx_service_timeoutstartsec: 90
 # nginx_service_timeoutstopsec: 90
 
 # Set the restart policy for systemd systems

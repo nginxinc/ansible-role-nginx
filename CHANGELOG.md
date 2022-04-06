@@ -9,7 +9,7 @@ FEATURES:
 
 ENHANCEMENTS:
 
-* Bump the Ansible `community.general` collection to `4.6.1` and `community.docker` collection to `2.3.0`.
+* Bump the Ansible `community.general` collection to `4.7.0` and `community.docker` collection to `2.3.0`.
 * Streamline configuring SELinux.
 * Add `TimeoutStartSec` parameter to Systemd template.
 

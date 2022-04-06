@@ -7,6 +7,9 @@ updates:
       interval: weekly
       day: monday
       time: "00:00"
+    labels:
+      - "dependencies"
+      - "skip-changelog"
   - package-ecosystem: pip
     directory: /.github/workflows/requirements
     schedule:

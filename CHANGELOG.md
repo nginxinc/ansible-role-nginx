@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.23.1 (Unreleased)
+## 0.23.1 (April 6, 2022)
 
 FEATURES:
 
@@ -12,6 +12,7 @@ ENHANCEMENTS:
 * Bump the Ansible `community.general` collection to `4.7.0` and `community.docker` collection to `2.3.0`.
 * Streamline configuring SELinux.
 * Add `TimeoutStartSec` parameter to Systemd template.
+* Update Dependabot to trigger updates at the same time across all NGINX core roles at the same time and to avoid triggering release drafter on GitHub actions dependency updates.
 
 BUG FIXES:
 

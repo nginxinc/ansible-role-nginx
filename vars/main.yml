@@ -62,7 +62,7 @@ nginx_alpine_dependencies: [
 
 # Debian dependencies
 nginx_debian_dependencies: [
-  'apt-transport-https', 'ca-certificates',
+  'apt-transport-https', 'ca-certificates', 'gpg-agent',
 ]
 
 # Red Hat dependencies

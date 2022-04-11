@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.23.2 (Unreleased)
+
+BUG FIXES:
+
+Ensure gpg-agent is installed on Ubuntu/Debian to avoid APT key tasks failures.
+
 ## 0.23.1 (April 6, 2022)
 
 FEATURES:

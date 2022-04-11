@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.23.2 (April 11, 2022)
+## 0.23.2 (Unreleased)
 
 BUG FIXES:
 

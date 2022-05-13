@@ -14,7 +14,7 @@
   when: nginx_manage_repo | bool
 
 - name: (Amazon Linux/CentOS/Oracle Linux/RHEL) Force Yum cache refresh
-  command: yum clean metadata
+  ansible.builtin.command: yum clean metadata
   when: nginx_manage_repo | bool
   changed_when: false
 

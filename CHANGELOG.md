@@ -4,7 +4,8 @@
 
 BUG FIXES:
 
-Ensure gpg-agent is installed on Ubuntu/Debian to avoid APT key tasks failures.
+* Ensure gpg-agent is installed on Ubuntu/Debian to avoid APT key tasks failures.
+* Always refresh the `yum` cache.
 
 ## 0.23.1 (April 6, 2022)
 

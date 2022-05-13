@@ -6,7 +6,7 @@
 - name: (Handler) Start/reload NGINX
   ansible.builtin.service:
     name: nginx
-    state: reloaded
+    state: restarted
     enabled: true
   when:
     - nginx_start | bool

@@ -10,7 +10,6 @@
     mode: 0644
     module_hotfixes: "{{ omit if ansible_version.full is version('2.11', '<') else true }}"
     state: "{{ (nginx_state == 'uninstall') | ternary('absent', 'present') }}"
-    metadata_expire: 1
   when: nginx_manage_repo | bool
 
 - name: (Amazon Linux/CentOS/RHEL) Force Yum cache refresh

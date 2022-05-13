@@ -6,7 +6,6 @@ BUG FIXES:
 
 * Ensure gpg-agent is installed on Ubuntu/Debian to avoid APT key tasks failures.
 * Always refresh the `yum` cache.
-* Restart the NGINX service instead of reloading the NGINX service. This role mainly deals with installing or updating NGINX and for these use cases, restarting the NGINX service fixes some edge case bugs resulting from different versions of NGINX being subsequently installed. The NGINX config role will keep reloading the NGINX service to ensure the seamless reloads capabilites of NGINX are left intact.
 
 ## 0.23.1 (April 6, 2022)
 

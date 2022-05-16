@@ -17,6 +17,9 @@ categories:
   - title: "🐛 Bug Fixes"
     labels:
       - "bug"
+  - title: "🧪 Tests"
+    labels:
+      - "tests"
   - title: "📝 Documentation"
     labels:
       - "documentation"
@@ -51,23 +54,24 @@ autolabeler:
     branch:
       - "/feat\/.+/"
       - "/feature\/.+/"
-      - "/implement\/.+/"
     title:
       - "/feat/i"
       - "/feature/i"
-      - "/implement/i"
   - label: "enhancement"
     branch:
-      - "/add\/.+/"
       - "/enhancement\/.+/"
     title:
-      - "/add/i"
       - "/enhancement/i"
   - label: "bug"
     branch:
       - "/fix\/.+/"
     title:
       - "/fix/i"
+  - label: "tests"
+    branch:
+      - "/molecule\/.+/"
+    title:
+      - "/molecule/i"
   - label: "documentation"
     branch:
       - "/docs\/.+/"

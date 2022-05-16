@@ -42,9 +42,9 @@ Follow our [Installation Guide](https://github.com/nginxinc/ansible-role-nginx/b
 
 To report a bug, open an issue on GitHub with the label `bug` using the available bug report issue template. Please ensure the issue has not already been reported.
 
-### Suggest an Enhancement
+### Suggest a Feature or Enhancement
 
-To suggest an enhancement, please create an issue on GitHub with the label `enhancement` using the available feature issue template.
+To suggest an enhancement, please create an issue on GitHub with the label `feature` or `enhancement` using the available feature request issue template.
 
 ### Open a Pull Request
 

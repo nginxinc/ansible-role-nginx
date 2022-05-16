@@ -4,7 +4,12 @@
 
 FEATURES:
 
-Add support for NGINX OSS on Ubuntu jammy (22.04).
+* Add support for NGINX OSS on Ubuntu jammy (22.04).
+* Add CODEOWNERS file.
+
+ENHANCEMENTS:
+
+Tweak Release Drafter config.
 
 BUG FIXES:
 

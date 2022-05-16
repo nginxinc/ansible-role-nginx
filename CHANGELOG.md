@@ -2,6 +2,10 @@
 
 ## 0.23.2 (Unreleased)
 
+FEATURES:
+
+Add support for NGINX OSS on Ubuntu jammy (22.04).
+
 BUG FIXES:
 
 * Ensure gpg-agent is installed on Ubuntu/Debian to avoid APT key tasks failures.

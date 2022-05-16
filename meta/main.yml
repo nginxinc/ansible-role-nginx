@@ -32,7 +32,8 @@ galaxy_info:
       versions:
         - bionic
         - focal
-        - hirsute
+        - impish
+        - jammy
     - name: SLES
       versions:
         - 12

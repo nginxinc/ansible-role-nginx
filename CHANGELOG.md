@@ -4,7 +4,7 @@
 
 FEATURES:
 
-Add support for Ubuntu jammy (22.04).
+Add support for NGINX OSS on Ubuntu jammy (22.04).
 
 BUG FIXES:
 

@@ -1,33 +1,32 @@
 ---
 galaxy_info:
-  author: Alessandro Fael Garcia
+  author: nginxinc
   description: Official Ansible role for NGINX
   role_name: nginx
-  namespace: nginxinc  # Ansible Lint requirement
-  company: F5 Networks, Inc.
+  company: F5, Inc.
 
   license: Apache License, Version 2.0
 
-  min_ansible_version: 2.12
+  min_ansible_version: '2.12'
 
   platforms:
     - name: Alpine
       versions:
-        - any
+        - all
     - name: Amazon Linux 2
       versions:
-        - any
+        - all
     - name: Debian
       versions:
         - buster
         - bullseye
     - name: EL
       versions:
-        - 7
-        - 8
+        - '7'
+        - '8'
     - name: FreeBSD
       versions:
-        - 12.1
+        - '12.1'
     - name: Ubuntu
       versions:
         - bionic
@@ -36,8 +35,8 @@ galaxy_info:
         - jammy
     - name: SLES
       versions:
-        - 12
-        - 15
+        - '12'
+        - '15'
 
   galaxy_tags:
     - nginx

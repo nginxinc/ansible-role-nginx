@@ -44,7 +44,7 @@ To report a bug, open an issue on GitHub with the label `bug` using the availabl
 
 ### Suggest a Feature or Enhancement
 
-To suggest an enhancement, please create an issue on GitHub with the label `feature` or `enhancement` using the available feature request issue template.
+To suggest a feature or enhancement, please create an issue on GitHub with the label `feature` or `enhancement` using the available feature request issue template.
 
 ### Open a Pull Request
 

@@ -87,6 +87,8 @@ Debian:
 Red Hat:
   - 7.4+
   - 8
+Rocky:
+  - 8
 SUSE/SLES:
   - 12
   - 15

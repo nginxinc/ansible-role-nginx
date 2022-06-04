@@ -62,6 +62,13 @@ platforms:
     volumes:
       - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
     command: "/usr/sbin/init"
+  - name: rhel-9
+    image: registry.access.redhat.com/ubi9/ubi:9.0.0
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/usr/sbin/init"
   - name: debian-buster
     image: debian:buster-slim
     dockerfile: ../common/Dockerfile.j2

@@ -10,7 +10,7 @@ FEATURES:
 ENHANCEMENTS:
 
 * Tweak Release Drafter config.
-* Bump the Ansible `community.general` collection to `5.0.0`, `ansible.posix` collection to `1.4.0` and `community.docker` collection to `2.6.0`.
+* Bump the Ansible `community.general` collection to `5.1.0`, `ansible.posix` collection to `1.4.0` and `community.docker` collection to `2.6.0`.
 
 BUG FIXES:
 

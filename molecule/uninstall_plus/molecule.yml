@@ -96,3 +96,18 @@ provisioner:
     prepare: prepare.yml
     converge: converge.yml
     verify: verify.yml
+scenario:
+  test_sequence:
+    - dependency
+    - lint
+    - cleanup
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    # - idempotence  Not working on Ubuntu bionic and Debian buster
+    - side_effect
+    - verify
+    - cleanup
+    - destroy

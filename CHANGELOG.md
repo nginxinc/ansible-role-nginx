@@ -6,7 +6,8 @@ FEATURES:
 
 * Add support for NGINX OSS on Ubuntu jammy (22.04).
 * Add CODEOWNERS file.
-* Add support for NGINX OSS on RHEL 9.
+* Add RHEL 9 to the NGINX OSS list of tested and supported platforms.
+* Add Alpine Linux 3.16 to the NGINX OSS list of tested and supported platforms (and remove Alpine Linux 3.12).
 
 ENHANCEMENTS:
 
@@ -48,10 +49,10 @@ FEATURES:
 
 * Backwards support for older versions of Ansible (e.g. Ansible `<2.12`).
 * Update NGINX Amplify repositories to use Python 3 when possible.
+* Add Alpine Linux 3.15 to the NGINX Plus list of tested and supported platforms (and remove Alpine Linux 3.11).
 
 ENHANCEMENTS:
 
-* Add Alpine Linux 3.15 to the NGINX Plus list of tested and supported platforms (and remove Alpine Linux 3.11).
 * Use `pcre2` by default when possible.
 * Bump the Ansible `community.general` collection to `4.4.0` and `community.docker` collection to `2.1.1`.
 
@@ -72,10 +73,10 @@ FEATURES:
 
 * Pin repository data when installing NGINX OSS on Alpine and Debian distributions.
 * You can now downgrade versions of NGINX and switch from stable to mainline and viceversa. You will need to specify the NGINX branch and version you wish to install when tweaking versions.
+* Add Alpine Linux 3.15 to the NGINX OSS list of tested and supported platforms (and remove Alpine Linux 3.11).
 
 ENHANCEMENTS:
 
-* Add Alpine Linux 3.15 to the NGINX OSS list of tested and supported platforms (and remove Alpine Linux 3.11).
 * Bump the Ansible `community.general` collection to `4.1.0` and `community.docker` collection to `2.0.2`.
 
 BUG FIXES:

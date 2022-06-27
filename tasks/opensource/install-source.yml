@@ -25,6 +25,7 @@
         name:
           - ca-certificates
           - gcc
+          - gcc-c++
           - gd
           - gd-devel
           - glibc
@@ -103,7 +104,7 @@
 
 - name: (CentOS/RHEL) Install PCRE dependency from package
   ansible.builtin.yum:
-    name: pcre-devel
+    name: "{{ (pcre_release == 2) | ternary('pcre2-devel', 'pcre-devel') }}"
     update_cache: true
   when:
     - nginx_install_source_pcre | bool
@@ -111,7 +112,7 @@
 
 - name: (Debian/Ubuntu) Install PCRE dependency from package
   ansible.builtin.apt:
-    name: libpcre3-dev
+    name: "{{ (pcre_release == 2) | ternary('libpcre2-dev', 'libpcre3-dev') }}"
     update_cache: true
   when:
     - nginx_install_source_pcre | bool
@@ -119,7 +120,7 @@
 
 - name: (Alpine Linux) Install PCRE dependency from package
   community.general.apk:
-    name: pcre-dev
+    name: "{{ (pcre_release == 2) | ternary('pcre2-dev', 'pcre-dev') }}"
     update_cache: true
   when:
     - nginx_install_source_pcre | bool
@@ -129,7 +130,7 @@
   block:
     - name: Download PCRE dependency
       ansible.builtin.get_url:
-        url: "https://ftp.exim.org/pub/pcre/{{ pcre_version }}.tar.gz"
+        url: "{{ (pcre_release == 2) | ternary('https://github.com/PCRE2Project/pcre2/releases/download/' ~ pcre_version ~ '/' ~ pcre_version ~ '.tar.gz', 'https://ftp.exim.org/pub/pcre/' ~ pcre_version ~ '.tar.gz') }}"
         dest: "/tmp/{{ pcre_version }}.tar.gz"
         mode: 0600
       register: pcre_source

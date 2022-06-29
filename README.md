@@ -102,10 +102,10 @@ Ubuntu:
 
 ```yaml
 Alpine:
-  - 3.12
   - 3.13
   - 3.14
   - 3.15
+  - 3.16
 Amazon Linux 2:
   - any
 CentOS:
@@ -121,12 +121,14 @@ Oracle Linux:
 Red Hat:
   - 7.4+
   - 8
+  - 9
 SUSE/SLES:
   - 12
   - 15
 Ubuntu:
   - bionic (18.04)
   - focal (20.04)
+  - jammy (22.04)
 ```
 
 ### NGINX Amplify Agent

@@ -4,10 +4,10 @@
 
 FEATURES:
 
-* Add support for NGINX OSS on Ubuntu jammy (22.04).
+* Add Ubuntu jammy (22.04) to the NGINX list of tested and supported platforms.
+* Add RHEL 9 to the NGINX list of tested and supported platforms.
+* Add Alpine Linux 3.16 to the NGINX list of tested and supported platforms (and remove Alpine Linux 3.12).
 * Add CODEOWNERS file.
-* Add RHEL 9 to the NGINX OSS list of tested and supported platforms.
-* Add Alpine Linux 3.16 to the NGINX OSS list of tested and supported platforms (and remove Alpine Linux 3.12).
 
 ENHANCEMENTS:
 

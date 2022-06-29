@@ -6,13 +6,6 @@ lint: |
   yamllint .
   ansible-lint --force-color
 platforms:
-  - name: alpine-3.12
-    image: alpine:3.12
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/sbin/init"
   - name: alpine-3.13
     image: alpine:3.13
     dockerfile: ../common/Dockerfile.j2
@@ -29,6 +22,13 @@ platforms:
     command: "/sbin/init"
   - name: alpine-3.15
     image: alpine:3.15
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/sbin/init"
+  - name: alpine-3.16
+    image: alpine:3.16
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
@@ -62,6 +62,13 @@ platforms:
     volumes:
       - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
     command: "/usr/sbin/init"
+  - name: rhel-9
+    image: registry.access.redhat.com/ubi9/ubi:9.0.0
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/usr/sbin/init"
   - name: debian-buster
     image: debian:buster-slim
     dockerfile: ../common/Dockerfile.j2
@@ -85,6 +92,13 @@ platforms:
     command: "/sbin/init"
   - name: ubuntu-focal
     image: ubuntu:focal
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/sbin/init"
+  - name: ubuntu-jammy
+    image: ubuntu:jammy
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:

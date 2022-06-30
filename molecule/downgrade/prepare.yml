@@ -2,10 +2,6 @@
 - name: Prepare
   hosts: all
   pre_tasks:
-    - name: Set repo if Alpine
-      ansible.builtin.set_fact:
-        version: "=1.23.0-r1"
-      when: ansible_facts['os_family'] == "Alpine"
     - name: Set repo if Debian
       ansible.builtin.set_fact:
         version: "=1.23.0-1~{{ ansible_facts['distribution_release'] }}"

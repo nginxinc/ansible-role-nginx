@@ -24,10 +24,21 @@
         url: http://localhost
         status_code: 200
 
+    - name: Fetch NGINX version
+      ansible.builtin.uri:
+        url: https://version.nginx.com/nginx/stable
+        return_content: true
+      check_mode: false
+      register: nginx_versions
+
+    - name: Set NGINX version
+      ansible.builtin.set_fact:
+        nginx_version: "{{ nginx_versions.content | regex_search('([0-9]+\\.){2}[0-9]+') }}"
+
     - name: Verify NGINX has been downgraded
       ansible.builtin.command: nginx -v
       args:
         chdir: "{{ ((ansible_facts['system'] | lower is not search('bsd')) | ternary('/etc/nginx', '/usr/local/sbin')) }}"
       changed_when: false
       register: version
-      failed_when: version is not search('1.20.2')
+      failed_when: version is not search(nginx_version)

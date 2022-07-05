@@ -25,7 +25,7 @@ nginx_start: true
 # Specify whether you want to install NGINX, upgrade to the latest version, or remove NGINX.
 # Can be used with `nginx_version` to fine tune control which version of NGINX is installed/used on each playbook execution.
 # Using 'install' will install the latest version (or 'nginx_version') of NGINX on a fresh install.
-# Using 'upgrade' will upgrade NGINX to the latest version (that matches your 'nginx_version') of NGINX on every playbook execution. Does not work on Alpine Linux.
+# Using 'upgrade' will upgrade NGINX to the latest version (that matches your 'nginx_version') of NGINX on every playbook execution.
 # Using 'uninstall' will remove NGINX from your system.
 # Default is install.
 nginx_setup: install

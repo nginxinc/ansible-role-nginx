@@ -13,4 +13,21 @@
     state: "{{ nginx_state }}"
     update_cache: true
   ignore_errors: "{{ ansible_check_mode }}"
+  when: not (nginx_setup == 'upgrade' and nginx_version is not defined)
   notify: (Handler) Run NGINX
+
+- name: (Alpine Linux) Upgrade NGINX workaround ('nginx_setup' is set to 'upgrade' and 'nginx_version' is not defined)
+  block:
+    - name: (Alpine Linux) Check if there are NGINX upgrades available
+      ansible.builtin.command: apk list --upgrade
+      register: upgrade
+      changed_when: false
+
+    - name: (Alpine Linux) Upgrade NGINX
+      ansible.builtin.command: apk add --upgrade nginx{{ nginx_repository is not defined | ternary('@nginx', '') }}
+      changed_when: upgrade.stdout is search('nginx')
+      when: upgrade.stdout is search('nginx')
+      notify: (Handler) Run NGINX
+  when:
+    - nginx_setup == 'upgrade'
+    - nginx_version is not defined

@@ -19,6 +19,7 @@ BUG FIXES:
 
 * Ensure gpg-agent is installed on Ubuntu/Debian to avoid APT key tasks failures.
 * Always refresh the `yum` cache.
+* The role can now correctly upgrade NGINX to the latest release on Alpine Linux.
 
 ## 0.23.1 (April 6, 2022)
 

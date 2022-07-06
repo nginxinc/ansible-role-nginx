@@ -14,11 +14,13 @@ ENHANCEMENTS:
 * Add support for PCRE 2 and OpenSSL 3.0 (built from source) when building NGINX from source.
 * Tweak Release Drafter config.
 * Bump the Ansible `community.general` collection to `5.1.1`, `ansible.posix` collection to `1.4.0` and `community.docker` collection to `2.6.0`.
+* Re-add Alpine Linux tests to `downgrade` Molecule scenarios.
 
 BUG FIXES:
 
 * Ensure gpg-agent is installed on Ubuntu/Debian to avoid APT key tasks failures.
 * Always refresh the `yum` cache.
+* The role can now correctly upgrade NGINX to the latest release on Alpine Linux.
 
 ## 0.23.1 (April 6, 2022)
 

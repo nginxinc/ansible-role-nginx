@@ -22,12 +22,14 @@ jobs:
         scenario:
           - default
           - downgrade
+          - downgrade_plus
           - module
           - plus
           - source
           - uninstall
           - uninstall_plus
           - upgrade
+          - upgrade_plus
     steps:
       - name: Check out the codebase
         if: "!(contains(matrix.scenario, 'plus') && github.event.pull_request.head.repo.full_name != github.repository)"

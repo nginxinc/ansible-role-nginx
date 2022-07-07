@@ -1,0 +1,33 @@
+---
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Check if NGINX Plus is installed
+      ansible.builtin.package:
+        name: nginx-plus
+        state: present
+      check_mode: true
+      register: install
+      failed_when: (install is changed) or (install is failed)
+
+    - name: Check if NGINX Plus service is running
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: true
+      check_mode: true
+      register: service
+      failed_when: (service is changed) or (service is failed)
+
+    - name: Verify NGINX Plus is up and running
+      ansible.builtin.uri:
+        url: http://localhost
+        status_code: 200
+
+    - name: Verify NGINX Plus has been downgraded
+      ansible.builtin.command: nginx -v
+      args:
+        chdir: "{{ ((ansible_facts['system'] | lower is not search('bsd')) | ternary('/etc/nginx', '/usr/local/sbin')) }}"
+      changed_when: false
+      register: version
+      failed_when: version is not search('26')

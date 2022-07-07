@@ -22,6 +22,10 @@ BUG FIXES:
 * Always refresh the `yum` cache.
 * The role can now correctly upgrade NGINX to the latest release on Alpine Linux.
 
+TESTS:
+
+* Create downgrade and upgrade tests for NGINX Plus.
+
 ## 0.23.1 (April 6, 2022)
 
 FEATURES:

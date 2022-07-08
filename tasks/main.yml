@@ -3,12 +3,12 @@
   ansible.builtin.assert:
     that: (nginx_type == "opensource" and ansible_facts['distribution'] in nginx_distributions)
           or (nginx_type == "plus" and ansible_facts['distribution'] in nginx_plus_distributions)
-    success_msg: "Your OS, {{ ansible_facts['distribution'] }} is supported by NGINX {{ (nginx_type=='plus') | ternary('Plus', 'Open Source') }}"
-    fail_msg: "Your OS, {{ ansible_facts['distribution'] }} is not supported by NGINX {{ (nginx_type=='plus') | ternary('Plus', 'Open Source') }}"
+    success_msg: Your OS, {{ ansible_facts['distribution'] }} is supported by NGINX {{ (nginx_type=='plus') | ternary('Plus', 'Open Source') }}
+    fail_msg: Your OS, {{ ansible_facts['distribution'] }} is not supported by NGINX {{ (nginx_type=='plus') | ternary('Plus', 'Open Source') }}
   when:
     - nginx_enable | bool
     - (nginx_install_from == "nginx_repository" or nginx_type == "plus")
-  ignore_errors: true  # noqa ignore-errors
+  ignore_errors: true # noqa ignore-errors
   tags: nginx_check_support
 
 - name: Check that NGINX setup is an allowed value
@@ -16,7 +16,7 @@
     that: nginx_setup in nginx_setup_vars
     fail_msg: The value {{ nginx_setup }} you used for `nginx_setup` is not allowed. Try one of {{ nginx_setup_vars | join(', ') }}.
   when: nginx_enable | bool
-  ignore_errors: true  # noqa ignore-errors
+  ignore_errors: true # noqa ignore-errors
   tags: nginx_check_support
 
 - name: Set up prerequisites

@@ -20,7 +20,7 @@
 
 - name: (Amazon Linux/CentOS/Oracle Linux/RHEL) {{ nginx_setup | capitalize }} NGINX Plus
   ansible.builtin.yum:
-    name: "nginx-plus{{ nginx_version | default('') }}"
+    name: nginx-plus{{ nginx_version | default('') }}
     state: "{{ nginx_state }}"
     update_cache: true
     allow_downgrade: "{{ omit if ansible_version.full is version('2.12', '<') else true }}"

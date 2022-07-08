@@ -24,7 +24,7 @@
 
 - name: (FreeBSD) {{ nginx_setup | capitalize }} NGINX Plus
   community.general.pkgng:
-    name: "nginx-plus{{ nginx_version | default('') }}"
+    name: nginx-plus{{ nginx_version | default('') }}
     state: "{{ nginx_state }}"
   when: nginx_license_status is not defined
   notify: (Handler) Run NGINX

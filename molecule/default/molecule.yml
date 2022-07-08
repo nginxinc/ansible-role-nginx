@@ -3,7 +3,6 @@ driver:
   name: docker
 lint: |
   set -e
-  yamllint .
   ansible-lint --force-color
 platforms:
   - name: alpine-3.13
@@ -11,99 +10,99 @@ platforms:
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/sbin/init"
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
   - name: alpine-3.14
     image: alpine:3.14
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/sbin/init"
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
   - name: alpine-3.15
     image: alpine:3.15
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/sbin/init"
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
   - name: alpine-3.16
     image: alpine:3.16
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/sbin/init"
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
   - name: amazonlinux-2
     image: amazonlinux:2
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/usr/sbin/init"
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /usr/sbin/init
   - name: centos-7
     image: centos:7
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/usr/sbin/init"
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /usr/sbin/init
   - name: rhel-7
     image: registry.access.redhat.com/ubi7/ubi:7.9
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/usr/sbin/init"
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /usr/sbin/init
   - name: rhel-8
     image: registry.access.redhat.com/ubi8/ubi:8.5
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/usr/sbin/init"
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /usr/sbin/init
   - name: rhel-9
     image: registry.access.redhat.com/ubi9/ubi:9.0.0
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/usr/sbin/init"
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /usr/sbin/init
   - name: debian-buster
     image: debian:buster-slim
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/sbin/init"
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
   - name: debian-bullseye
     image: debian:bullseye-slim
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/sbin/init"
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
   - name: ubuntu-bionic
     image: ubuntu:bionic
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/sbin/init"
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
   - name: ubuntu-focal
     image: ubuntu:focal
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/sbin/init"
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
   - name: ubuntu-jammy
     image: ubuntu:jammy
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/sbin/init"
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
 provisioner:
   name: ansible
   playbooks:

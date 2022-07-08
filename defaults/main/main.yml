@@ -57,7 +57,7 @@ nginx_install_source_zlib: false
 # You can select any of the static modules listed on http://nginx.org/en/docs/configure.html.
 # Format is '--with-*' where '*' should be used as static module name in the list below. (see an example below).
 # Default is 'http_ssl_module'. (DO NOT remove it if you need SSL support).
-nginx_static_modules: ['http_ssl_module']
+nginx_static_modules: [http_ssl_module]
 # nginx_static_modules: ['http_v2_module']  # Example for '--with-http_v2_module'
 
 # (Optional) Choose where to fetch the NGINX signing key from.

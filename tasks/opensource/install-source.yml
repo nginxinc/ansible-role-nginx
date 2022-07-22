@@ -130,8 +130,7 @@
   block:
     - name: Download PCRE dependency
       ansible.builtin.get_url:
-        url: "{{ (pcre_release == 2)
-              | ternary('https://github.com/PCRE2Project/pcre2/releases/download/' ~ pcre_version ~ '/' ~ pcre_version ~ '.tar.gz', 'https://ftp.exim.org/pub/pcre/' ~ pcre_version ~ '.tar.gz') }}"
+        url: "{{ (pcre_release == 2) | ternary('https://github.com/PCRE2Project/pcre2/releases/download/' ~ pcre_version ~ '/' ~ pcre_version ~ '.tar.gz', 'https://ftp.exim.org/pub/pcre/' ~ pcre_version ~ '.tar.gz') }}"
         dest: /tmp/{{ pcre_version }}.tar.gz
         mode: 0600
       register: pcre_source

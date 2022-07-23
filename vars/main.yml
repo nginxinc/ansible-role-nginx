@@ -1,6 +1,6 @@
 ---
 nginx_setup_vars: [
-  'install', 'uninstall', 'upgrade',
+  install, uninstall, upgrade,
 ]
 
 nginx_default_setup: install
@@ -15,14 +15,14 @@ nginx_state: "{{ nginx_state_vals[nginx_setup] | default(nginx_state_vals[nginx_
 # Supported NGINX Open Source distributions
 # https://nginx.org/en/docs/install.html
 nginx_distributions: [
-  'Alpine', 'Amazon', 'CentOS', 'Debian', 'FreeBSD', 'RedHat', 'SLES', 'Ubuntu',
-  'NetBSD', 'OpenBSD', 'DragonFlyBSD', 'HardenedBSD',
+  Alpine, Amazon, CentOS, Debian, FreeBSD, RedHat, SLES, Ubuntu,
+  NetBSD, OpenBSD, DragonFlyBSD, HardenedBSD,
 ]
 
 # Supported NGINX Plus distributions
 # https://docs.nginx.com/nginx/technical-specs/
 nginx_plus_distributions: [
-  'Alpine', 'Amazon', 'CentOS', 'Debian', 'FreeBSD', 'OracleLinux', 'RedHat', 'SLES', 'Ubuntu',
+  Alpine, Amazon, CentOS, Debian, FreeBSD, OracleLinux, RedHat, SLES, Ubuntu,
 ]
 
 # Default NGINX signing key
@@ -30,54 +30,45 @@ nginx_default_signing_key_pgp: https://nginx.org/keys/nginx_signing.key
 nginx_default_signing_key_rsa_pub: https://nginx.org/keys/nginx_signing.rsa.pub
 
 # Default NGINX Open Source repositories
-nginx_default_repository_alpine: "@nginx http://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}\
-                                  alpine/v{{ ansible_facts['distribution_version'] | regex_search('^[0-9]+\\.[0-9]+') }}/main"
-nginx_default_repository_amazon: "https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}/amzn2/$releasever/$basearch"
+nginx_default_repository_alpine: "@nginx http://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}alpine/v{{ ansible_facts['distribution_version'] | regex_search('^[0-9]+\\.[0-9]+') }}/main"
+nginx_default_repository_amazon: https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}/amzn2/$releasever/$basearch
 nginx_default_repository_debian:
-  - "deb [arch={{ (ansible_facts['architecture'] == 'aarch64') | ternary('arm64', 'amd64') }} signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}\
-    {{ ansible_facts['distribution'] | lower }}/ {{ ansible_facts['distribution_release'] }} nginx"
-  - "deb-src [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}\
-    {{ ansible_facts['distribution'] | lower }}/ {{ ansible_facts['distribution_release'] }} nginx"
-nginx_default_repository_redhat: "https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}\
-                                  {{ (ansible_facts['distribution'] == 'CentOS') | ternary('centos', 'rhel') }}/\
-                                  {{ ansible_facts['distribution_major_version'] }}/$basearch/"
-nginx_default_repository_suse: "https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}\
-                                sles/{{ ansible_facts['distribution_major_version'] }}"
+  - deb [arch={{ (ansible_facts['architecture'] == 'aarch64') | ternary('arm64', 'amd64') }} signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}{{ ansible_facts['distribution'] | lower }}/ {{ ansible_facts['distribution_release'] }} nginx
+  - deb-src [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}{{ ansible_facts['distribution'] | lower }}/ {{ ansible_facts['distribution_release'] }} nginx
+nginx_default_repository_redhat: https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}{{ (ansible_facts['distribution'] == 'CentOS') | ternary('centos', 'rhel') }}/{{ ansible_facts['distribution_major_version'] }}/$basearch/
+nginx_default_repository_suse: https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}sles/{{ ansible_facts['distribution_major_version'] }}
 
 # Default NGINX Plus repositories
-nginx_plus_default_repository_alpine: "https://pkgs.nginx.com/plus/alpine/v{{ ansible_facts['distribution_version'] | regex_search('^[0-9]+\\.[0-9]+') }}/main"
-nginx_plus_default_repository_amazon: "https://pkgs.nginx.com/plus/amzn{{ (ansible_facts['distribution_major_version'] is version('2', '==')) | ternary('2', '') }}/$releasever/$basearch"
-nginx_plus_default_repository_debian: "deb [arch={{ (ansible_facts['architecture'] == 'aarch64') | ternary('arm64', 'amd64') }} signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] https://pkgs.nginx.com/plus/{{ ansible_facts['distribution'] | lower }} {{ ansible_facts['distribution_release'] }} nginx-plus"
-nginx_plus_default_repository_freebsd: "https://pkgs.nginx.com/plus/freebsd/${ABI}/latest"
-nginx_plus_default_repository_redhat: "https://pkgs.nginx.com/plus/{{ (ansible_facts['distribution'] == 'CentOS') | ternary('centos', 'rhel') }}/\
-                                      {{ (ansible_facts['distribution_version'] is version('7.4', '>=')
-                                      and ansible_facts['distribution_version'] is version('8', '<')) | ternary('7.4', ansible_facts['distribution_major_version']) }}/$basearch/"
-nginx_plus_default_repository_suse: "https://pkgs.nginx.com/plus/sles/{{ ansible_facts['distribution_major_version'] }}\
-                                    ?ssl_clientcert=/etc/ssl/nginx/nginx-repo-bundle.crt&ssl_verify=peer"
+nginx_plus_default_repository_alpine: https://pkgs.nginx.com/plus/alpine/v{{ ansible_facts['distribution_version'] | regex_search('^[0-9]+\.[0-9]+') }}/main
+nginx_plus_default_repository_amazon: https://pkgs.nginx.com/plus/amzn{{ (ansible_facts['distribution_major_version'] is version('2', '==')) | ternary('2', '') }}/$releasever/$basearch
+nginx_plus_default_repository_debian: deb [arch={{ (ansible_facts['architecture'] == 'aarch64') | ternary('arm64', 'amd64') }} signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] https://pkgs.nginx.com/plus/{{ ansible_facts['distribution'] | lower }} {{ ansible_facts['distribution_release'] }} nginx-plus
+nginx_plus_default_repository_freebsd: https://pkgs.nginx.com/plus/freebsd/${ABI}/latest
+nginx_plus_default_repository_redhat: https://pkgs.nginx.com/plus/{{ (ansible_facts['distribution'] == 'CentOS') | ternary('centos', 'rhel') }}/{{ (ansible_facts['distribution_version'] is version('7.4', '>=') and ansible_facts['distribution_version'] is version('8', '<')) | ternary('7.4', ansible_facts['distribution_major_version']) }}/$basearch/
+nginx_plus_default_repository_suse: https://pkgs.nginx.com/plus/sles/{{ ansible_facts['distribution_major_version'] }}?ssl_clientcert=/etc/ssl/nginx/nginx-repo-bundle.crt&ssl_verify=peer
 
 # Alpine dependencies
 nginx_alpine_dependencies: [
-  'ca-certificates', 'coreutils', 'openssl', 'pcre2',
+  ca-certificates, coreutils, openssl, pcre2,
 ]
 
 # Debian dependencies
 nginx_debian_dependencies: [
-  'apt-transport-https', 'ca-certificates', 'gpg-agent',
+  apt-transport-https, ca-certificates, gpg-agent,
 ]
 
 # Red Hat dependencies
 nginx_redhat_dependencies: [
-  'ca-certificates',
+  ca-certificates,
 ]
 
 # SLES dependencies
 nginx_sles_dependencies: [
-  'ca-certificates',
+  ca-certificates,
 ]
 
 # FreeBSD dependencies
 nginx_freebsd_dependencies: [
-  'security/ca_root_nss',
+  security/ca_root_nss,
 ]
 
 # Default locations and versions when 'nginx_install_from' is set to 'source'.
@@ -89,11 +80,11 @@ openssl_version: openssl-3.0.4
 
 # Supported NGINX Open Source dynamic modules
 nginx_modules_list: [
-  'geoip', 'image-filter', 'njs', 'perl', 'xslt',
+  geoip, image-filter, njs, perl, xslt,
 ]
 
 # Supported NGINX Plus dynamic modules
 nginx_plus_modules_list: [
-  'auth-spnego', 'brotli', 'encrypted-session', 'geoip', 'geoip2', 'headers-more', 'image-filter',
-  'lua', 'njs', 'opentracing', 'passenger', 'perl', 'prometheus', 'rtmp', 'subs-filter', 'xslt',
+  auth-spnego, brotli, encrypted-session, geoip, geoip2, headers-more, image-filter,
+  lua, njs, opentracing, passenger, perl, prometheus, rtmp, subs-filter, xslt,
 ]

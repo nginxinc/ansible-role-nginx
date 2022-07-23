@@ -25,6 +25,8 @@ BUG FIXES:
 TESTS:
 
 * Create downgrade and upgrade tests for NGINX Plus.
+* Remove Yamllint (Ansible Lint now incorporates Yamllint).
+* Skip Ansible Lint line length rule.
 
 ## 0.23.1 (April 6, 2022)
 

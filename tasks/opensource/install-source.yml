@@ -131,7 +131,7 @@
     - name: Download PCRE dependency
       ansible.builtin.get_url:
         url: "{{ (pcre_release == 2) | ternary('https://github.com/PCRE2Project/pcre2/releases/download/' ~ pcre_version ~ '/' ~ pcre_version ~ '.tar.gz', 'https://ftp.exim.org/pub/pcre/' ~ pcre_version ~ '.tar.gz') }}"
-        dest: "/tmp/{{ pcre_version }}.tar.gz"
+        dest: /tmp/{{ pcre_version }}.tar.gz
         mode: 0600
       register: pcre_source
 
@@ -145,16 +145,16 @@
     - name: Configure PCRE dependency
       ansible.builtin.command: ./configure
       args:
-        chdir: "/tmp/{{ pcre_version }}"
-        creates: "/tmp/makefile"
+        chdir: /tmp/{{ pcre_version }}
+        creates: /tmp/makefile
 
     - name: Make PCRE dependency
       community.general.make:
-        chdir: "/tmp/{{ pcre_version }}"
+        chdir: /tmp/{{ pcre_version }}
 
     - name: Install PCRE dependency
       community.general.make:
-        chdir: "/tmp/{{ pcre_version }}"
+        chdir: /tmp/{{ pcre_version }}
         target: install
   when:
     - not pcre_result.stat.exists | bool
@@ -189,8 +189,8 @@
   block:
     - name: Download ZLib dependency
       ansible.builtin.get_url:
-        url: "https://zlib.net/{{ zlib_version }}.tar.gz"
-        dest: "/tmp/{{ zlib_version }}.tar.gz"
+        url: https://zlib.net/{{ zlib_version }}.tar.gz
+        dest: /tmp/{{ zlib_version }}.tar.gz
         mode: 0600
       register: zlib_source
 
@@ -204,16 +204,16 @@
     - name: Configure ZLib dependency
       ansible.builtin.command: ./configure
       args:
-        chdir: "/tmp/{{ zlib_version }}"
-        creates: "/tmp/makefile"
+        chdir: /tmp/{{ zlib_version }}
+        creates: /tmp/makefile
 
     - name: Make ZLib dependency
       community.general.make:
-        chdir: "/tmp/{{ zlib_version }}"
+        chdir: /tmp/{{ zlib_version }}
 
     - name: Install ZLib dependency
       community.general.make:
-        chdir: "/tmp/{{ zlib_version }}"
+        chdir: /tmp/{{ zlib_version }}
         target: install
   when:
     - not zlib_result.stat.exists | bool
@@ -248,8 +248,8 @@
   block:
     - name: Download OpenSSL dependency
       ansible.builtin.get_url:
-        url: "https://www.openssl.org/source/{{ openssl_version }}.tar.gz"
-        dest: "/tmp/{{ openssl_version }}.tar.gz"
+        url: https://www.openssl.org/source/{{ openssl_version }}.tar.gz
+        dest: /tmp/{{ openssl_version }}.tar.gz
         mode: 0600
       register: openssl_source
 
@@ -263,16 +263,16 @@
     - name: Configure OpenSSL dependency
       ansible.builtin.command: ./config --prefix=/usr/local/openssl --openssldir=/usr/local/openssl shared zlib
       args:
-        chdir: "/tmp/{{ openssl_version }}"
-        creates: "/tmp/makefile"
+        chdir: /tmp/{{ openssl_version }}
+        creates: /tmp/makefile
 
     - name: Make OpenSSL dependency
       community.general.make:
-        chdir: "/tmp/{{ openssl_version }}"
+        chdir: /tmp/{{ openssl_version }}
 
     - name: Install OpenSSL dependency
       community.general.make:
-        chdir: "/tmp/{{ openssl_version }}"
+        chdir: /tmp/{{ openssl_version }}
         target: install
   when:
     - not openssl_result.stat.exists | bool
@@ -306,8 +306,8 @@
   block:
     - name: Download NGINX
       ansible.builtin.get_url:
-        url: "https://nginx.org/download/{{ nginx_version }}.tar.gz"
-        dest: "/tmp/{{ nginx_version }}.tar.gz"
+        url: https://nginx.org/download/{{ nginx_version }}.tar.gz
+        dest: /tmp/{{ nginx_version }}.tar.gz
         mode: 0600
       register: nginx_source
 
@@ -340,17 +340,17 @@
         {{ nginx_install_source_openssl | ternary('', '--with-openssl=../' + openssl_version) }}
         {{ nginx_install_source_static_modules | default('') }}
       args:
-        chdir: "/tmp/{{ nginx_version }}"
-        creates: "/tmp/makefile"
+        chdir: /tmp/{{ nginx_version }}
+        creates: /tmp/makefile
       register: nginx_configure
 
     - name: Make NGINX
       community.general.make:
-        chdir: "/tmp/{{ nginx_version }}"
+        chdir: /tmp/{{ nginx_version }}
 
     - name: Install NGINX
       community.general.make:
-        chdir: "/tmp/{{ nginx_version }}"
+        chdir: /tmp/{{ nginx_version }}
         target: install
 
     - name: Upload systemd NGINX service file
@@ -369,7 +369,7 @@
         state: restarted
         enabled: true
       when: ansible_facts['service_mgr'] == "systemd"
-      notify: "(Handler) Run NGINX"
+      notify: (Handler) Run NGINX
 
     - name: Upload upstart NGINX service file
       ansible.builtin.copy:
@@ -396,7 +396,7 @@
     - name: Start Upstart NGINX service reload
       ansible.builtin.command: nginx
       when: ansible_facts['service_mgr'] == "upstart"
-      notify: "(Handler) Run NGINX"
+      notify: (Handler) Run NGINX
 
     - name: Upload SysVinit NGINX service file
       ansible.builtin.copy:
@@ -406,7 +406,7 @@
         group: root
         mode: 0755
       when: ansible_facts['service_mgr'] == "sysvinit"
-      notify: "(Handler) Run NGINX"
+      notify: (Handler) Run NGINX
 
     - name: Upload OpenRC NGINX service file
       ansible.builtin.copy:

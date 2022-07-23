@@ -2,8 +2,7 @@
 - name: (Amazon Linux/CentOS/RHEL) {{ (nginx_setup == 'uninstall') | ternary('Remove', 'Configure') }} NGINX repository
   ansible.builtin.yum_repository:
     name: nginx
-    baseurl: "{{ nginx_repository |
-              default(lookup('vars', 'nginx_default_repository_' + ((ansible_facts['distribution'] == 'Amazon') | ternary('amazon', 'redhat')))) }}"
+    baseurl: "{{ nginx_repository | default(lookup('vars', 'nginx_default_repository_' + ((ansible_facts['distribution'] == 'Amazon') | ternary('amazon', 'redhat')))) }}"
     description: NGINX Repository
     enabled: true
     gpgcheck: true
@@ -19,7 +18,7 @@
 
 - name: (Amazon Linux/CentOS/RHEL) {{ nginx_setup | capitalize }} NGINX
   ansible.builtin.yum:
-    name: "nginx{{ nginx_version | default('') }}"
+    name: nginx{{ nginx_version | default('') }}
     state: "{{ nginx_state }}"
     update_cache: true
     allow_downgrade: "{{ omit if ansible_version.full is version('2.12', '<') else true }}"

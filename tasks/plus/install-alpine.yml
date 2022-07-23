@@ -9,7 +9,7 @@
 
 - name: (Alpine Linux) {{ nginx_setup | capitalize }} NGINX Plus
   community.general.apk:
-    name: "nginx-plus{{ nginx_version | default('') }}"
+    name: nginx-plus{{ nginx_version | default('') }}
     repository: "{{ nginx_repository | default(nginx_plus_default_repository_alpine) }}"
     state: "{{ nginx_state }}"
   ignore_errors: "{{ ansible_check_mode }}"

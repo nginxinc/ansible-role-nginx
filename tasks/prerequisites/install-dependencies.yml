@@ -3,28 +3,28 @@
   community.general.apk:
     name: "{{ nginx_alpine_dependencies }}"
     update_cache: true
-    state: latest  # noqa package-latest
+    state: latest # noqa package-latest
   when: ansible_facts['os_family'] == "Alpine"
 
 - name: (Debian/Ubuntu) Install dependencies
   ansible.builtin.apt:
     name: "{{ nginx_debian_dependencies }}"
     update_cache: true
-    state: latest  # noqa package-latest
+    state: latest # noqa package-latest
   when: ansible_facts['os_family'] == "Debian"
 
 - name: (Amazon Linux/CentOS/Oracle Linux/RHEL) Install dependencies
   ansible.builtin.yum:
     name: "{{ nginx_redhat_dependencies }}"
     update_cache: true
-    state: latest  # noqa package-latest
+    state: latest # noqa package-latest
   when: ansible_facts['os_family'] == "RedHat"
 
 - name: (SLES) Install dependencies
   community.general.zypper:
     name: "{{ nginx_sles_dependencies }}"
     update_cache: true
-    state: latest  # noqa package-latest
+    state: latest # noqa package-latest
   when: ansible_facts['os_family'] == "Suse"
 
 - name: (FreeBSD) Install dependencies
@@ -32,14 +32,14 @@
     - name: (FreeBSD) Install dependencies using package(s)
       community.general.pkgng:
         name: "{{ nginx_freebsd_dependencies }}"
-        state: latest  # noqa package-latest
+        state: latest # noqa package-latest
       when: nginx_bsd_install_packages | bool
 
     - name: (FreeBSD) Install dependencies using port(s)
       community.general.portinstall:
         name: "{{ item }}"
         use_packages: "{{ nginx_bsd_portinstall_use_packages | default(omit) }}"
-        state: latest  # noqa package-latest
+        state: latest # noqa package-latest
       loop: "{{ nginx_freebsd_dependencies }}"
       when: not nginx_bsd_install_packages | bool
   when: ansible_facts['distribution'] == "FreeBSD"

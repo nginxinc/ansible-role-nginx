@@ -136,8 +136,6 @@ Ubuntu:
 ```yaml
 Amazon Linux 2:
   - any
-CentOS:
-  - 7
 Debian:
   - buster (10)
   - bullseye (11)
@@ -176,9 +174,15 @@ Working functional playbook examples can be found in the **[`molecule/`](https:/
 | Name | Description |
 | ---- | ----------- |
 | **[`default/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/default/converge.yml)** | Install a specific version of NGINX and set up logrotate |
+| **[`downgrade/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/downgrade/converge.yml)** | Downgrade to a specific version of NGINX |
+| **[`downgrade_plus/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/downgrade_plus/converge.yml)** | Downgrade to a specific version of NGINX Plus |
 | **[`module/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/module/converge.yml)** | Install various NGINX supported modules |
 | **[`plus/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/plus/converge.yml)** | Install NGINX Plus and various NGINX Plus supported modules |
 | **[`source/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/source/converge.yml)** | Install NGINX from source |
+| **[`uninstall/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/uninstall/converge.yml)** | Uninstall NGINX |
+| **[`uninstall_plus/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/uninstall_plus/converge.yml)** | Uninstall NGINX Plus |
+| **[`upgrade/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/upgrade/converge.yml)** | Upgrade NGINX |
+| **[`upgrade_plus/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/upgrade_plus/converge.yml)** | Upgrade NGINX Plus |
 
 Do note that if you install this repository via Ansible Galaxy, you will have to replace the role variable in the sample playbooks from `ansible-role-nginx` to `nginxinc.nginx`.
 

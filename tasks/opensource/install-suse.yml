@@ -10,7 +10,7 @@
   community.general.zypper:
     name: nginx{{ nginx_version | default('') }}
     state: "{{ nginx_state }}"
-    disable_recommends: false
     update_cache: true
+    oldpackage: true
   ignore_errors: "{{ ansible_check_mode }}"
   notify: (Handler) Run NGINX

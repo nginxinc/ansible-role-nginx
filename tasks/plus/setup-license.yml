@@ -16,6 +16,21 @@
       loop:
         - "{{ nginx_license['certificate'] }}"
         - "{{ nginx_license['key'] }}"
+
+    - name: (SLES) Create NGINX Plus license bundle
+      block:
+        - name: (SLES) Check combined NGINX Plus license bundle exists
+          ansible.builtin.stat:
+            path: /etc/ssl/nginx/nginx-repo-bundle.crt
+          register: bundle
+
+        - name: (SLES) Combine NGINX Plus certificate and license key
+          ansible.builtin.assemble:
+            src: /etc/ssl/nginx
+            dest: /etc/ssl/nginx/nginx-repo-bundle.crt
+            mode: 0444
+          when: not bundle.stat.exists
+      when: ansible_facts['os_family'] == "Suse"
   when: ansible_facts['os_family'] != "Alpine"
 
 - name: (Alpine Linux) Set up NGINX Plus license
@@ -41,9 +56,4 @@
         mode: 0444
   when: ansible_facts['os_family'] == "Alpine"
 
-- name: (SLES) Combine NGINX Plus certificate and license key
-  ansible.builtin.assemble:
-    src: /etc/ssl/nginx
-    dest: /etc/ssl/nginx/nginx-repo-bundle.crt
-    mode: 0444
-  when: ansible_facts['os_family'] == "Suse"
+

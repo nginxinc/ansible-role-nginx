@@ -32,6 +32,10 @@
       ansible.builtin.set_fact:
         version: -26-1.{{ (ansible_facts['distribution'] == "Amazon") | ternary('amzn2', ('el' + ansible_facts['distribution_major_version'] | string)) }}.ngx
       when: ansible_facts['os_family'] == "RedHat"
+      - name: Set repo if SLES
+      ansible.builtin.set_fact:
+        version: =26-1.sles{{ ansible_facts['distribution_major_version'] }}.ngx
+      when: ansible_facts['os_family'] == "Suse"
   tasks:
     - name: Install NGINX
       ansible.builtin.include_role:

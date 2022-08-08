@@ -55,5 +55,3 @@
         decrypt: true
         mode: 0444
   when: ansible_facts['os_family'] == "Alpine"
-
-

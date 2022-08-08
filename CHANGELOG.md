@@ -24,6 +24,7 @@ BUG FIXES:
 
 TESTS:
 
+* Add SLES 15 to all Molecule tests.
 * Create downgrade and upgrade tests for NGINX Plus.
 * Remove Yamllint (Ansible Lint now incorporates Yamllint).
 * Skip Ansible Lint line length rule.

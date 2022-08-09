@@ -76,7 +76,7 @@ nginx_freebsd_dependencies: [
 pcre_release: 2
 pcre_version: pcre2-10.40
 zlib_version: zlib-1.2.12
-openssl_version: openssl-3.0.4
+openssl_version: openssl-3.0.5
 
 # Supported NGINX Open Source dynamic modules
 nginx_modules_list: [

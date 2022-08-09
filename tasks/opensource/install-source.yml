@@ -1,7 +1,22 @@
 ---
 - name: Check for build tools
   block:
-    - name: (RHEL 8) Setup Python 3
+    - name: (Alpine Linux) Install build tools
+      community.general.apk:
+        name:
+          - alpine-sdk
+          - build-base
+          - git
+          - openrc
+          - perl
+          - python3
+          - linux-headers
+          - tar
+          - wget
+        update_cache: true
+      when: ansible_facts['os_family'] == "Alpine"
+
+    - name: (CentOS/RHEL) Set up build tools
       block:
         - name: (RHEL 8) Install Python 3
           ansible.builtin.yum:
@@ -10,33 +25,32 @@
               - python3-pip
               - python3-devel
             update_cache: true
+          when: ansible_facts['distribution_major_version'] is version('8', '==')
 
         - name: (RHEL 8) Set Python 3 as default
           community.general.alternatives:
             name: python
             path: /usr/bin/python3
             link: /usr/bin/python
-      when:
-        - ansible_facts['os_family'] == "RedHat"
-        - ansible_facts['distribution_major_version'] is version('8', '==')
+          when: ansible_facts['distribution_major_version'] is version('8', '==')
 
-    - name: (CentOS/RHEL) Install build tools
-      ansible.builtin.yum:
-        name:
-          - ca-certificates
-          - gcc
-          - gcc-c++
-          - gd
-          - gd-devel
-          - glibc
-          - glibc-common
-          - make
-          - perl-core
-          - tar
-          - unzip
-          - wget
-          - zlib-devel
-        update_cache: true
+        - name: (CentOS/RHEL) Install build tools
+          ansible.builtin.yum:
+            name:
+              - ca-certificates
+              - gcc
+              - gcc-c++
+              - gd
+              - gd-devel
+              - glibc
+              - glibc-common
+              - make
+              - perl-core
+              - tar
+              - unzip
+              - wget
+              - zlib-devel
+            update_cache: true
       when: ansible_facts['os_family'] == "RedHat"
 
     - name: (Debian) Install backports repo for 'buster'
@@ -60,29 +74,17 @@
         update_cache: true
       when: ansible_facts['os_family'] == "Debian"
 
-    - name: (Alpine Linux) Install build tools
-      community.general.apk:
+    - name: (SLES) Install build tools
+      community.general.zypper:
         name:
-          - alpine-sdk
-          - build-base
-          - git
-          - openrc
-          - perl
-          - python3
-          - linux-headers
+          - awk
+          - gcc
+          - gzip
+          - make
           - tar
-          - wget
+          - zlib-devel
         update_cache: true
-      when: ansible_facts['os_family'] == "Alpine"
-
-    - name: (Alpine Linux) Enable OpenRC
-      ansible.builtin.copy:
-        content: ""
-        dest: /run/openrc/softlevel
-        force: false
-        owner: root
-        mode: 0644
-      when: ansible_facts['os_family'] == "Alpine"
+      when: ansible_facts['os_family'] == "Suse"
   when: nginx_install_source_build_tools | bool
 
 - name: Check for source installs
@@ -102,29 +104,32 @@
         path: /tmp/{{ openssl_version }}
       register: openssl_result
 
-- name: (CentOS/RHEL) Install PCRE dependency from package
-  ansible.builtin.yum:
-    name: "{{ (pcre_release == 2) | ternary('pcre2-devel', 'pcre-devel') }}"
-    update_cache: true
-  when:
-    - nginx_install_source_pcre | bool
-    - ansible_facts['os_family'] == "RedHat"
+- name: Install PCRE dependecy from package
+  block:
+    - name: (Alpine Linux) Install PCRE dependency from package
+      community.general.apk:
+        name: "{{ (pcre_release == 2) | ternary('pcre2-dev', 'pcre-dev') }}"
+        update_cache: true
+      when: ansible_facts['os_family'] == "Alpine"
 
-- name: (Debian/Ubuntu) Install PCRE dependency from package
-  ansible.builtin.apt:
-    name: "{{ (pcre_release == 2) | ternary('libpcre2-dev', 'libpcre3-dev') }}"
-    update_cache: true
-  when:
-    - nginx_install_source_pcre | bool
-    - ansible_facts['os_family'] == "Debian"
+    - name: (CentOS/RHEL) Install PCRE dependency from package
+      ansible.builtin.yum:
+        name: "{{ (pcre_release == 2) | ternary('pcre2-devel', 'pcre-devel') }}"
+        update_cache: true
+      when: ansible_facts['os_family'] == "RedHat"
 
-- name: (Alpine Linux) Install PCRE dependency from package
-  community.general.apk:
-    name: "{{ (pcre_release == 2) | ternary('pcre2-dev', 'pcre-dev') }}"
-    update_cache: true
-  when:
-    - nginx_install_source_pcre | bool
-    - ansible_facts['os_family'] == "Alpine"
+    - name: (Debian/Ubuntu) Install PCRE dependency from package
+      ansible.builtin.apt:
+        name: "{{ (pcre_release == 2) | ternary('libpcre2-dev', 'libpcre3-dev') }}"
+        update_cache: true
+      when: ansible_facts['os_family'] == "Debian"
+
+    - name: (SLES) Install PCRE dependency from package
+      community.general.zypper:
+        name: "{{ (pcre_release == 2) | ternary('pcre2-devel', 'pcre-devel') }}"
+        update_cache: true
+      when: ansible_facts['os_family'] == "Suse"
+  when: nginx_install_source_pcre | bool
 
 - name: Install PCRE dependence from source
   block:
@@ -161,29 +166,32 @@
     - not nginx_install_source_pcre | bool
     - not ansible_check_mode | bool
 
-- name: (CentOS/RHEL) Install ZLib dependency from package
-  ansible.builtin.yum:
-    name: zlib-devel
-    update_cache: true
-  when:
-    - nginx_install_source_zlib | bool
-    - ansible_facts['os_family'] == "RedHat"
+- name: Install ZLib dependency from package
+  block:
+    - name: (Alpine Linux) Install ZLib dependency from package
+      community.general.apk:
+        name: zlib-dev
+        update_cache: true
+      when: ansible_facts['os_family'] == "Alpine"
 
-- name: (Debian/Ubuntu) Install ZLib dependency from package
-  ansible.builtin.apt:
-    name: zlib1g-dev
-    update_cache: true
-  when:
-    - nginx_install_source_zlib | bool
-    - ansible_facts['os_family'] == "Debian"
+    - name: (CentOS/RHEL) Install ZLib dependency from package
+      ansible.builtin.yum:
+        name: zlib-devel
+        update_cache: true
+      when: ansible_facts['os_family'] == "RedHat"
 
-- name: (Alpine Linux) Install ZLib dependency from package
-  community.general.apk:
-    name: zlib-dev
-    update_cache: true
-  when:
-    - nginx_install_source_zlib | bool
-    - ansible_facts['os_family'] == "Alpine"
+    - name: (Debian/Ubuntu) Install ZLib dependency from package
+      ansible.builtin.apt:
+        name: zlib1g-dev
+        update_cache: true
+      when: ansible_facts['os_family'] == "Debian"
+
+    - name: (SLES) Install ZLib dependency from package
+      community.general.zypper:
+        name: zlib-devel
+        update_cache: true
+      when: ansible_facts['os_family'] == "Suse"
+  when: nginx_install_source_zlib | bool
 
 - name: Install ZLib dependency from source
   block:
@@ -220,29 +228,32 @@
     - not nginx_install_source_zlib | bool
     - not ansible_check_mode | bool
 
-- name: (CentOS/RHEL) Install OpenSSL dependency from package
-  ansible.builtin.yum:
-    name: openssl-devel
-    update_cache: true
-  when:
-    - nginx_install_source_openssl | bool
-    - ansible_facts['os_family'] == "RedHat"
+- name: Install OpenSSL dependency from package
+  block:
+    - name: (Alpine Linux) Install OpenSSL dependency from package
+      community.general.apk:
+        name: openssl-dev
+        update_cache: true
+      when: ansible_facts['os_family'] == "Alpine"
 
-- name: (Debian/Ubuntu) Install OpenSSL dependency from package
-  ansible.builtin.apt:
-    name: libssl-dev
-    update_cache: true
-  when:
-    - nginx_install_source_openssl | bool
-    - ansible_facts['os_family'] == "Debian"
+    - name: (CentOS/RHEL) Install OpenSSL dependency from package
+      ansible.builtin.yum:
+        name: openssl-devel
+        update_cache: true
+      when: ansible_facts['os_family'] == "RedHat"
 
-- name: (Alpine Linux) Install OpenSSL dependency from package
-  community.general.apk:
-    name: openssl-dev
-    update_cache: true
-  when:
-    - nginx_install_source_openssl | bool
-    - ansible_facts['os_family'] == "Alpine"
+    - name: (Debian/Ubuntu) Install OpenSSL dependency from package
+      ansible.builtin.apt:
+        name: libssl-dev
+        update_cache: true
+      when: ansible_facts['os_family'] == "Debian"
+
+    - name: (SLES) Install OpenSSL dependency from package
+      community.general.zypper:
+        name: openssl-devel
+        update_cache: true
+      when: ansible_facts['os_family'] == "Suse"
+  when: nginx_install_source_openssl | bool
 
 - name: Install OpenSSL dependency from source
   block:
@@ -353,48 +364,48 @@
         chdir: /tmp/{{ nginx_version }}
         target: install
 
-    - name: Upload systemd NGINX service file
-      ansible.builtin.copy:
-        src: services/nginx.systemd
-        dest: /lib/systemd/system/nginx.service
-        owner: root
-        group: root
-        mode: 0644
-      when: ansible_facts['service_mgr'] == "systemd"
+    - name: Set up systemd
+      block:
+        - name: Upload systemd NGINX service file
+          ansible.builtin.copy:
+            src: services/nginx.systemd
+            dest: /usr/lib/systemd/system/nginx.service
+            owner: root
+            group: root
+            mode: 0644
 
-    - name: Enable systemd NGINX service file
-      ansible.builtin.systemd:
-        daemon_reload: true
-        name: nginx
-        state: restarted
-        enabled: true
+        - name: Enable systemd NGINX service file
+          ansible.builtin.systemd:
+            daemon_reload: true
+            name: nginx
+            state: restarted
+            enabled: true
       when: ansible_facts['service_mgr'] == "systemd"
       notify: (Handler) Run NGINX
 
-    - name: Upload upstart NGINX service file
-      ansible.builtin.copy:
-        src: services/nginx.upstart
-        dest: /etc/init.d/nginx
-        owner: root
-        group: root
-        mode: 0755
-      when: ansible_facts['service_mgr'] == "upstart"
+    - name: Set up Upstart
+      block:
+        - name: Upload Upstart NGINX service file
+          ansible.builtin.copy:
+            src: services/nginx.upstart
+            dest: /etc/init.d/nginx
+            owner: root
+            group: root
+            mode: 0755
 
-    - name: Upload Upstart NGINX service conf file
-      ansible.builtin.copy:
-        src: services/nginx.conf.upstart
-        dest: /etc/init/nginx.conf
-        owner: root
-        group: root
-        mode: 0644
-      when: ansible_facts['service_mgr'] == "upstart"
+        - name: Upload Upstart NGINX service conf file
+          ansible.builtin.copy:
+            src: services/nginx.conf.upstart
+            dest: /etc/init/nginx.conf
+            owner: root
+            group: root
+            mode: 0644
 
-    - name: Enable Upstart NGINX service reload
-      ansible.builtin.command: initctl reload-configuration
-      when: ansible_facts['service_mgr'] == "upstart"
+        - name: Enable Upstart NGINX service reload # noqa no-changed-when
+          ansible.builtin.command: initctl reload-configuration
 
-    - name: Start Upstart NGINX service reload
-      ansible.builtin.command: nginx
+        - name: Start Upstart NGINX service reload # noqa no-changed-when
+          ansible.builtin.command: nginx
       when: ansible_facts['service_mgr'] == "upstart"
       notify: (Handler) Run NGINX
 
@@ -408,17 +419,26 @@
       when: ansible_facts['service_mgr'] == "sysvinit"
       notify: (Handler) Run NGINX
 
-    - name: Upload OpenRC NGINX service file
-      ansible.builtin.copy:
-        src: services/nginx.openrc
-        dest: /etc/init.d/nginx
-        owner: root
-        group: root
-        mode: 0755
-      when: ansible_facts['service_mgr'] == "openrc"
+    - name: Set up OpenRC
+      block:
+        - name: Enable OpenRC
+          ansible.builtin.copy:
+            content: ""
+            dest: /run/openrc/softlevel
+            force: false
+            owner: root
+            mode: 0644
 
-    - name: Enable OpenRC NGINX service
-      ansible.builtin.command: rc-update add nginx default
+        - name: Upload OpenRC NGINX service file
+          ansible.builtin.copy:
+            src: services/nginx.openrc
+            dest: /etc/init.d/nginx
+            owner: root
+            group: root
+            mode: 0755
+
+        - name: Enable OpenRC NGINX service # noqa no-changed-when
+          ansible.builtin.command: rc-update add nginx default
       when: ansible_facts['service_mgr'] == "openrc"
       notify: (Handler) Run NGINX
   when:

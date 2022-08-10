@@ -30,7 +30,7 @@ RUN \
     && yum clean all; \
   elif [ $(command -v zypper) ]; then \
     zypper refresh \
-    && zypper install -y bash iproute2 python3 sudo systemd-sysvinit vim \
+    && zypper install -y bash iproute2 python3 sudo systemd systemd-sysvinit vim \
     && zypper clean -a; \
   elif [ $(command -v apk) ]; then \
     apk update \

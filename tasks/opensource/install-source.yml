@@ -309,9 +309,19 @@
         follow: true
       register: nginx_result
 
+- name: Add NGINX group
+  ansible.builtin.group:
+    name: nginx
+    gid: 101
+
 - name: Add NGINX user
   ansible.builtin.user:
     name: nginx
+    group: nginx
+    uid: 101
+    comment: nginx user
+    home: /var/cache/nginx
+    shell: /sbin/nologin
 
 - name: Install NGINX
   block:
@@ -344,6 +354,7 @@
         --modules-path=/usr/lib/nginx/modules
         --prefix=/usr
         --pid-path=/var/run/nginx.pid
+        --user=nginx
         --with-mail=dynamic
         --with-stream
         {{ nginx_install_source_pcre | ternary('', '--with-pcre=../' + pcre_version) }}
@@ -369,7 +380,7 @@
         - name: Upload systemd NGINX service file
           ansible.builtin.copy:
             src: services/nginx.systemd
-            dest: /usr/lib/systemd/system/nginx.service
+            dest: "{{ (ansible_facts['os_family'] == 'Suse') | ternary('usr/lib/systemd/system/nginx.service', '/lib/systemd/system/nginx.service')}}"
             owner: root
             group: root
             mode: 0644

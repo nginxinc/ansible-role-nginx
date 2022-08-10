@@ -89,6 +89,13 @@ platforms: # Ubuntu bionic and Debian buster result in a segmentation fault erro
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /sbin/init
+  - name: sles15
+    image: registry.suse.com/bci/bci-base:15.4
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /usr/sbin/init
 provisioner:
   name: ansible
   playbooks:

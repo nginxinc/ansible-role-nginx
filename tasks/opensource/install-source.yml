@@ -380,7 +380,7 @@
         - name: Upload systemd NGINX service file
           ansible.builtin.copy:
             src: services/nginx.systemd
-            dest: "{{ (ansible_facts['os_family'] == 'Suse') | ternary('usr/lib/systemd/system/nginx.service', '/lib/systemd/system/nginx.service')}}"
+            dest: "{{ (ansible_facts['os_family'] == 'Suse') | ternary('usr/lib/systemd/system/nginx.service', '/lib/systemd/system/nginx.service') }}"
             owner: root
             group: root
             mode: 0644

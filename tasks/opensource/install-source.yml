@@ -312,13 +312,11 @@
 - name: Add NGINX group
   ansible.builtin.group:
     name: nginx
-    gid: 101
 
 - name: Add NGINX user
   ansible.builtin.user:
     name: nginx
     group: nginx
-    uid: 101
     comment: nginx user
     home: /var/cache/nginx
     shell: /sbin/nologin

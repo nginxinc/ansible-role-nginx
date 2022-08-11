@@ -39,11 +39,6 @@
         success_msg: Your NGINX Plus license is valid!
         fail_msg: Something went wrong! Make sure your NGINX Plus license is valid!
 
-    - name: (Debian/Red Hat/SLES OSs) Uninstall cryptography package
-      ansible.builtin.package:
-        name: "{{ (ansible_python['version']['major'] == 3) | ternary('python3-cryptography', 'python2-cryptography') }}"
-        state: absent
-
     - name: (SLES) Create NGINX Plus license bundle
       block:
         - name: (SLES) Check combined NGINX Plus license bundle exists
@@ -103,9 +98,4 @@
           - cert.public_key == key.public_key
         success_msg: Your NGINX Plus license is valid!
         fail_msg: Something went wrong! Make sure your NGINX Plus license is valid!
-
-    - name: (Alpine Linux) Uninstall cryptography package
-      ansible.builtin.package:
-        name: py3-cryptography
-        state: absent
   when: ansible_facts['os_family'] == "Alpine"

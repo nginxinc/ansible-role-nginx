@@ -2,6 +2,8 @@
 collections:
   - name: community.general
     version: 5.4.0
+  - name: community.crypto
+    version: 2.5.0
   - name: ansible.posix
     version: 1.4.0
   - name: community.docker

@@ -13,7 +13,7 @@ ENHANCEMENTS:
 
 * Add support for PCRE 2 and OpenSSL 3.0 (built from source) when building NGINX from source.
 * Tweak Release Drafter config.
-* Bump the Ansible `community.general` collection to `5.1.1`, `ansible.posix` collection to `1.4.0` and `community.docker` collection to `2.6.0`.
+* Bump the Ansible `community.general` collection to `5.4.0`, `ansible.posix` collection to `1.4.0` and `community.docker` collection to `2.7.0`.
 * Re-add Alpine Linux tests to `downgrade` Molecule scenarios.
 
 BUG FIXES:

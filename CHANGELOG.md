@@ -4,6 +4,7 @@
 
 FEATURES:
 
+* Check NGINX Plus license is valid before trying to install NGINX Plus.
 * Add Ubuntu jammy (22.04) to the NGINX list of tested and supported platforms.
 * Add RHEL 9 to the NGINX list of tested and supported platforms.
 * Add Alpine Linux 3.16 to the NGINX list of tested and supported platforms (and remove Alpine Linux 3.12).

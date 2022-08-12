@@ -51,4 +51,5 @@ galaxy_info:
 
 collections:
   - ansible.posix
+  - community.crypto
   - community.general

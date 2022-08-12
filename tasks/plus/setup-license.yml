@@ -17,6 +17,28 @@
         - "{{ nginx_license['certificate'] }}"
         - "{{ nginx_license['key'] }}"
 
+    - name: (Debian/Red Hat/SLES OSs) Install cryptography package
+      ansible.builtin.package:
+        name: "{{ (ansible_python['version']['major'] == 3) | ternary('python3-cryptography', 'python2-cryptography') }}"
+
+    - name: (Debian/Red Hat/SLES OSs) Check that NGINX Plus certificate is valid
+      community.crypto.x509_certificate_info:
+        path: /etc/ssl/nginx/nginx-repo.crt
+      register: cert
+
+    - name: (Debian/Red Hat/SLES OSs) Check that NGINX Plus key is valid
+      community.crypto.openssl_privatekey_info:
+        path: /etc/ssl/nginx/nginx-repo.key
+      register: key
+
+    - name: (Debian/Red Hat/SLES OSs) Check that NGINX Plus license is valid
+      ansible.builtin.assert:
+        that:
+          - cert.expired == false
+          - cert.public_key == key.public_key
+        success_msg: Your NGINX Plus license is valid!
+        fail_msg: Something went wrong! Make sure your NGINX Plus license is valid!
+
     - name: (SLES) Create NGINX Plus license bundle
       block:
         - name: (SLES) Check combined NGINX Plus license bundle exists
@@ -35,11 +57,22 @@
 
 - name: (Alpine Linux) Set up NGINX Plus license
   block:
+    - name: Install cryptography package
+      ansible.builtin.package:
+        name: py3-cryptography
+
     - name: (Alpine Linux) Create APK directory
       ansible.builtin.file:
         path: /etc/apk
         state: directory
         mode: 0755
+
+    - name: (Alpine Linux) Copy NGINX Plus certificate
+      ansible.builtin.copy:
+        src: "{{ nginx_license['certificate'] }}"
+        dest: /etc/apk/cert.pem
+        decrypt: true
+        mode: 0444
 
     - name: (Alpine Linux) Copy NGINX Plus key
       ansible.builtin.copy:
@@ -48,10 +81,21 @@
         decrypt: true
         mode: 0444
 
-    - name: (Alpine Linux) Copy NGINX Plus certificate
-      ansible.builtin.copy:
-        src: "{{ nginx_license['certificate'] }}"
-        dest: /etc/apk/cert.pem
-        decrypt: true
-        mode: 0444
+    - name: (Alpine Linux) Check that NGINX Plus certificate is valid
+      community.crypto.x509_certificate_info:
+        path: /etc/apk/cert.pem
+      register: cert
+
+    - name: (Alpine Linux) Check that NGINX Plus key is valid
+      community.crypto.openssl_privatekey_info:
+        path: /etc/apk/cert.key
+      register: key
+
+    - name: (Alpine Linux) Check that NGINX Plus license is valid
+      ansible.builtin.assert:
+        that:
+          - cert.expired == false
+          - cert.public_key == key.public_key
+        success_msg: Your NGINX Plus license is valid!
+        fail_msg: Something went wrong! Make sure your NGINX Plus license is valid!
   when: ansible_facts['os_family'] == "Alpine"

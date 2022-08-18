@@ -8,7 +8,7 @@ name: Ansible Galaxy import
 jobs:
   galaxy:
     name: Galaxy
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Check out the codebase
         uses: actions/checkout@v3

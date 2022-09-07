@@ -32,25 +32,21 @@ jobs:
           - upgrade_plus
     steps:
       - name: Check out the codebase
-        if: "!(contains(matrix.scenario, 'plus') && github.event.pull_request.head.repo.full_name != github.repository)"
         uses: actions/checkout@v3
 
       - name: Set up Python 3
-        if: "!(contains(matrix.scenario, 'plus') && github.event.pull_request.head.repo.full_name != github.repository)"
         uses: actions/setup-python@v4
         with:
           python-version: 3.x
 
       - name: Install Molecule dependencies
-        if: "!(contains(matrix.scenario, 'plus') && github.event.pull_request.head.repo.full_name != github.repository)"
         run: pip3 install -r .github/workflows/requirements/requirements_molecule.txt
 
-      - name: Install Ansible base dependencies
-        if: "!(contains(matrix.scenario, 'plus') && github.event.pull_request.head.repo.full_name != github.repository)"
+      - name: Install Ansible core dependencies
         run: ansible-galaxy install -r .github/workflows/requirements/requirements_ansible.yml
 
       - name: Run Molecule tests
-        if: "!(contains(matrix.scenario, 'plus') && github.event.pull_request.head.repo.full_name != github.repository)"
+        if: ${{ env.NGINX_CRT != 0 && env.NGINX_KEY != 0 }}
         run: molecule test -s ${{ matrix.scenario }}
         env:
           PY_COLORS: 1

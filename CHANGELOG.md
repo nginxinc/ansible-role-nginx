@@ -25,6 +25,7 @@ BUG FIXES:
 
 TESTS:
 
+* Update GitHub actions to only skip \*plus\* scenarios when the NGINX Plus license secrets are not present (it used to only run the NGINX Plus test scenarios during internal PRs).
 * Add SLES 15 to all Molecule tests.
 * Create downgrade and upgrade tests for NGINX Plus.
 * Remove Yamllint (Ansible Lint now incorporates Yamllint).

@@ -25,13 +25,13 @@ If you wish to install NGINX Plus using this role, you will need to obtain an NG
     ---
     collections:
       - name: community.general
-        version: 5.4.0
+        version: 5.5.0
       - name: ansible.posix
         version: 1.4.0
       - name: community.crypto # Only required if you plan to install NGINX Plus
         version: 2.5.0
       - name: community.docker # Only required if you plan to use Molecule (see below)
-        version: 2.7.0
+        version: 3.1.0
     ```
 
     **Note:** You can alternatively install the Ansible community distribution (what is known as the "old" Ansible) if you don't want to manage individual collections.

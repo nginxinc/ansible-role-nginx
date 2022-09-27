@@ -28,6 +28,7 @@
   when: ansible_facts['os_family'] == "Suse"
 
 - name: (FreeBSD) Install dependencies
+  when: ansible_facts['distribution'] == "FreeBSD"
   block:
     - name: (FreeBSD) Install dependencies using package(s)
       community.general.pkgng:
@@ -42,4 +43,3 @@
         state: latest # noqa package-latest
       loop: "{{ nginx_freebsd_dependencies }}"
       when: not nginx_bsd_install_packages | bool
-  when: ansible_facts['distribution'] == "FreeBSD"

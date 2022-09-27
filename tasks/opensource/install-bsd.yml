@@ -1,5 +1,8 @@
 ---
 - name: (FreeBSD) Update ports
+  when:
+    - ansible_facts['system'] == "FreeBSD"
+    - nginx_bsd_update_ports | bool
   block:
     - name: (FreeBSD) Fetch ports
       ansible.builtin.command: portsnap fetch --interactive
@@ -10,11 +13,9 @@
       ansible.builtin.command: portsnap extract
       args:
         creates: /usr/ports
-  when:
-    - ansible_facts['system'] == "FreeBSD"
-    - nginx_bsd_update_ports | bool
 
 - name: (FreeBSD) {{ nginx_setup | capitalize }} NGINX
+  when: ansible_facts['system'] == "FreeBSD"
   block:
     - name: (FreeBSD) {{ nginx_setup | capitalize }} NGINX package
       community.general.pkgng:
@@ -30,9 +31,9 @@
         state: "{{ nginx_state }}"
       when: not nginx_bsd_install_packages | bool
       notify: (Handler) Run NGINX
-  when: ansible_facts['system'] == "FreeBSD"
 
 - name: (OpenBSD) {{ nginx_setup | capitalize }} NGINX
+  when: ansible_facts['system'] == "OpenBSD"
   block:
     - name: (OpenBSD) {{ nginx_setup | capitalize }} NGINX package
       community.general.openbsd_pkg:
@@ -49,9 +50,9 @@
         state: "{{ nginx_state }}"
       when: not nginx_bsd_install_packages | bool
       notify: (Handler) Run NGINX
-  when: ansible_facts['system'] == "OpenBSD"
 
 - name: (NetBSD) {{ nginx_setup | capitalize }} NGINX
+  when: ansible_facts['system'] == "NetBSD"
   block:
     - name: (NetBSD) {{ nginx_setup | capitalize }} NGINX package
       ansible.builtin.command: pkg_add www/nginx{{ nginx_version | default('') }}
@@ -62,9 +63,9 @@
       ansible.builtin.fail:
         msg: "{{ ansible_facts['system'] }} {{ nginx_setup | capitalize }} NGINX port not implemented."
       when: not nginx_bsd_install_packages | bool
-  when: ansible_facts['system'] == "NetBSD"
 
 - name: (DragonFlyBSD/HardenedBSD) {{ nginx_setup | capitalize }} NGINX
+  when: ansible_facts['system'] in ['DragonFlyBSD', 'HardenedBSD']
   block:
     - name: (DragonFlyBSD/HardenedBSD) {{ nginx_setup | capitalize }} NGINX package
       ansible.builtin.command: pkg install www/nginx{{ nginx_version | default('') }}
@@ -75,4 +76,3 @@
       ansible.builtin.fail:
         msg: "{{ ansible_facts['system'] }} {{ nginx_setup | capitalize }} NGINX port not implemented."
       when: not nginx_bsd_install_packages | bool
-  when: ansible_facts['system'] in ['DragonFlyBSD', 'HardenedBSD']

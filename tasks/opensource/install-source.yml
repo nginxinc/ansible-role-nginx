@@ -1,5 +1,6 @@
 ---
 - name: Check for build tools
+  when: nginx_install_source_build_tools | bool
   block:
     - name: (Alpine Linux) Install build tools
       community.general.apk:
@@ -17,6 +18,7 @@
       when: ansible_facts['os_family'] == "Alpine"
 
     - name: (CentOS/RHEL) Set up build tools
+      when: ansible_facts['os_family'] == "RedHat"
       block:
         - name: (RHEL 8) Install Python 3
           ansible.builtin.yum:
@@ -51,7 +53,6 @@
               - wget
               - zlib-devel
             update_cache: true
-      when: ansible_facts['os_family'] == "RedHat"
 
     - name: (Debian) Install backports repo for 'buster'
       ansible.builtin.apt_repository:
@@ -85,7 +86,6 @@
           - zlib-devel
         update_cache: true
       when: ansible_facts['os_family'] == "Suse"
-  when: nginx_install_source_build_tools | bool
 
 - name: Check for source installs
   block:
@@ -105,6 +105,7 @@
       register: openssl_result
 
 - name: Install PCRE dependecy from package
+  when: nginx_install_source_pcre | bool
   block:
     - name: (Alpine Linux) Install PCRE dependency from package
       community.general.apk:
@@ -129,9 +130,12 @@
         name: "{{ (pcre_release == 2) | ternary('pcre2-devel', 'pcre-devel') }}"
         update_cache: true
       when: ansible_facts['os_family'] == "Suse"
-  when: nginx_install_source_pcre | bool
 
 - name: Install PCRE dependence from source
+  when:
+    - not pcre_result.stat.exists | bool
+    - not nginx_install_source_pcre | bool
+    - not ansible_check_mode | bool
   block:
     - name: Download PCRE dependency
       ansible.builtin.get_url:
@@ -161,12 +165,9 @@
       community.general.make:
         chdir: /tmp/{{ pcre_version }}
         target: install
-  when:
-    - not pcre_result.stat.exists | bool
-    - not nginx_install_source_pcre | bool
-    - not ansible_check_mode | bool
 
 - name: Install ZLib dependency from package
+  when: nginx_install_source_zlib | bool
   block:
     - name: (Alpine Linux) Install ZLib dependency from package
       community.general.apk:
@@ -191,9 +192,12 @@
         name: zlib-devel
         update_cache: true
       when: ansible_facts['os_family'] == "Suse"
-  when: nginx_install_source_zlib | bool
 
 - name: Install ZLib dependency from source
+  when:
+    - not zlib_result.stat.exists | bool
+    - not nginx_install_source_zlib | bool
+    - not ansible_check_mode | bool
   block:
     - name: Download ZLib dependency
       ansible.builtin.get_url:
@@ -223,12 +227,10 @@
       community.general.make:
         chdir: /tmp/{{ zlib_version }}
         target: install
-  when:
-    - not zlib_result.stat.exists | bool
-    - not nginx_install_source_zlib | bool
-    - not ansible_check_mode | bool
+
 
 - name: Install OpenSSL dependency from package
+  when: nginx_install_source_openssl | bool
   block:
     - name: (Alpine Linux) Install OpenSSL dependency from package
       community.general.apk:
@@ -253,9 +255,12 @@
         name: openssl-devel
         update_cache: true
       when: ansible_facts['os_family'] == "Suse"
-  when: nginx_install_source_openssl | bool
 
 - name: Install OpenSSL dependency from source
+  when:
+    - not openssl_result.stat.exists | bool
+    - not nginx_install_source_openssl | bool
+    - not ansible_check_mode | bool
   block:
     - name: Download OpenSSL dependency
       ansible.builtin.get_url:
@@ -285,10 +290,6 @@
       community.general.make:
         chdir: /tmp/{{ openssl_version }}
         target: install
-  when:
-    - not openssl_result.stat.exists | bool
-    - not nginx_install_source_openssl | bool
-    - not ansible_check_mode | bool
 
 - name: Get NGINX version
   block:
@@ -322,6 +323,9 @@
     shell: /sbin/nologin
 
 - name: Install NGINX
+  when:
+    - not nginx_result.stat.exists | bool
+    - not ansible_check_mode | bool
   block:
     - name: Download NGINX
       ansible.builtin.get_url:
@@ -374,6 +378,8 @@
         target: install
 
     - name: Set up systemd
+      when: ansible_facts['service_mgr'] == "systemd"
+      notify: (Handler) Run NGINX
       block:
         - name: Upload systemd NGINX service file
           ansible.builtin.copy:
@@ -389,10 +395,10 @@
             name: nginx
             state: restarted
             enabled: true
-      when: ansible_facts['service_mgr'] == "systemd"
-      notify: (Handler) Run NGINX
 
     - name: Set up Upstart
+      when: ansible_facts['service_mgr'] == "upstart"
+      notify: (Handler) Run NGINX
       block:
         - name: Upload Upstart NGINX service file
           ansible.builtin.copy:
@@ -415,8 +421,6 @@
 
         - name: Start Upstart NGINX service reload # noqa no-changed-when
           ansible.builtin.command: nginx
-      when: ansible_facts['service_mgr'] == "upstart"
-      notify: (Handler) Run NGINX
 
     - name: Upload SysVinit NGINX service file
       ansible.builtin.copy:
@@ -429,6 +433,8 @@
       notify: (Handler) Run NGINX
 
     - name: Set up OpenRC
+      when: ansible_facts['service_mgr'] == "openrc"
+      notify: (Handler) Run NGINX
       block:
         - name: Enable OpenRC
           ansible.builtin.copy:
@@ -448,11 +454,6 @@
 
         - name: Enable OpenRC NGINX service # noqa no-changed-when
           ansible.builtin.command: rc-update add nginx default
-      when: ansible_facts['service_mgr'] == "openrc"
-      notify: (Handler) Run NGINX
-  when:
-    - not nginx_result.stat.exists | bool
-    - not ansible_check_mode | bool
 
 - name: Cleanup downloads
   ansible.builtin.file:

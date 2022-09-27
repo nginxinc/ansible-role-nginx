@@ -1,5 +1,6 @@
 ---
 - name: "{{ nginx_setup | capitalize }} NGINX in Linux systems"
+  when: ansible_facts['system'] | lower is not search('bsd')
   block:
     - name: "{{ nginx_setup | capitalize }} NGINX from repository"
       ansible.builtin.include_tasks: "{{ role_path }}/tasks/opensource/install-{{ ansible_facts['os_family'] | lower }}.yml"
@@ -15,7 +16,6 @@
         state: "{{ nginx_state }}"
       when: nginx_install_from == "os_repository"
       notify: (Handler) Run NGINX
-  when: ansible_facts['system'] | lower is not search('bsd')
 
 - name: "{{ nginx_setup | capitalize }} NGINX in Unix systems"
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/opensource/install-bsd.yml"

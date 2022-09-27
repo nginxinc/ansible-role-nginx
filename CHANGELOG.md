@@ -29,7 +29,7 @@ TESTS:
 * Add SLES 15 to all Molecule tests.
 * Create downgrade and upgrade tests for NGINX Plus.
 * Remove Yamllint (Ansible Lint now incorporates Yamllint).
-* Skip Ansible Lint line length rule.
+* Skip Ansible Lint line length and no templates in name rules. Slightly refactor code to incorporate changes added to Ansible Lint 6.7.0.
 
 ## 0.23.1 (April 6, 2022)
 

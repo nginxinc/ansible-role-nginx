@@ -31,6 +31,8 @@
   tags: nginx_key
 
 - name: "{{ nginx_setup | capitalize }} NGINX"
+  when: nginx_enable | bool
+  tags: nginx_enable
   block:
     - name: "{{ nginx_setup | capitalize }} NGINX Open Source"
       ansible.builtin.include_tasks: "{{ role_path }}/tasks/opensource/install-oss.yml"
@@ -69,8 +71,6 @@
         - ansible_facts['service_mgr'] == "systemd"
         - nginx_service_modify | bool
       tags: nginx_modify_systemd
-  when: nginx_enable | bool
-  tags: nginx_enable
 
 - name: Trigger handlers if necessary
   ansible.builtin.meta: flush_handlers

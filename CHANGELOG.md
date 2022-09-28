@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.23.2 (Unreleased)
+## 0.23.2 (September 28, 2022)
 
 FEATURES:
 

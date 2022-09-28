@@ -24,10 +24,10 @@ If you wish to install NGINX Plus using this role, you will need to obtain an NG
     ```yaml
     ---
     collections:
-      - name: community.general
-        version: 5.5.0
       - name: ansible.posix
         version: 1.4.0
+      - name: community.general
+        version: 5.5.0
       - name: community.crypto # Only required if you plan to install NGINX Plus
         version: 2.5.0
       - name: community.docker # Only required if you plan to use Molecule (see below)
@@ -195,8 +195,6 @@ You can find the Ansible NGINX Core collection of roles to install and configure
 You can find the Ansible NGINX configuration role to configure NGINX [here](https://github.com/nginxinc/ansible-role-nginx-config).
 
 You can find the Ansible NGINX App Protect role to install and configure NGINX App Protect WAF and NGINX App Protect DoS [here](https://github.com/nginxinc/ansible-role-nginx-app-protect).
-
-You can find the Ansible NGINX Controller collection of roles to install and configure NGINX Controller [here](https://github.com/nginxinc/ansible-collection-nginx_controller).
 
 You can find the Ansible NGINX Unit role to install NGINX Unit [here](https://github.com/nginxinc/ansible-role-nginx-unit).
 

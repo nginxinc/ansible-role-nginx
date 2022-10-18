@@ -55,7 +55,6 @@ platforms:
     image: amazonlinux:2
     dockerfile: ../common/Dockerfile.j2
     privileged: true
-    cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
@@ -63,7 +62,6 @@ platforms:
     image: centos:7
     dockerfile: ../common/Dockerfile.j2
     privileged: true
-    cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
@@ -122,6 +120,7 @@ platforms:
     image: rockylinux:8
     dockerfile: ../common/Dockerfile.j2
     privileged: true
+    cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init

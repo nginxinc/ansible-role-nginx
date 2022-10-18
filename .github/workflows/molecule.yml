@@ -45,11 +45,6 @@ jobs:
       - name: Install Ansible core dependencies
         run: ansible-galaxy install -r .github/workflows/requirements/requirements_ansible.yml
 
-      - name: Reset Docker
-        run: |
-          sudo rm /etc/docker/daemon.json
-          sudo systemctl restart docker
-
       - name: Run Molecule tests
         if: ${{ env.NGINX_CRT != 0 && env.NGINX_KEY != 0 }}
         run: molecule test -s ${{ matrix.scenario }}

@@ -63,7 +63,6 @@ platforms:
   - name: centos-7
     image: centos:7
     dockerfile: ../common/Dockerfile.j2
-    platform: amd64
     privileged: true
     cgroupns_mode: host
     volumes:
@@ -100,7 +99,6 @@ platforms:
   - name: rhel-7
     image: registry.access.redhat.com/ubi7/ubi:7.9
     dockerfile: ../common/Dockerfile.j2
-    platform: amd64
     privileged: true
     cgroupns_mode: host
     volumes:

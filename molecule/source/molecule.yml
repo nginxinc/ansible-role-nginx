@@ -9,6 +9,7 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     image: almalinux:8
     dockerfile: ../common/Dockerfile.j2
     privileged: true
+    cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
@@ -23,6 +24,7 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     image: alpine:3.14
     dockerfile: ../common/Dockerfile.j2
     privileged: true
+    cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /sbin/init
@@ -30,6 +32,7 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     image: alpine:3.15
     dockerfile: ../common/Dockerfile.j2
     privileged: true
+    cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /sbin/init
@@ -37,6 +40,7 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     image: alpine:3.16
     dockerfile: ../common/Dockerfile.j2
     privileged: true
+    cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /sbin/init
@@ -58,6 +62,7 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     image: centos:7
     dockerfile: ../common/Dockerfile.j2
     privileged: true
+    cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
@@ -100,6 +105,7 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     image: registry.access.redhat.com/ubi7/ubi:7.9
     dockerfile: ../common/Dockerfile.j2
     privileged: true
+    cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
@@ -107,6 +113,7 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     image: redhat/ubi8:8.7
     dockerfile: ../common/Dockerfile.j2
     privileged: true
+    cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
@@ -114,6 +121,7 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     image: redhat/ubi9:9.1.0
     dockerfile: ../common/Dockerfile.j2
     privileged: true
+    cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
@@ -121,6 +129,7 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     image: rockylinux:8
     dockerfile: ../common/Dockerfile.j2
     privileged: true
+    cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
@@ -128,6 +137,7 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     image: rockylinux:9.0.20220720
     dockerfile: ../common/Dockerfile.j2
     privileged: true
+    cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
@@ -142,6 +152,7 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     image: ubuntu:bionic
     dockerfile: ../common/Dockerfile.j2
     privileged: true
+    cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /sbin/init
@@ -149,6 +160,7 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     image: ubuntu:focal
     dockerfile: ../common/Dockerfile.j2
     privileged: true
+    cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /sbin/init
@@ -156,6 +168,7 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     image: ubuntu:jammy
     dockerfile: ../common/Dockerfile.j2
     privileged: true
+    cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /sbin/init

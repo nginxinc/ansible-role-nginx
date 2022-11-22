@@ -36,6 +36,11 @@
             link: /usr/bin/python
           when: ansible_facts['distribution_major_version'] is version('8', '==')
 
+        - name: (Oracle Linux 7) Enable Oracle Linux 7 optional repositories
+          ansible.builtin.yum_repository:
+            name: ol7_optional_latest
+            baseurl: https://yum.oracle.com/repo/OracleLinux/OL7/optional/latest/aarch64/
+
         - name: (CentOS/RHEL) Install build tools
           ansible.builtin.yum:
             name:

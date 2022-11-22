@@ -24,6 +24,7 @@
           ansible.builtin.yum_repository:
             name: ol7_optional_latest
             baseurl: https://yum.oracle.com/repo/OracleLinux/OL7/optional/latest/aarch64/
+            gpgcheck: true
           when: ansible_facts['distribution'] == "OracleLinux" and ansible_facts['distribution_major_version'] is version('7', '==')
 
         - name: (RHEL 8) Install Python 3

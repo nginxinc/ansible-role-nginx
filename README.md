@@ -79,15 +79,24 @@ Alpine:
   - 3.14
   - 3.15
   - 3.16
+AlmaLinux:
+  - 8
+  - 9
 Amazon Linux:
   - 2
 CentOS:
   - 7.4+
 Debian:
-  - buster (10)
   - bullseye (11)
+Oracle Linux:
+  - 7
+  - 8
+  - 9
 Red Hat:
   - 7.4+
+  - 8
+  - 9
+Rocky Linux:
   - 8
   - 9
 SUSE/SLES:
@@ -210,4 +219,4 @@ You can find the Ansible NGINX Unit role to install NGINX Unit [here](https://gi
 
 [Tom Gamull](https://github.com/magicalyak)
 
-&copy; [F5 Networks, Inc.](https://www.f5.com/) 2018 - 2022
+&copy; [F5, Inc.](https://www.f5.com/) 2018 - 2022

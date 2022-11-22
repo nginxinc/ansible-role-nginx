@@ -15,7 +15,7 @@ nginx_state: "{{ nginx_state_vals[nginx_setup] | default(nginx_state_vals[nginx_
 # Supported NGINX Open Source distributions
 # https://nginx.org/en/docs/install.html
 nginx_distributions: [
-  Alpine, Amazon, CentOS, Debian, FreeBSD, RedHat, SLES, Ubuntu,
+  Alpine, AlmaLinux, Amazon, CentOS, Debian, FreeBSD, OracleLinux, RedHat, Rocky, SLES, Ubuntu,
   NetBSD, OpenBSD, DragonFlyBSD, HardenedBSD,
 ]
 

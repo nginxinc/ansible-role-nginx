@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.23.3 (Unreleased)
+
+FEATURES:
+
+* Add AlmaLinux, Oracle Linux and Rocky Linux to the list of NGINX OSS tested and supported plaforms.
+
 ## 0.23.2 (September 28, 2022)
 
 FEATURES:

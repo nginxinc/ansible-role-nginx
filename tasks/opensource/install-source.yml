@@ -23,6 +23,7 @@
         - name: (Oracle Linux 7) Enable Oracle Linux 7 optional repositories
           ansible.builtin.yum_repository:
             name: ol7_optional_latest
+            description: Oracle Linux 7 optional repositories
             baseurl: https://yum.oracle.com/repo/OracleLinux/OL7/optional/latest/aarch64/
             gpgcheck: true
           when: ansible_facts['distribution'] == "OracleLinux" and ansible_facts['distribution_major_version'] is version('7', '==')

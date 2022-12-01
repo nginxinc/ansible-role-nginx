@@ -4,7 +4,21 @@ driver:
 lint: |
   set -e
   ansible-lint --force-color
-platforms: # Alpine 3.16 only has one version of NGINX Plus available (at the moment) so it's impossible to test the downgrade scenario
+platforms: # Alpine 3.17 only has one version of NGINX Plus available (at the moment) so it's impossible to test the downgrade scenario
+  - name: almalinux-8
+    image: almalinux:8
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/usr/sbin/init"
+  - name: almalinux-9
+    image: almalinux:9
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/usr/sbin/init"
   - name: alpine-3.13
     image: alpine:3.13
     dockerfile: ../common/Dockerfile.j2
@@ -26,6 +40,13 @@ platforms: # Alpine 3.16 only has one version of NGINX Plus available (at the mo
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /sbin/init
+  - name: alpine-3.16
+    image: alpine:3.16
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
   - name: amazonlinux-2
     image: amazonlinux:2
     dockerfile: ../common/Dockerfile.j2
@@ -33,20 +54,6 @@ platforms: # Alpine 3.16 only has one version of NGINX Plus available (at the mo
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
-  - name: almalinux-8
-    image: almalinux:8
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/usr/sbin/init"
-  - name: almalinux-9
-    image: almalinux:9
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/usr/sbin/init"
   - name: centos-7
     image: centos:7
     dockerfile: ../common/Dockerfile.j2
@@ -54,15 +61,29 @@ platforms: # Alpine 3.16 only has one version of NGINX Plus available (at the mo
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
-  - name: rockylinux-8
-    image: rockylinux:8
+  - name: debian-bullseye
+    image: debian:bullseye-slim
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
+  - name: oraclelinux-7
+    image: oraclelinux:7
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
       - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
     command: "/usr/sbin/init"
-  - name: rockylinux-9
-    image: rockylinux:9
+  - name: oraclelinux-8
+    image: oraclelinux:8
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/usr/sbin/init"
+  - name: oraclelinux-9
+    image: oraclelinux:9
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
@@ -89,13 +110,27 @@ platforms: # Alpine 3.16 only has one version of NGINX Plus available (at the mo
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
-  - name: debian-bullseye
-    image: debian:bullseye-slim
+  - name: rockylinux-8
+    image: rockylinux:8
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/usr/sbin/init"
+  - name: rockylinux-9
+    image: rockylinux:9
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    command: "/usr/sbin/init"
+  - name: sles15
+    image: registry.suse.com/bci/bci-base:15.4
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /sbin/init
+    command: /usr/sbin/init
   - name: ubuntu-bionic
     image: ubuntu:bionic
     dockerfile: ../common/Dockerfile.j2
@@ -117,13 +152,6 @@ platforms: # Alpine 3.16 only has one version of NGINX Plus available (at the mo
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /sbin/init
-  - name: sles15
-    image: registry.suse.com/bci/bci-base:15.4
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /usr/sbin/init
 provisioner:
   name: ansible
   playbooks:

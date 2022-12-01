@@ -4,7 +4,8 @@
 
 FEATURES:
 
-* Add AlmaLinux, Oracle Linux and Rocky Linux to the list of NGINX OSS tested and supported platforms.
+* Add AlmaLinux, Oracle Linux and Rocky Linux to the list of NGINX OSS and NGINX Plus tested and supported platforms.
+* Add Alpine Linux 3.17 to the NGINX list of tested and supported platforms (and remove Alpine Linux 3.13 from the list of NGINX OSS supported platforms).
 
 ## 0.23.2 (September 28, 2022)
 

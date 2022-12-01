@@ -24,7 +24,7 @@
     url: "{{ keysite }}"
   when: ansible_facts['os_family'] == "Debian"
 
-- name: (Amazon Linux/CentOS/Oracle Linux/RHEL/SLES) Add NGINX signing key
+- name: (Red Hat/SLES OSs) Add NGINX signing key
   ansible.builtin.rpm_key:
     fingerprint: 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
     key: "{{ keysite }}"

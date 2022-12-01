@@ -17,7 +17,7 @@
         update_cache: true
       when: ansible_facts['os_family'] == "Alpine"
 
-    - name: (CentOS/RHEL) Set up build tools
+    - name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) Set up build tools
       when: ansible_facts['os_family'] == "RedHat"
       block:
         - name: (Oracle Linux 7) Enable Oracle Linux 7 optional repositories
@@ -45,7 +45,7 @@
             link: /usr/bin/python
           when: ansible_facts['distribution_major_version'] is version('8', '==')
 
-        - name: (CentOS/RHEL) Install build tools
+        - name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) Install build tools
           ansible.builtin.yum:
             name:
               - ca-certificates
@@ -62,14 +62,6 @@
               - wget
               - zlib-devel
             update_cache: true
-
-    - name: (Debian) Install backports repo for 'buster'
-      ansible.builtin.apt_repository:
-        filename: buster-backports
-        repo: deb http://ftp.us.debian.org/debian buster-backports main
-        update_cache: true
-        mode: 0644
-      when: ansible_facts['distribution_release'] == "buster"
 
     - name: (Debian/Ubuntu) Install build tools
       ansible.builtin.apt:
@@ -122,7 +114,7 @@
         update_cache: true
       when: ansible_facts['os_family'] == "Alpine"
 
-    - name: (CentOS/RHEL) Install PCRE dependency from package
+    - name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) Install PCRE dependency from package
       ansible.builtin.yum:
         name: "{{ (pcre_release == 2) | ternary('pcre2-devel', 'pcre-devel') }}"
         update_cache: true
@@ -184,7 +176,7 @@
         update_cache: true
       when: ansible_facts['os_family'] == "Alpine"
 
-    - name: (CentOS/RHEL) Install ZLib dependency from package
+    - name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) Install ZLib dependency from package
       ansible.builtin.yum:
         name: zlib-devel
         update_cache: true
@@ -247,7 +239,7 @@
         update_cache: true
       when: ansible_facts['os_family'] == "Alpine"
 
-    - name: (CentOS/RHEL) Install OpenSSL dependency from package
+    - name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) Install OpenSSL dependency from package
       ansible.builtin.yum:
         name: openssl-devel
         update_cache: true

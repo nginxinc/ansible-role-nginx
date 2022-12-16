@@ -4,7 +4,7 @@ driver:
 lint: |
   set -e
   ansible-lint --force-color
-platforms: # Alpine 3.17 only has one version of NGINX OSS available (at the moment) so it's impossible to test the downgrade scenario
+platforms:
   - name: almalinux-8
     image: almalinux:8
     dockerfile: ../common/Dockerfile.j2
@@ -35,6 +35,13 @@ platforms: # Alpine 3.17 only has one version of NGINX OSS available (at the mom
     command: /sbin/init
   - name: alpine-3.16
     image: alpine:3.16
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
+  - name: alpine-3.17
+    image: alpine:3.17
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:

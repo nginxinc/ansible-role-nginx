@@ -10,15 +10,15 @@ platforms:
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/usr/sbin/init"
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /usr/sbin/init
   - name: almalinux-9
     image: almalinux:9
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/usr/sbin/init"
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /usr/sbin/init
   - name: alpine-3.13
     image: alpine:3.13
     dockerfile: ../common/Dockerfile.j2
@@ -80,22 +80,22 @@ platforms:
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/usr/sbin/init"
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /usr/sbin/init
   - name: oraclelinux-8
     image: oraclelinux:8
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/usr/sbin/init"
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /usr/sbin/init
   - name: oraclelinux-9
     image: oraclelinux:9
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
-    command: "/usr/sbin/init"
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /usr/sbin/init
   - name: rhel-7
     image: registry.access.redhat.com/ubi7/ubi:7.9
     dockerfile: ../common/Dockerfile.j2

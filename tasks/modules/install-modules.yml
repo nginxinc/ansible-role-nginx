@@ -9,7 +9,7 @@
 
 - name: (RHEL) Install GeoIP2 and/or OpenTracing EPEL dependencies
   when:
-    - ansible_facts['distribution'] == "RedHat"
+    - ansible_facts['distribution'] == "RedHat" or ansible_facts['distribution'] == "OracleLinux" or ansible_facts['distribution'] == "AlmaLinux"
     - (ansible_facts['distribution_major_version'] == 7 and '"geoip2" in nginx_modules')
       or '"opentracing" in nginx_modules'
     - nginx_install_epel_release | bool

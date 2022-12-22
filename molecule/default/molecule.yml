@@ -154,6 +154,7 @@ platforms:
     command: /sbin/init
 provisioner:
   name: ansible
+  log: true
   playbooks:
     converge: converge.yml
     verify: verify.yml

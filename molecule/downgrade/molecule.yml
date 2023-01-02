@@ -118,7 +118,7 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
   - name: rockylinux-9
-    image: rockylinux:9
+    image: rockylinux:9.0.20220720
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
@@ -154,6 +154,7 @@ platforms:
     command: /sbin/init
 provisioner:
   name: ansible
+  log: true
   playbooks:
     prepare: prepare.yml
     converge: converge.yml

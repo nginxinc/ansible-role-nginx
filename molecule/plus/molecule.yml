@@ -117,6 +117,20 @@ platforms:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
+  - name: rockylinux-8
+    image: rockylinux:8
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /usr/sbin/init
+  - name: rockylinux-9
+    image: rockylinux:9.0.20220720
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /usr/sbin/init
   - name: sles15
     image: registry.suse.com/bci/bci-base:15.4
     dockerfile: ../common/Dockerfile.j2

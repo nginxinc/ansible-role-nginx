@@ -125,7 +125,7 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
   - name: rockylinux-9
-    image: rockylinux:9
+    image: rockylinux:9.0.20220720
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
@@ -161,6 +161,7 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     command: /sbin/init
 provisioner:
   name: ansible
+  log: true
   playbooks:
     converge: converge.yml
     verify: verify.yml

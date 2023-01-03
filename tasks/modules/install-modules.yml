@@ -24,13 +24,12 @@
         name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_facts['distribution_major_version'] }}.noarch.rpm
 
 - name: (Alpine Linux) Install Lua and Encrypted Sessions Alpine Linux 3.17 dependencies
+  community.general.apk:
+    name: nginx-plus-module-ndk
   when:
     - ansible_facts['os_family'] == "Alpine"
     - ansible_facts['distribution_version'] | regex_search('^[0-9]+\\.[0-9]+') is version('3.17', '==')
     - ('"lua" in nginx_modules') or ('"encrypted-sessions" in nginx_modules')
-  tasks:
-    community.general.apk:
-      name: nginx-plus-module-ndk
 
 - name: Setup NGINX modules
   ansible.builtin.package:

@@ -90,21 +90,21 @@ platforms: # Alpine 3.17 only has one version of NGINX Plus available (at the mo
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
   - name: rhel-7
-    image: registry.access.redhat.com/ubi7
+    image: registry.access.redhat.com/ubi7/ubi:7.9
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
   - name: rhel-8
-    image: registry.access.redhat.com/ubi8
+    image: redhat/ubi8:8.7
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
   - name: rhel-9
-    image: registry.access.redhat.com/ubi9
+    image: redhat/ubi9:9.1.0
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:

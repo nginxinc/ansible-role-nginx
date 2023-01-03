@@ -9,7 +9,7 @@
 
 - name: (AlmaLinux/Oracle Linux/RHEL) Install GeoIP2 and/or OpenTracing EPEL dependencies
   when:
-    - ansible_facts['os_family'] == "RedHat"
+    - ansible_facts['os_family'] == "RedHat" and ansible_facts['distribution'] != "Amazon"
     - (ansible_facts['distribution_major_version'] == 7 and '"geoip2" in nginx_modules')
       or '"opentracing" in nginx_modules'
     - nginx_install_epel_release | bool

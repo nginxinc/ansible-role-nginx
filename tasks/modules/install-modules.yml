@@ -9,9 +9,7 @@
 
 - name: (AlmaLinux/Oracle Linux/RHEL) Install GeoIP2 and/or OpenTracing EPEL dependencies
   when:
-    - ansible_facts['distribution'] == "AlmaLinux"
-      or ansible_facts['distribution'] == "OracleLinux"
-      or ansible_facts['distribution'] == "RedHat"
+    - ansible_facts['os_family'] == "RedHat"
     - (ansible_facts['distribution_major_version'] == 7 and '"geoip2" in nginx_modules')
       or '"opentracing" in nginx_modules'
     - nginx_install_epel_release | bool
@@ -24,6 +22,15 @@
     - name: (RHEL) Install package dependencies
       ansible.builtin.yum:
         name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_facts['distribution_major_version'] }}.noarch.rpm
+
+- name: (Alpine Linux) Install Lua and Encrypted Sessions Alpine Linux 3.17 dependencies
+  when:
+    - ansible_facts['os_family'] == "Alpine"
+    - ansible_facts['distribution_version'] | regex_search('^[0-9]+\\.[0-9]+') is version('3.17', '==')
+    - ('"lua" in nginx_modules') or ('"encrypted-sessions" in nginx_modules')
+  tasks:
+    community.general.apk:
+      name: nginx-plus-module-ndk
 
 - name: Setup NGINX modules
   ansible.builtin.package:

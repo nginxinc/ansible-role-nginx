@@ -14,9 +14,10 @@ nginx_type: opensource
 
 # (Optional) Specify which version of NGINX you want to install.
 # Default is to install the latest release.
-# nginx_version: "=19-1~bionic"
-# For NGINX Plus and modules you'll need a wilcard like below (which installs plus-20 and modules)
-# nginx_version: "-20*"
+# For NGINX Open Source you'll need to specify the relevant release like below (Ubuntu jammy example).
+# nginx_version: "=1.23.2-1~jammy"
+# For NGINX Plus you'll need to specify the R* release like below (Ubuntu jammy example).
+# nginx_version: "=28-1~jammy"
 
 # Start NGINX service.
 # Default is true.

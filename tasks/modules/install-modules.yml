@@ -1,5 +1,5 @@
 ---
-- name: (CentOS) Install GeoIP EPEL dependencies
+- name: (CentOS) Install GeoIP EPEL dependency
   ansible.builtin.yum:
     name: epel-release
   when:
@@ -7,10 +7,26 @@
     - '"geoip" in nginx_modules'
     - nginx_install_epel_release | bool
 
-- name: (RHEL) Install GeoIP2 and/or OpenTracing EPEL dependencies
+- name: (RHEL 7) Install GeoIP2 dependency
   when:
     - ansible_facts['distribution'] == "RedHat"
-    - (ansible_facts['distribution_major_version'] == 7 and '"geoip2" in nginx_modules')
+    - ansible_facts['distribution_major_version'] is version('7', '==')
+    - '"geoip2" in nginx_modules'
+  block:
+    - name: (RHEL 7) Check if libmaxminddb is available
+      ansible.builtin.yum:
+        list: available
+      register: packages
+
+    - name: (RHEL 7) Install libmaxminddb
+      ansible.builtin.yum:
+        name: https://rpmfind.net/linux/centos/7.9.2009/os/x86_64/Packages/libmaxminddb-1.2.0-6.el7.x86_64.rpm
+      when: '"libmaxminddb" not in packages.results'
+
+- name: (AlmaLinux/Oracle Linux/RHEL) Install GeoIP2 and/or OpenTracing EPEL dependency
+  when:
+    - ansible_facts['os_family'] == "RedHat" and ansible_facts['distribution'] != "Amazon"
+    - (ansible_facts['distribution_major_version'] is version('7', '==') and '"geoip2" in nginx_modules')
       or '"opentracing" in nginx_modules'
     - nginx_install_epel_release | bool
   block:
@@ -19,9 +35,18 @@
         state: present
         key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_facts['distribution_major_version'] }}
 
-    - name: (RHEL) Install package dependencies
+    - name: (RHEL) Install EPEL
       ansible.builtin.yum:
         name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_facts['distribution_major_version'] }}.noarch.rpm
+
+- name: (Alpine Linux) Install Lua and Encrypted Sessions Alpine Linux 3.17 dependency
+  community.general.apk:
+    name: nginx-plus-module-ndk
+  when:
+    - nginx_type == 'plus'
+    - ansible_facts['os_family'] == "Alpine"
+    - ansible_facts['distribution_version'] | regex_search('^[0-9]+\\.[0-9]+') is version('3.17', '==')
+    - ('"lua" in nginx_modules') or ('"encrypted-sessions" in nginx_modules')
 
 - name: Setup NGINX modules
   ansible.builtin.package:

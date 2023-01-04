@@ -5,13 +5,20 @@ lint: |
   set -e
   ansible-lint --force-color
 platforms:
-  - name: alpine-3.13
-    image: alpine:3.13
+  - name: almalinux-8
+    image: almalinux:8
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /sbin/init
+    command: /usr/sbin/init
+  - name: almalinux-9
+    image: almalinux:9
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /usr/sbin/init
   - name: alpine-3.14
     image: alpine:3.14
     dockerfile: ../common/Dockerfile.j2
@@ -33,6 +40,13 @@ platforms:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /sbin/init
+  - name: alpine-3.17
+    image: alpine:3.17
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
   - name: amazonlinux-2
     image: amazonlinux:2
     dockerfile: ../common/Dockerfile.j2
@@ -47,6 +61,34 @@ platforms:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
+  - name: debian-bullseye
+    image: debian:bullseye-slim
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
+  - name: oraclelinux-7
+    image: oraclelinux:7
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /usr/sbin/init
+  - name: oraclelinux-8
+    image: oraclelinux:8
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /usr/sbin/init
+  - name: oraclelinux-9
+    image: oraclelinux:9
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /usr/sbin/init
   - name: rhel-7
     image: registry.access.redhat.com/ubi7/ubi:7.9
     dockerfile: ../common/Dockerfile.j2
@@ -55,33 +97,40 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
   - name: rhel-8
-    image: registry.access.redhat.com/ubi8/ubi:8.5
+    image: redhat/ubi8:8.7
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
   - name: rhel-9
-    image: registry.access.redhat.com/ubi9/ubi:9.0.0
+    image: redhat/ubi9:9.1.0
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
-  - name: debian-buster
-    image: debian:buster-slim
+  - name: rockylinux-8
+    image: rockylinux:8
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /sbin/init
-  - name: debian-bullseye
-    image: debian:bullseye-slim
+    command: /usr/sbin/init
+  - name: rockylinux-9
+    image: rockylinux:9.0.20220720
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /sbin/init
+    command: /usr/sbin/init
+  - name: sles15
+    image: registry.suse.com/bci/bci-base:15.4
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /usr/sbin/init
   - name: ubuntu-bionic
     image: ubuntu:bionic
     dockerfile: ../common/Dockerfile.j2
@@ -103,15 +152,9 @@ platforms:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /sbin/init
-  - name: sles15
-    image: registry.suse.com/bci/bci-base:15.4
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /usr/sbin/init
 provisioner:
   name: ansible
+  log: true
   playbooks:
     converge: converge.yml
     verify: verify.yml

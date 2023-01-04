@@ -15,14 +15,14 @@ nginx_state: "{{ nginx_state_vals[nginx_setup] | default(nginx_state_vals[nginx_
 # Supported NGINX Open Source distributions
 # https://nginx.org/en/docs/install.html
 nginx_distributions: [
-  Alpine, Amazon, CentOS, Debian, FreeBSD, RedHat, SLES, Ubuntu,
+  AlmaLinux, Alpine, Amazon, CentOS, Debian, FreeBSD, OracleLinux, RedHat, Rocky, SLES, Ubuntu,
   NetBSD, OpenBSD, DragonFlyBSD, HardenedBSD,
 ]
 
 # Supported NGINX Plus distributions
 # https://docs.nginx.com/nginx/technical-specs/
 nginx_plus_distributions: [
-  Alpine, Amazon, CentOS, Debian, FreeBSD, OracleLinux, RedHat, SLES, Ubuntu,
+  AlmaLinux, Alpine, Amazon, CentOS, Debian, FreeBSD, OracleLinux, RedHat, Rocky, SLES, Ubuntu,
 ]
 
 # Default NGINX signing key

@@ -14,7 +14,6 @@ BUG FIXES:
 TESTS:
 
 * Update GitHub actions to run on Ubuntu 22.04. Amazon Linux 2 does not support cgroups v2 so the corresponding Molecule tests have been removed.
-* Update GitHub actions to only skip \*plus\* scenarios when the NGINX Plus license secrets are not present (it used to only run the NGINX Plus test scenarios during internal PRs).
 
 ## 0.23.2 (September 28, 2022)
 
@@ -41,6 +40,7 @@ BUG FIXES:
 
 TESTS:
 
+* Update GitHub actions to only skip \*plus\* scenarios when the NGINX Plus license secrets are not present (it used to only run the NGINX Plus test scenarios during internal PRs).
 * Add SLES 15 to all Molecule tests.
 * Create downgrade and upgrade tests for NGINX Plus.
 * Remove Yamllint (Ansible Lint now incorporates Yamllint).

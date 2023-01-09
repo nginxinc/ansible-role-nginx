@@ -56,7 +56,6 @@ platforms:
   - name: amazonlinux-2
     image: amazonlinux:2
     dockerfile: ../common/Dockerfile.j2
-    platform: amd64
     privileged: true
     cgroupns_mode: host
     volumes:

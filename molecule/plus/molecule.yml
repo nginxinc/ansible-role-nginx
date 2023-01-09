@@ -9,6 +9,7 @@ platforms:
     image: almalinux:8
     dockerfile: ../common/Dockerfile.j2
     privileged: true
+    cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
@@ -16,6 +17,7 @@ platforms:
     image: almalinux:9
     dockerfile: ../common/Dockerfile.j2
     privileged: true
+    cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
@@ -55,6 +57,7 @@ platforms:
     image: alpine:3.17
     dockerfile: ../common/Dockerfile.j2
     privileged: true
+    cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /sbin/init
@@ -62,6 +65,7 @@ platforms:
     image: amazonlinux:2
     dockerfile: ../common/Dockerfile.j2
     privileged: true
+    cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
@@ -77,6 +81,7 @@ platforms:
     image: debian:bullseye-slim
     dockerfile: ../common/Dockerfile.j2
     privileged: true
+    cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /sbin/init
@@ -84,6 +89,7 @@ platforms:
     image: oraclelinux:7
     dockerfile: ../common/Dockerfile.j2
     privileged: true
+    cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
@@ -91,6 +97,7 @@ platforms:
     image: oraclelinux:8
     dockerfile: ../common/Dockerfile.j2
     privileged: true
+    cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
@@ -98,6 +105,7 @@ platforms:
     image: oraclelinux:9
     dockerfile: ../common/Dockerfile.j2
     privileged: true
+    cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init

@@ -10,10 +10,11 @@ FEATURES:
 BUG FIXES:
 
 * Fix an issue when installing the GeoIP2 module on an UBI 7 container where the the `libmaxminddb` package dependency might not be available via `yum` (if it's not available, `libmaxminddb` is installed from an external source).
+* GitHub actions should now correctly skip \*plus\* scenarios only when the NGINX Plus license secrets are not present.
 
 TESTS:
 
-* Update GitHub actions to run on Ubuntu 22.04. Amazon Linux 2 does not support cgroups v2 so the corresponding Molecule tests have been removed.
+Update GitHub actions to run on Ubuntu 22.04. Amazon Linux 2 does not support cgroups v2 so the corresponding Molecule tests have been removed.
 
 ## 0.23.2 (September 28, 2022)
 

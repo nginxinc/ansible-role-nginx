@@ -10,6 +10,7 @@ FEATURES:
 BUG FIXES:
 
 * Fix an issue when installing the GeoIP2 module on an UBI 7 container where the the `libmaxminddb` package dependency might not be available via `yum` (if it's not available, `libmaxminddb` is installed from an external source).
+* GitHub actions should now correctly skip \*plus\* scenarios only when the NGINX Plus license secrets are not present.
 
 TESTS:
 

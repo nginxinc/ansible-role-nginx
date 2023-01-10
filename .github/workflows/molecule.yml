@@ -16,6 +16,9 @@ jobs:
   molecule:
     name: Molecule
     runs-on: ubuntu-22.04
+    env:
+      NGINX_CRT: ${{ secrets.NGINX_CRT }}
+      NGINX_KEY: ${{ secrets.NGINX_KEY }}
     strategy:
       fail-fast: false
       matrix:
@@ -55,5 +58,3 @@ jobs:
         env:
           PY_COLORS: 1
           ANSIBLE_FORCE_COLOR: 1
-          NGINX_CRT: ${{ secrets.NGINX_CRT }}
-          NGINX_KEY: ${{ secrets.NGINX_KEY }}

@@ -14,7 +14,7 @@ BUG FIXES:
 
 TESTS:
 
-Update GitHub actions to run on Ubuntu 22.04. Amazon Linux 2 does not support cgroups v2 so the corresponding Molecule tests have been removed.
+Update GitHub actions to run on Ubuntu 22.04 (and thus support `cgroups` v2).
 
 ## 0.23.2 (September 28, 2022)
 

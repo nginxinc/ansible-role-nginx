@@ -7,6 +7,10 @@ FEATURES:
 * Add AlmaLinux, Oracle Linux and Rocky Linux to the list of NGINX OSS and NGINX Plus tested and supported platforms.
 * Add Alpine Linux 3.17 to the NGINX list of tested and supported platforms (and remove Alpine Linux 3.13 from the list of NGINX OSS supported platforms).
 
+ENHANCEMENTS:
+
+Bump the Ansible `community.general` collection to `6.2.0`, `community.crypto` collection to `2.10.0` and `community.docker` collection to `3.4.0`.
+
 BUG FIXES:
 
 * Fix an issue when installing the GeoIP2 module on an UBI 7 container where the the `libmaxminddb` package dependency might not be available via `yum` (if it's not available, `libmaxminddb` is installed from an external source).

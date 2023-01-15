@@ -6,15 +6,15 @@ BREAKING CHANGES:
 
 * When building from source the various libraries required to build NGINX from source, you will no longer need to specify the name of the package, only the version:
 
-```yaml
-pcre_version: pcre2-10.42
-```
+  ```yaml
+  pcre_version: pcre2-10.42
+  ```
 
-is now:
+  is now:
 
-```yaml
-pcre_version: 10.42
-```
+  ```yaml
+  pcre_version: 10.42
+  ```
 
 * The `nginx_install_source_<package>: false` parameters have been reversed. Setting `nginx_install_source_pcre: true` will now build PCRE from source, instead of using the default package manager. The previous behavior was unintuitive at best.
 
@@ -32,7 +32,7 @@ BUG FIXES:
 
 * Fix an issue when installing the GeoIP2 module on an UBI 7 container where the the `libmaxminddb` package dependency might not be available via `yum` (if it's not available, `libmaxminddb` is installed from an external source).
 * GitHub actions should now correctly skip \*plus\* scenarios only when the NGINX Plus license secrets are not present.
-* Update the versions of the various packages required to build NGINX from source.
+* Update the versions of the various packages required to build NGINX from source. The version of `zlib` listed in the role was no longer available.
 
 TESTS:
 

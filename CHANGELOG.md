@@ -2,6 +2,22 @@
 
 ## 0.23.3 (Unreleased)
 
+BREAKING CHANGES:
+
+* When building from source the various libraries required to build NGINX from source, you will no longer need to specify the name of the package, only the version:
+
+  ```yaml
+  pcre_version: pcre2-10.42
+  ```
+
+  is now:
+
+  ```yaml
+  pcre_version: 10.42
+  ```
+
+* The `nginx_install_source_<package>: false` parameters have been reversed. Setting `nginx_install_source_pcre: true` will now build PCRE from source, instead of using the default package manager. The previous behavior was unintuitive at best.
+
 FEATURES:
 
 * Add AlmaLinux, Oracle Linux and Rocky Linux to the list of NGINX OSS and NGINX Plus tested and supported platforms.
@@ -9,12 +25,14 @@ FEATURES:
 
 ENHANCEMENTS:
 
-Bump the Ansible `community.general` collection to `6.2.0`, `community.crypto` collection to `2.10.0` and `community.docker` collection to `3.4.0`.
+* Bump the Ansible `community.general` collection to `6.2.0`, `community.crypto` collection to `2.10.0` and `community.docker` collection to `3.4.0`.
+* Use the official GitHub repositories as the source for the various packages required to compile NGINX OSS from source.
 
 BUG FIXES:
 
 * Fix an issue when installing the GeoIP2 module on an UBI 7 container where the the `libmaxminddb` package dependency might not be available via `yum` (if it's not available, `libmaxminddb` is installed from an external source).
 * GitHub actions should now correctly skip \*plus\* scenarios only when the NGINX Plus license secrets are not present.
+* Update the versions of the various packages required to build NGINX from source. The version of `zlib` listed in the role was no longer available.
 
 TESTS:
 

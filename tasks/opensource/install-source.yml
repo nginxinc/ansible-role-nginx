@@ -92,21 +92,21 @@
   block:
     - name: Check for PCRE install
       ansible.builtin.stat:
-        path: /tmp/{{ pcre_version }}
+        path: /tmp/pcre-{{ pcre_version }}
       register: pcre_result
 
     - name: Check for ZLib install
       ansible.builtin.stat:
-        path: /tmp/{{ zlib_version }}
+        path: /tmp/zlib-{{ zlib_version }}
       register: zlib_result
 
     - name: Check for OpenSSL install
       ansible.builtin.stat:
-        path: /tmp/{{ openssl_version }}
+        path: /tmp/openssl-{{ openssl_version }}
       register: openssl_result
 
 - name: Install PCRE dependecy from package
-  when: nginx_install_source_pcre | bool
+  when: not nginx_install_source_pcre | bool
   block:
     - name: (Alpine Linux) Install PCRE dependency from package
       community.general.apk:
@@ -135,40 +135,47 @@
 - name: Install PCRE dependence from source
   when:
     - not pcre_result.stat.exists | bool
-    - not nginx_install_source_pcre | bool
+    - nginx_install_source_pcre | bool
     - not ansible_check_mode | bool
   block:
     - name: Download PCRE dependency
       ansible.builtin.get_url:
-        url: "{{ (pcre_release == 2) | ternary('https://github.com/PCRE2Project/pcre2/releases/download/' ~ pcre_version ~ '/' ~ pcre_version ~ '.tar.gz', 'https://ftp.exim.org/pub/pcre/' ~ pcre_version ~ '.tar.gz') }}"
-        dest: /tmp/{{ pcre_version }}.tar.gz
+        url: "{{ (pcre_release == 2) | ternary('https://github.com/PCRE2Project/pcre2/releases/download/pcre2-' ~ pcre_version ~ '/pcre2-' ~ pcre_version ~ '.tar.gz', 'https://ftp.exim.org/pub/pcre/pcre-' ~ pcre_version ~ '.tar.gz') }}"
+        dest: /tmp
         mode: 0600
       register: pcre_source
+
+    - name: Ensure PCRE directory exists
+      ansible.builtin.file:
+        path: /tmp/pcre-{{ pcre_version }}
+        state: directory
+        mode: 0700
 
     - name: Unpack PCRE dependency
       ansible.builtin.unarchive:
         copy: false
-        dest: /tmp/
         src: "{{ pcre_source.dest }}"
+        dest: /tmp/pcre-{{ pcre_version }}/
         mode: 0700
+        extra_opts: [--strip-components=1]
 
     - name: Configure PCRE dependency
       ansible.builtin.command: ./configure
       args:
-        chdir: /tmp/{{ pcre_version }}
+        chdir: /tmp/pcre-{{ pcre_version }}
         creates: /tmp/makefile
 
     - name: Make PCRE dependency
       community.general.make:
-        chdir: /tmp/{{ pcre_version }}
+        chdir: /tmp/pcre-{{ pcre_version }}
 
     - name: Install PCRE dependency
       community.general.make:
-        chdir: /tmp/{{ pcre_version }}
+        chdir: /tmp/pcre-{{ pcre_version }}
         target: install
 
 - name: Install ZLib dependency from package
-  when: nginx_install_source_zlib | bool
+  when: not nginx_install_source_zlib | bool
   block:
     - name: (Alpine Linux) Install ZLib dependency from package
       community.general.apk:
@@ -197,41 +204,47 @@
 - name: Install ZLib dependency from source
   when:
     - not zlib_result.stat.exists | bool
-    - not nginx_install_source_zlib | bool
+    - nginx_install_source_zlib | bool
     - not ansible_check_mode | bool
   block:
     - name: Download ZLib dependency
       ansible.builtin.get_url:
-        url: https://zlib.net/{{ zlib_version }}.tar.gz
-        dest: /tmp/{{ zlib_version }}.tar.gz
+        url: https://github.com/madler/zlib/releases/download/v{{ zlib_version }}/zlib-{{ zlib_version }}.tar.gz
+        dest: /tmp
         mode: 0600
       register: zlib_source
+
+    - name: Ensure ZLib directory exists
+      ansible.builtin.file:
+        path: /tmp/zlib-{{ zlib_version }}
+        state: directory
+        mode: 0700
 
     - name: Unpack ZLib dependency
       ansible.builtin.unarchive:
         copy: false
-        dest: /tmp/
         src: "{{ zlib_source.dest }}"
+        dest: /tmp/zlib-{{ zlib_version }}
         mode: 0700
+        extra_opts: [--strip-components=1]
 
     - name: Configure ZLib dependency
       ansible.builtin.command: ./configure
       args:
-        chdir: /tmp/{{ zlib_version }}
+        chdir: /tmp/zlib-{{ zlib_version }}
         creates: /tmp/makefile
 
     - name: Make ZLib dependency
       community.general.make:
-        chdir: /tmp/{{ zlib_version }}
+        chdir: /tmp/zlib-{{ zlib_version }}
 
     - name: Install ZLib dependency
       community.general.make:
-        chdir: /tmp/{{ zlib_version }}
+        chdir: /tmp/zlib-{{ zlib_version }}
         target: install
 
-
 - name: Install OpenSSL dependency from package
-  when: nginx_install_source_openssl | bool
+  when: not nginx_install_source_openssl | bool
   block:
     - name: (Alpine Linux) Install OpenSSL dependency from package
       community.general.apk:
@@ -260,36 +273,43 @@
 - name: Install OpenSSL dependency from source
   when:
     - not openssl_result.stat.exists | bool
-    - not nginx_install_source_openssl | bool
+    - nginx_install_source_openssl | bool
     - not ansible_check_mode | bool
   block:
     - name: Download OpenSSL dependency
       ansible.builtin.get_url:
-        url: https://www.openssl.org/source/{{ openssl_version }}.tar.gz
+        url: https://github.com/openssl/openssl/archive/refs/tags/openssl-{{ openssl_version }}.tar.gz
         dest: /tmp/{{ openssl_version }}.tar.gz
         mode: 0600
       register: openssl_source
 
+    - name: Ensure OpenSSL directory exists
+      ansible.builtin.file:
+        path: /tmp/openssl-{{ openssl_version }}
+        state: directory
+        mode: 0700
+
     - name: Unpack OpenSSL dependency
       ansible.builtin.unarchive:
         copy: false
-        dest: /tmp/
         src: "{{ openssl_source.dest }}"
+        dest: /tmp/openssl-{{ openssl_version }}
         mode: 0700
+        extra_opts: [--strip-components=1]
 
     - name: Configure OpenSSL dependency
       ansible.builtin.command: ./config --prefix=/usr/local/openssl --openssldir=/usr/local/openssl shared zlib
       args:
-        chdir: /tmp/{{ openssl_version }}
+        chdir: /tmp/openssl-{{ openssl_version }}
         creates: /tmp/makefile
 
     - name: Make OpenSSL dependency
       community.general.make:
-        chdir: /tmp/{{ openssl_version }}
+        chdir: /tmp/openssl-{{ openssl_version }}
 
     - name: Install OpenSSL dependency
       community.general.make:
-        chdir: /tmp/{{ openssl_version }}
+        chdir: /tmp/openssl-{{ openssl_version }}
         target: install
 
 - name: Get NGINX version
@@ -338,8 +358,8 @@
     - name: Unpack NGINX
       ansible.builtin.unarchive:
         copy: false
-        dest: /tmp/
         src: "{{ nginx_source.dest }}"
+        dest: /tmp
         mode: 0755
 
     - name: Set static modules
@@ -360,9 +380,9 @@
         --user=nginx
         --with-mail=dynamic
         --with-stream
-        {{ nginx_install_source_pcre | ternary('', '--with-pcre=../' + pcre_version) }}
-        {{ nginx_install_source_zlib | ternary('', '--with-zlib=../' + zlib_version) }}
-        {{ nginx_install_source_openssl | ternary('', '--with-openssl=../' + openssl_version) }}
+        {{ nginx_install_source_pcre | ternary('--with-pcre=../pcre-' + pcre_version | string, '') }}
+        {{ nginx_install_source_zlib | ternary('--with-zlib=../zlib-' + zlib_version | string, '') }}
+        {{ nginx_install_source_openssl | ternary('--with-openssl=../openssl-' + openssl_version | string, '') }}
         {{ nginx_install_source_static_modules | default('') }}
       args:
         chdir: /tmp/{{ nginx_version }}

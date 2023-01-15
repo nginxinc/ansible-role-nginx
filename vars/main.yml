@@ -74,9 +74,9 @@ nginx_freebsd_dependencies: [
 # Default locations and versions when 'nginx_install_from' is set to 'source'.
 # Set 'pcre_release' to 1 to install PCRE 1, modify the 'openssl_version' to move back to 1.1.1.
 pcre_release: 2
-pcre_version: pcre2-10.40
-zlib_version: zlib-1.2.12
-openssl_version: openssl-3.0.5
+pcre_version: 10.42
+zlib_version: 1.2.13
+openssl_version: 3.0.7
 
 # Supported NGINX Open Source dynamic modules
 nginx_modules_list: [

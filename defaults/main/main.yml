@@ -46,9 +46,9 @@ nginx_install_from: nginx_repository
 # Specify source install options for NGINX Open Source.
 # Options represent whether to install from source also or to install from packages (default).
 # These only apply if 'nginx_install_from' is set to 'source'.
-# For the tools, true means we will install from a package and false means install from source.
 # 'nginx_install_source_build_tools' will install compiler and build tools from packages.
-# If false, you need to have these present.
+# If set to false, you need to have these present.
+# For the required libraries, true means we will install from source and false means we will install using the default package manager.
 nginx_install_source_build_tools: true
 nginx_install_source_pcre: false
 nginx_install_source_openssl: true

@@ -358,8 +358,8 @@
     - name: Unpack NGINX
       ansible.builtin.unarchive:
         copy: false
-        dest: /tmp/
         src: "{{ nginx_source.dest }}"
+        dest: /tmp
         mode: 0755
 
     - name: Set static modules

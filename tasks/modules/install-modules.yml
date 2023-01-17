@@ -7,35 +7,35 @@
     - '"geoip" in nginx_modules'
     - nginx_install_epel_release | bool
 
-- name: (RHEL 7) Install GeoIP2 dependency
+- name: (Amazon Linux 2/RHEL 7) Install GeoIP2 dependency
   when:
-    - ansible_facts['distribution'] == "RedHat"
+    - ansible_facts['distribution'] == "RedHat" or ansible_facts['distribution'] == "Amazon"
     - ansible_facts['distribution_major_version'] is version('7', '==')
     - '"geoip2" in nginx_modules'
   block:
-    - name: (RHEL 7) Check if libmaxminddb is available
+    - name: (Amazon Linux 2/RHEL 7) Check if libmaxminddb is available
       ansible.builtin.yum:
         list: available
       register: packages
 
-    - name: (RHEL 7) Install libmaxminddb
+    - name: (Amazon Linux 2/RHEL 7) Install libmaxminddb
       ansible.builtin.yum:
         name: https://rpmfind.net/linux/centos/7.9.2009/os/x86_64/Packages/libmaxminddb-1.2.0-6.el7.x86_64.rpm
       when: '"libmaxminddb" not in packages.results'
 
-- name: (AlmaLinux/Oracle Linux/RHEL) Install GeoIP2 and/or OpenTracing EPEL dependency
+- name: (AlmaLinux/Amazon Linux 2/Oracle Linux/RHEL) Install GeoIP2 and/or OpenTracing EPEL dependency
   when:
-    - ansible_facts['os_family'] == "RedHat" and ansible_facts['distribution'] != "Amazon"
+    - ansible_facts['os_family'] == "RedHat"
     - (ansible_facts['distribution_major_version'] is version('7', '==') and '"geoip2" in nginx_modules')
       or '"opentracing" in nginx_modules'
     - nginx_install_epel_release | bool
   block:
-    - name: (RHEL) Import EPEL GPG key
+    - name: (AlmaLinux/Amazon Linux 2/Oracle Linux/RHEL) Import EPEL GPG key
       ansible.builtin.rpm_key:
         state: present
         key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_facts['distribution_major_version'] }}
 
-    - name: (RHEL) Install EPEL
+    - name: (AlmaLinux/Amazon Linux 2/Oracle Linux/RHEL) Install EPEL
       ansible.builtin.yum:
         name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_facts['distribution_major_version'] }}.noarch.rpm
 

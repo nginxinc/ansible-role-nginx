@@ -111,14 +111,16 @@ nginx_modules: []
   # - headers-more  # NGINX Plus
   # - image-filter
   # - lua  # NGINX Plus
+  # - ndk  # NGINX Plus
   # - name: njs  # Required
   #   state: present  # Optional
   #   version: =1.19.4+0.4.4-1~bionic  # Optional
   # - opentracing  # NGINX Plus
   # - passenger  # NGINX Plus
-  # - perl  # NGINX Plus
+  # - perl
   # - prometheus  # NGINX Plus
-  # - rtmp
+  # - rtmp  # NGINX Plus
+  # - set-misc  # NGINX Plus
   # - subs-filter  # NGINX Plus
   # - waf  # NGINX Plus
   # - xslt

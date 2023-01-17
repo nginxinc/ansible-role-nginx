@@ -46,7 +46,7 @@
     - nginx_type == 'plus'
     - ansible_facts['os_family'] == "Alpine"
     - ansible_facts['distribution_version'] | regex_search('^[0-9]+\\.[0-9]+') is version('3.17', '==')
-    - ('"lua" in nginx_modules') or ('"encrypted-sessions" in nginx_modules')
+    - ('"encrypted-sessions" in nginx_modules') or ('"lua" in nginx_modules') or ('"set-misc" in nginx_modules')
 
 - name: Setup NGINX modules
   ansible.builtin.package:
@@ -57,21 +57,12 @@
   when:
     - (item.name | default(item) in nginx_modules_list and nginx_type == 'opensource')
       or (item.name | default(item) in nginx_plus_modules_list and nginx_type == 'plus')
-    - not (item.name | default(item) == "auth-spnego")
-      or not (ansible_facts['os_family'] == "Alpine" and (ansible_facts['distribution_version'] | regex_search('^[0-9]+\\.[0-9]+') is version('3.8', '==')))
     - not (item.name | default(item) == "brotli")
-      or not ((ansible_facts['os_family'] == "Alpine")
-      or (ansible_facts['distribution'] == "Amazon")
-      or (ansible_facts['os_family'] == "Debian" and ansible_facts['distribution_major_version'] is version('9', '=='))
-      or (ansible_facts['distribution'] == "OracleLinux")
-      or (ansible_facts['os_family'] == "RedHat" and ansible_facts['distribution_major_version'] is version('8', '<'))
-      or (ansible_facts['os_family'] == "Suse" and ansible_facts['distribution_major_version'] is version('12', '<')))
+      or not (ansible_facts['os_family'] == "Suse" and ansible_facts['distribution_major_version'] is version('12', '=='))
     - not (item.name | default(item) == "geoip")
       or not ((ansible_facts['os_family'] == "FreeBSD")
       or (ansible_facts['os_family'] == "RedHat" and ansible_facts['distribution_major_version'] is version('8', '>=')))
     - not (item.name | default(item) == "geoip2")
-      or not ((ansible_facts['distribution'] == 'Amazon')
-      or (ansible_facts['os_family'] == "Suse"))
+      or not (ansible_facts['os_family'] == "Suse")
     - not (item.name | default(item) == "opentracing")
-      or not ((ansible_facts['distribution'] == 'Amazon')
-      or (ansible_facts['os_family'] == "Suse" and ansible_facts['distribution_major_version'] is version('12', '==')))
+      or not (ansible_facts['os_family'] == "Suse" and ansible_facts['distribution_major_version'] is version('12', '=='))

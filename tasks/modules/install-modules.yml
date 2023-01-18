@@ -33,11 +33,11 @@
     - name: (AlmaLinux/Amazon Linux 2/Oracle Linux/RHEL) Import EPEL GPG key
       ansible.builtin.rpm_key:
         state: present
-        key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_facts['distribution_major_version'] }}
+        key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7
 
     - name: (AlmaLinux/Amazon Linux 2/Oracle Linux/RHEL) Install EPEL
       ansible.builtin.yum:
-        name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_facts['distribution_major_version'] }}.noarch.rpm
+        name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 
 - name: (Alpine Linux) Install Lua and Encrypted Sessions Alpine Linux 3.17 dependency
   community.general.apk:

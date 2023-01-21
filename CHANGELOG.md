@@ -37,7 +37,7 @@ BUG FIXES:
 TESTS:
 
 * Update GitHub actions to run on Ubuntu 22.04 (and thus support `cgroups` v2).
-* Explicitly specify `amd64` as the platform used in RHEL 7 Molecule Docker images. This will ensure that tests work when run on different host architectures (e.g. newer Macbooks with `arm` processors) given the RHEL 7 UBI image only supports `amd64`.
+* Explicitly specify `amd64` as the platform used in the Amazon Linux 2/CentOS/Oracle Linux/RHEL 7/SLES 15 Molecule Docker images. This will ensure that tests work when run on different host architectures (e.g. newer Macbooks with `arm64` processors) when running tests in distributions that only support `amd64` (either due to lack of support for `cgroups` v2 or due to lack of builds for `arm64`).
 
 ## 0.23.2 (September 28, 2022)
 

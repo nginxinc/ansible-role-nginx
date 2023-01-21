@@ -26,7 +26,7 @@
 - name: (AlmaLinux/Amazon Linux 2/Oracle Linux/RHEL/Rocky Linux) Install GeoIP2 and/or OpenTracing EPEL dependency
   when:
     - ansible_facts['os_family'] == "RedHat"
-    - ('"geoip2" in nginx_modules') or ('"opentracing" in nginx_modules')
+    - ('"opentracing" in nginx_modules')
     - nginx_install_epel_release | bool
   block:
     - name: (AlmaLinux/Amazon Linux 2/Oracle Linux/RHEL/Rocky Linux) Import EPEL GPG key

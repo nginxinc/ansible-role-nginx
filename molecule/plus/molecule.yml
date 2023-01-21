@@ -81,7 +81,6 @@ platforms:
     command: /usr/sbin/init
   - name: debian-bullseye
     image: debian:bullseye-slim
-    platform: amd64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -90,6 +89,7 @@ platforms:
     command: /sbin/init
   - name: oraclelinux-7
     image: oraclelinux:7
+    platform: amd64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host

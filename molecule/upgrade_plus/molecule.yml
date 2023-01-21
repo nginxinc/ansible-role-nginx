@@ -55,6 +55,7 @@ platforms: # Alpine 3.17 only has one version of NGINX Plus available (at the mo
     command: /sbin/init
   - name: amazonlinux-2
     image: amazonlinux:2
+    platform: amd64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host

@@ -7,7 +7,6 @@ lint: |
 platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions for some undetermined reason
   - name: almalinux-8
     image: almalinux:8
-    platform: amd64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -16,7 +15,6 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     command: /usr/sbin/init
   - name: almalinux-9
     image: almalinux:9
-    platform: amd64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -25,7 +23,6 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     command: /usr/sbin/init
   - name: alpine-3.14
     image: alpine:3.14
-    platform: amd64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -34,7 +31,6 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     command: /sbin/init
   - name: alpine-3.15
     image: alpine:3.15
-    platform: amd64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -43,7 +39,6 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     command: /sbin/init
   - name: alpine-3.16
     image: alpine:3.16
-    platform: amd64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -52,7 +47,6 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     command: /sbin/init
   - name: alpine-3.17
     image: alpine:3.17
-    platform: amd64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -79,7 +73,6 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     command: /usr/sbin/init
   - name: debian-bullseye
     image: debian:bullseye-slim
-    platform: amd64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -88,7 +81,6 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     command: /sbin/init
   - name: oraclelinux-8
     image: oraclelinux:8
-    platform: amd64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -97,7 +89,6 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     command: /usr/sbin/init
   - name: oraclelinux-9
     image: oraclelinux:9
-    platform: amd64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -106,7 +97,6 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     command: /usr/sbin/init
   - name: rockylinux-8
     image: rockylinux:8
-    platform: amd64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -115,7 +105,6 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     command: /usr/sbin/init
   - name: rockylinux-9
     image: rockylinux:9.0.20220720
-    platform: amd64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -133,7 +122,6 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     command: /usr/sbin/init
   - name: rhel-8
     image: redhat/ubi8:8.7
-    platform: amd64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -142,7 +130,6 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     command: /usr/sbin/init
   - name: rhel-9
     image: redhat/ubi9:9.1.0
-    platform: amd64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -150,7 +137,6 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
   - name: rockylinux-8
-    platform: amd64
     image: rockylinux:8
     dockerfile: ../common/Dockerfile.j2
     privileged: true
@@ -160,7 +146,6 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     command: /usr/sbin/init
   - name: rockylinux-9
     image: rockylinux:9.0.20220720
-    platform: amd64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -178,7 +163,6 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     command: /usr/sbin/init
   - name: ubuntu-bionic
     image: ubuntu:bionic
-    platform: amd64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -187,7 +171,6 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     command: /sbin/init
   - name: ubuntu-focal
     image: ubuntu:focal
-    platform: amd64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -196,7 +179,6 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     command: /sbin/init
   - name: ubuntu-jammy
     image: ubuntu:jammy
-    platform: amd64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host

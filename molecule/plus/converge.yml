@@ -26,5 +26,6 @@
           - perl
           - prometheus
           - rtmp
+          - set-misc
           - subs-filter
           - xslt

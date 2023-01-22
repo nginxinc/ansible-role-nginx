@@ -86,5 +86,5 @@ nginx_modules_list: [
 # Supported NGINX Plus dynamic modules
 nginx_plus_modules_list: [
   auth-spnego, brotli, encrypted-session, geoip, geoip2, headers-more, image-filter,
-  lua, njs, opentracing, passenger, perl, prometheus, rtmp, subs-filter, xslt,
+  lua, ndk, njs, opentracing, passenger, perl, prometheus, rtmp, set-misc, subs-filter, xslt,
 ]

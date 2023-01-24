@@ -1,14 +1,14 @@
 ---
 name: Molecule CI/CD
-"on":
+on:
   pull_request:
     branches:
       - main
   push:
     branches:
       - main
-    ignore-tags:
-      - "*"
+    tags-ignore:
+      - "**"
   schedule:
     - cron: "0 0 1 * *"
   workflow_dispatch:

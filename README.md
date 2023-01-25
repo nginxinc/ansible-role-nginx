@@ -49,13 +49,13 @@ If you wish to install NGINX Plus using this role, you will need to obtain an NG
 * Instructions on how to install Molecule can be found in the [Molecule website](https://molecule.readthedocs.io/en/latest/installation.html). *You will also need to install the Molecule Docker driver.*
 * To run the NGINX Plus Molecule tests, you must copy your NGINX Plus license to the role's [`files/license`](https://github.com/nginxinc/ansible-role-nginx/blob/main/files/license/) folder.
 
-You can alternatively add your NGINX Plus repository certificate and key to the local environment. Run the following commands to export these files as base64-encoded variables and execute the Molecule tests:
+  You can alternatively add your NGINX Plus repository certificate and key to the local environment. Run the following commands to export these files as base64-encoded variables and execute the Molecule tests:
 
-```bash
-export NGINX_CRT=$( cat <path to your certificate file> | base64 )
-export NGINX_KEY=$( cat <path to your key file> | base64 )
-molecule test -s plus
-```
+  ```bash
+  export NGINX_CRT=$( cat <path to your certificate file> | base64 )
+  export NGINX_KEY=$( cat <path to your key file> | base64 )
+  molecule test -s plus
+  ```
 
 ## Installation
 

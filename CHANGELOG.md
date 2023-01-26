@@ -35,11 +35,13 @@ BUG FIXES:
 * GitHub actions should now correctly skip \*plus\* scenarios only when the NGINX Plus license secrets are not present.
 * Update the versions of the various packages required to build NGINX from source. The version of `zlib` listed in the role was no longer available.
 * The `ignore-tags` GitHub actions key does not exist. Replace it with the correct key, `tags-ignore`.
+* Remove the `arch` option from the Debian family NGINX repository source. In its current form this prevented the role from working any platforms beyond `x86_64`/`amd64` and `aarch64`/`arm64`.
 
 TESTS:
 
 * Update GitHub actions to run on Ubuntu 22.04 (and thus support `cgroups` v2).
-* Explicitly specify `amd64` as the platform used in the Amazon Linux 2/CentOS/Oracle Linux/RHEL 7/SLES 15 Molecule Docker images. This will ensure that tests work when run on different host architectures (e.g. newer Macbooks with `arm64` processors) when running tests in distributions that only support `amd64` (either due to lack of support for a `cgroups` v2 backport or due to lack of builds for `arm64`).
+* Explicitly specify `x86_64`/`amd64` as the platform used in the Amazon Linux 2/CentOS/Oracle Linux/RHEL 7/SLES 15 Molecule Docker images. This will ensure that tests work when run on different host architectures (e.g. newer Macbooks with `aarch64`/`arm64` processors) when running tests in distributions that only support `x86_64` (either due to lack of support for a `cgroups` v2 backport or due to lack of builds for `aarch64`).
+* Test some distributions using `aarch64` and `s390x` architectures. This should ensure the role works as intended across the various architectures that are officially supported.
 
 ## 0.23.2 (September 28, 2022)
 

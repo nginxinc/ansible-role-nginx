@@ -42,7 +42,9 @@ jobs:
         if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}
         uses: docker/setup-qemu-action@v2
         with:
-          platforms: linux/arm64,linux/s390x
+          platforms: aarch64,s390x
+
+          # platforms: linux/arm64,linux/s390x
           # platforms: x86_64, aarch64, s390x
 
       - name: Set up Python 3

@@ -49,6 +49,7 @@ jobs:
         run: pip3 install -r .github/workflows/requirements/requirements_molecule.txt
 
       - name: Set up Docker QEMU
+        if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}
         uses: docker/setup-qemu-action@v2
         with:
           platforms: x86_64, aarch64, s390x

@@ -63,5 +63,7 @@
       or (ansible_facts['os_family'] == "RedHat" and ansible_facts['distribution_major_version'] is version('8', '>=')))
     - not (item.name | default(item) == "geoip2")
       or not (ansible_facts['os_family'] == "Suse")
+    - not (item.name | default(item) == "lua")
+      or not (ansible_facts['architecture'] == "s390x")
     - not (item.name | default(item) == "opentracing")
       or not (ansible_facts['os_family'] == "Suse" and ansible_facts['distribution_major_version'] is version('12', '=='))

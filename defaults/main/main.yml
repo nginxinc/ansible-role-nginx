@@ -68,7 +68,7 @@ nginx_static_modules: [http_ssl_module]
 # (Optional) Specify repository for NGINX Open Source or NGINX Plus.
 # Only works if 'install_from' is set to 'nginx_repository' when installing NGINX Open Source.
 # Defaults are the official NGINX repositories.
-# nginx_repository: deb [arch=amd64] https://nginx.org/packages/mainline/debian/ buster nginx
+# nginx_repository: deb https://nginx.org/packages/mainline/debian/ buster nginx
 
 # Specify which branch of NGINX Open Source you want to install.
 # Options are 'mainline' or 'stable'.

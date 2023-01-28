@@ -50,7 +50,7 @@
 - name: Setup NGINX modules
   ansible.builtin.package:
     name: "nginx-{{ (nginx_type == 'plus') | ternary('plus-', '') }}module-{{ item.name | default(item) }}\
-          {{ item.version | default(nginx_version) | default('') }}{{ (nginx_repository is not defined and ansible_facts['os_family'] == 'Alpine' and nginx_type != 'plus') | ternary('@nginx', '') }}"
+          {{ (nginx_repository is not defined and ansible_facts['os_family'] == 'Alpine' and nginx_type != 'plus') | ternary('@nginx', '') }}{{ item.version | default('') }}"
     state: "{{ item.state | default('present') }}"
   loop: "{{ nginx_modules }}"
   when:

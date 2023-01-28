@@ -40,8 +40,11 @@ BUG FIXES:
 TESTS:
 
 * Update GitHub actions to run on Ubuntu 22.04 (and thus support `cgroups` v2).
-* Explicitly specify `x86_64`/`amd64` as the platform used in the Amazon Linux 2/CentOS/Oracle Linux/RHEL 7/SLES 15 Molecule Docker images. This will ensure that tests work when run on different host architectures (e.g. newer Macbooks with `aarch64`/`arm64` processors) when running tests in distributions that only support `x86_64` (either due to lack of support for a `cgroups` v2 backport or due to lack of builds for `aarch64`).
+* Explicitly specify `x86_64`/`amd64` as the platform used in the Amazon Linux 2/CentOS/Oracle Linux/RHEL 7/SLES 15 Molecule Docker images. This will ensure that tests work when run on different host architectures (e.g. newer Macbooks with `aarch64`/`arm64` processors) when running tests in distributions that only support `x86_64`/`amd64` (either due to lack of support for a `cgroups` v2 backport or due to lack of builds for `aarch64`/`arm64`).
 * Explicitly test some distributions using `aarch64` and `s390x` as the Molecule platform. This should ensure the role works as intended across the various architectures that are officially supported.
+* Combine the `module` Molecule scenario with the `default` scenario.
+* Add `stable` Molecule scenario.
+* Replace underscores with dashes in Molecule scenario names to improve naming consistency across the role.
 
 ## 0.23.2 (September 28, 2022)
 

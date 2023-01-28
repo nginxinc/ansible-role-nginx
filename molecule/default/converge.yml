@@ -24,6 +24,14 @@
         name: ansible-role-nginx
       vars:
         nginx_version: "{{ version }}"
+        nginx_modules:
+          - brotli
+          - geoip
+          - image-filter
+          - name: njs
+            state: present
+          - perl
+          - xslt
         nginx_service_modify: true
         nginx_service_timeout: 95
         nginx_logrotate_conf_enable: true

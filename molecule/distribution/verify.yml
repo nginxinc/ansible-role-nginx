@@ -34,5 +34,5 @@
     - name: Verify NGINX is up and running
       ansible.builtin.uri:
         url: http://localhost
-        status_code: 503
+        status_code: 403
       when: ansible_facts['distribution'] == 'SLES'

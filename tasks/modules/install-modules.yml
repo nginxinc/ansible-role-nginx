@@ -47,7 +47,7 @@
     - ansible_facts['distribution_version'] | regex_search('^[0-9]+\\.[0-9]+') is version('3.17', '==')
     - ('"encrypted-sessions" in nginx_modules') or ('"lua" in nginx_modules') or ('"set-misc" in nginx_modules')
 
-- name: Setup NGINX modules
+- name: Install NGINX modules
   ansible.builtin.package:
     name: "nginx-{{ (nginx_type == 'plus') | ternary('plus-', '') }}module-{{ item.name | default(item) }}\
           {{ (nginx_repository is not defined and ansible_facts['os_family'] == 'Alpine' and nginx_type != 'plus') | ternary('@nginx', '') }}{{ item.version | default('') }}"

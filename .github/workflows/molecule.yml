@@ -33,6 +33,7 @@ jobs:
           - uninstall-plus
           - upgrade
           - upgrade-plus
+          - version
     steps:
       - name: Check out the codebase
         if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}

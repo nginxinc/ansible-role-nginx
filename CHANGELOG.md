@@ -31,6 +31,7 @@ ENHANCEMENTS:
 
 BUG FIXES:
 
+* Specifying a module version would result in an invalid package name on Alpine Linux.
 * Fix an issue when installing the GeoIP2 module on an UBI 7 container where the the `libmaxminddb` package dependency might not be available via `yum` (if it's not available, `libmaxminddb` is installed from an external source).
 * GitHub actions should now correctly skip \*plus\* scenarios only when the NGINX Plus license secrets are not present.
 * Update the versions of the various packages required to build NGINX from source. The version of `zlib` listed in the role was no longer available.

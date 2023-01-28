@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: Install NGINX
+      ansible.builtin.include_role:
+        name: ansible-role-nginx
+      vars:
+        nginx_install_from: os_repository

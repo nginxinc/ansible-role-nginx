@@ -36,9 +36,7 @@
   args:
     creates: "{{ (nginx_setup == 'uninstall') | ternary(omit, '/sbin/nginx') }}"
     removes: "{{ (nginx_setup == 'uninstall') | ternary('/sbin/nginx', omit) }}"
-  when:
-    - ansible_facts['distribution'] == "Amazon"
-    - nginx_state == "absent"
+  when: ansible_facts['distribution'] == "Amazon"
   notify: (Handler) Run NGINX
 
 - name: "{{ nginx_setup | capitalize }} NGINX from the distribution's package repository"

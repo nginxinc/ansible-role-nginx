@@ -31,17 +31,14 @@
     - ansible_facts['distribution'] == "CentOS"
     - ansible_facts['distribution_major_version'] is version('7', '==')
 
-- name: (Amazon Linux) {{ nginx_setup | capitalize }} NGINX from Amazon's extras package repository
-  ansible.builtin.command: amazon-linux-extras {{ (nginx_setup == 'uninstall') | ternary('remove', 'install') }} -y nginx1
+- name: (Amazon Linux) Enable the NGINX Amazon extras package repository
+  ansible.builtin.command: amazon-linux-extras enable nginx1
   args:
-    creates: "{{ (nginx_setup == 'uninstall') | ternary(omit, '/sbin/nginx') }}"
-    removes: "{{ (nginx_setup == 'uninstall') | ternary('/sbin/nginx', omit) }}"
+    creates: /usr/sbin/nginx
   when: ansible_facts['distribution'] == "Amazon"
-  notify: (Handler) Run NGINX
 
 - name: "{{ nginx_setup | capitalize }} NGINX from the distribution's package repository"
   ansible.builtin.package:
     name: nginx{{ nginx_version | default('') }}
     state: "{{ nginx_state }}"
-  when: ansible_facts['distribution'] != "Amazon"
   notify: (Handler) Run NGINX

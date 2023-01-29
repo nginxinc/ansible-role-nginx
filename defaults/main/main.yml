@@ -38,8 +38,9 @@ nginx_setup: install
 nginx_manage_repo: true
 
 # Specify repository origin for NGINX Open Source.
-# Options are 'nginx_repository', 'source' or 'os_repository'.
 # Only works if 'nginx_type' is set to 'opensource'.
+# Options are 'nginx_repository', 'source' or 'os_repository'.
+# When using 'os_repository' on CentOS/RHEL 7 based systems, you will also need to install the EPEL repository (see the 'nginx_install_epel_release' variable below).
 # Default is nginx_repository.
 nginx_install_from: nginx_repository
 
@@ -90,7 +91,7 @@ nginx_setup_license: true
 # Default is true.
 nginx_remove_license: true
 
-# Specify whether or not you want this role to install the EPEL package when installing certain NGINX Plus modules.
+# Specify whether or not you want this role to install the EPEL package when installing NGINX OSS in some distributions and some NGINX OSS/Plus modules.
 # Using 'true' will install EPEL.
 # Using 'false' will not install EPEL.
 # Default is true.

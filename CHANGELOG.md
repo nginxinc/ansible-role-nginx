@@ -32,6 +32,7 @@ ENHANCEMENTS:
 BUG FIXES:
 
 * Specifying a module version would result in an invalid package name on Alpine Linux.
+* Fix the NGINX installation process when installing NGINX from a distribution's package repository in CentOS/RHEL 7 based distributions.
 * Fix an issue when installing the GeoIP2 module on an UBI 7 container where the the `libmaxminddb` package dependency might not be available via `yum` (if it's not available, `libmaxminddb` is installed from an external source).
 * GitHub actions should now correctly skip \*plus\* scenarios only when the NGINX Plus license secrets are not present.
 * Update the versions of the various packages required to build NGINX from source. The version of `zlib` listed in the role was no longer available.
@@ -45,6 +46,7 @@ TESTS:
 * Explicitly test some distributions using `aarch64` and `s390x` as the Molecule platform. This should ensure the role works as intended across the various architectures that are officially supported.
 * Combine the `module` Molecule scenario with the `default` scenario.
 * Add `stable` and `version` Molecule scenario.
+* Add `distribution` Molecule scenario.
 * Replace underscores with dashes in Molecule scenario names to improve naming consistency across the role.
 
 ## 0.23.2 (September 28, 2022)

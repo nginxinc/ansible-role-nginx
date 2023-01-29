@@ -24,6 +24,7 @@ jobs:
       matrix:
         scenario:
           - default
+          - distribution
           - downgrade
           - downgrade-plus
           - plus

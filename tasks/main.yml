@@ -1,24 +1,4 @@
 ---
-- name: Check whether you are using a supported NGINX distribution
-  ansible.builtin.assert:
-    that: (nginx_type == "opensource" and ansible_facts['distribution'] in nginx_distributions)
-          or (nginx_type == "plus" and ansible_facts['distribution'] in nginx_plus_distributions)
-    success_msg: Your OS, {{ ansible_facts['distribution'] }} is supported by NGINX {{ (nginx_type == 'plus') | ternary('Plus', 'Open Source') }}
-    fail_msg: Your OS, {{ ansible_facts['distribution'] }} is not supported by NGINX {{ (nginx_type == 'plus') | ternary('Plus', 'Open Source') }}
-  when:
-    - nginx_enable | bool
-    - (nginx_install_from == "nginx_repository" or nginx_type == "plus")
-  ignore_errors: true # noqa ignore-errors
-  tags: nginx_check_support
-
-- name: Check that NGINX setup is an allowed value
-  ansible.builtin.assert:
-    that: nginx_setup in nginx_setup_vars
-    fail_msg: The value {{ nginx_setup }} you used for `nginx_setup` is not allowed. Try one of {{ nginx_setup_vars | join(', ') }}.
-  when: nginx_enable | bool
-  ignore_errors: true # noqa ignore-errors
-  tags: nginx_check_support
-
 - name: Set up prerequisites
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/prerequisites/prerequisites.yml"
   when: nginx_state != "absent"
@@ -78,6 +58,7 @@
 - name: Debug NGINX output
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/config/debug-output.yml"
   when:
+    - nginx_enable | bool
     - nginx_debug_output | bool
     - nginx_state != "absent"
   tags: nginx_debug_output

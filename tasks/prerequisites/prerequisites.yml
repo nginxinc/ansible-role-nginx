@@ -1,8 +1,4 @@
 ---
-- name: Validate installation
-  ansible.builtin.include_tasks: "{{ role_path }}/tasks/prerequisites/validate.yml"
-  tags: nginx_validate
-
 - name: Install dependencies
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/prerequisites/install-dependencies.yml"
 

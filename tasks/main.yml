@@ -1,4 +1,8 @@
 ---
+- name: Validate distribution and role variables
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/validate/validate.yml"
+  tags: nginx_validate
+
 - name: Set up prerequisites
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/prerequisites/prerequisites.yml"
   when: nginx_state != "absent"

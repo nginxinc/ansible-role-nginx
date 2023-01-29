@@ -25,7 +25,7 @@ nginx_supported_platforms:
   almalinux:
     name: AlmaLinux
     versions: [8, 9]
-    architectures: ['x86_64', 'aarch64', 's390x']
+    architectures: [x86_64, aarch64, s390x]
   alpine:
     name: Alpine Linux
     versions: [3.14, 3.15, 3.16, 3.17]
@@ -53,7 +53,7 @@ nginx_supported_platforms:
   rocky:
     name: Rocky Linux
     versions: [8, 9]
-    architectures: ['x86_64', 'aarch64', 's390x']
+    architectures: [x86_64, aarch64, s390x]
   sles:
     name: SUSE Linux Enterprise Server
     versions: [12, 15]
@@ -69,7 +69,7 @@ nginx_supported_plus_platforms:
   almalinux:
     name: AlmaLinux
     versions: [8, 9]
-    architectures: ['x86_64', 'aarch64']
+    architectures: [x86_64, aarch64]
   alpine:
     name: Alpine Linux
     versions: [3.13, 3.14, 3.15, 3.16, 3.17]
@@ -101,7 +101,7 @@ nginx_supported_plus_platforms:
   rocky:
     name: Rocky Linux
     versions: [8, 9]
-    architectures: ['x86_64', 'aarch64']
+    architectures: [x86_64, aarch64]
   sles:
     name: SUSE Linux Enterprise Server
     versions: [12, 15]

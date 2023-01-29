@@ -17,11 +17,11 @@ nginx_state_vals:
 nginx_state: "{{ nginx_state_vals[nginx_setup] | default(nginx_state_vals[nginx_default_setup]) }}"
 
 # Set the nginx_platforms check to opensource or plus
-nginx_platforms: "{{ (nginx_type == 'opensource') | ternary(nginx_supported_platforms, nginx_plus_supported_platforms) }}"
+nginx_distributions: "{{ (nginx_type == 'opensource') | ternary(nginx_supported_distributions, nginx_plus_supported_distributions) }}"
 
 # Supported NGINX Open Source distributions
 # https://nginx.org/en/docs/install.html
-nginx_supported_platforms:
+nginx_supported_distributions:
   almalinux:
     name: AlmaLinux
     versions: [8, 9]
@@ -65,7 +65,7 @@ nginx_supported_platforms:
 
 # Supported NGINX Plus distributions
 # https://docs.nginx.com/nginx/technical-specs/
-nginx_supported_plus_platforms:
+nginx_plus_supported_distributions:
   almalinux:
     name: AlmaLinux
     versions: [8, 9]

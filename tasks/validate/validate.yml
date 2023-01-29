@@ -1,0 +1,35 @@
+---
+- name: Check whether you are using a supported NGINX distribution
+  ansible.builtin.assert:
+    that:
+      - "{{ ansible_facts['distribution'] | lower in nginx_distributions.keys() | list }}"
+      - "{{ (ansible_facts['distribution_version'] | regex_search('\\d+\\.?\\d*') in nginx_distributions[ansible_facts['distribution'] | lower]['versions'] | string)
+        if ansible_facts['distribution'] | lower in ['alpine', 'ubuntu'] else ansible_facts['distribution_major_version'] in nginx_distributions[ansible_facts['distribution'] | lower]['versions'] | string }}"
+      - "{{ ansible_facts['architecture'] in nginx_distributions[ansible_facts['distribution'] | lower]['architectures'] }}"
+    success_msg: Your distribution, {{ nginx_distributions[ansible_facts['distribution'] | lower]['name'] }} {{ ansible_facts['distribution_version'] }} ({{ ansible_facts['architecture'] }}), is supported by NGINX {{ (nginx_type == 'opensource') | ternary('Open Source', 'Plus') }}.
+    fail_msg: Your distribution, {{ nginx_distributions[ansible_facts['distribution'] | lower]['name'] }} {{ ansible_facts['distribution_version'] }} ({{ ansible_facts['architecture'] }}), is not supported by NGINX {{ (nginx_type == 'opensource') | ternary('Open Source', 'Plus') }}.
+  when:
+    - nginx_enable | bool
+    - (nginx_install_from == "nginx_repository" or nginx_type == "plus")
+  ignore_errors: true # noqa ignore-errors
+
+- name: Check that 'nginx_setup' is an allowed value
+  ansible.builtin.assert:
+    that: nginx_setup in nginx_setup_vars
+    fail_msg: The value you used for 'nginx_setup', {{ nginx_setup }}, is not allowed. The allowed values are [{{ nginx_setup_vars | join(', ') }}].
+  when: nginx_enable | bool
+  ignore_errors: true # noqa ignore-errors
+
+- name: Check that 'nginx_branch' is an allowed value
+  ansible.builtin.assert:
+    that: nginx_branch in nginx_branch_vars
+    fail_msg: The value you used for 'nginx_branch', {{ nginx_branch }}, is not allowed. The allowed values are [{{ nginx_branch_vars | join(', ') }}].
+  when: nginx_enable | bool
+  ignore_errors: true # noqa ignore-errors
+
+- name: Check that 'nginx_install_from' is an allowed value
+  ansible.builtin.assert:
+    that: nginx_install_from in nginx_install_from_vars
+    fail_msg: The value you used for 'nginx_install_from', {{ nginx_install_from }}, is not allowed. The allowed values are [{{ nginx_install_from_vars | join(', ') }}].
+  when: nginx_enable | bool
+  ignore_errors: true # noqa ignore-errors

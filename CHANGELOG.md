@@ -20,12 +20,14 @@ BREAKING CHANGES:
 
 FEATURES:
 
+* Validate that various role variables have been set to one of the allowed values.
 * Add support for the newer `ndk` and `set-misc` NGINX Plus dynamic modules and remove old code checks for distributions that are no longer supported.
 * Add AlmaLinux, Oracle Linux and Rocky Linux to the list of NGINX OSS and NGINX Plus tested and supported distributions.
 * Add Alpine Linux 3.17 to the NGINX list of tested and supported platforms (and remove Alpine Linux 3.13 from the list of NGINX OSS supported distributions).
 
 ENHANCEMENTS:
 
+* Improve validation of supported distributions when installing NGINX from the official repository.
 * Bump the Ansible `community.general` collection to `6.2.0`, `community.crypto` collection to `2.10.0` and `community.docker` collection to `3.4.0`.
 * Use the official GitHub repositories as the source for the various packages required to compile NGINX OSS from source.
 

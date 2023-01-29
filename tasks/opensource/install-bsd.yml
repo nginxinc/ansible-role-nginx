@@ -1,21 +1,21 @@
 ---
 - name: (FreeBSD) Update ports
   when:
-    - ansible_facts['system'] == "FreeBSD"
+    - ansible_facts['system'] == 'FreeBSD'
     - nginx_bsd_update_ports | bool
   block:
     - name: (FreeBSD) Fetch ports
-      ansible.builtin.command: portsnap fetch --interactive
-      args:
+      ansible.builtin.command:
+        cmd: portsnap fetch --interactive
         creates: /var/db/portsnap/INDEX
 
     - name: (FreeBSD) Extract ports
-      ansible.builtin.command: portsnap extract
-      args:
+      ansible.builtin.command:
+        cmd: portsnap extract
         creates: /usr/ports
 
 - name: (FreeBSD) {{ nginx_setup | capitalize }} NGINX
-  when: ansible_facts['system'] == "FreeBSD"
+  when: ansible_facts['system'] == 'FreeBSD'
   block:
     - name: (FreeBSD) {{ nginx_setup | capitalize }} NGINX package
       community.general.pkgng:
@@ -33,7 +33,7 @@
       notify: (Handler) Run NGINX
 
 - name: (OpenBSD) {{ nginx_setup | capitalize }} NGINX
-  when: ansible_facts['system'] == "OpenBSD"
+  when: ansible_facts['system'] == 'OpenBSD'
   block:
     - name: (OpenBSD) {{ nginx_setup | capitalize }} NGINX package
       community.general.openbsd_pkg:
@@ -52,7 +52,7 @@
       notify: (Handler) Run NGINX
 
 - name: (NetBSD) {{ nginx_setup | capitalize }} NGINX
-  when: ansible_facts['system'] == "NetBSD"
+  when: ansible_facts['system'] == 'NetBSD'
   block:
     - name: (NetBSD) {{ nginx_setup | capitalize }} NGINX package
       ansible.builtin.command: pkg_add www/nginx{{ nginx_version | default('') }}

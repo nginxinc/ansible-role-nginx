@@ -1,7 +1,7 @@
 ---
 - name: (CentOS/RHEL 7) Set up the EPEL repository
   when:
-    - ansible_facts['distribution'] in ["CentOS", "RedHat"]
+    - ansible_facts['distribution'] in ['CentOS', 'RedHat']
     - ansible_facts['distribution_major_version'] is version('7', '==')
     - nginx_install_epel_release | bool
   block:
@@ -18,7 +18,7 @@
   ansible.builtin.yum:
     name: oracle-epel-release-el7
   when:
-    - ansible_facts['distribution'] == "OracleLinux"
+    - ansible_facts['distribution'] == 'OracleLinux'
     - ansible_facts['distribution_major_version'] is version('7', '==')
     - nginx_install_epel_release | bool
 
@@ -28,14 +28,14 @@
     state: absent
     line: tsflags=nodocs
   when:
-    - ansible_facts['distribution'] == "CentOS"
+    - ansible_facts['distribution'] == 'CentOS'
     - ansible_facts['distribution_major_version'] is version('7', '==')
 
 - name: (Amazon Linux) Enable the NGINX Amazon extras package repository
-  ansible.builtin.command: amazon-linux-extras enable nginx1
-  args:
+  ansible.builtin.command:
+    cmd: amazon-linux-extras enable nginx1
     creates: /usr/sbin/nginx
-  when: ansible_facts['distribution'] == "Amazon"
+  when: ansible_facts['distribution'] == 'Amazon'
 
 - name: "{{ nginx_setup | capitalize }} NGINX from the distribution's package repository"
   ansible.builtin.package:

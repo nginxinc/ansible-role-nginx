@@ -59,7 +59,7 @@
 - name: Import SELinux NGINX Plus module
   ansible.builtin.command: semodule -i {{ nginx_selinux_tempdir }}/nginx-plus-module.pp # noqa no-handler
   changed_when: false
-  when: nginx_selinux_module.changed | bool
+  when: nginx_selinux_module['changed'] | bool
 
 - name: Set SELinux mode to enforcing
   ansible.posix.selinux:

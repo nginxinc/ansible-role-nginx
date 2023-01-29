@@ -7,7 +7,7 @@
   ansible.builtin.file:
     path: /etc/ssl/nginx
     state: absent
-  when: ansible_facts['distribution'] != "Alpine"
+  when: ansible_facts['distribution'] != 'Alpine'
 
 - name: (Alpine Linux) Delete NGINX Plus license
   ansible.builtin.file:
@@ -16,7 +16,7 @@
   loop:
     - /etc/apk/cert.key
     - /etc/apk/cert.pem
-  when: ansible_facts['distribution'] == "Alpine"
+  when: ansible_facts['distribution'] == 'Alpine'
 
 - name: Remove NGINX Plus repository data
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/plus/install-{{ ansible_facts['os_family'] | lower }}.yml"

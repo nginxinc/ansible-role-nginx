@@ -25,7 +25,7 @@
     name: nginx-plus{{ nginx_version | default('') }}
     state: "{{ nginx_state }}"
     update_cache: true
-    allow_downgrade: "{{ omit if ansible_version.full is version('2.12', '<') else true }}"
+    allow_downgrade: "{{ omit if ansible_version['full'] is version('2.12', '<') else true }}"
   ignore_errors: "{{ ansible_check_mode }}"
   when: nginx_license_status is not defined
   notify: (Handler) Run NGINX

@@ -45,7 +45,7 @@
         fail_msg: Something went wrong! Make sure your NGINX Plus license is valid!
 
 - name: (Debian/Red Hat/SLES OSs) Set up NGINX Plus license
-  when: ansible_facts['os_family'] != "Alpine"
+  when: ansible_facts['os_family'] != 'Alpine'
   block:
     - name: (Debian/Red Hat/SLES OSs) Create SSL directory
       ansible.builtin.file:
@@ -86,7 +86,7 @@
         fail_msg: Something went wrong! Make sure your NGINX Plus license is valid!
 
     - name: (SLES) Create NGINX Plus license bundle
-      when: ansible_facts['os_family'] == "Suse"
+      when: ansible_facts['os_family'] == 'Suse'
       block:
         - name: (SLES) Check combined NGINX Plus license bundle exists
           ansible.builtin.stat:
@@ -98,4 +98,4 @@
             src: /etc/ssl/nginx
             dest: /etc/ssl/nginx/nginx-repo-bundle.crt
             mode: 0444
-          when: not bundle.stat.exists
+          when: not bundle['stat']['exists']

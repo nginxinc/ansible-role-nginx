@@ -31,6 +31,7 @@ ENHANCEMENTS:
 
 BUG FIXES:
 
+* Specifying a module version would result in an invalid package name on Alpine Linux.
 * Fix an issue when installing the GeoIP2 module on an UBI 7 container where the the `libmaxminddb` package dependency might not be available via `yum` (if it's not available, `libmaxminddb` is installed from an external source).
 * GitHub actions should now correctly skip \*plus\* scenarios only when the NGINX Plus license secrets are not present.
 * Update the versions of the various packages required to build NGINX from source. The version of `zlib` listed in the role was no longer available.
@@ -40,8 +41,11 @@ BUG FIXES:
 TESTS:
 
 * Update GitHub actions to run on Ubuntu 22.04 (and thus support `cgroups` v2).
-* Explicitly specify `x86_64`/`amd64` as the platform used in the Amazon Linux 2/CentOS/Oracle Linux/RHEL 7/SLES 15 Molecule Docker images. This will ensure that tests work when run on different host architectures (e.g. newer Macbooks with `aarch64`/`arm64` processors) when running tests in distributions that only support `x86_64` (either due to lack of support for a `cgroups` v2 backport or due to lack of builds for `aarch64`).
+* Explicitly specify `x86_64`/`amd64` as the platform used in the Amazon Linux 2/CentOS/Oracle Linux/RHEL 7/SLES 15 Molecule Docker images. This will ensure that tests work when run on different host architectures (e.g. newer Macbooks with `aarch64`/`arm64` processors) when running tests in distributions that only support `x86_64`/`amd64` (either due to lack of support for a `cgroups` v2 backport or due to lack of builds for `aarch64`/`arm64`).
 * Explicitly test some distributions using `aarch64` and `s390x` as the Molecule platform. This should ensure the role works as intended across the various architectures that are officially supported.
+* Combine the `module` Molecule scenario with the `default` scenario.
+* Add `stable` and `version` Molecule scenario.
+* Replace underscores with dashes in Molecule scenario names to improve naming consistency across the role.
 
 ## 0.23.2 (September 28, 2022)
 

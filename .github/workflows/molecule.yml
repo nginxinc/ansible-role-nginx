@@ -25,14 +25,15 @@ jobs:
         scenario:
           - default
           - downgrade
-          - downgrade_plus
-          - module
+          - downgrade-plus
           - plus
           - source
+          - stable
           - uninstall
-          - uninstall_plus
+          - uninstall-plus
           - upgrade
-          - upgrade_plus
+          - upgrade-plus
+          - version
     steps:
       - name: Check out the codebase
         if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}

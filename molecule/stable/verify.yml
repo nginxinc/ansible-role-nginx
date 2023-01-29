@@ -23,3 +23,11 @@
       ansible.builtin.uri:
         url: http://localhost
         status_code: 200
+
+    - name: Verify correct version of NGINX has been installed
+      ansible.builtin.command: nginx -v
+      args:
+        chdir: "{{ ((ansible_facts['system'] | lower is not search('bsd')) | ternary('/etc/nginx', '/usr/local/sbin')) }}"
+      changed_when: false
+      register: version
+      failed_when: version is not search('1.22.1')

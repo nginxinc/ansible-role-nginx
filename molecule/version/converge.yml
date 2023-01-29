@@ -1,0 +1,58 @@
+---
+- name: Converge
+  hosts: all
+  pre_tasks:
+    - name: Set repo if Alpine
+      ansible.builtin.set_fact:
+        ngx_version: =1.23.2-r1
+        njs: =1.23.2.7.9-r1
+      when: ansible_facts['os_family'] == "Alpine"
+    - name: Set repo if Debian
+      ansible.builtin.set_fact:
+        ngx_version: =1.23.2-1~{{ ansible_facts['distribution_release'] }}
+        njs_version: =1.23.2+0.7.9-1~{{ ansible_facts['distribution_release'] }}
+      when: ansible_facts['os_family'] == "Debian"
+    - name: Set repo if Red Hat
+      ansible.builtin.set_fact:
+        ngx_version: -1.23.2-1.{{ (ansible_facts['distribution'] == "Amazon") | ternary('amzn2', ('el' + ansible_facts['distribution_major_version'] | string)) }}.ngx
+        njs_version: -1.23.2+0.7.9-1.{{ (ansible_facts['distribution'] == "Amazon") | ternary('amzn2', ('el' + ansible_facts['distribution_major_version'] | string)) }}.ngx
+      when: ansible_facts['os_family'] == "RedHat"
+    - name: Set repo if SLES
+      ansible.builtin.set_fact:
+        ngx_version: =1.23.2-1.sles{{ ansible_facts['distribution_major_version'] }}.ngx
+        njs_version: =1.23.2+0.7.9-1.sles{{ ansible_facts['distribution_major_version'] }}.ngx
+      when: ansible_facts['os_family'] == "Suse"
+  tasks:
+    - name: Install NGINX
+      ansible.builtin.include_role:
+        name: ansible-role-nginx
+      vars:
+        nginx_version: "{{ ngx_version }}"
+        nginx_modules:
+          - name: brotli
+            version: "{{ ngx_version }}"
+          - name: geoip
+            version: "{{ ngx_version }}"
+          - name: image-filter
+            version: "{{ ngx_version }}"
+          - name: njs
+            state: present
+            version: "{{ njs_version }}"
+          - name: perl
+            version: "{{ ngx_version }}"
+          - name: xslt
+            version: "{{ ngx_version }}"
+        nginx_service_modify: true
+        nginx_service_timeout: 95
+        nginx_logrotate_conf_enable: true
+        nginx_logrotate_conf:
+          paths:
+            - /var/log/nginx/*.log
+          options:
+            - daily
+            - missingok
+            - rotate 14
+            - compress
+            - delaycompress
+            - notifempty
+            - sharedscripts

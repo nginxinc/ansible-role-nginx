@@ -16,20 +16,20 @@
 - name: Check that 'nginx_setup' is an allowed value
   ansible.builtin.assert:
     that: nginx_setup in nginx_setup_vars
-    fail_msg: The value you used for `nginx_setup`, {{ nginx_setup }}, is not allowed. The allowed values are [{{ nginx_setup_vars | join(', ') }}].
+    fail_msg: The value you used for 'nginx_setup', {{ nginx_setup }}, is not allowed. The allowed values are [{{ nginx_setup_vars | join(', ') }}].
   when: nginx_enable | bool
   ignore_errors: true # noqa ignore-errors
 
 - name: Check that 'nginx_branch' is an allowed value
   ansible.builtin.assert:
     that: nginx_branch in nginx_branch_vars
-    fail_msg: The value you used for `nginx_branch`, {{ nginx_branch }}, is not allowed. The allowed values are [{{ nginx_branch_vars | join(', ') }}].
+    fail_msg: The value you used for 'nginx_branch', {{ nginx_branch }}, is not allowed. The allowed values are [{{ nginx_branch_vars | join(', ') }}].
   when: nginx_enable | bool
   ignore_errors: true # noqa ignore-errors
 
 - name: Check that 'nginx_install_from' is an allowed value
   ansible.builtin.assert:
     that: nginx_install_from in nginx_install_from_vars
-    fail_msg: The value you used for `nginx_install_from`, {{ nginx_install_from }}, is not allowed. The allowed values are [{{ nginx_install_from_vars | join(', ') }}].
+    fail_msg: The value you used for 'nginx_install_from', {{ nginx_install_from }}, is not allowed. The allowed values are [{{ nginx_install_from_vars | join(', ') }}].
   when: nginx_enable | bool
   ignore_errors: true # noqa ignore-errors

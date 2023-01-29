@@ -7,13 +7,12 @@ nginx_install_from_vars: [nginx_repository, source, os_repository]
 nginx_branch_vars: [mainline, stable]
 
 # Determine the current value of 'nginx_state'
-nginx_default_setup: install
-
 nginx_state_vals:
   install: present
   uninstall: absent
   upgrade: latest
 
+nginx_default_setup: install
 nginx_state: "{{ nginx_state_vals[nginx_setup] | default(nginx_state_vals[nginx_default_setup]) }}"
 
 # Set the nginx_platforms check to opensource or plus

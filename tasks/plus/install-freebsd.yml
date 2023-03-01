@@ -19,7 +19,7 @@
       MIRROR_TYPE: SRV
       }
     state: "{{ nginx_license_status | default('present') }}"
-    mode: 0644
+    mode: "0644"
   when: nginx_manage_repo | bool
 
 - name: (FreeBSD) {{ nginx_setup | capitalize }} NGINX Plus

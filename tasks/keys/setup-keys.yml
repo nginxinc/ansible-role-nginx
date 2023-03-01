@@ -10,7 +10,7 @@
       ansible.builtin.get_url:
         url: "{{ keysite }}"
         dest: /etc/apk/keys/nginx_signing.rsa.pub
-        mode: 0400
+        mode: "0400"
 
 - name: (Debian/Red Hat/SLES OSs) Set up NGINX signing key URL
   ansible.builtin.set_fact:

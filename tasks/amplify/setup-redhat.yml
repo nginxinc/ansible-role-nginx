@@ -6,4 +6,4 @@
     description: NGINX Amplify Agent
     enabled: true
     gpgcheck: true
-    mode: 0644
+    mode: "0644"

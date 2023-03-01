@@ -9,7 +9,7 @@
       Acquire::https::{{ (nginx_repository | default(nginx_plus_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::SslCert     "/etc/ssl/nginx/nginx-repo.crt";
       Acquire::https::{{ (nginx_repository | default(nginx_plus_default_repository_debian)) | regex_search('(?<=https://)[^/]*') }}::SslKey      "/etc/ssl/nginx/nginx-repo.key";
     state: "{{ nginx_license_status | default((nginx_setup == 'uninstall') | ternary('absent', 'present')) }}"
-    mode: 0444
+    mode: "0444"
 
 - name: (Debian/Ubuntu) {{ nginx_license_status is defined | ternary('Remove', 'Configure') }} NGINX Plus repository
   ansible.builtin.apt_repository:
@@ -17,7 +17,7 @@
     repo: "{{ nginx_repository | default(nginx_plus_default_repository_debian) }}"
     update_cache: false
     state: "{{ nginx_license_status | default((nginx_setup == 'uninstall') | ternary('absent', 'present')) }}"
-    mode: 0644
+    mode: "0644"
   when: nginx_manage_repo | bool
 
 - name: (Debian/Ubuntu) {{ nginx_setup | capitalize }} NGINX Plus

@@ -41,7 +41,7 @@
   ansible.builtin.template:
     src: "{{ role_path }}/templates/selinux/nginx-plus-module.te.j2"
     dest: "{{ nginx_selinux_tempdir }}/nginx-plus-module.te"
-    mode: 0644
+    mode: "0644"
   register: nginx_selinux_module
 
 - name: Check SELinux NGINX Plus module

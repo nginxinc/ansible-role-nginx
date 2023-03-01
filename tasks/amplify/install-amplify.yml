@@ -13,7 +13,7 @@
     remote_src: true
     src: /etc/amplify-agent/agent.conf.default
     dest: /etc/amplify-agent/agent.conf
-    mode: 0644
+    mode: "0644"
 
 - name: Configure NGINX Amplify agent API key
   ansible.builtin.lineinfile:

@@ -4,7 +4,7 @@
     filename: nginx
     repo: "{{ item }}"
     update_cache: true
-    mode: 0644
+    mode: "0644"
     state: "{{ (nginx_state == 'uninstall') | ternary('absent', 'present') }}"
   loop: "{{ nginx_repository | default(nginx_default_repository_debian) }}"
   when: nginx_manage_repo | bool
@@ -18,7 +18,7 @@
       Pin: origin nginx.org
       Pin: release o=nginx
       Pin-Priority: 900
-    mode: 0644
+    mode: "0644"
     state: "{{ (nginx_state == 'uninstall') | ternary('absent', 'present') }}"
   when: nginx_repository is not defined
 

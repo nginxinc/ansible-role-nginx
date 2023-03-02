@@ -9,7 +9,7 @@
     enabled: true
     gpgcheck: true
     state: "{{ nginx_license_status | default((nginx_setup == 'uninstall') | ternary('absent', 'present')) }}"
-    mode: 0644
+    mode: "0644"
   when: nginx_manage_repo | bool
 
 - name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) Force Yum cache refresh

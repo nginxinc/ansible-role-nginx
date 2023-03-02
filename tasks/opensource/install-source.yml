@@ -144,21 +144,21 @@
       ansible.builtin.get_url:
         url: "{{ (pcre_release == 2) | ternary('https://github.com/PCRE2Project/pcre2/releases/download/pcre2-' ~ pcre_version ~ '/pcre2-' ~ pcre_version ~ '.tar.gz', 'https://ftp.exim.org/pub/pcre/pcre-' ~ pcre_version ~ '.tar.gz') }}"
         dest: /tmp
-        mode: 0600
+        mode: "0600"
       register: pcre_source
 
     - name: Ensure PCRE directory exists
       ansible.builtin.file:
         path: /tmp/pcre-{{ pcre_version }}
         state: directory
-        mode: 0700
+        mode: "0700"
 
     - name: Unpack PCRE dependency
       ansible.builtin.unarchive:
         copy: false
         src: "{{ pcre_source['dest'] }}"
         dest: /tmp/pcre-{{ pcre_version }}/
-        mode: 0700
+        mode: "0700"
         extra_opts: [--strip-components=1]
 
     - name: Configure PCRE dependency
@@ -213,21 +213,21 @@
       ansible.builtin.get_url:
         url: https://github.com/madler/zlib/releases/download/v{{ zlib_version }}/zlib-{{ zlib_version }}.tar.gz
         dest: /tmp
-        mode: 0600
+        mode: "0600"
       register: zlib_source
 
     - name: Ensure ZLib directory exists
       ansible.builtin.file:
         path: /tmp/zlib-{{ zlib_version }}
         state: directory
-        mode: 0700
+        mode: "0700"
 
     - name: Unpack ZLib dependency
       ansible.builtin.unarchive:
         copy: false
         src: "{{ zlib_source['dest'] }}"
         dest: /tmp/zlib-{{ zlib_version }}
-        mode: 0700
+        mode: "0700"
         extra_opts: [--strip-components=1]
 
     - name: Configure ZLib dependency
@@ -282,21 +282,21 @@
       ansible.builtin.get_url:
         url: https://github.com/openssl/openssl/archive/refs/tags/openssl-{{ openssl_version }}.tar.gz
         dest: /tmp/{{ openssl_version }}.tar.gz
-        mode: 0600
+        mode: "0600"
       register: openssl_source
 
     - name: Ensure OpenSSL directory exists
       ansible.builtin.file:
         path: /tmp/openssl-{{ openssl_version }}
         state: directory
-        mode: 0700
+        mode: "0700"
 
     - name: Unpack OpenSSL dependency
       ansible.builtin.unarchive:
         copy: false
         src: "{{ openssl_source['dest'] }}"
         dest: /tmp/openssl-{{ openssl_version }}
-        mode: 0700
+        mode: "0700"
         extra_opts: [--strip-components=1]
 
     - name: Configure OpenSSL dependency
@@ -354,7 +354,7 @@
       ansible.builtin.get_url:
         url: https://nginx.org/download/{{ nginx_version }}.tar.gz
         dest: /tmp/{{ nginx_version }}.tar.gz
-        mode: 0600
+        mode: "0600"
       register: nginx_source
 
     - name: Unpack NGINX
@@ -362,7 +362,7 @@
         copy: false
         src: "{{ nginx_source.dest }}"
         dest: /tmp
-        mode: 0755
+        mode: "0755"
 
     - name: Set static modules
       ansible.builtin.set_fact:
@@ -410,7 +410,7 @@
             dest: "{{ (ansible_facts['os_family'] == 'Suse') | ternary('usr/lib/systemd/system/nginx.service', '/lib/systemd/system/nginx.service') }}"
             owner: root
             group: root
-            mode: 0644
+            mode: "0644"
 
         - name: Enable systemd NGINX service file
           ansible.builtin.systemd:
@@ -429,7 +429,7 @@
             dest: /etc/init.d/nginx
             owner: root
             group: root
-            mode: 0755
+            mode: "0755"
 
         - name: Upload Upstart NGINX service conf file
           ansible.builtin.copy:
@@ -437,7 +437,7 @@
             dest: /etc/init/nginx.conf
             owner: root
             group: root
-            mode: 0644
+            mode: "0644"
 
         - name: Enable Upstart NGINX service reload # noqa no-changed-when
           ansible.builtin.command: initctl reload-configuration
@@ -451,7 +451,7 @@
         dest: /etc/init.d/nginx
         owner: root
         group: root
-        mode: 0755
+        mode: "0755"
       when: ansible_facts['service_mgr'] == 'sysvinit'
       notify: (Handler) Run NGINX
 
@@ -465,7 +465,7 @@
             dest: /run/openrc/softlevel
             force: false
             owner: root
-            mode: 0644
+            mode: "0644"
 
         - name: Upload OpenRC NGINX service file
           ansible.builtin.copy:
@@ -473,7 +473,7 @@
             dest: /etc/init.d/nginx
             owner: root
             group: root
-            mode: 0755
+            mode: "0755"
 
         - name: Enable OpenRC NGINX service # noqa no-changed-when
           ansible.builtin.command: rc-update add nginx default

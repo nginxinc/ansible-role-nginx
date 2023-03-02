@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.24.1 (Unreleased)
+
+ENHANCEMENTS:
+
+Refactor the OSS BSD installation process to consolidate tasks and avoid Ansible Lint warnings.
+
 ## 0.24.0 (January 29, 2023)
 
 BREAKING CHANGES:

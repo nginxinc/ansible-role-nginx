@@ -47,6 +47,9 @@
 - name: (Debian/Red Hat/SLES OSs) Set up NGINX Plus license
   when: ansible_facts['os_family'] != 'Alpine'
   block:
+    - name: (RedHat) Install pip
+      ansible.builtin.include_tasks: "{{ role_path }}/tasks/plus/install-pip{{ ansible_python['version']['major'] }}.yml"
+
     - name: (Debian/Red Hat/SLES OSs) Create SSL directory
       ansible.builtin.file:
         path: /etc/ssl/nginx
@@ -64,8 +67,8 @@
         - "{{ nginx_license['key'] }}"
 
     - name: (Debian/Red Hat/SLES OSs) Install cryptography package
-      ansible.builtin.package:
-        name: "{{ (ansible_python['version']['major'] == 3) | ternary('python3-cryptography', 'python2-cryptography') }}"
+      ansible.builtin.pip:
+         name: cryptography
 
     - name: (Debian/Red Hat/SLES OSs) Check that NGINX Plus certificate is valid
       community.crypto.x509_certificate_info:

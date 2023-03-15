@@ -1,6 +1,6 @@
 - name: (Python 3) Install 'pip' package
-   ansible.builtin.package:
-     name: python3-pip
+  ansible.builtin.package:
+    name: python3-pip
 
 - name: (Python 3) Ensure 'pip' is updated
   ansible.builtin.pip:

@@ -15,3 +15,5 @@
   args:
     chdir: /tmp/
   when: not pip.stat.exists
+  register: pip_install
+  changed_when: pip_install.changed

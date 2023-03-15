@@ -68,7 +68,7 @@
 
     - name: (Debian/Red Hat/SLES OSs) Install cryptography package
       ansible.builtin.pip:
-         name: cryptography
+        name: cryptography
 
     - name: (Debian/Red Hat/SLES OSs) Check that NGINX Plus certificate is valid
       community.crypto.x509_certificate_info:

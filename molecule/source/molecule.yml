@@ -63,6 +63,14 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
+  - name: amazonlinux-2023
+    image: amazonlinux:2023
+    platform: x86_64
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    cgroupns_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
   - name: centos-7
     image: centos:7

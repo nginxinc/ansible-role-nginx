@@ -1,7 +1,5 @@
 ---
-- name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) {{ (nginx_license_status is defined or nginx_setup == 'uninstall') | ternary('Remove', 'Configure') }} NGINX Plus repository
-  # vars: 
-  #   distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
+- name: (AlmaLinux/Amazon Linux/Amazon Linux 2023/CentOS/Oracle Linux/RHEL/Rocky Linux) {{ (nginx_license_status is defined or nginx_setup == 'uninstall') | ternary('Remove', 'Configure') }} NGINX Plus repository
   ansible.builtin.yum_repository:
     name: nginx-plus
     baseurl: "{{ nginx_repository | default(lookup('vars', 'nginx_plus_default_repository_' + ((ansible_facts['distribution'] == 'Amazon') | ternary('amazon', 'redhat')))) }}"
@@ -14,24 +12,6 @@
     mode: "0644"
   when: 
     - nginx_manage_repo | bool
-    # - distribution != 'Amazon Linux 2023'
-
-# - name: (Amazon Linux 2023) {{ (nginx_license_status is defined or nginx_setup == 'uninstall') | ternary('Remove', 'Configure') }} NGINX Plus repository
-  # vars: 
-  #   distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
-  # ansible.builtin.dnf_repository:
-  #   name: nginx-plus
-  #   baseurl: "{{ nginx_repository | default(lookup('vars', 'nginx_plus_default_repository_' + ((ansible_facts['distribution'] == 'Amazon') | ternary('amazon', 'redhat')))) }}"
-  #   description: NGINX Plus Repository
-  #   sslclientcert: /etc/ssl/nginx/nginx-repo.crt
-  #   sslclientkey: /etc/ssl/nginx/nginx-repo.key
-  #   enabled: true
-  #   gpgcheck: true
-  #   state: "{{ nginx_license_status | default((nginx_setup == 'uninstall') | ternary('absent', 'present')) }}"
-  #   mode: "0644"
-  # when: 
-  #   - nginx_manage_repo | bool
-    # - distribution == 'Amazon Linux 2023'
 
 - name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) Force Yum cache refresh
   vars: 

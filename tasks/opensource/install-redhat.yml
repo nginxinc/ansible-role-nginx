@@ -72,8 +72,8 @@
     distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
   ansible.builtin.dnf:
     name: nginx{{ nginx_version | default('') }} 
+    disablerepo: amazonlinux
     enablerepo: nginx-mainline
-    repo: nginx-mainline
     state: "{{ nginx_state }}"
     update_cache: true
     allow_downgrade: "{{ omit if ansible_version['full'] is version('2.12', '<') else true }}"

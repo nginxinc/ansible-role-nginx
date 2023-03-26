@@ -30,7 +30,7 @@
     distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
   ansible.builtin.dnf:
     enablerepo: nginx-mainline
-    repo: nginx-mainline
+    disablerepo: amazonlinux
     name: libmaxminddb
   when:
     - distribution == "Amazon Linux 2023"

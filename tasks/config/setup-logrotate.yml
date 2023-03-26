@@ -24,8 +24,8 @@
   vars: 
     distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
   ansible.builtin.dnf:
-    repo: nginx-mainline
     enablerepo: nginx-mainline
+    disablerepo: amazonlinux
     name: logrotate
     state: present
   when:

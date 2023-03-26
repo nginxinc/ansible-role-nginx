@@ -28,7 +28,8 @@
   vars: 
     distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
   ansible.builtin.dnf:
-    name: "{{ nginx_redhat_dependencies }}"
+    name: "{{ nginx_redhat_dependencies }}" 
+    repo: nginx-mainline
     update_cache: true
     state: latest # noqa package-latest
   when: 

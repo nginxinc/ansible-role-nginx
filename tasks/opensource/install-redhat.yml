@@ -15,13 +15,14 @@
     - nginx_manage_repo | bool
     - distribution != 'Amazon Linux 2023'
 
-- name: (Amazon Linux 2023) {{ (nginx_setup == 'uninstall') | ternary('Remove', 'Configure') }} NGINX repository
+- name: (Amazon Linux 2023) {{ (nginx_setup == 'uninstall') | ternary('Remove', 'Configure') }} NGINX stable repository
   vars: 
     distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
   ansible.builtin.yum_repository:
-    name: nginx
+    name: nginx stable repo
     baseurl: http://nginx.org/packages/amzn/2023/$basearch/
-    description: NGINX Repository
+    gpgcakey: https://nginx.org/keys/nginx_signing.key
+    description: NGINX Stable Repository
     enabled: true
     gpgcheck: true
     mode: "0644"
@@ -30,6 +31,24 @@
   when: 
     - nginx_manage_repo | bool
     - distribution == 'Amazon Linux 2023'
+
+- name: (Amazon Linux 2023) {{ (nginx_setup == 'uninstall') | ternary('Remove', 'Configure') }} NGINX mainline repository
+  vars: 
+    distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
+  ansible.builtin.yum_repository:
+    name: nginx mainline repo
+    baseurl: http://nginx.org/packages/mainline/amzn/2023/$basearch/
+    gpgcakey: https://nginx.org/keys/nginx_signing.key
+    description: NGINX Mainline Repository
+    enabled: true
+    gpgcheck: true
+    mode: "0644"
+    module_hotfixes: true
+    state: "{{ (nginx_state == 'uninstall') | ternary('absent', 'present') }}"
+  when: 
+    - nginx_manage_repo | bool
+    - distribution == 'Amazon Linux 2023'
+
 
 - name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) Force Yum cache refresh
   ansible.builtin.command: yum clean metadata
@@ -52,7 +71,9 @@
   vars: 
     distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
   ansible.builtin.dnf:
-    name: nginx{{ nginx_version | default('') }}
+    name: nginx{{ nginx_version | default('') }} 
+    enablerepo: nginx-mainline
+    repo: nginx-mainline
     state: "{{ nginx_state }}"
     update_cache: true
     allow_downgrade: "{{ omit if ansible_version['full'] is version('2.12', '<') else true }}"

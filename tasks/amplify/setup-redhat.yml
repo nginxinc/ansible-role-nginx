@@ -1,5 +1,7 @@
 ---
 - name: (Amazon Linux/CentOS/RHEL) Add NGINX Amplify agent repository
+  vars: 
+    distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
   ansible.builtin.yum_repository:
     name: nginx-amplify
     baseurl: https://packages.amplify.nginx.com/{{ (ansible_facts['distribution_major_version'] is version('7', '==')) | ternary('', 'py3/') }}{{ (ansible_facts['distribution'] == 'Amazon') | ternary('amzn', 'centos') }}/$releasever/$basearch/
@@ -7,3 +9,16 @@
     enabled: true
     gpgcheck: true
     mode: "0644"
+  when: distribution != 'Amazon Linux 2023'
+
+- name: (Amazon Linux 2023) Add NGINX Amplify agent repository
+  vars: 
+    distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
+  ansible.builtin.dnf_repository:
+    name: nginx-amplify
+    baseurl: https://packages.amplify.nginx.com/{{ (ansible_facts['distribution_major_version'] is version('7', '==')) | ternary('', 'py3/') }}{{ (ansible_facts['distribution'] == 'Amazon') | ternary('amzn', 'centos') }}/$releasever/$basearch/
+    description: NGINX Amplify Agent
+    enabled: true
+    gpgcheck: true
+    mode: "0644"
+  when: distribution == 'Amazon Linux 2023'

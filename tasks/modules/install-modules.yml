@@ -8,9 +8,11 @@
     - nginx_install_epel_release | bool
 
 - name: (Amazon Linux/RHEL 7) Install GeoIP2 dependency
+  vars:
+    distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
   when:
     - (ansible_facts['distribution'] == "RedHat" and ansible_facts['distribution_major_version'] is version('7', '=='))
-      or ansible_facts['distribution'] == "Amazon"
+      or ansible_facts['distribution'] == "Amazon and distribution != 'Amazon LInux 2023'"
     - '"geoip2" in nginx_modules'
   block:
     - name: (Amazon Linux/RHEL 7) Check if libmaxminddb is available
@@ -23,9 +25,29 @@
         name: https://rpmfind.net/linux/centos/7.9.2009/os/x86_64/Packages/libmaxminddb-1.2.0-6.el7.x86_64.rpm
       when: "'libmaxminddb' not in packages['results']"
 
-- name: (AlmaLinux/Amazon Linux/Oracle Linux/RHEL/Rocky Linux) Install GeoIP2 and/or OpenTracing EPEL dependency
+- name: (Amazon Linux 2023) Install GeoIP2 dependency
+  vars:
+    distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
   when:
-    - ansible_facts['os_family'] == "RedHat"
+    - distribution == "Amazon Linux 2023"
+    - '"geoip2" in nginx_modules'
+  block:
+    - name: (Amazon Linux 2023) Check if libmaxminddb is available
+      ansible.builtin.dnf:
+        list: available
+      register: packages
+
+    - name: (Amazon Linux 2023) Install libmaxminddb
+      ansible.builtin.dnf:
+        name: https://rpmfind.net/linux/centos/7.9.2009/os/x86_64/Packages/libmaxminddb-1.2.0-6.el7.x86_64.rpm
+      when: "'libmaxminddb' not in packages['results']"
+
+- name: (AlmaLinux/Amazon Linux/Oracle Linux/RHEL/Rocky Linux) Install GeoIP2 and/or OpenTracing EPEL dependency
+  vars:
+    distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
+  when:
+    - ansible_facts['os_family'] != "RedHat"
+    - distribution == "Amazon Linux 2023"
     - ('opentracing' in nginx_modules)
     - nginx_install_epel_release | bool
   block:
@@ -37,6 +59,25 @@
     - name: (AlmaLinux/Amazon Linux/Oracle Linux/RHEL/Rocky Linux) Install EPEL
       ansible.builtin.yum:
         name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ((ansible_facts['distribution'] == 'Amazon') | ternary('7', ansible_facts['distribution_major_version'])) }}.noarch.rpm
+
+- name: (Amazon Linux 2023) Install GeoIP2 and/or OpenTracing EPEL dependency
+  vars:
+    distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
+  when:
+    - ansible_facts['os_family'] == "RedHat"
+    - distribution == "Amazon Linux 2023"
+    - ('opentracing' in nginx_modules)
+    - nginx_install_epel_release | bool
+  block:
+    - name: (Amazon Linux 2023) Import EPEL GPG key
+      ansible.builtin.rpm_key:
+        state: present
+        key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ((ansible_facts['distribution'] == 'Amazon') | ternary('7', ansible_facts['distribution_major_version'])) }}
+
+    - name: (Amazon Linux 2023) Install EPEL
+      ansible.builtin.dnf:
+        name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ((ansible_facts['distribution'] == 'Amazon') | ternary('7', ansible_facts['distribution_major_version'])) }}.noarch.rpm
+
 
 - name: (Alpine Linux) Install Lua and Encrypted Sessions Alpine Linux 3.17 dependency
   community.general.apk:

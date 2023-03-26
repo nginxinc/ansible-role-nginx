@@ -30,6 +30,7 @@
   when: 
     - nginx_manage_repo | bool
     - distribution == 'Amazon Linux 2023'
+
 - name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) Force Yum cache refresh
   ansible.builtin.command: yum clean metadata
   when: nginx_manage_repo | bool
@@ -45,8 +46,7 @@
     allow_downgrade: "{{ omit if ansible_version['full'] is version('2.12', '<') else true }}"
   ignore_errors: "{{ ansible_check_mode }}"
   notify: (Handler) Run NGINX
-  when:
-    - distribution != 'Amazon Linux 2023'
+  when: distribution != 'Amazon Linux 2023'
 
 - name: (Amazon Linux 2023) {{ nginx_setup | capitalize }} NGINX
   vars: 
@@ -58,5 +58,4 @@
     allow_downgrade: "{{ omit if ansible_version['full'] is version('2.12', '<') else true }}"
   ignore_errors: "{{ ansible_check_mode }}"
   notify: (Handler) Run NGINX
-  when:
-    - distribution == 'Amazon Linux 2023'
+  when: distribution == 'Amazon Linux 2023'

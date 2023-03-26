@@ -48,6 +48,8 @@
           when: ansible_facts['distribution_major_version'] is version('8', '==')
 
         - name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) Install build tools
+          vars: 
+            distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
           ansible.builtin.yum:
             name:
               - ca-certificates
@@ -64,6 +66,30 @@
               - wget
               - zlib-devel
             update_cache: true
+          when:
+            - distribution != 'Amazon Linux 2023'
+
+        - name: (Amazon Linux 2023) Install build tools
+          vars:
+            distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
+          ansible.builtin.dnf:
+            name:
+              - ca-certificates
+              - gcc
+              - gcc-c++
+              - gd
+              - gd-devel
+              - glibc
+              - glibc-common
+              - make
+              - perl-core
+              - tar
+              - unzip
+              - wget
+              - zlib-devel
+            update_cache: true
+          when:
+            - distribution == 'Amazon Linux 2023'
 
     - name: (Debian/Ubuntu) Install build tools
       ansible.builtin.apt:
@@ -121,6 +147,15 @@
         name: "{{ (pcre_release == 2) | ternary('pcre2-devel', 'pcre-devel') }}"
         update_cache: true
       when: ansible_facts['os_family'] == 'RedHat'
+
+    - name: (Amazon Linux 2023) Install PCRE dependency from package
+      ansible.builtin.bnf:
+        name: "{{ (pcre_release == 2) | ternary('pcre2-devel', 'pcre-devel') }}"
+        update_cache: true
+      when:
+        - ansible_facts['os_family'] == 'RedHat' 
+        - ansible_facts['distribution'] == 'Amazon'
+        - ansible_facts['distribution_version'] == '2023'
 
     - name: (Debian/Ubuntu) Install PCRE dependency from package
       ansible.builtin.apt:
@@ -191,6 +226,14 @@
         update_cache: true
       when: ansible_facts['os_family'] == 'RedHat'
 
+    - name: (Amazon Linux 2023) Install ZLib dependency from package
+      ansible.builtin.dnf:
+        name: zlib-devel
+        update_cache: true
+      when:
+        - ansible_facts['os_family'] == 'RedHat' 
+        - ansible_facts['distribution'] == 'Amazon'
+        - ansible_facts['distribution_version'] == '2023'
     - name: (Debian/Ubuntu) Install ZLib dependency from package
       ansible.builtin.apt:
         name: zlib1g-dev
@@ -259,6 +302,15 @@
         name: openssl-devel
         update_cache: true
       when: ansible_facts['os_family'] == 'RedHat'
+
+    - name: (Amazon Linux 2023) Install OpenSSL dependency from package
+      ansible.builtin.dnf:
+        name: openssl-devel
+        update_cache: true
+      when:
+        - ansible_facts['os_family'] == 'RedHat' 
+        - ansible_facts['distribution'] == 'Amazon'
+        - ansible_facts['distribution_version'] == '2023'
 
     - name: (Debian/Ubuntu) Install OpenSSL dependency from package
       ansible.builtin.apt:

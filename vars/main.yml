@@ -31,7 +31,7 @@ nginx_supported_distributions:
     architectures: [x86_64, aarch64]
   amazon:
     name: Amazon Linux
-    versions: [2]
+    versions: [2, 2023]
     architectures: [x86_64, aarch64]
   centos:
     name: CentOS

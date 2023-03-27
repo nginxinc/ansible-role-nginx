@@ -1,27 +1,23 @@
 ---
 - name: (CentOS/RHEL) Install dependencies
-  vars: 
-    distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
+  vars:
+    distribution: "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}"
   ansible.builtin.yum:
     name:
       - libselinux-utils
       - policycoreutils
       - selinux-policy-targeted
-  when: 
-    ansible_facts['os_family'] == "RedHat"
-    distribution != 'Amazon Linux 2023'
+  when: ansible_facts['os_family'] == "RedHat" distribution != 'Amazon Linux 2023'
 
 - name: (Amazon Linux 2023) Install dependencies
-  vars: 
-    distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
+  vars:
+    distribution: "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}"
   ansible.builtin.dnf:
     name:
       - libselinux-utils
       - policycoreutils
       - selinux-policy-targeted
-  when: 
-    distribution == 'Amazon Linux 2023'
-
+  when: distribution == 'Amazon Linux 2023'
 
 - name: Set SELinux mode to permissive
   ansible.posix.selinux:

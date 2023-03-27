@@ -9,10 +9,10 @@
 
 - name: (Amazon Linux/RHEL 7) Install GeoIP2 dependency
   vars:
-    distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
+    distribution: "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}"
   when:
-    - (ansible_facts['distribution'] == "RedHat" and ansible_facts['distribution_major_version'] is version('7', '=='))
-      or ansible_facts['distribution'] == "Amazon and distribution != 'Amazon LInux 2023'"
+    - (ansible_facts['distribution'] == "RedHat" and ansible_facts['distribution_major_version'] is version('7', '==')) or ansible_facts['distribution'] == "Amazon
+      and distribution != 'Amazon LInux 2023'"
     - '"geoip2" in nginx_modules'
   block:
     - name: (Amazon Linux/RHEL 7) Check if libmaxminddb is available
@@ -27,7 +27,7 @@
 
 - name: (Amazon Linux 2023) Install GeoIP2 dependency
   vars:
-    distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
+    distribution: "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}"
   ansible.builtin.dnf:
     enablerepo: nginx-mainline-repo
     disablerepo: amazonlinux
@@ -38,7 +38,7 @@
 
 - name: (AlmaLinux/Amazon Linux/Oracle Linux/RHEL/Rocky Linux) Install GeoIP2 and/or OpenTracing EPEL dependency
   vars:
-    distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
+    distribution: "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}"
   when:
     - ansible_facts['os_family'] != "RedHat"
     - distribution != "Amazon Linux 2023"
@@ -48,11 +48,13 @@
     - name: (AlmaLinux/Amazon Linux/Oracle Linux/RHEL/Rocky Linux) Import EPEL GPG key
       ansible.builtin.rpm_key:
         state: present
-        key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ((ansible_facts['distribution'] == 'Amazon') | ternary('7', ansible_facts['distribution_major_version'])) }}
+        key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ((ansible_facts['distribution'] == 'Amazon') | ternary('7', ansible_facts['distribution_major_version']))
+          }}
 
     - name: (AlmaLinux/Amazon Linux/Oracle Linux/RHEL/Rocky Linux) Install EPEL
       ansible.builtin.yum:
-        name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ((ansible_facts['distribution'] == 'Amazon') | ternary('7', ansible_facts['distribution_major_version'])) }}.noarch.rpm
+        name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ((ansible_facts['distribution'] == 'Amazon') | ternary('7', ansible_facts['distribution_major_version']))
+          }}.noarch.rpm
 
 - name: (Alpine Linux) Install Lua and Encrypted Sessions Alpine Linux 3.17 dependency
   community.general.apk:
@@ -65,21 +67,18 @@
 
 - name: Install NGINX modules
   ansible.builtin.package:
-    name: "nginx-{{ (nginx_type == 'plus') | ternary('plus-', '') }}module-{{ item['name'] | default(item) }}\
-          {{ (nginx_repository is not defined and ansible_facts['os_family'] == 'Alpine' and nginx_type != 'plus') | ternary('@nginx', '') }}{{ item['version'] | default('') }}"
+    name: nginx-{{ (nginx_type == 'plus') | ternary('plus-', '') }}module-{{ item['name'] | default(item) }}{{ (nginx_repository is not defined and ansible_facts['os_family']
+      == 'Alpine' and nginx_type != 'plus') | ternary('@nginx', '') }}{{ item['version'] | default('') }}
     state: "{{ item['state'] | default('present') }}"
   loop: "{{ nginx_modules }}"
   when:
-    - (item['name'] | default(item) in nginx_modules_list and nginx_type == 'opensource')
-      or (item['name'] | default(item) in nginx_plus_modules_list and nginx_type == 'plus')
-    - not (item['name'] | default(item) == 'brotli')
-      or not (ansible_facts['os_family'] == 'Suse' and ansible_facts['distribution_major_version'] is version('12', '=='))
-    - not (item['name'] | default(item) == "geoip")
-      or not ((ansible_facts['os_family'] == 'FreeBSD')
-      or (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('8', '>=')))
-    - not (item['name'] | default(item) == 'geoip2')
-      or not (ansible_facts['os_family'] == 'Suse')
-    - not (item['name'] | default(item) == 'lua')
-      or not (ansible_facts['architecture'] == 's390x')
-    - not (item['name'] | default(item) == 'opentracing')
-      or not (ansible_facts['os_family'] == 'Suse' and ansible_facts['distribution_major_version'] is version('12', '=='))
+    - (item['name'] | default(item) in nginx_modules_list and nginx_type == 'opensource') or (item['name'] | default(item) in nginx_plus_modules_list and nginx_type
+      == 'plus')
+    - not (item['name'] | default(item) == 'brotli') or not (ansible_facts['os_family'] == 'Suse' and ansible_facts['distribution_major_version'] is version('12',
+      '=='))
+    - not (item['name'] | default(item) == "geoip") or not ((ansible_facts['os_family'] == 'FreeBSD') or (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version']
+      is version('8', '>=')))
+    - not (item['name'] | default(item) == 'geoip2') or not (ansible_facts['os_family'] == 'Suse')
+    - not (item['name'] | default(item) == 'lua') or not (ansible_facts['architecture'] == 's390x')
+    - not (item['name'] | default(item) == 'opentracing') or not (ansible_facts['os_family'] == 'Suse' and ansible_facts['distribution_major_version'] is version('12',
+      '=='))

@@ -19,8 +19,8 @@
       when: ansible_facts['selinux']['mode'] is defined
 
 - name: (Amazon Linux 2023) Set up SELinux
-  vars: 
-    distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
+  vars:
+    distribution: "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}"
   when:
     - nginx_selinux | bool
     - "'selinux' in ansible_facts"

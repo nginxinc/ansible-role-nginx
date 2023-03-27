@@ -1,23 +1,24 @@
 ---
 - name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) {{ (nginx_setup == 'uninstall') | ternary('Remove', 'Configure') }} NGINX repository
-  vars: 
-    distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
+  vars:
+    distribution: "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}"
   ansible.builtin.yum_repository:
     name: nginx
-    baseurl: "{{ nginx_repository | default(lookup('vars', 'nginx_default_repository_' + ((ansible_facts['distribution'] == 'Amazon') | ternary('amazon', 'redhat')))) }}"
+    baseurl: "{{ nginx_repository | default(lookup('vars', 'nginx_default_repository_' + ((ansible_facts['distribution'] == 'Amazon') | ternary('amazon', 'redhat'))))\
+      \ }}"
     description: NGINX Repository
     enabled: true
     gpgcheck: true
     mode: "0644"
     module_hotfixes: true
     state: "{{ (nginx_state == 'uninstall') | ternary('absent', 'present') }}"
-  when: 
+  when:
     - nginx_manage_repo | bool
     - distribution != 'Amazon Linux 2023'
 
 - name: (Amazon Linux 2023) {{ (nginx_setup == 'uninstall') | ternary('Remove', 'Configure') }} NGINX stable repository
-  vars: 
-    distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
+  vars:
+    distribution: "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}"
   ansible.builtin.yum_repository:
     name: nginx-stable-repo
     baseurl: http://nginx.org/packages/amzn/2023/$basearch/
@@ -28,13 +29,13 @@
     mode: "0644"
     module_hotfixes: true
     state: "{{ (nginx_state == 'uninstall') | ternary('absent', 'present') }}"
-  when: 
+  when:
     - nginx_manage_repo | bool
     - distribution == 'Amazon Linux 2023'
 
 - name: (Amazon Linux 2023) {{ (nginx_setup == 'uninstall') | ternary('Remove', 'Configure') }} NGINX mainline repository
-  vars: 
-    distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
+  vars:
+    distribution: "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}"
   ansible.builtin.yum_repository:
     name: nginx-mainline-repo
     baseurl: http://nginx.org/packages/mainline/amzn/2023/$basearch/
@@ -45,10 +46,9 @@
     mode: "0644"
     module_hotfixes: true
     state: "{{ (nginx_state == 'uninstall') | ternary('absent', 'present') }}"
-  when: 
+  when:
     - nginx_manage_repo | bool
     - distribution == 'Amazon Linux 2023'
-
 
 - name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) Force Yum cache refresh
   ansible.builtin.command: yum clean metadata
@@ -56,8 +56,8 @@
   changed_when: false
 
 - name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) {{ nginx_setup | capitalize }} NGINX
-  vars: 
-    distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
+  vars:
+    distribution: "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}"
   ansible.builtin.yum:
     name: nginx{{ nginx_version | default('') }}
     state: "{{ nginx_state }}"
@@ -68,10 +68,10 @@
   when: distribution != 'Amazon Linux 2023'
 
 - name: (Amazon Linux 2023) {{ nginx_setup | capitalize }} NGINX
-  vars: 
-    distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
+  vars:
+    distribution: "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}"
   ansible.builtin.dnf:
-    name: nginx{{ nginx_version | default('') }} 
+    name: nginx{{ nginx_version | default('') }}
     disablerepo: amazonlinux
     enablerepo: nginx-mainline-repo
     state: "{{ nginx_state }}"

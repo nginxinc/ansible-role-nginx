@@ -19,7 +19,7 @@
   vars: 
     distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
   ansible.builtin.yum_repository:
-    name: nginx stable repo
+    name: nginx-stable-repo
     baseurl: http://nginx.org/packages/amzn/2023/$basearch/
     gpgcakey: https://nginx.org/keys/nginx_signing.key
     description: NGINX Stable Repository
@@ -36,7 +36,7 @@
   vars: 
     distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
   ansible.builtin.yum_repository:
-    name: nginx mainline repo
+    name: nginx-mainline-repo
     baseurl: http://nginx.org/packages/mainline/amzn/2023/$basearch/
     gpgcakey: https://nginx.org/keys/nginx_signing.key
     description: NGINX Mainline Repository
@@ -73,7 +73,7 @@
   ansible.builtin.dnf:
     name: nginx{{ nginx_version | default('') }} 
     disablerepo: amazonlinux
-    enablerepo: nginx-mainline
+    enablerepo: nginx-mainline-repo
     state: "{{ nginx_state }}"
     update_cache: true
     allow_downgrade: "{{ omit if ansible_version['full'] is version('2.12', '<') else true }}"

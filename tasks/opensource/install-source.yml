@@ -153,11 +153,10 @@
     - name: (Amazon Linux 2023) Install PCRE dependency from package
       vars: 
         distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
-      ansible.builtin.bnf:
+      ansible.builtin.dnf:
         name: "{{ (pcre_release == 2) | ternary('pcre2-devel', 'pcre-devel') }}"
         update_cache: true
       when:
-        - ansible_facts['os_family'] == 'RedHat' 
         - distribution == 'Amazon Linux 2023'
 
     - name: (Debian/Ubuntu) Install PCRE dependency from package
@@ -240,7 +239,6 @@
         name: zlib-devel
         update_cache: true
       when: 
-        - ansible_facts['os_family'] == 'RedHat'
         - distribution == 'Amazon Linux 2023'
 
     - name: (Debian/Ubuntu) Install ZLib dependency from package
@@ -323,7 +321,6 @@
         name: openssl-devel
         update_cache: true
       when:
-        - ansible_facts['os_family'] == 'RedHat' 
         - distribution == 'Amazon Linux 2023'
 
     - name: (Debian/Ubuntu) Install OpenSSL dependency from package

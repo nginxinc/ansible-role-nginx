@@ -29,7 +29,7 @@
   vars:
     distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"
   ansible.builtin.dnf:
-    enablerepo: nginx-mainline
+    enablerepo: nginx-mainline-repo
     disablerepo: amazonlinux
     name: libmaxminddb
   when:

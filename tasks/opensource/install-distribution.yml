@@ -55,10 +55,10 @@
 - name: "{{ nginx_setup | capitalize }} NGINX from the distribution's package repository"
   vars: 
     distribution: "{{ansible_facts['distribution']}} {{ansible_facts['system']}} {{ansible_facts['distribution_version']}}"  
-  ansible.builtin.package:
+  ansible.builtin.dnf:
     name: nginx{{ nginx_version | default('') }}    
-    enablerepo: nginx-mainline
-    repo: nginx-mainline
+    disablerepo: amazonlinux
+    enablerepo: nginx-mainline-repo
     state: "{{ nginx_state }}"
   notify: (Handler) Run NGINX
   when: 

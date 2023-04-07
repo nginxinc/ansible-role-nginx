@@ -5,6 +5,7 @@
 ENHANCEMENTS:
 
 - Refactor the OSS BSD installation process to consolidate tasks and avoid Ansible Lint warnings.
+- Refactor handlers to avoid Ansible Lint warnings.
 - Enable SELinux configuration tasks on Oracle Linux OS.
 
 ## 0.24.0 (January 29, 2023)

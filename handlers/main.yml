@@ -15,7 +15,8 @@
   listen: (Handler) Run NGINX
 
 - name: (Handler) Check NGINX
-  ansible.builtin.command: nginx -t
+  ansible.builtin.command:
+    cmd: nginx -t
   args:
     chdir: "{{ ((ansible_facts['system'] | lower is not search('bsd')) | ternary('/etc/nginx', '/usr/local/sbin')) }}"
   register: config_check
@@ -41,5 +42,21 @@
     name: amplify-agent
     state: started
 
-- name: (Handler) Run logrotate
-  ansible.builtin.command: logrotate -f /etc/logrotate.d/nginx
+- name: (Handler) Start logrotate
+  ansible.builtin.command:
+    cmd: logrotate -f /etc/logrotate.d/nginx
+  register: logrotate_check
+  ignore_errors: true
+  check_mode: false
+  changed_when: false
+  listen: (Handler) Run logrotate
+
+- name: (Handler) Print logrotate error if config check fails
+  ansible.builtin.debug:
+    var: logrotate_check.stderr_lines
+  failed_when: logrotate_check['rc'] != 0
+  when:
+    - logrotate_check['stderr_lines'] is defined
+    - logrotate_check['stderr_lines'] != []
+    - logrotate_check['rc'] != 0
+  listen: (Handler) Run logrotate

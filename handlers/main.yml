@@ -42,14 +42,14 @@
     name: amplify-agent
     state: started
 
-- name: (Handler) Load logrotate config
+- name: (Handler) Start logrotate
   ansible.builtin.command:
     cmd: logrotate -f /etc/logrotate.d/nginx
   register: logrotate_check
   ignore_errors: true
   check_mode: false
   changed_when: false
-  listen: (Handler) Start logrotate
+  listen: (Handler) Run logrotate
 
 - name: (Handler) Print logrotate error if config check fails
   ansible.builtin.debug:
@@ -59,4 +59,4 @@
     - logrotate_check['stderr_lines'] is defined
     - logrotate_check['stderr_lines'] != []
     - logrotate_check['rc'] != 0
-  listen: (Handler) Start logrotate
+  listen: (Handler) Run logrotate

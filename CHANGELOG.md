@@ -8,6 +8,11 @@ ENHANCEMENTS:
 - Refactor handlers to avoid Ansible Lint warnings.
 - Enable SELinux configuration tasks on Oracle Linux OS.
 
+CI/CD:
+
+- Replace `molecule[docker]` with `molecule` and `molecule-plugins[docker]`.
+- Add pre-releases to Release Drafter.
+
 ## 0.24.0 (January 29, 2023)
 
 BREAKING CHANGES:

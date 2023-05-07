@@ -7,4 +7,4 @@ collections:
   - name: community.crypto # Only required if you plan to install NGINX Plus
     version: 2.10.0
   - name: community.docker # Only required if you plan to use Molecule
-    version: 3.4.0
+    version: 3.4.5

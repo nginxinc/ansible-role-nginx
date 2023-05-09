@@ -2,11 +2,22 @@
 
 ## 0.24.1 (Unreleased)
 
+FEATURES:
+
+- Remove Alpine Linux 3.13 from the list of NGINX Plus tested and supported distributions.
+
 ENHANCEMENTS:
 
 - Refactor the OSS BSD installation process to consolidate tasks and avoid Ansible Lint warnings.
 - Refactor handlers to avoid Ansible Lint warnings.
 - Enable SELinux configuration tasks on Oracle Linux OS.
+- Bump the Ansible `ansible.posix` collection to `1.5.2`, `community.general` collection to `6.4.0`, `community.crypto` collection to `2.13.0` and `community.docker` collection to `3.4.5`.
+
+CI/CD:
+
+- Replace `molecule[docker]` with `molecule` and `molecule-plugins[docker]`.
+- Explicitly set the `ansible-compat` version.
+- Add pre-releases to Release Drafter.
 
 ## 0.24.0 (January 29, 2023)
 

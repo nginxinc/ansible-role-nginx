@@ -15,6 +15,7 @@ ENHANCEMENTS:
 
 CI/CD:
 
+- Split Ansible Lint into its own GH actions job since Molecule no longer runs linters natively.
 - Replace `molecule[docker]` with `molecule` and `molecule-plugins[docker]`.
 - Explicitly set the `ansible-compat` version.
 - Add pre-releases to Release Drafter.

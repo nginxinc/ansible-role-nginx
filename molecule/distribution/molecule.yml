@@ -1,9 +1,6 @@
 ---
 driver:
   name: docker
-lint: |
-  set -e
-  ansible-lint --force-color
 platforms: # The RHEL UBI 7 image fails to install some NGINX dependencies when installing NGINX from EPEL. The role works as expected when targeting a RHEL 7 VM instead.
   - name: almalinux-8
     image: almalinux:8

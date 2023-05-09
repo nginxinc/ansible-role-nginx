@@ -1,9 +1,6 @@
 ---
 driver:
   name: docker
-lint: |
-  set -e
-  ansible-lint --force-color
 platforms: # Alpine 3.17 only has one version of NGINX Plus available (at the moment) so it's impossible to test the upgrade scenario
   - name: almalinux-8
     image: almalinux:8

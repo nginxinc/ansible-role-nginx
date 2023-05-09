@@ -1,9 +1,6 @@
 ---
 driver:
   name: docker
-lint: |
-  set -e
-  ansible-lint --force-color
 platforms: # Ubuntu bionic results in a segmentation fault error as of Ansible core 2.13
   - name: almalinux-8
     image: almalinux:8

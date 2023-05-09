@@ -13,6 +13,23 @@ on:
     - cron: "0 0 1 * *"
   workflow_dispatch:
 jobs:
+  lint:
+    name: Linter
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out the codebase
+        uses: actions/checkout@v3
+
+      - name: Set up Python 3
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+
+      - name: Install Ansible Lint
+        run: pip3 install ansible-lint
+
+      - name: Run Ansible Lint
+        run: ansible-lint
   molecule:
     name: Molecule
     runs-on: ubuntu-22.04
@@ -35,6 +52,7 @@ jobs:
           - upgrade
           - upgrade-plus
           - version
+    needs: lint
     steps:
       - name: Check out the codebase
         if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}

@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
 jobs:
   ansible-lint:
-    name: Linter
+    name: Ansible Lint
     runs-on: ubuntu-22.04
     steps:
       - name: Check out the codebase

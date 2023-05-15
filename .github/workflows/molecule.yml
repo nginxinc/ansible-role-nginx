@@ -26,10 +26,14 @@ jobs:
           python-version: 3.x
 
       - name: Install Ansible Lint
-        run: pip3 install ansible-lint
+        run: pip3 install ansible-core ansible-lint
+
+      - name: Install Ansible collection dependencies
+        run: ansible-galaxy install -r .github/workflows/requirements/requirements_ansible.yml
 
       - name: Run Ansible Lint
         run: ansible-lint
+
   molecule:
     name: Molecule
     runs-on: ubuntu-22.04
@@ -74,7 +78,7 @@ jobs:
         if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}
         run: pip3 install -r .github/workflows/requirements/requirements_molecule.txt
 
-      - name: Install Ansible core dependencies
+      - name: Install Ansible collection dependencies
         if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}
         run: ansible-galaxy install -r .github/workflows/requirements/requirements_ansible.yml
 

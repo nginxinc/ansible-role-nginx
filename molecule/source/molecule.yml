@@ -1,9 +1,6 @@
 ---
 driver:
   name: docker
-lint: |
-  set -e
-  ansible-lint --force-color
 platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions for some undetermined reason
   - name: almalinux-8
     image: almalinux:8

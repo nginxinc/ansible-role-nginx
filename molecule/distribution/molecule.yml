@@ -36,6 +36,7 @@ platforms: # The RHEL UBI 7 image fails to install some NGINX dependencies when 
     command: /sbin/init
   - name: alpine-3.16
     image: alpine:3.16
+    platform: x86_64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -44,6 +45,7 @@ platforms: # The RHEL UBI 7 image fails to install some NGINX dependencies when 
     command: /sbin/init
   - name: alpine-3.17
     image: alpine:3.17
+    platform: aarch64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -52,7 +54,7 @@ platforms: # The RHEL UBI 7 image fails to install some NGINX dependencies when 
     command: /sbin/init
   - name: amazonlinux-2
     image: amazonlinux:2
-    platform: amd64
+    platform: x86_64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -61,7 +63,7 @@ platforms: # The RHEL UBI 7 image fails to install some NGINX dependencies when 
     command: /usr/sbin/init
   - name: centos-7
     image: centos:7
-    platform: amd64
+    platform: x86_64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -78,7 +80,7 @@ platforms: # The RHEL UBI 7 image fails to install some NGINX dependencies when 
     command: /sbin/init
   - name: oraclelinux-7
     image: oraclelinux:7
-    platform: amd64
+    platform: x86_64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -103,6 +105,7 @@ platforms: # The RHEL UBI 7 image fails to install some NGINX dependencies when 
     command: /usr/sbin/init
   - name: rhel-8
     image: redhat/ubi8:8.7
+    platform: s390x
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -111,6 +114,7 @@ platforms: # The RHEL UBI 7 image fails to install some NGINX dependencies when 
     command: /usr/sbin/init
   - name: rhel-9
     image: redhat/ubi9:9.1.0
+    platform: aarch64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -135,7 +139,7 @@ platforms: # The RHEL UBI 7 image fails to install some NGINX dependencies when 
     command: /usr/sbin/init
   - name: sles15
     image: registry.suse.com/bci/bci-base:15.4
-    platform: amd64
+    platform: x86_64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -144,6 +148,7 @@ platforms: # The RHEL UBI 7 image fails to install some NGINX dependencies when 
     command: /usr/sbin/init
   - name: ubuntu-bionic
     image: ubuntu:bionic
+    platform: x86_64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -152,6 +157,7 @@ platforms: # The RHEL UBI 7 image fails to install some NGINX dependencies when 
     command: /sbin/init
   - name: ubuntu-focal
     image: ubuntu:focal
+    platform: s390x
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -160,6 +166,7 @@ platforms: # The RHEL UBI 7 image fails to install some NGINX dependencies when 
     command: /sbin/init
   - name: ubuntu-jammy
     image: ubuntu:jammy
+    platform: aarch64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host

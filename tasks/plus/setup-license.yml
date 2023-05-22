@@ -66,8 +66,10 @@
     - name: (Debian/Red Hat/SLES OSs) Install cryptography package
       ansible.builtin.package:
         name: "{{ (ansible_python['version']['major'] == 3) | ternary('python3-cryptography', 'python2-cryptography') }}"
-      when: (ansible_facts['distribution'] != "OracleLinux" and ansible_facts['distribution_major_version'] != "8")
-
+      when:        
+        - ansible_facts['distribution'] != "OracleLinux"
+        - ansible_facts['distribution_major_version'] != "8"
+        
     - name: (OracleLinux 8) Install cryptography package
       ansible.builtin.package:
         name: "python3.11-cryptography"

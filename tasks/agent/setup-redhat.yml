@@ -1,9 +1,12 @@
 ---
-- name: (Amazon Linux/CentOS/RHEL) Add NGINX Agent repository
+- name: (RHEL/CentOS/Rocky Linux/AlmaLinux/Oracle Linux) Add NGINX Agent repository
   ansible.builtin.yum_repository:
-    name: nginx-amplify
-    baseurl: https://pkgs.nginx.com/nginx-agent/{{ (ansible_facts['distribution_major_version'] is version('7', '==')) }}{{ (ansible_facts['distribution'] == 'Amazon') | ternary('amzn', 'centos') }}/$releasever/$basearch/
-    description: NGINX Amplify Agent
+    name: nginx-agent
+    file: nginx-agent
+    baseurl: https://{{ nginx_agent_repo }}/nginx-agent/{{ (ansible_facts['distribution'] == 'Amazon') | ternary('amzn', 'centos') }}/$releasever/$basearch/
+    description: NGINX Agent
     enabled: true
     gpgcheck: true
+    gpgkey: https://nginx.org/keys/nginx_signing.key
+    module_hotfixes: true
     mode: "0644"

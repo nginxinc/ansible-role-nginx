@@ -42,6 +42,12 @@
     name: amplify-agent
     state: started
 
+- name: (Handler) Start NGINX Agent
+  ansible.builtin.service:
+    name: nginx-agent
+    state: started
+    enabled: true
+
 - name: (Handler) Start logrotate
   ansible.builtin.command:
     cmd: logrotate -f /etc/logrotate.d/nginx

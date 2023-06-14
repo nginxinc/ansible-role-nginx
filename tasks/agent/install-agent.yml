@@ -8,10 +8,16 @@
     name: nginx-agent
     state: present
 
-- name: Copy NGINX configurator Agent configuration template
-  ansible.builtin.copy:
-    remote_src: true
-    src: /etc/nginx-agent/nginx-agent.conf.default
-    dest: /etc/nginx-agent/nginx-agent.conf
-    mode: "0644"
+# TODO - after installing NGINX Agent /etc/nginx-agent/nginx-agent.conf.default does not exist
+#- name: Copy NGINX configurator Agent configuration template
+#  ansible.builtin.copy:
+#    remote_src: true
+#    src: /etc/nginx-agent/nginx-agent.conf.default
+#    dest: /etc/nginx-agent/nginx-agent.conf
+#    mode: "0644"
 
+- name: Start NGINX Agent
+  ansible.builtin.service:
+    name: nginx-agent
+    state: started
+    enabled: true

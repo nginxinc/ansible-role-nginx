@@ -81,3 +81,9 @@
     - nginx_amplify_api_key is defined
     - nginx_amplify_api_key | length > 0
   tags: nginx_install_amplify
+
+- name: Install NGINX Agent
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/agent/install-agent.yml"
+  when:
+    - nginx_agent_enable | bool
+  tags: nginx_install_agent

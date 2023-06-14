@@ -1,0 +1,9 @@
+---
+- name: (Debian/Ubuntu) Add NGINX Agent repository
+  ansible.builtin.apt_repository:
+    filename: nginx-agent
+    repo: deb [arch=amd64 signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] https://pkgs.nginx.com/nginx-agent/{{ ansible_facts['distribution'] | lower }}/{{ ansible_facts['distribution_release'] | lower }} nginx-agent
+    update_cache: true
+    mode: "0644"
+
+# TODO conditional on arch and nginx_agent_repo for URL in repo

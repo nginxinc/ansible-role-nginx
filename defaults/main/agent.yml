@@ -1,0 +1,6 @@
+---
+# Install NGINX Agent.
+# Requires access to either the NGINX stub_status or the NGINX Plus REST API.
+# Default is null.
+nginx_agent_enable: false
+nginx_agent_repo: packages.nginx.org

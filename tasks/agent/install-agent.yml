@@ -1,0 +1,17 @@
+---
+- name: Configure NGINX Agent repository
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/agent/setup-{{ ansible_facts['os_family'] | lower }}.yml"
+  when: ansible_facts['os_family'] in ['Debian', 'RedHat']
+
+- name: Install NGINX Agent
+  ansible.builtin.package:
+    name: nginx-agent
+    state: present
+
+- name: Copy NGINX configurator Agent configuration template
+  ansible.builtin.copy:
+    remote_src: true
+    src: /etc/nginx-agent/nginx-agent.conf.default
+    dest: /etc/nginx-agent/nginx-agent.conf
+    mode: "0644"
+

@@ -6,7 +6,7 @@
 
 # Ansible NGINX Role
 
-This role installs NGINX Open Source, NGINX Plus, or the NGINX Amplify agent on your target host.
+This role installs NGINX Open Source, NGINX Plus, NGINX Agent or the NGINX Amplify agent on your target host.
 
 **Note:** This role is still in active development. There may be unidentified issues and the role variables may change as development continues.
 
@@ -175,6 +175,48 @@ Red Hat:
 Ubuntu:
   - bionic
   - focal
+```
+
+### NGINX Agent
+
+```yaml
+AlmaLinux:
+  - 8
+  - 9
+Alpine:
+  - 3.13
+  - 3.14
+  - 3.15
+  - 3.16
+  - 3.17
+Amazon Linux 2:
+  - any
+Debian:
+  - buster (10)
+  - bullseye (11)
+CentOS:
+  - 7.4+
+FreeBSD:
+  - 12.1+
+  - 13
+Oracle Linux:
+  - 7.4+
+  - 8
+  - 9
+Red Hat:
+  - 7
+  - 8
+  - 9
+Rocky Linux:
+  - 8
+  - 9
+SUSE/SLES:
+  - 12
+  - 15
+Ubuntu:
+  - bionic
+  - focal
+  - jammy
 ```
 
 **Note:** You can also use this role to compile NGINX Open Source from source, install NGINX Open Source on compatible yet unsupported platforms, or install NGINX Open Source on BSD systems at your own risk.

@@ -16,8 +16,15 @@
 #    dest: /etc/nginx-agent/nginx-agent.conf
 #    mode: "0644"
 
-- name: Start NGINX Agent
-  ansible.builtin.service:
-    name: nginx-agent
-    state: started
-    enabled: true
+#TODO - add in when NMS vars are present to both below tasks
+- name: Copy NGINX Agent config fragment for NGINX Management Suite
+  ansible.builtin.template:
+    src: nginx-agent/nms-nginx-agent.conf.j2
+    dest: /etc/nginx-agent/nms-nginx-agent-fragment.conf
+    mode: "0644"
+
+- name: Assemble NGINX Agent config fragment
+  ansible.builtin.assemble:
+    src: /etc/nginx-agent
+    dest: /etc/nginx-agent/nginx-agent.conf
+  notify: (Handler) Start/reloaded NGINX Agent

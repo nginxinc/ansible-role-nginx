@@ -1,0 +1,26 @@
+# specify the server grpc port to connect to
+server:
+  # host of the control plane
+{% if nms_server_host is defined %}
+  host: {{ nms_server_host }}
+{% endif %}
+{% if nms_server_port is defined %}
+  grpcPort: {{ nms_server_port }}
+{% endif %}
+
+
+# tls options
+tls:
+  # enable tls in the nginx-agent setup for grpcs
+  # default to enable to connect with tls connection but without client cert for mtls
+{% if nms_tls_enable is defined %}
+  enable: {{ nms_tls_enable }}
+{% endif %}
+{% if nms_tls_skip_verify is defined %}
+  skip_verify: {{ nms_tls_skip_verify }}
+{% endif %}
+  # path to ca certificate file used for server cert validation
+  ca: ""
+  # path to cert and key files for mTLS
+  cert: ""
+  key: ""

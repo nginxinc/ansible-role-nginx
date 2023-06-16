@@ -1,0 +1,25 @@
+---
+
+- name: Add NGINX Management Suite config to NGINX Agent config
+  ansible.builtin.blockinfile:
+    backup: true
+    mode: "0644"
+    path: /etc/nginx-agent/nginx-agent.conf
+    block: |
+      # specify the server grpc port to connect to
+      server:
+        # host of the control plane
+        host: {{ nms_server_host }}
+        grpcPort: {{ nms_server_port }}
+
+      # tls options
+      tls:
+        # enable tls in the nginx-agent setup for grpcs
+        # default to enable to connect with tls connection but without client cert for mtls
+        enable: {{ nms_tls_enable | lower }}
+        skip_verify: {{ nms_tls_skip_verify | lower }}
+        # path to ca certificate file used for server cert validation
+        ca: {{ nms_tls_ca }}
+        # path to cert and key files for mTLS
+        cert: {{ nms_tls_cert }}
+        key: {{ nms_tls_key }}

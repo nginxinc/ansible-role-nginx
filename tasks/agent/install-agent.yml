@@ -7,24 +7,8 @@
   ansible.builtin.package:
     name: nginx-agent
     state: present
-
-# TODO - after installing NGINX Agent /etc/nginx-agent/nginx-agent.conf.default does not exist
-#- name: Copy NGINX configurator Agent configuration template
-#  ansible.builtin.copy:
-#    remote_src: true
-#    src: /etc/nginx-agent/nginx-agent.conf.default
-#    dest: /etc/nginx-agent/nginx-agent.conf
-#    mode: "0644"
-
-#TODO - add in when NMS vars are present to both below tasks
-- name: Copy NGINX Agent config fragment for NGINX Management Suite
-  ansible.builtin.template:
-    src: nginx-agent/nms-nginx-agent.conf.j2
-    dest: /etc/nginx-agent/nms-nginx-agent-fragment.conf
-    mode: "0644"
-
-- name: Assemble NGINX Agent config fragment
-  ansible.builtin.assemble:
-    src: /etc/nginx-agent
-    dest: /etc/nginx-agent/nginx-agent.conf
   notify: (Handler) Start/reloaded NGINX Agent
+
+- name: Configure NGINX Agent with NGINX Management Suite
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/agent/config-nms.yml"
+  when: nms_server_host is defined

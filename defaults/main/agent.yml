@@ -4,3 +4,19 @@
 # Default is null.
 nginx_agent_enable: false
 nginx_agent_repo: packages.nginx.org
+
+# Specify the grpc server
+nms_server_host: null # host of the control plane
+nms_server_port: 443 # port of the control plane
+
+# Enable tls in the nginx-agent setup for grpc
+# Default to enable to connect with tls connection but without client cert for mtls
+nms_tls_enable: true
+nms_tls_skip_verify: true
+
+# Path to ca certificate file used for server cert validation
+nms_tls_ca: ""
+
+# Path to cert and key files for mTLS
+nms_tls_cert: ""
+nms_tls_key: ""

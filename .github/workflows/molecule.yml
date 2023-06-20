@@ -78,7 +78,7 @@ jobs:
         if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}
         run: pip3 install -r .github/workflows/requirements/requirements_molecule.txt
 
-      - name: Install Ansible collection dependencies
+      - name: Install Ansible core collection dependencies
         if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}
         run: ansible-galaxy install -r .github/workflows/requirements/requirements_ansible.yml
 

@@ -263,7 +263,7 @@ ENHANCEMENTS:
 - Specify GitHub Actions Ubuntu release.
 - Minor GitHub template tweaks, including the creation of a SECURITY doc.
 - Add Molecule NGINX OSS tests for Alpine 3.13, remove Molecule tests for Debian stretch, and update list of supported platforms.
-- Update Ansible base to `2.10.8`, Ansible Lint to `5.0.7`, Molecule to `3.3.0`, yamllint to `1.26.1` and Docker Python SDK to `5.0.0`.
+- Update Ansible base to `2.10.8`, Ansible Lint to `5.0.7`, Molecule to `3.3.0`, Yamllint to `1.26.1` and Docker Python SDK to `5.0.0`.
 - Consolidate Molecule testing scenarios to address changes introduced in Ansible Lint `5.*`.
 - Override of systemd `Restart` value by using proper `nginx_service_restart` variable.
 
@@ -335,7 +335,7 @@ ENHANCEMENTS:
 
 - Add survey to README.
 - Improve README structure and use tables where relevant.
-- Update Ansible (now Ansible base) to `2.10.3`, Ansible (now Ansible Community Distribution) to `2.10.3`, Ansible Lint to `4.3.7`, Molecule to `3.1.5`, and yamllint to `1.25.0`.
+- Update Ansible (now Ansible base) to `2.10.3`, Ansible (now Ansible Community Distribution) to `2.10.3`, Ansible Lint to `4.3.7`, Molecule to `3.1.5`, and Yamllint to `1.25.0`.
 - Optimize NGINX Plus install/remove tasks.
 
 BUG FIXES:

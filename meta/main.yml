@@ -15,7 +15,7 @@ galaxy_info:
     - name: Amazon Linux
       versions: ['2', '2023']
     - name: Debian
-      versions: [bullseye]
+      versions: [bullseye, bookworm]
     - name: EL
       versions: ['7', '8', '9']
     - name: FreeBSD

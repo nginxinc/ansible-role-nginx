@@ -92,16 +92,17 @@ AlmaLinux:
   - 8
   - 9
 Alpine:
-  - 3.14
   - 3.15
   - 3.16
   - 3.17
+  - 3.18
 Amazon Linux:
   - 2
 CentOS:
   - 7.4+
 Debian:
   - bullseye (11)
+  - bookworm (12)
 Oracle Linux:
   - 7
   - 8

@@ -4,6 +4,8 @@
 
 FEATURES:
 
+- Add Alpine Linux 3.18 and Debian bookworm to the list of NGINX OSS tested and supported distributions.
+- Remove Alpine Linux 3.14 from the list of NGINX OSS tested and supported distributions.
 - Remove Alpine Linux 3.13 from the list of NGINX Plus tested and supported distributions.
 
 ENHANCEMENTS:
@@ -44,7 +46,8 @@ FEATURES:
 - Validate that various role variables have been set to one of the allowed values.
 - Add support for the newer `ndk` and `set-misc` NGINX Plus dynamic modules and remove old code checks for distributions that are no longer supported.
 - Add AlmaLinux, Oracle Linux and Rocky Linux to the list of NGINX OSS and NGINX Plus tested and supported distributions.
-- Add Alpine Linux 3.17 to the NGINX list of tested and supported platforms (and remove Alpine Linux 3.13 from the list of NGINX OSS supported distributions).
+- Add Alpine Linux 3.17 to the NGINX list of tested and supported platforms.
+- Remove Alpine Linux 3.13 from the list of NGINX OSS supported distributions.
 
 ENHANCEMENTS:
 

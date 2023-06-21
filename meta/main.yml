@@ -21,7 +21,7 @@ galaxy_info:
     - name: FreeBSD
       versions: ['12.1']
     - name: Ubuntu
-      versions: [bionic, focal, impish, jammy]
+      versions: [focal, jammy, kinetic, lunar]
     - name: SLES
       versions: ['12', '15']
 

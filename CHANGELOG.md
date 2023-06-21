@@ -4,7 +4,7 @@
 
 FEATURES:
 
-- Add Alpine Linux 3.18 and Debian bookworm to the list of NGINX OSS tested and supported distributions.
+- Add Alpine Linux 3.18, Debian bookworm, and Ubuntu kinetic/lunar to the list of NGINX OSS tested and supported distributions.
 - Remove Alpine Linux 3.14 from the list of NGINX OSS tested and supported distributions.
 - Remove Alpine Linux 3.13 from the list of NGINX Plus tested and supported distributions.
 

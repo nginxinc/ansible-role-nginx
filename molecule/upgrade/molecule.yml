@@ -163,15 +163,6 @@ platforms:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
-  - name: ubuntu-bionic
-    image: ubuntu:bionic
-    platform: x86_64
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    cgroupns_mode: host
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /sbin/init
   - name: ubuntu-focal
     image: ubuntu:focal
     platform: s390x
@@ -184,6 +175,23 @@ platforms:
   - name: ubuntu-jammy
     image: ubuntu:jammy
     platform: aarch64
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    cgroupns_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
+  - name: ubuntu-kinetic
+    image: ubuntu:kinetic
+    platform: x86_64
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    cgroupns_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
+  - name: ubuntu-lunar
+    image: ubuntu:lunar
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host

@@ -46,7 +46,6 @@ platforms:
     command: /sbin/init
   - name: alpine-3.18
     image: alpine:3.18
-    platform: aarch64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host

@@ -46,7 +46,6 @@ platforms: # The RHEL UBI 7 image fails to install some NGINX dependencies when 
     command: /sbin/init
   - name: alpine-3.18
     image: alpine:3.18
-    platform: aarch64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host

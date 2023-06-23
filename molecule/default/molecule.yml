@@ -122,7 +122,7 @@ platforms:
     command: /usr/sbin/init
   - name: rhel-8
     image: redhat/ubi8:8.7
-    platform: s390x
+    # platform: s390x
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -165,7 +165,7 @@ platforms:
     command: /usr/sbin/init
   - name: ubuntu-focal
     image: ubuntu:focal
-    platform: s390x
+    # platform: s390x
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host

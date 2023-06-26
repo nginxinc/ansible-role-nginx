@@ -155,15 +155,15 @@ platforms: # Ubuntu bionic results in a segmentation fault error as of Ansible c
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
-  - name: ubuntu-bionic
-    image: ubuntu:bionic
-    # platform: x86_64
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    cgroupns_mode: host
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /sbin/init
+  # - name: ubuntu-bionic
+  #   image: ubuntu:bionic
+  #   platform: x86_64
+  #   dockerfile: ../common/Dockerfile.j2
+  #   privileged: true
+  #   cgroupns_mode: host
+  #   volumes:
+  #     - /sys/fs/cgroup:/sys/fs/cgroup:rw
+  #   command: /sbin/init
   - name: ubuntu-focal
     image: ubuntu:focal
     # platform: s390x

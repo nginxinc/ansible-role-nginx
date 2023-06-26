@@ -16,11 +16,16 @@ ENHANCEMENTS:
 - Bump the Ansible `ansible.posix` collection to `1.5.4`, `community.general` collection to `7.1.0`, `community.crypto` collection to `2.14.0` and `community.docker` collection to `3.4.7`.
 - Oracle Linux 8 requires the Python `python3.11-cryptography` package for validating the NGINX Plus repository certificate.
 
+BUG FIXES:
+
+- Fix an issue with the platform validation logic whereas distro versions ending in `*.*0` would not be correctly identified.
+
 CI/CD:
 
+- Comment out the platform parameter out of Molecule tests. QEMU based tests are failing when trying to test the newest supported distros.
 - Split Ansible Lint into its own GitHub Actions job since Molecule no longer runs linters natively.
 - Replace `molecule[docker]` with `molecule` and `molecule-plugins[docker]`.
-- Explicitly set the `ansible-compat` version (commented out for the time being whilst waiting for a new release of Molecule).
+- Explicitly set the `ansible-compat` version.
 - Add pre-releases to Release Drafter.
 
 ## 0.24.0 (January 29, 2023)

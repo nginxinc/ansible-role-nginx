@@ -111,15 +111,15 @@ platforms: # The RHEL UBI 7 image fails to install some NGINX dependencies when 
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
-  - name: rhel-7
-    image: registry.access.redhat.com/ubi7:7.9
-    # platform: x86_64
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    cgroupns_mode: host
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /usr/sbin/init
+  # - name: rhel-7
+  #   image: registry.access.redhat.com/ubi7:7.9
+  #   platform: x86_64
+  #   dockerfile: ../common/Dockerfile.j2
+  #   privileged: true
+  #   cgroupns_mode: host
+  #   volumes:
+  #     - /sys/fs/cgroup:/sys/fs/cgroup:rw
+  #   command: /usr/sbin/init
   - name: rhel-8
     image: redhat/ubi8:8.7
     # platform: s390x

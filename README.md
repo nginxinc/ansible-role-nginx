@@ -27,7 +27,7 @@ If you wish to install NGINX Plus using this role, you will need to obtain an NG
       - name: ansible.posix
         version: 1.5.4
       - name: community.general
-        version: 7.1.0
+        version: 6.5.0
       - name: community.crypto # Only required if you plan to install NGINX Plus
         version: 2.14.0
       - name: community.docker # Only required if you plan to use Molecule (see below)

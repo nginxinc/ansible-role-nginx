@@ -13,7 +13,7 @@ ENHANCEMENTS:
 - Refactor the OSS BSD installation process to consolidate tasks and avoid Ansible Lint warnings.
 - Refactor handlers to avoid Ansible Lint warnings.
 - Enable SELinux configuration tasks on Oracle Linux OS.
-- Bump the Ansible `ansible.posix` collection to `1.5.4`, `community.general` collection to `7.1.0`, `community.crypto` collection to `2.14.0` and `community.docker` collection to `3.4.7`.
+- Bump the Ansible `ansible.posix` collection to `1.5.4`, `community.general` collection to `6.5.0`, `community.crypto` collection to `2.14.0` and `community.docker` collection to `3.4.7`.
 - Oracle Linux 8 requires the Python `python3.11-cryptography` package for validating the NGINX Plus repository certificate.
 
 BUG FIXES:

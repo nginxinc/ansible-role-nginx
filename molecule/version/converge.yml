@@ -25,7 +25,7 @@
   tasks:
     - name: Install NGINX
       ansible.builtin.include_role:
-        name: ansible-role-nginx
+        name: nginxinc.nginx
       vars:
         nginx_version: "{{ ngx_version }}"
         nginx_modules:

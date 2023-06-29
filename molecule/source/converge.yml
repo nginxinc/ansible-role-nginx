@@ -4,7 +4,7 @@
   tasks:
     - name: Install NGINX from source
       ansible.builtin.include_role:
-        name: ansible-role-nginx
+        name: nginxinc.nginx
       vars:
         nginx_install_from: source
         nginx_branch: stable

@@ -12,16 +12,16 @@ galaxy_info:
   platforms:
     - name: Alpine
       versions: [all]
-    - name: Amazon Linux 2
-      versions: [all]
+    - name: Amazon Linux
+      versions: ['2', '2023']
     - name: Debian
-      versions: [bullseye]
+      versions: [bullseye, bookworm]
     - name: EL
       versions: ['7', '8', '9']
     - name: FreeBSD
       versions: ['12.1']
     - name: Ubuntu
-      versions: [bionic, focal, impish, jammy]
+      versions: [focal, jammy, kinetic, lunar]
     - name: SLES
       versions: ['12', '15']
 

@@ -13,6 +13,27 @@ on:
     - cron: "0 0 1 * *"
   workflow_dispatch:
 jobs:
+  ansible-lint:
+    name: Ansible Lint
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out the codebase
+        uses: actions/checkout@v3
+
+      - name: Set up Python 3
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+
+      - name: Install Ansible Lint
+        run: pip3 install -r .github/workflows/requirements/requirements_ansible_lint.txt
+
+      - name: Install Ansible collection dependencies
+        run: ansible-galaxy install -r .github/workflows/requirements/requirements_ansible.yml
+
+      - name: Run Ansible Lint
+        run: ansible-lint --force-color
+
   molecule:
     name: Molecule
     runs-on: ubuntu-22.04
@@ -35,16 +56,17 @@ jobs:
           - upgrade
           - upgrade-plus
           - version
+    needs: ansible-lint
     steps:
       - name: Check out the codebase
         if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}
         uses: actions/checkout@v3
 
-      - name: Set up Docker QEMU
-        if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}
-        uses: docker/setup-qemu-action@v2
-        with:
-          platforms: aarch64,s390x
+      # - name: Set up Docker QEMU
+      #   if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}
+      #   uses: docker/setup-qemu-action@v2
+      #   with:
+      #     platforms: aarch64,s390x
 
       - name: Set up Python 3
         if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}
@@ -56,7 +78,7 @@ jobs:
         if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}
         run: pip3 install -r .github/workflows/requirements/requirements_molecule.txt
 
-      - name: Install Ansible core dependencies
+      - name: Install Ansible core collection dependencies
         if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}
         run: ansible-galaxy install -r .github/workflows/requirements/requirements_ansible.yml
 

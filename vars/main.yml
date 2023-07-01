@@ -30,6 +30,7 @@ nginx_supported_distributions:
     name: Amazon Linux
     versions: [2, 2023]
     architectures: [x86_64, aarch64]
+    distribution: "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}"
   centos:
     name: CentOS
     versions: [7]
@@ -73,7 +74,7 @@ nginx_plus_supported_distributions:
     architectures: [x86_64, aarch64]
   amazon:
     name: Amazon Linux
-    versions: [2]
+    versions: [2, 2023]
     architectures: [x86_64, aarch64]
   centos:
     name: CentOS

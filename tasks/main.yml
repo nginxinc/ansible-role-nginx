@@ -10,7 +10,8 @@
 
 - name: Set up signing keys
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/keys/setup-keys.yml"
-  when: (nginx_enable | bool and nginx_install_from == 'nginx_repository') or nginx_amplify_enable | bool
+  when: (nginx_enable | bool and nginx_install_from == 'nginx_repository') or 
+        (nginx_amplify_enable | bool)
   tags: nginx_key
 
 - name: "{{ nginx_setup | capitalize }} NGINX"

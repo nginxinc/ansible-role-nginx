@@ -48,8 +48,6 @@
           when: ansible_facts['distribution_major_version'] is version('8', '==')
 
         - name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) Install build tools
-          vars:
-            distribution: "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}"
           ansible.builtin.yum:
             name:
               - ca-certificates
@@ -66,11 +64,9 @@
               - wget
               - zlib-devel
             update_cache: true
-          when: distribution != 'Amazon Linux 2023'
+          when: "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}" != 'Amazon Linux 2023'
 
         - name: (Amazon Linux 2023) Install build tools
-          vars:
-            distribution: "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}"
           ansible.builtin.dnf:
             name:
               - ca-certificates
@@ -87,7 +83,7 @@
               - wget
               - zlib-devel
             update_cache: true
-          when: distribution == 'Amazon Linux 2023'
+          when: "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}" == 'Amazon Linux 2023'
 
     - name: (Debian/Ubuntu) Install build tools
       ansible.builtin.apt:
@@ -141,23 +137,19 @@
       when: ansible_facts['os_family'] == 'Alpine'
 
     - name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) Install PCRE dependency from package
-      vars:
-        distribution: "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}"
       ansible.builtin.yum:
         name: "{{ (pcre_release == 2) | ternary('pcre2-devel', 'pcre-devel') }}"
         update_cache: true
       when:
         - ansible_facts['os_family'] == 'RedHat'
-        - distribution != 'Amazon Linux 2023'
+        - "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}" != 'Amazon Linux 2023'
 
     - name: (Amazon Linux 2023) Install PCRE dependency from package
-      vars:
-        distribution: "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}"
       ansible.builtin.dnf:
         name: "{{ (pcre_release == 2) | ternary('pcre2-devel', 'pcre-devel') }}"
         update_cache: true
       when:
-        - distribution == 'Amazon Linux 2023'
+        - "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}" == 'Amazon Linux 2023'
 
     - name: (Debian/Ubuntu) Install PCRE dependency from package
       ansible.builtin.apt:
@@ -179,8 +171,7 @@
   block:
     - name: Download PCRE dependency
       ansible.builtin.get_url:
-        url: "{{ (pcre_release == 2) | ternary('https://github.com/PCRE2Project/pcre2/releases/download/pcre2-' ~ pcre_version ~ '/pcre2-' ~ pcre_version ~ '.tar.gz',\
-          \ 'https://ftp.exim.org/pub/pcre/pcre-' ~ pcre_version ~ '.tar.gz') }}"
+        url: "{{ (pcre_release == 2) | ternary('https://github.com/PCRE2Project/pcre2/releases/download/pcre2-' ~ pcre_version ~ '/pcre2-' ~ pcre_version ~ '.tar.gz', 'https://ftp.exim.org/pub/pcre/pcre-' ~ pcre_version ~ '.tar.gz') }}"
         dest: /tmp
         mode: "0600"
       register: pcre_source
@@ -223,23 +214,19 @@
       when: ansible_facts['os_family'] == 'Alpine'
 
     - name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) Install ZLib dependency from package
-      vars:
-        distribution: "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}"
       ansible.builtin.yum:
         name: zlib-devel
         update_cache: true
       when:
         - ansible_facts['os_family'] == 'RedHat'
-        - distribution != 'Amazon Linux 2023'
+        - "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}" != 'Amazon Linux 2023'
 
     - name: (Amazon Linux 2023) Install ZLib dependency from package
-      vars:
-        distribution: "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}"
       ansible.builtin.dnf:
         name: zlib-devel
         update_cache: true
       when:
-        - distribution == 'Amazon Linux 2023'
+        - "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}" == 'Amazon Linux 2023'
 
     - name: (Debian/Ubuntu) Install ZLib dependency from package
       ansible.builtin.apt:
@@ -279,6 +266,7 @@
         dest: /tmp/zlib-{{ zlib_version }}
         mode: "0700"
         extra_opts: [--strip-components=1]
+        
     - name: Configure ZLib dependency
       ansible.builtin.command:
         cmd: ./configure
@@ -314,13 +302,11 @@
         - distribution != 'Amazon Linux 2023'
 
     - name: (Amazon Linux 2023) Install OpenSSL dependency from package
-      vars:
-        distribution: "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}"
       ansible.builtin.dnf:
         name: openssl-devel
         update_cache: true
       when:
-        - distribution == 'Amazon Linux 2023'
+        - "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}" == 'Amazon Linux 2023'
 
     - name: (Debian/Ubuntu) Install OpenSSL dependency from package
       ansible.builtin.apt:
@@ -360,6 +346,7 @@
         dest: /tmp/openssl-{{ openssl_version }}
         mode: "0700"
         extra_opts: [--strip-components=1]
+        
     - name: Configure OpenSSL dependency
       ansible.builtin.command:
         cmd: ./config --prefix=/usr/local/openssl --openssldir=/usr/local/openssl shared zlib

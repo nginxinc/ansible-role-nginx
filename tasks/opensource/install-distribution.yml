@@ -8,13 +8,11 @@
     - name: (CentOS/RHEL 7) Import the EPEL repository GPG key
       ansible.builtin.rpm_key:
         state: present
-        key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ((ansible_facts['distribution'] == 'Amazon') | ternary('7', ansible_facts['distribution_major_version']))
-          }}
+        key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ((ansible_facts['distribution'] == 'Amazon') | ternary('7', ansible_facts['distribution_major_version'])) }}
 
     - name: (CentOS/RHEL 7) Install the EPEL repository
       ansible.builtin.yum:
-        name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ((ansible_facts['distribution'] == 'Amazon') | ternary('7', ansible_facts['distribution_major_version']))
-          }}.noarch.rpm
+        name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ((ansible_facts['distribution'] == 'Amazon') | ternary('7', ansible_facts['distribution_major_version'])) }}.noarch.rpm
 
 - name: (Oracle Linux 7) Install the EPEL repository
   ansible.builtin.yum:
@@ -34,29 +32,23 @@
     - ansible_facts['distribution_major_version'] is version('7', '==')
 
 - name: (Amazon Linux) Enable the NGINX Amazon extras package repository
-  vars:
-    distribution: "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}"
   ansible.builtin.command:
     cmd: amazon-linux-extras enable nginx1
     creates: /usr/sbin/nginx
   when:
     - ansible_facts['distribution'] == 'Amazon'
-    - distribution != 'Amazon Linux 2023'
+    - "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}" != 'Amazon Linux 2023'
 
 - name: "{{ nginx_setup | capitalize }} NGINX from the distribution's package repository"
-  vars:
-    distribution: "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}"
   ansible.builtin.package:
     name: nginx{{ nginx_version | default('') }}
     state: "{{ nginx_state }}"
   notify: (Handler) Run NGINX
   when:
     - ansible_facts['distribution'] == 'Amazon'
-    - distribution != 'Amazon Linux 2023'
+    - "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}" != 'Amazon Linux 2023'
 
 - name: "{{ nginx_setup | capitalize }} NGINX from the distribution's package repository"
-  vars:
-    distribution: "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}"
   ansible.builtin.dnf:
     name: nginx{{ nginx_version | default('') }}
     disablerepo: amazonlinux
@@ -65,4 +57,4 @@
   notify: (Handler) Run NGINX
   when:
     - ansible_facts['distribution'] == 'Amazon'
-    - distribution == 'Amazon Linux 2023'
+    - "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}" == 'Amazon Linux 2023'

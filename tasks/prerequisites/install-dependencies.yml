@@ -14,26 +14,22 @@
   when: ansible_facts['os_family'] == 'Debian'
 
 - name: (Amazon Linux/CentOS/Oracle Linux/RHEL) Install dependencies
-  vars:
-    distribution: "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}"
   ansible.builtin.yum:
     name: "{{ nginx_redhat_dependencies }}"
     update_cache: true
     state: latest # noqa package-latest
   when:
     - ansible_facts['os_family'] == 'RedHat'
-    - distribution != 'Amazon Linux 2023'
+    - "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}" != 'Amazon Linux 2023'
 
 - name: (Amazon Linux 2023) Install dependencies
-  vars:
-    distribution: "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}"
   ansible.builtin.dnf:
     name: "{{ nginx_redhat_dependencies }}"
     disablerepo: amazonlinux
     update_cache: true
     state: latest # noqa package-latest
   when:
-    - distribution == 'Amazon Linux 2023'
+    - "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}" == 'Amazon Linux 2023'
 
 - name: (SLES) Install dependencies
   community.general.zypper:

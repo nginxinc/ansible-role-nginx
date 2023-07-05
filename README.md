@@ -1,6 +1,7 @@
 [![Ansible Galaxy](https://img.shields.io/badge/galaxy-nginxinc.nginx-5bbdbf.svg)](https://galaxy.ansible.com/nginxinc/nginx)
 [![Molecule CI/CD](https://github.com/nginxinc/ansible-role-nginx/workflows/Molecule%20CI/CD/badge.svg)](https://github.com/nginxinc/ansible-role-nginx/actions)
 [![License](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
 # 👾 *Help make the NGINX Ansible role better by participating in our [survey](https://forms.office.com/Pages/ResponsePage.aspx?id=L_093Ttq0UCb4L-DJ9gcUKLQ7uTJaE1PitM_37KR881UM0NCWkY5UlE5MUYyWU1aTUcxV0NRUllJSC4u)!* 👾
 
@@ -131,13 +132,12 @@ AlmaLinux:
   - 8
   - 9
 Alpine:
-  - 3.13
   - 3.14
   - 3.15
   - 3.16
   - 3.17
-Amazon Linux 2:
-  - any
+Amazon Linux:
+  - 2
 CentOS:
   - 7.4+
 Debian:
@@ -147,9 +147,11 @@ FreeBSD:
   - 13
 Oracle Linux:
   - 7.4+
+  - 8.1+
+  - 9
 Red Hat:
   - 7.4+
-  - 8
+  - 8.1+
   - 9
 Rocky Linux:
   - 8
@@ -166,16 +168,18 @@ Ubuntu:
 ### NGINX Amplify Agent
 
 ```yaml
-Amazon Linux 2:
-  - any
+Amazon Linux:
+  - 2
 Debian:
   - buster (10)
   - bullseye (11)
 Red Hat:
   - 8
+  - 9
 Ubuntu:
-  - bionic
-  - focal
+  - bionic (18.04)
+  - focal (20.04)
+  - jammy (22.04)
 ```
 
 **Note:** You can also use this role to compile NGINX Open Source from source, install NGINX Open Source on compatible yet unsupported platforms, or install NGINX Open Source on BSD systems at your own risk.

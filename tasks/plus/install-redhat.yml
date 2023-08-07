@@ -1,5 +1,5 @@
 ---
-- name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) {{ (nginx_license_status is defined or nginx_setup == 'uninstall') | ternary('Remove', 'Configure') }} NGINX Plus repository
+- name: (AlmaLinux/Amazon Linux/Amazon Linux 2023/CentOS/Oracle Linux/RHEL/Rocky Linux) {{ (nginx_license_status is defined or nginx_setup == 'uninstall') | ternary('Remove', 'Configure') }} NGINX Plus repository
   ansible.builtin.yum_repository:
     name: nginx-plus
     baseurl: "{{ nginx_repository | default(lookup('vars', 'nginx_plus_default_repository_' + ((ansible_facts['distribution'] == 'Amazon') | ternary('amazon', 'redhat')))) }}"
@@ -14,7 +14,16 @@
 
 - name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) Force Yum cache refresh
   ansible.builtin.command: yum clean metadata
-  when: nginx_manage_repo | bool
+  when:
+    - nginx_manage_repo | bool
+    - "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}" != 'Amazon Linux 2023'
+  changed_when: false
+
+- name: (Amazon Linux 2023) Force Yum cache refresh
+  ansible.builtin.command: dnf clean metadata
+  when:
+    - nginx_manage_repo | bool
+    - "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}" == 'Amazon Linux 2023'
   changed_when: false
 
 - name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) {{ nginx_setup | capitalize }} NGINX Plus
@@ -24,5 +33,20 @@
     update_cache: true
     allow_downgrade: "{{ omit if ansible_version['full'] is version('2.12', '<') else true }}"
   ignore_errors: "{{ ansible_check_mode }}"
-  when: nginx_license_status is not defined
+  when:
+    - nginx_license_status is not defined
+    - "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}" != 'Amazon Linux 2023'
+  notify: (Handler) Run NGINX
+
+- name: (Amazon Linux 2023) {{ nginx_setup | capitalize }} NGINX Plus
+  ansible.builtin.dnf:
+    name: nginx-plus{{ nginx_version | default('') }}
+    disablerepo: amazonlinux
+    state: "{{ nginx_state }}"
+    update_cache: true
+    allow_downgrade: "{{ omit if ansible_version['full'] is version('2.12', '<') else true }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  when:
+    - nginx_license_status is not defined
+    - "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}" == 'Amazon Linux 2023'
   notify: (Handler) Run NGINX

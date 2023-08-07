@@ -99,6 +99,7 @@ Alpine:
   - 3.18
 Amazon Linux:
   - 2
+  - 2023
 CentOS:
   - 7.4+
 Debian:

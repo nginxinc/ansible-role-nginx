@@ -64,6 +64,26 @@
               - wget
               - zlib-devel
             update_cache: true
+          when: "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}" != 'Amazon Linux 2023'
+
+        - name: (Amazon Linux 2023) Install build tools
+          ansible.builtin.dnf:
+            name:
+              - ca-certificates
+              - gcc
+              - gcc-c++
+              - gd
+              - gd-devel
+              - glibc
+              - glibc-common
+              - make
+              - perl-core
+              - tar
+              - unzip
+              - wget
+              - zlib-devel
+            update_cache: true
+          when: "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}" == 'Amazon Linux 2023'
 
     - name: (Debian/Ubuntu) Install build tools
       ansible.builtin.apt:
@@ -120,7 +140,16 @@
       ansible.builtin.yum:
         name: "{{ (pcre_release == 2) | ternary('pcre2-devel', 'pcre-devel') }}"
         update_cache: true
-      when: ansible_facts['os_family'] == 'RedHat'
+      when:
+        - ansible_facts['os_family'] == 'RedHat'
+        - "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}" != 'Amazon Linux 2023'
+
+    - name: (Amazon Linux 2023) Install PCRE dependency from package
+      ansible.builtin.dnf:
+        name: "{{ (pcre_release == 2) | ternary('pcre2-devel', 'pcre-devel') }}"
+        update_cache: true
+      when:
+        - "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}" == 'Amazon Linux 2023'
 
     - name: (Debian/Ubuntu) Install PCRE dependency from package
       ansible.builtin.apt:
@@ -160,7 +189,6 @@
         dest: /tmp/pcre-{{ pcre_version }}/
         mode: "0700"
         extra_opts: [--strip-components=1]
-
     - name: Configure PCRE dependency
       ansible.builtin.command:
         cmd: ./configure
@@ -189,7 +217,16 @@
       ansible.builtin.yum:
         name: zlib-devel
         update_cache: true
-      when: ansible_facts['os_family'] == 'RedHat'
+      when:
+        - ansible_facts['os_family'] == 'RedHat'
+        - "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}" != 'Amazon Linux 2023'
+
+    - name: (Amazon Linux 2023) Install ZLib dependency from package
+      ansible.builtin.dnf:
+        name: zlib-devel
+        update_cache: true
+      when:
+        - "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}" == 'Amazon Linux 2023'
 
     - name: (Debian/Ubuntu) Install ZLib dependency from package
       ansible.builtin.apt:
@@ -229,7 +266,7 @@
         dest: /tmp/zlib-{{ zlib_version }}
         mode: "0700"
         extra_opts: [--strip-components=1]
-
+        
     - name: Configure ZLib dependency
       ansible.builtin.command:
         cmd: ./configure
@@ -255,10 +292,21 @@
       when: ansible_facts['os_family'] == 'Alpine'
 
     - name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) Install OpenSSL dependency from package
+      vars:
+        distribution: "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}"
       ansible.builtin.yum:
         name: openssl-devel
         update_cache: true
-      when: ansible_facts['os_family'] == 'RedHat'
+      when:
+        - ansible_facts['os_family'] == 'RedHat'
+        - distribution != 'Amazon Linux 2023'
+
+    - name: (Amazon Linux 2023) Install OpenSSL dependency from package
+      ansible.builtin.dnf:
+        name: openssl-devel
+        update_cache: true
+      when:
+        - "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}" == 'Amazon Linux 2023'
 
     - name: (Debian/Ubuntu) Install OpenSSL dependency from package
       ansible.builtin.apt:
@@ -298,7 +346,7 @@
         dest: /tmp/openssl-{{ openssl_version }}
         mode: "0700"
         extra_opts: [--strip-components=1]
-
+        
     - name: Configure OpenSSL dependency
       ansible.builtin.command:
         cmd: ./config --prefix=/usr/local/openssl --openssldir=/usr/local/openssl shared zlib

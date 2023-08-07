@@ -35,10 +35,26 @@
   ansible.builtin.command:
     cmd: amazon-linux-extras enable nginx1
     creates: /usr/sbin/nginx
-  when: ansible_facts['distribution'] == 'Amazon'
+  when:
+    - ansible_facts['distribution'] == 'Amazon'
+    - "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}" != 'Amazon Linux 2023'
 
 - name: "{{ nginx_setup | capitalize }} NGINX from the distribution's package repository"
   ansible.builtin.package:
     name: nginx{{ nginx_version | default('') }}
     state: "{{ nginx_state }}"
   notify: (Handler) Run NGINX
+  when:
+    - ansible_facts['distribution'] == 'Amazon'
+    - "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}" != 'Amazon Linux 2023'
+
+- name: "{{ nginx_setup | capitalize }} NGINX from the distribution's package repository"
+  ansible.builtin.dnf:
+    name: nginx{{ nginx_version | default('') }}
+    disablerepo: amazonlinux
+    enablerepo: nginx-mainline-repo
+    state: "{{ nginx_state }}"
+  notify: (Handler) Run NGINX
+  when:
+    - ansible_facts['distribution'] == 'Amazon'
+    - "{{ ansible_facts['distribution'] }} {{ ansible_facts['system'] }} {{ ansible_facts['distribution_version'] }}" == 'Amazon Linux 2023'

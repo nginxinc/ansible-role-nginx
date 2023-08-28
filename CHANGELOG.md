@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.24.2 (Unreleased)
+
+CI/CD:
+
+- Reimplement some platforms in the upgrade & downgrade Molecule scenarios since all platforms now have at least two releases.
+- Replace the hardcoded NGINX version check in multiple Molecule scenarios with a dynamic NGINX version check.
+
 ## 0.24.1 (July 6, 2023)
 
 FEATURES:

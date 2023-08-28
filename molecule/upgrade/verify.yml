@@ -28,7 +28,6 @@
       ansible.builtin.uri:
         url: https://version.nginx.com/nginx/mainline
         return_content: true
-      check_mode: false
       register: nginx_version
 
     - name: Verify NGINX has been upgraded to the latest mainline version

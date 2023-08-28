@@ -2,6 +2,11 @@
 
 ## 0.24.2 (Unreleased)
 
+FEATURES:
+
+- Add Alpine Linux 3.18 and Debian bookworm to the list of NGINX Plus tested and supported distributions.
+- Remove Alpine Linux 3.14 and Ubuntu bionic from the list of NGINX Plus tested and supported distributions.
+
 CI/CD:
 
 - Reimplement some platforms in the upgrade & downgrade Molecule scenarios since all platforms now have at least two releases.

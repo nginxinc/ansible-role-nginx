@@ -2,6 +2,12 @@
 
 ## 0.24.2 (Unreleased)
 
+FEATURES:
+
+- Add Alpine Linux 3.18 and Debian bookworm to the list of NGINX Plus tested and supported distributions.
+- Remove Alpine Linux 3.14 and Ubuntu bionic from the list of NGINX Plus tested and supported distributions.
+- The `geoip2` module for NGINX Plus is no longer supported on Amazon Linux.
+
 CI/CD:
 
 - Reimplement some platforms in the upgrade & downgrade Molecule scenarios since all platforms now have at least two releases.
@@ -25,11 +31,11 @@ ENHANCEMENTS:
 
 BUG FIXES:
 
-- Fix an issue with the platform validation logic whereas distro versions ending in `*.*0` would not be correctly identified.
+- Fix an issue with the platform validation logic where distribution versions ending in `*.*0` would not be correctly identified.
 
 CI/CD:
 
-- Comment out the platform parameter out of Molecule tests. QEMU based tests are failing when trying to test the newest supported distros.
+- Comment out the platform parameter out of Molecule tests. QEMU based tests are failing when trying to test the newest supported distribution.
 - Split Ansible Lint into its own GitHub Actions job since Molecule no longer runs linters natively.
 - Replace `molecule[docker]` with `molecule` and `molecule-plugins[docker]`.
 - Explicitly set the `ansible-compat` version (commented out for the time being whilst waiting for a new release of Molecule).

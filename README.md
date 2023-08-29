@@ -132,16 +132,17 @@ AlmaLinux:
   - 8
   - 9
 Alpine:
-  - 3.14
   - 3.15
   - 3.16
   - 3.17
+  - 3.18
 Amazon Linux:
   - 2
 CentOS:
   - 7.4+
 Debian:
   - bullseye (11)
+  - bookworm (12)
 FreeBSD:
   - 12.1+
   - 13
@@ -160,7 +161,6 @@ SUSE/SLES:
   - 12
   - 15
 Ubuntu:
-  - bionic (18.04)
   - focal (20.04)
   - jammy (22.04)
 ```

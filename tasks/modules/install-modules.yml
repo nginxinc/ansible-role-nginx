@@ -7,18 +7,18 @@
     - '"geoip" in nginx_modules'
     - nginx_install_epel_release | bool
 
-- name: (Amazon Linux/RHEL 7) Install GeoIP2 dependency
+- name: (RHEL 7) Install GeoIP2 dependency
   when:
-    - (ansible_facts['distribution'] == "RedHat" and ansible_facts['distribution_major_version'] is version('7', '=='))
-      or ansible_facts['distribution'] == "Amazon"
+    - ansible_facts['distribution'] == "RedHat"
+    - ansible_facts['distribution_major_version'] is version('7', '==')
     - '"geoip2" in nginx_modules'
   block:
-    - name: (Amazon Linux/RHEL 7) Check if libmaxminddb is available
+    - name: (RHEL 7) Check if libmaxminddb is available
       ansible.builtin.yum:
         list: available
       register: packages
 
-    - name: (Amazon Linux/RHEL 7) Install libmaxminddb
+    - name: (/RHEL 7) Install libmaxminddb
       ansible.builtin.yum:
         name: https://rpmfind.net/linux/centos/7.9.2009/os/x86_64/Packages/libmaxminddb-1.2.0-6.el7.x86_64.rpm
       when: "'libmaxminddb' not in packages['results']"
@@ -62,7 +62,8 @@
       or not ((ansible_facts['os_family'] == 'FreeBSD')
       or (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] is version('8', '>=')))
     - not (item['name'] | default(item) == 'geoip2')
-      or not (ansible_facts['os_family'] == 'Suse')
+      or not ((ansible_facts['os_family'] == 'Suse')
+      or (ansible_facts['distribution'] == 'Amazon'))
     - not (item['name'] | default(item) == 'lua')
       or not (ansible_facts['architecture'] == 's390x')
     - not (item['name'] | default(item) == 'opentracing')

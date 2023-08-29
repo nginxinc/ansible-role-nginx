@@ -28,12 +28,7 @@
       ansible.builtin.uri:
         url: https://version.nginx.com/plus
         return_content: true
-      check_mode: false
-      register: nginx_versions
-
-    - name: Set NGINX Plus version
-      ansible.builtin.set_fact:
-        nginx_version: "{{ nginx_versions.content | regex_search('[0-9]+') }}"
+      register: nginx_version
 
     - name: Verify NGINX Plus has been upgraded
       ansible.builtin.command: nginx -v
@@ -41,4 +36,4 @@
         chdir: "{{ ((ansible_facts['system'] | lower is not search('bsd')) | ternary('/etc/nginx', '/usr/local/sbin')) }}"
       changed_when: false
       register: version
-      failed_when: version is not search(nginx_version)
+      failed_when: version is not search(nginx_version['content'] | regex_search('[0-9]+'))

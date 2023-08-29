@@ -24,7 +24,7 @@
         url: http://localhost
         status_code: 200
 
-    - name: Fetch latest mainline version of NGINX
+    - name: Fetch the latest mainline version of NGINX
       ansible.builtin.uri:
         url: https://version.nginx.com/nginx/mainline
         return_content: true

@@ -18,7 +18,7 @@
         list: available
       register: packages
 
-    - name: (/RHEL 7) Install libmaxminddb
+    - name: (RHEL 7) Install libmaxminddb
       ansible.builtin.yum:
         name: https://rpmfind.net/linux/centos/7.9.2009/os/x86_64/Packages/libmaxminddb-1.2.0-6.el7.x86_64.rpm
       when: "'libmaxminddb' not in packages['results']"

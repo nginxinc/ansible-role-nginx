@@ -2,8 +2,8 @@
 name: Molecule CI/CD
 on:
   pull_request:
-    # branches:
-    #   - main
+    branches:
+      - main
   push:
     branches:
       - main

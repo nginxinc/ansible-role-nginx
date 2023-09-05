@@ -38,7 +38,7 @@ CI/CD:
 - Comment out the platform parameter out of Molecule tests. QEMU based tests are failing when trying to test the newest supported distribution.
 - Split Ansible Lint into its own GitHub Actions job since Molecule no longer runs linters natively.
 - Replace `molecule[docker]` with `molecule` and `molecule-plugins[docker]`.
-- Explicitly set the `ansible-compat` version (commented out for the time being whilst waiting for a new release of Molecule).
+- Explicitly set the `ansible-compat` version.
 - Add pre-releases to Release Drafter.
 
 ## 0.24.0 (January 29, 2023)

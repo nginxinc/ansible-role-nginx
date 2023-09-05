@@ -14,7 +14,7 @@ This codebase mainly consists of an Ansible role, sprinkled with a dose of GitHu
 
 ### Ansible
 
-If you find a security vulnerability that affects Ansible directly, we encourage you to report it according to the [Ansible guidelines](https://docs.ansible.com/ansible/devel/community/reporting_bugs_and_features.html#reporting-a-bug).
+If you find a security vulnerability that directly affects Ansible, we encourage you to report it according to the [Ansible guidelines](https://docs.ansible.com/ansible/devel/community/reporting_bugs_and_features.html#reporting-a-bug).
 
 ### Codebase
 

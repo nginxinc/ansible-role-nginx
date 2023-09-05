@@ -28,7 +28,7 @@ platforms: # Ubuntu bionic results in a segmentation fault error as of Ansible c
     command: /sbin/init
   - name: alpine-3.16
     image: alpine:3.16
-    # platform: x86_64
+    platform: x86_64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -37,7 +37,7 @@ platforms: # Ubuntu bionic results in a segmentation fault error as of Ansible c
     command: /sbin/init
   - name: alpine-3.17
     image: alpine:3.17
-    # platform: aarch64
+    platform: aarch64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -46,7 +46,7 @@ platforms: # Ubuntu bionic results in a segmentation fault error as of Ansible c
     command: /sbin/init
   - name: alpine-3.18
     image: alpine:3.18
-    # platform: aarch64
+    platform: aarch64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -55,7 +55,7 @@ platforms: # Ubuntu bionic results in a segmentation fault error as of Ansible c
     command: /sbin/init
   - name: amazonlinux-2
     image: amazonlinux:2
-    # platform: x86_64
+    platform: x86_64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -64,7 +64,7 @@ platforms: # Ubuntu bionic results in a segmentation fault error as of Ansible c
     command: /usr/sbin/init
   - name: centos-7
     image: centos:7
-    # platform: x86_64
+    platform: x86_64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -89,7 +89,7 @@ platforms: # Ubuntu bionic results in a segmentation fault error as of Ansible c
     command: /sbin/init
   - name: oraclelinux-7
     image: oraclelinux:7
-    # platform: x86_64
+    platform: x86_64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -114,7 +114,7 @@ platforms: # Ubuntu bionic results in a segmentation fault error as of Ansible c
     command: /usr/sbin/init
   - name: rhel-7
     image: registry.access.redhat.com/ubi7:7.9
-    # platform: x86_64
+    platform: x86_64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -123,7 +123,7 @@ platforms: # Ubuntu bionic results in a segmentation fault error as of Ansible c
     command: /usr/sbin/init
   - name: rhel-8
     image: redhat/ubi8:8.7
-    # platform: s390x
+    platform: s390x
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -132,7 +132,7 @@ platforms: # Ubuntu bionic results in a segmentation fault error as of Ansible c
     command: /usr/sbin/init
   - name: rhel-9
     image: redhat/ubi9:9.1.0
-    # platform: aarch64
+    platform: aarch64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -157,7 +157,7 @@ platforms: # Ubuntu bionic results in a segmentation fault error as of Ansible c
     command: /usr/sbin/init
   - name: sles15
     image: registry.suse.com/bci/bci-base:15.4
-    # platform: x86_64
+    platform: x86_64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -166,7 +166,7 @@ platforms: # Ubuntu bionic results in a segmentation fault error as of Ansible c
     command: /usr/sbin/init
   - name: ubuntu-focal
     image: ubuntu:focal
-    # platform: s390x
+    platform: s390x
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -175,7 +175,7 @@ platforms: # Ubuntu bionic results in a segmentation fault error as of Ansible c
     command: /sbin/init
   - name: ubuntu-jammy
     image: ubuntu:jammy
-    # platform: aarch64
+    platform: aarch64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host

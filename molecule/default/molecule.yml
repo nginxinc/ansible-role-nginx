@@ -35,15 +35,15 @@ platforms:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /sbin/init
-  - name: alpine-3.17
-    image: alpine:3.17
-    platform: linux/arm64
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    cgroupns_mode: host
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /sbin/init
+  # - name: alpine-3.17
+  #   image: alpine:3.17
+  #   platform: aarch64
+  #   dockerfile: ../common/Dockerfile.j2
+  #   privileged: true
+  #   cgroupns_mode: host
+  #   volumes:
+  #     - /sys/fs/cgroup:/sys/fs/cgroup:rw
+  #   command: /sbin/init
   - name: alpine-3.18
     image: alpine:3.18
     dockerfile: ../common/Dockerfile.j2

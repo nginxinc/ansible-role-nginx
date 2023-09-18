@@ -13,6 +13,7 @@ CI/CD:
 
 - Reimplement some platforms in the upgrade & downgrade Molecule scenarios since all platforms now have at least two releases.
 - Replace the hardcoded NGINX version check in multiple Molecule scenarios with a dynamic NGINX version check.
+- Explicitly specify the `x86_64` platform in certain Molecule scenarios to avoid compatibility issues in ARM based computers.
 
 ## 0.24.1 (July 6, 2023)
 

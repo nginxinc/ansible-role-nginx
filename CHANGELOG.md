@@ -5,6 +5,7 @@
 FEATURES:
 
 - Add Alpine Linux 3.18 and Debian bookworm to the list of NGINX Plus tested and supported distributions.
+- Remove Ubuntu kinetic from the list of NGINX OSS tested and supported distributions.
 - Remove Alpine Linux 3.14 and Ubuntu bionic from the list of NGINX Plus tested and supported distributions.
 - The `geoip2` module for NGINX Plus is no longer supported on Amazon Linux.
 

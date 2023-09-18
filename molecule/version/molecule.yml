@@ -28,7 +28,7 @@ platforms:
     command: /sbin/init
   - name: alpine-3.16
     image: alpine:3.16
-    # # platform: x86_64
+    # platform: x86_64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -54,7 +54,7 @@ platforms:
     command: /sbin/init
   - name: amazonlinux-2
     image: amazonlinux:2
-    # # platform: x86_64
+    # platform: x86_64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -63,7 +63,7 @@ platforms:
     command: /usr/sbin/init
   - name: centos-7
     image: centos:7
-    # # platform: x86_64
+    # platform: x86_64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -88,7 +88,7 @@ platforms:
     command: /sbin/init
   - name: oraclelinux-7
     image: oraclelinux:7
-    # # platform: x86_64
+    # platform: x86_64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -113,7 +113,7 @@ platforms:
     command: /usr/sbin/init
   - name: rhel-7
     image: registry.access.redhat.com/ubi7:7.9
-    # # platform: x86_64
+    # platform: x86_64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -156,7 +156,7 @@ platforms:
     command: /usr/sbin/init
   - name: sles15
     image: registry.suse.com/bci/bci-base:15.4
-    # # platform: x86_64
+    # platform: x86_64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host

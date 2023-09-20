@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Check out the codebase
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python 3
         uses: actions/setup-python@v4
@@ -60,7 +60,7 @@ jobs:
     steps:
       - name: Check out the codebase
         if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # - name: Set up Docker QEMU
       #   if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}

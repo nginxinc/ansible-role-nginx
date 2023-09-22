@@ -59,7 +59,7 @@ nginx_supported_distributions:
     architectures: [x86_64]
   ubuntu:
     name: Ubuntu
-    versions: [20.04, 22.04, 22.10, 23.04]
+    versions: [20.04, 22.04, 23.04]
     architectures: "{{ (['x86_64', 'aarch64'] + ['s390x']) if ((ansible_facts['distribution_version'] is version('20.04', '==')) or (ansible_facts['distribution_version'] is version('22.04', '=='))) else ['x86_64', 'aarch64'] }}"
 
 # Supported NGINX Plus distributions

@@ -23,7 +23,7 @@ galaxy_info:
     - name: OracleLinux
       versions: ['7', '8', '9']
     - name: Ubuntu
-      versions: [focal, jammy, kinetic, lunar]
+      versions: [focal, jammy, lunar]
     - name: SLES
       versions: ['12', '15']
 

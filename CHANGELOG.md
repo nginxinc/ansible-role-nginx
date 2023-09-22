@@ -5,6 +5,7 @@
 FEATURES:
 
 - Add Alpine Linux 3.18 and Debian bookworm to the list of NGINX Plus tested and supported distributions.
+- Remove Ubuntu kinetic from the list of NGINX OSS tested and supported distributions.
 - Remove Alpine Linux 3.14 and Ubuntu bionic from the list of NGINX Plus tested and supported distributions.
 - The `geoip2` module for NGINX Plus is no longer supported on Amazon Linux.
 
@@ -12,6 +13,7 @@ CI/CD:
 
 - Reimplement some platforms in the upgrade & downgrade Molecule scenarios since all platforms now have at least two releases.
 - Replace the hardcoded NGINX version check in multiple Molecule scenarios with a dynamic NGINX version check.
+- Explicitly specify the `x86_64` platform in certain Molecule scenarios to avoid compatibility issues in ARM based computers.
 
 ## 0.24.1 (July 6, 2023)
 

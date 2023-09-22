@@ -113,7 +113,7 @@ platforms:
     command: /usr/sbin/init
   - name: rhel-7
     image: registry.access.redhat.com/ubi7:7.9
-    # platform: x86_64
+    platform: x86_64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -175,15 +175,6 @@ platforms:
   - name: ubuntu-jammy
     image: ubuntu:jammy
     platform: aarch64
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    cgroupns_mode: host
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /sbin/init
-  - name: ubuntu-kinetic
-    image: ubuntu:kinetic
-    platform: x86_64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host

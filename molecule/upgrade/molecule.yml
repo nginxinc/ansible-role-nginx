@@ -37,7 +37,7 @@ platforms:
     command: /sbin/init
   - name: alpine-3.17
     image: alpine:3.17
-    # platform: aarch64
+    platform: aarch64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -131,7 +131,7 @@ platforms:
     command: /usr/sbin/init
   - name: rhel-9
     image: redhat/ubi9:9.1.0
-    # platform: aarch64
+    platform: aarch64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host

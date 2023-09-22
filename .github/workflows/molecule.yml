@@ -64,7 +64,7 @@ jobs:
 
       - name: Set up Docker QEMU
         if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
         with:
           platforms: aarch64, s390x
 

@@ -18,6 +18,9 @@ nginx_type: opensource
 # nginx_version: "=1.23.2-1~jammy"
 # For NGINX Plus you'll need to specify the R* release like below (Ubuntu jammy example).
 # nginx_version: "=28-1~jammy"
+# For Open source and from source the version should be of the following format 1.25.1
+# As in https://nginx.org/download/ `nginx-<version>.<extension>`
+# nginx_version: "1.25.1"
 
 # Start NGINX service.
 # Default is true.

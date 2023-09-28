@@ -50,6 +50,7 @@ jobs:
           - downgrade-plus
           - plus
           - source
+          - source-version
           - stable
           - uninstall
           - uninstall-plus

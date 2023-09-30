@@ -2,14 +2,6 @@
 - name: Verify
   hosts: all
   tasks:
-    - name: Check if NGINX is installed
-      ansible.builtin.package:
-        name: nginx
-        state: present
-      check_mode: true
-      register: install
-      failed_when: (install is changed) or (install is failed)
-
     - name: Check if NGINX service is running
       ansible.builtin.service:
         name: nginx

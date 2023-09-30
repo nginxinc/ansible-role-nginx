@@ -2,23 +2,15 @@
 - name: Converge
   hosts: all
   tasks:
-    - name: Install NGINX
+    - name: Install NGINX from source
       ansible.builtin.include_role:
         name: nginxinc.nginx
       vars:
         nginx_install_from: source
+        nginx_branch: stable
         nginx_version: "1.25.1"
-        nginx_service_modify: true
-        nginx_service_timeout: 95
-        nginx_logrotate_conf_enable: true
-        nginx_logrotate_conf:
-          paths:
-            - /var/log/nginx/*.log
-          options:
-            - daily
-            - missingok
-            - rotate 14
-            - compress
-            - delaycompress
-            - notifempty
-            - sharedscripts
+        nginx_static_modules: [http_ssl_module]
+        nginx_install_source_build_tools: true
+        nginx_install_source_pcre: false
+        nginx_install_source_openssl: false
+        nginx_install_source_zlib: false

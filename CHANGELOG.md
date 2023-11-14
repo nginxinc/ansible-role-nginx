@@ -10,7 +10,7 @@ FEATURES:
 ENHANCEMENTS:
 
 - Allow strings in addition to a list when configuring `logrotate`.
-
+- Bump the Ansible `community.general` collection to `8.0.2`, `community.crypto` collection to `2.16.0` and `community.docker` collection to `3.4.11`.
 BUG FIXES:
 
 - Avoid re-copying the NGINX Amplify config file every time the role is run.

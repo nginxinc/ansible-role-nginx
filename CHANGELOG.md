@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.24.3 (Unreleased)
+
+ENHANCEMENTS:
+
+- Allow strings in addition to a list when configuring `logrotate`.
+
 ## 0.24.2 (October 3rd, 2023)
 
 FEATURES:

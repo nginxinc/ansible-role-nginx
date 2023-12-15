@@ -25,7 +25,7 @@
 
         - name: Login to NGINX Amplify
           ansible.builtin.uri:
-            url: https://amplify.nginx.com/sapi/auth/login/
+            url: "https://amplify.nginx.com/sapi/auth/login/"
             method: POST
             headers:
               Content-Type: application/json
@@ -37,7 +37,7 @@
 
         - name: Get list of IDs
           ansible.builtin.uri:
-            url: 'https://amplify.nginx.com/sapi/inventory/objects/?all=true&filter=false/'
+            url: "https://amplify.nginx.com/sapi/inventory/objects/?all=true&filter=false/"
             method: GET
             headers:
               Cookie: "{{ login.cookies_string }}"
@@ -47,7 +47,7 @@
 
         - name: Remove dangling instances from NGINX Amplify
           ansible.builtin.uri:
-            url: 'https://amplify.nginx.com/sapi/inventory/objects/{{ item }}/'
+            url: "https://amplify.nginx.com/sapi/inventory/objects/{{ item }}/"
             method: DELETE
             status_code: 204
             headers:

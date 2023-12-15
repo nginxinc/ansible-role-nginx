@@ -24,7 +24,7 @@
         url: http://localhost
         status_code: 200
 
-    - name: Check if NGINX Amplify is installed
+    - name: Check if NGINX Amplify agent is installed
       ansible.builtin.package:
         name: nginx-amplify-agent
         state: present

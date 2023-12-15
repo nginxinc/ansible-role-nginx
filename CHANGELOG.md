@@ -6,6 +6,14 @@ ENHANCEMENTS:
 
 - Allow strings in addition to a list when configuring `logrotate`.
 
+BUG FIXES:
+
+- Avoid re-copying the NGINX Amplify config file every time the role is run.
+
+CI/CD:
+
+- Add Molecule tests for NGINX Amplify.
+
 ## 0.24.2 (October 3rd, 2023)
 
 FEATURES:

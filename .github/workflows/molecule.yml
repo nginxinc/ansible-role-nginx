@@ -37,13 +37,18 @@ jobs:
   molecule:
     name: Molecule
     runs-on: ubuntu-22.04
+    needs: ansible-lint
     env:
+      AMPLIFY_API_KEY: ${{ secrets.AMPLIFY_API_KEY }}
+      AMPLIFY_EMAIL: ${{ secrets.AMPLIFY_EMAIL }}
+      AMPLIFY_PASSWORD: ${{ secrets.AMPLIFY_PASSWORD }}
       NGINX_CRT: ${{ secrets.NGINX_CRT }}
       NGINX_KEY: ${{ secrets.NGINX_KEY }}
     strategy:
       fail-fast: false
       matrix:
         scenario:
+          - amplify
           - default
           - distribution
           - downgrade
@@ -57,7 +62,6 @@ jobs:
           - upgrade
           - upgrade-plus
           - version
-    needs: ansible-lint
     steps:
       - name: Check out the codebase
         if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}

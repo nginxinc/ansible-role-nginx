@@ -71,7 +71,7 @@ nginx_plus_supported_distributions:
     architectures: [x86_64, aarch64]
   alpine:
     name: Alpine Linux
-    versions: [3.15, 3.16, 3.17, 3.18]
+    versions: [3.16, 3.17, 3.18, 3.19]
     architectures: [x86_64, aarch64]
   amazon:
     name: Amazon Linux
@@ -87,7 +87,7 @@ nginx_plus_supported_distributions:
     architectures: [x86_64, aarch64]
   freebsd:
     name: FreeBSD
-    versions: [12, 13]
+    versions: [12, 13, 14]
     architectures: [x86_64]
   oraclelinux:
     name: Oracle Linux

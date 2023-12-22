@@ -13,6 +13,7 @@ BUG FIXES:
 CI/CD:
 
 - Add Molecule tests for NGINX Amplify.
+- Use the local role name instead of fully qualified role name in Molecule to ensure tests always work as intended in environments where the role has been already installed beforehand.
 
 ## 0.24.2 (October 3rd, 2023)
 

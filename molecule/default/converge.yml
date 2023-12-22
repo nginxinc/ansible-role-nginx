@@ -4,7 +4,7 @@
   tasks:
     - name: Install NGINX
       ansible.builtin.include_role:
-        name: nginxinc.nginx
+        name: ansible-role-nginx
       vars:
         nginx_modules:
           - geoip

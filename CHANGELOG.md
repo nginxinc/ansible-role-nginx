@@ -2,6 +2,11 @@
 
 ## 0.24.3 (Unreleased)
 
+FEATURES:
+
+- Add Alpine Linux 3.19 to the list of NGINX Plus tested and supported distributions.
+- Remove Alpine Linux 3.15 from the list of NGINX Plus tested and supported distributions.
+
 ENHANCEMENTS:
 
 - Allow strings in addition to a list when configuring `logrotate`.

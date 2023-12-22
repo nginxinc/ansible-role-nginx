@@ -132,10 +132,10 @@ AlmaLinux:
   - 8
   - 9
 Alpine:
-  - 3.15
   - 3.16
   - 3.17
   - 3.18
+  - 3.19
 Amazon Linux:
   - 2
 CentOS:
@@ -146,6 +146,7 @@ Debian:
 FreeBSD:
   - 12.1+
   - 13
+  - 14
 Oracle Linux:
   - 7.4+
   - 8.1+

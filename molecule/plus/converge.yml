@@ -4,7 +4,7 @@
   tasks:
     - name: Install NGINX Plus
       ansible.builtin.include_role:
-        name: nginxinc.nginx
+        name: ansible-role-nginx
       vars:
         nginx_type: plus
         nginx_license:

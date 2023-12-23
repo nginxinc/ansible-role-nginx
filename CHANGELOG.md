@@ -18,6 +18,7 @@ BUG FIXES:
 CI/CD:
 
 - Add Molecule tests for NGINX Amplify.
+- Use the local role name (`ansible-role-nginx`) instead of the  fully qualified role name (`nginxinc.nginx`) in Molecule to ensure tests always work as intended in environments where the role has been already installed beforehand.
 
 ## 0.24.2 (October 3rd, 2023)
 

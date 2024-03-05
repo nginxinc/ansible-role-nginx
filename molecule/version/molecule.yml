@@ -195,3 +195,8 @@ provisioner:
   playbooks:
     converge: converge.yml
     verify: verify.yml
+  config_options:
+    defaults:
+      fact_caching: jsonfile
+      fact_caching_connection: /tmp/facts_cache
+      fact_caching_timeout: 7200

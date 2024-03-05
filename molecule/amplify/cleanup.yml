@@ -14,7 +14,7 @@
 
         - name: Containers are not up, quit from here
           ansible.builtin.fail:
-          when: container['failed']
+          when: container['failed'] | bool
 
         - name: Gather facts
           ansible.builtin.setup:

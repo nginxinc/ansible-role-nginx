@@ -94,10 +94,10 @@ AlmaLinux:
   - 8
   - 9
 Alpine:
-  - 3.15
   - 3.16
   - 3.17
   - 3.18
+  - 3.19
 Amazon Linux:
   - 2
 CentOS:

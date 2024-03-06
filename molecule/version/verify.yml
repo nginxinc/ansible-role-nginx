@@ -30,4 +30,4 @@
         chdir: "{{ ((ansible_facts['system'] | lower is not search('bsd')) | ternary('/etc/nginx', '/usr/local/sbin')) }}"
       changed_when: false
       register: version
-      failed_when: version is not search(nginx_version | regex_search('([0-9]+\\.){2}[0-9]+'))
+      failed_when: version is not search(ngx_version | regex_search('([0-9]+\\.){2}[0-9]+'))

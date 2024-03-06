@@ -5,7 +5,7 @@
     - name: Set repo if Alpine
       ansible.builtin.set_fact:
         ngx_version: =1.25.3-r1
-        njs: =1.25.3.0.8.2-r1
+        njs_version: =1.25.3.0.8.2-r1
         cacheable: true
       when: ansible_facts['os_family'] == "Alpine"
     - name: Set repo if Debian

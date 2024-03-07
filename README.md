@@ -1,6 +1,8 @@
 [![Ansible Galaxy](https://img.shields.io/badge/galaxy-nginxinc.nginx-5bbdbf.svg)](https://galaxy.ansible.com/nginxinc/nginx)
 [![Molecule CI/CD](https://github.com/nginxinc/ansible-role-nginx/workflows/Molecule%20CI/CD/badge.svg)](https://github.com/nginxinc/ansible-role-nginx/actions)
 [![License](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Community Support](https://badgen.net/badge/support/community/cyan?icon=awesome)](https://github.com/nginxinc/ansible-role-nginx/blob/main/SUPPORT.md)
 
 # 👾 *Help make the NGINX Ansible role better by participating in our [survey](https://forms.office.com/Pages/ResponsePage.aspx?id=L_093Ttq0UCb4L-DJ9gcUKLQ7uTJaE1PitM_37KR881UM0NCWkY5UlE5MUYyWU1aTUcxV0NRUllJSC4u)!* 👾
 
@@ -25,13 +27,13 @@ If you wish to install NGINX Plus using this role, you will need to obtain an NG
     ---
     collections:
       - name: ansible.posix
-        version: 1.5.2
+        version: 1.5.4
       - name: community.general
-        version: 6.6.0
+        version: 6.4.0
       - name: community.crypto # Only required if you plan to install NGINX Plus
-        version: 2.13.0
+        version: 2.14.1
       - name: community.docker # Only required if you plan to use Molecule (see below)
-        version: 3.4.5
+        version: 3.4.7
     ```
 
     **Note:** You can alternatively install the Ansible community distribution (what is known as the "old" Ansible) if you don't want to manage individual collections.
@@ -92,16 +94,17 @@ AlmaLinux:
   - 8
   - 9
 Alpine:
-  - 3.14
-  - 3.15
   - 3.16
   - 3.17
+  - 3.18
+  - 3.19
 Amazon Linux:
   - 2
 CentOS:
   - 7.4+
 Debian:
   - bullseye (11)
+  - bookworm (12)
 Oracle Linux:
   - 7
   - 8
@@ -117,10 +120,9 @@ SUSE/SLES:
   - 12
   - 15
 Ubuntu:
-  - bionic (18.04)
   - focal (20.04)
-  - impish (21.10)
   - jammy (22.04)
+  - lunar (23.04)
 ```
 
 ### NGINX Plus
@@ -130,25 +132,28 @@ AlmaLinux:
   - 8
   - 9
 Alpine:
-  - 3.13
-  - 3.14
-  - 3.15
   - 3.16
   - 3.17
-Amazon Linux 2:
-  - any
+  - 3.18
+  - 3.19
+Amazon Linux:
+  - 2
 CentOS:
   - 7.4+
 Debian:
   - bullseye (11)
+  - bookworm (12)
 FreeBSD:
   - 12.1+
   - 13
+  - 14
 Oracle Linux:
   - 7.4+
+  - 8.1+
+  - 9
 Red Hat:
   - 7.4+
-  - 8
+  - 8.1+
   - 9
 Rocky Linux:
   - 8
@@ -157,7 +162,6 @@ SUSE/SLES:
   - 12
   - 15
 Ubuntu:
-  - bionic (18.04)
   - focal (20.04)
   - jammy (22.04)
 ```
@@ -165,16 +169,18 @@ Ubuntu:
 ### NGINX Amplify Agent
 
 ```yaml
-Amazon Linux 2:
-  - any
+Amazon Linux:
+  - 2
 Debian:
   - buster (10)
   - bullseye (11)
 Red Hat:
   - 8
+  - 9
 Ubuntu:
-  - bionic
-  - focal
+  - bionic (18.04)
+  - focal (20.04)
+  - jammy (22.04)
 ```
 
 ### NGINX Agent
@@ -246,6 +252,7 @@ Working functional playbook examples can be found in the **[`molecule/`](https:/
 
 | Name | Description |
 | ---- | ----------- |
+| **[`amplify/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/amplify/converge.yml)** | Install and configure the NGINX Amplify agent |
 | **[`default/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/default/converge.yml)** | Install a specific version of NGINX, install various NGINX supported modules, tweak systemd and set up logrotate |
 | **[`distribution/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/distribution/converge.yml)** | Install NGINX from the distribution's package repository instead of NGINX's package repository |
 | **[`downgrade/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/downgrade/converge.yml)** | Downgrade to a specific version of NGINX |
@@ -283,4 +290,4 @@ You can find the Ansible NGINX Unit role to install NGINX Unit [here](https://gi
 
 [Tom Gamull](https://github.com/magicalyak)
 
-&copy; [F5, Inc.](https://www.f5.com/) 2018 - 2023
+&copy; [F5, Inc.](https://www.f5.com/) 2018 - 2024

@@ -18,10 +18,10 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Check out the codebase
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python 3
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: 3.x
 
@@ -37,40 +37,45 @@ jobs:
   molecule:
     name: Molecule
     runs-on: ubuntu-22.04
+    needs: ansible-lint
     env:
+      AMPLIFY_API_KEY: ${{ secrets.AMPLIFY_API_KEY }}
+      AMPLIFY_EMAIL: ${{ secrets.AMPLIFY_EMAIL }}
+      AMPLIFY_PASSWORD: ${{ secrets.AMPLIFY_PASSWORD }}
       NGINX_CRT: ${{ secrets.NGINX_CRT }}
       NGINX_KEY: ${{ secrets.NGINX_KEY }}
     strategy:
       fail-fast: false
       matrix:
         scenario:
+          - amplify
           - default
           - distribution
           - downgrade
           - downgrade-plus
           - plus
           - source
+          - source-version
           - stable
           - uninstall
           - uninstall-plus
           - upgrade
           - upgrade-plus
           - version
-    needs: ansible-lint
     steps:
       - name: Check out the codebase
         if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Set up Docker QEMU
-        if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}
-        uses: docker/setup-qemu-action@v2
-        with:
-          platforms: aarch64,s390x
+      # - name: Set up Docker QEMU
+      #   if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}
+      #   uses: docker/setup-qemu-action@v2
+      #   with:
+      #     platforms: aarch64,s390x
 
       - name: Set up Python 3
         if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: 3.x
 
@@ -78,7 +83,7 @@ jobs:
         if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}
         run: pip3 install -r .github/workflows/requirements/requirements_molecule.txt
 
-      - name: Install Ansible collection dependencies
+      - name: Install Ansible core collection dependencies
         if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}
         run: ansible-galaxy install -r .github/workflows/requirements/requirements_ansible.yml
 

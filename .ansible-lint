@@ -1,4 +1,7 @@
 ---
+exclude_paths:
+  - .github/
 skip_list:
   - name[template]
+  - schema[meta]
   - yaml[line-length]

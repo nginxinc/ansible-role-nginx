@@ -23,3 +23,17 @@
       ansible.builtin.uri:
         url: http://localhost
         status_code: 200
+
+    - name: Fetch the latest version of NGINX Plus
+      ansible.builtin.uri:
+        url: https://version.nginx.com/plus
+        return_content: true
+      register: nginx_version
+
+    - name: Verify the latest version of NGINX Plus has been installed
+      ansible.builtin.command: nginx -v
+      args:
+        chdir: "{{ ((ansible_facts['system'] | lower is not search('bsd')) | ternary('/etc/nginx', '/usr/local/sbin')) }}"
+      changed_when: false
+      register: version
+      failed_when: version is not search(nginx_version['content'] | regex_search('[0-9]+'))

@@ -8,16 +8,25 @@
     name: nginx-amplify-agent
     state: present
 
-- name: Copy NGINX Amplify configurator agent configuration template
+- name: Check if NGINX Amplify agent configuration file is present
+  ansible.builtin.stat:
+    path: /etc/amplify-agent/agent.conf
+  register: nginx_amplify_agent_config
+
+- name: Copy NGINX Amplify agent configuration template
   ansible.builtin.copy:
     remote_src: true
     src: /etc/amplify-agent/agent.conf.default
     dest: /etc/amplify-agent/agent.conf
     mode: "0644"
+  when: not nginx_amplify_agent_config['stat']['exists']
 
 - name: Configure NGINX Amplify agent API key
   ansible.builtin.lineinfile:
     dest: /etc/amplify-agent/agent.conf
     regexp: api_key =.*
     line: api_key = {{ nginx_amplify_api_key }}
+  when:
+    - nginx_amplify_api_key is defined
+    - nginx_amplify_api_key | length > 0
   notify: (Handler) Start NGINX Amplify agent

@@ -18,22 +18,6 @@ platforms:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
-  - name: alpine-3.14
-    image: alpine:3.14
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    cgroupns_mode: host
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /sbin/init
-  - name: alpine-3.15
-    image: alpine:3.15
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    cgroupns_mode: host
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /sbin/init
   - name: alpine-3.16
     image: alpine:3.16
     platform: x86_64
@@ -45,7 +29,23 @@ platforms:
     command: /sbin/init
   - name: alpine-3.17
     image: alpine:3.17
-    platform: aarch64
+    # platform: aarch64
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    cgroupns_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
+  - name: alpine-3.18
+    image: alpine:3.18
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    cgroupns_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
+  - name: alpine-3.19
+    image: alpine:3.19
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -72,6 +72,14 @@ platforms:
     command: /usr/sbin/init
   - name: debian-bullseye
     image: debian:bullseye-slim
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    cgroupns_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
+  - name: debian-bookworm
+    image: debian:bookworm-slim
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -113,8 +121,8 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
   - name: rhel-8
-    image: redhat/ubi8:8.7
-    platform: s390x
+    image: redhat/ubi8:8.9
+    # platform: s390x
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -122,8 +130,8 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
   - name: rhel-9
-    image: redhat/ubi9:9.1.0
-    platform: aarch64
+    image: redhat/ubi9:9.3
+    # platform: aarch64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -139,7 +147,7 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
   - name: rockylinux-9
-    image: rockylinux:9.0.20220720
+    image: rockylinux:9.0
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -155,18 +163,9 @@ platforms:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
-  - name: ubuntu-bionic
-    image: ubuntu:bionic
-    platform: x86_64
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    cgroupns_mode: host
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /sbin/init
   - name: ubuntu-focal
     image: ubuntu:focal
-    platform: s390x
+    # platform: s390x
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -175,7 +174,7 @@ platforms:
     command: /sbin/init
   - name: ubuntu-jammy
     image: ubuntu:jammy
-    platform: aarch64
+    # platform: aarch64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host

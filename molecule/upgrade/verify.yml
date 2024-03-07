@@ -24,21 +24,16 @@
         url: http://localhost
         status_code: 200
 
-    - name: Fetch NGINX version
+    - name: Fetch the latest mainline version of NGINX
       ansible.builtin.uri:
         url: https://version.nginx.com/nginx/mainline
         return_content: true
-      check_mode: false
-      register: nginx_versions
+      register: nginx_version
 
-    - name: Set NGINX version
-      ansible.builtin.set_fact:
-        nginx_version: "{{ nginx_versions.content | regex_search('([0-9]+\\.){2}[0-9]+') }}"
-
-    - name: Verify NGINX has been upgraded
+    - name: Verify NGINX has been upgraded to the latest mainline version
       ansible.builtin.command: nginx -v
       args:
         chdir: "{{ ((ansible_facts['system'] | lower is not search('bsd')) | ternary('/etc/nginx', '/usr/local/sbin')) }}"
       changed_when: false
       register: version
-      failed_when: version is not search(nginx_version)
+      failed_when: version is not search(nginx_version['content'] | regex_search('([0-9]+\\.){2}[0-9]+'))

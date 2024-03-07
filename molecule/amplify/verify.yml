@@ -24,16 +24,10 @@
         url: http://localhost
         status_code: 200
 
-    - name: Fetch the latest mainline version of NGINX
-      ansible.builtin.uri:
-        url: https://version.nginx.com/nginx/mainline
-        return_content: true
-      register: nginx_version
-
-    - name: Verify the latest mainline version of NGINX has been installed
-      ansible.builtin.command: nginx -v
-      args:
-        chdir: "{{ ((ansible_facts['system'] | lower is not search('bsd')) | ternary('/etc/nginx', '/usr/local/sbin')) }}"
-      changed_when: false
-      register: version
-      failed_when: version is not search(nginx_version['content'] | regex_search('([0-9]+\\.){2}[0-9]+'))
+    - name: Check if NGINX Amplify agent is installed
+      ansible.builtin.package:
+        name: nginx-amplify-agent
+        state: present
+      check_mode: true
+      register: install
+      failed_when: (install is changed) or (install is failed)

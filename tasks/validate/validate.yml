@@ -2,10 +2,9 @@
 - name: Check whether you are using a supported NGINX distribution
   ansible.builtin.assert:
     that:
-      - "{{ ansible_facts['distribution'] | lower in nginx_distributions.keys() | list }}"
-      - "{{ (ansible_facts['distribution_version'] | regex_search('\\d+\\.?\\d*') in nginx_distributions[ansible_facts['distribution'] | lower]['versions'] | string)
-        if ansible_facts['distribution'] | lower in ['alpine', 'ubuntu'] else ansible_facts['distribution_major_version'] in nginx_distributions[ansible_facts['distribution'] | lower]['versions'] | string }}"
-      - "{{ ansible_facts['architecture'] in nginx_distributions[ansible_facts['distribution'] | lower]['architectures'] }}"
+      - ansible_facts['distribution'] | lower in nginx_distributions.keys() | list
+      - (ansible_facts['distribution_version'] | regex_search('\\d{1,2}\\.\\d{2}') | float in nginx_distributions[ansible_facts['distribution'] | lower]['versions'] | map('float') if ansible_facts['distribution'] | lower in ['alpine', 'ubuntu'] else ansible_facts['distribution_major_version'] in nginx_distributions[ansible_facts['distribution'] | lower]['versions'] | string)
+      - ansible_facts['architecture'] in nginx_distributions[ansible_facts['distribution'] | lower]['architectures']
     success_msg: Your distribution, {{ nginx_distributions[ansible_facts['distribution'] | lower]['name'] }} {{ ansible_facts['distribution_version'] }} ({{ ansible_facts['architecture'] }}), is supported by NGINX {{ (nginx_type == 'opensource') | ternary('Open Source', 'Plus') }}.
     fail_msg: Your distribution, {{ nginx_distributions[ansible_facts['distribution'] | lower]['name'] }} {{ ansible_facts['distribution_version'] }} ({{ ansible_facts['architecture'] }}), is not supported by NGINX {{ (nginx_type == 'opensource') | ternary('Open Source', 'Plus') }}.
   when:

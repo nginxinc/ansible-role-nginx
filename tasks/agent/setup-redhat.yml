@@ -1,9 +1,9 @@
 ---
-- name: (RHEL/CentOS/Rocky Linux/AlmaLinux/Oracle Linux) Add NGINX Agent repository
+- name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) Add NGINX Agent repository
   ansible.builtin.yum_repository:
     name: nginx-agent
     file: nginx-agent
-    baseurl: https://{{ nginx_agent_repo }}/nginx-agent/{{ (ansible_facts['distribution'] == 'Amazon') | ternary('amzn', 'centos') }}/$releasever/$basearch/
+    baseurl: https://packages.nginx.org/nginx-agent/{{ (ansible_facts['distribution'] == 'Amazon') | ternary('amzn2', 'centos') }}/$releasever/$basearch/
     description: NGINX Agent
     enabled: true
     gpgcheck: true

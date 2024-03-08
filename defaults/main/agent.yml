@@ -1,22 +1,14 @@
 ---
 # Install NGINX Agent.
 # Requires access to either the NGINX stub_status or the NGINX Plus REST API.
-# Default is null.
 nginx_agent_enable: false
-nginx_agent_repo: packages.nginx.org
 
-# Specify the grpc server
-nms_server_host: null # host of the control plane
-nms_server_port: 443 # port of the control plane
+# Specify the control plane server host and port
+# Default is the NGINX One SaaS control plane available in F5 Distributed Cloud
+nginx_agent_server_host: agent.connect.nginx.com
+nginx_agent_server_port: 443
 
-# Enable tls in the nginx-agent setup for grpc
-# Default to enable to connect with tls connection but without client cert for mtls
-nms_tls_enable: true
-nms_tls_skip_verify: true
-
-# Path to ca certificate file used for server cert validation
-nms_tls_ca: ""
-
-# Path to cert and key files for mTLS
-nms_tls_cert: ""
-nms_tls_key: ""
+# Enable TLS communication between data plane and control plane
+# Default is true.
+nginx_agent_tls_enable: true
+nginx_agent_tls_skip_verify: false

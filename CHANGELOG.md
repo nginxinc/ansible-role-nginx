@@ -4,6 +4,7 @@
 
 FEATURES:
 
+- Implement the ability to install the NGINX Agent.
 - Add Alpine Linux 3.19 to the list of NGINX Open Source and NGINX Plus tested and supported distributions.
 - Remove Alpine Linux 3.15 from the list of NGINX Open Source and NGINX Plus tested and supported distributions.
 

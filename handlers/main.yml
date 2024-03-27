@@ -41,6 +41,13 @@
   ansible.builtin.service:
     name: amplify-agent
     state: started
+    enabled: true
+
+- name: (Handler) Start NGINX Agent
+  ansible.builtin.service:
+    name: nginx-agent
+    state: started
+    enabled: true
 
 - name: (Handler) Start logrotate
   ansible.builtin.command:

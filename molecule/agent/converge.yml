@@ -1,0 +1,10 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: Install NGINX Agent
+      ansible.builtin.include_role:
+        name: ansible-role-nginx
+      vars:
+        nginx_agent_enable: true
+        nginx_agent_data_plane_key: "{{ lookup('env', 'AGENT_DATA_PLANE_KEY') }}"

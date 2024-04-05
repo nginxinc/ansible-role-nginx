@@ -45,6 +45,8 @@ jobs:
       AMPLIFY_PASSWORD: ${{ secrets.AMPLIFY_PASSWORD }}
       NGINX_CRT: ${{ secrets.NGINX_CRT }}
       NGINX_KEY: ${{ secrets.NGINX_KEY }}
+      ONE_API_TOKEN: ${{ secrets.ONE_API_TOKEN }}
+      ONE_TENANT: ${{ secrets.ONE_TENANT }}
     strategy:
       fail-fast: false
       matrix:

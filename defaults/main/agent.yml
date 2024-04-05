@@ -3,8 +3,13 @@
 # Requires access to either the NGINX stub_status or the NGINX Plus REST API.
 nginx_agent_enable: false
 
-# Specify the control plane server host and port
-# Default is the NGINX One SaaS control plane available in F5 Distributed Cloud
+# Specify the NGINX Agent data plane key/token.
+# This is required to authenticate the NGINX Agent with the NGINX One SaaS control plane available in F5 Distributed Cloud.
+# Default is null.
+nginx_agent_data_plane_key: null
+
+# Specify the control plane server host and port.
+# Default is the NGINX One SaaS control plane available in F5 Distributed Cloud.
 nginx_agent_server_host: agent.connect.nginx.com
 nginx_agent_server_port: 443
 

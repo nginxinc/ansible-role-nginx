@@ -251,7 +251,7 @@ Working functional playbook examples can be found in the **[`molecule/`](https:/
 
 | Name | Description |
 | ---- | ----------- |
-| **[`agent/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/agent/converge.yml)** | Install and configure the NGINX Agent |
+| **[`agent/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/agent/converge.yml)** | Install and configure the NGINX Agent to connect to the NGINX One SaaS control plane on F5 Distributed Cloud |
 | **[`amplify/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/amplify/converge.yml)** | Install and configure the NGINX Amplify agent |
 | **[`default/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/default/converge.yml)** | Install a specific version of NGINX, install various NGINX supported modules, tweak systemd and set up logrotate |
 | **[`distribution/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/distribution/converge.yml)** | Install NGINX from the distribution's package repository instead of NGINX's package repository |

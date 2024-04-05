@@ -15,7 +15,7 @@
     path: /etc/nginx-agent/nginx-agent.conf
     block: |
       server:
-        token: {{ nginx_agent_data_plane_key }}
+        {{ ("token: " + nginx_agent_data_plane_key) if nginx_agent_data_plane_key is defined and nginx_agent_data_plane_key | length > 0 }}
         host: {{ nginx_agent_server_host }}
         grpcPort: {{ nginx_agent_server_port }}
 

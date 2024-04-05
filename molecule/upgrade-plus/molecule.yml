@@ -154,7 +154,7 @@ platforms: # Alpine 3.19 only has one version of NGINX Plus available (at the mo
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
-  - name: sles15
+  - name: sles-15
     image: registry.suse.com/bci/bci-base:15.4
     platform: x86_64
     dockerfile: ../common/Dockerfile.j2

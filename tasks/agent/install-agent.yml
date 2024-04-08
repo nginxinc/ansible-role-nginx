@@ -1,0 +1,25 @@
+---
+- name: Configure NGINX Agent repository
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/agent/setup-{{ ansible_facts['os_family'] | lower }}.yml"
+  when: ansible_facts['os_family'] in ['Alpine', 'Debian', 'RedHat', 'Suse']
+
+- name: Install NGINX Agent
+  ansible.builtin.package:
+    name: nginx-agent
+    state: present
+
+- name: Configure NGINX Agent
+  ansible.builtin.blockinfile:
+    backup: true
+    mode: "0644"
+    path: /etc/nginx-agent/nginx-agent.conf
+    block: |
+      server:
+        {{ ("token: " + nginx_agent_data_plane_key) if nginx_agent_data_plane_key is defined and nginx_agent_data_plane_key | length > 0 }}
+        host: {{ nginx_agent_server_host }}
+        grpcPort: {{ nginx_agent_server_port }}
+
+      tls:
+        enable: {{ nginx_agent_tls_enable }}
+        skip_verify: {{ nginx_agent_tls_skip_verify }}
+  notify: (Handler) Start NGINX Agent

@@ -25,7 +25,7 @@
 
         - name: Login to NGINX Amplify
           ansible.builtin.uri:
-            url: "https://amplify.nginx.com/sapi/auth/login/"
+            url: https://amplify.nginx.com/sapi/auth/login
             method: POST
             headers:
               Content-Type: application/json
@@ -35,24 +35,24 @@
               password: "{{ lookup('env', 'AMPLIFY_PASSWORD') }}"
           register: login
 
-        - name: Get list of IDs
+        - name: Get list of NGINX Amplify dangling instance IDs
           ansible.builtin.uri:
-            url: "https://amplify.nginx.com/sapi/inventory/objects/?all=true&filter=false/"
+            url: https://amplify.nginx.com/sapi/inventory/objects/?all=true&filter=false
             method: GET
             headers:
-              Cookie: "{{ login.cookies_string }}"
+              Cookie: "{{ login['cookies_string'] }}"
               Connection: keep-alive
             follow_redirects: all
           register: get_ids
 
         - name: Remove dangling instances from NGINX Amplify
           ansible.builtin.uri:
-            url: "https://amplify.nginx.com/sapi/inventory/objects/{{ item }}/"
+            url: https://amplify.nginx.com/sapi/inventory/objects/{{ item }}
             method: DELETE
             status_code: 204
             headers:
-              Cookie: "{{ login.cookies_string }}"
-          loop: "{{ get_ids.json | rejectattr('parent_id', 'match', '^[0-9]+$') | map(attribute='id') | list }}"
+              Cookie: "{{ login['cookies_string'] }}"
+          loop: "{{ get_ids['json'] | rejectattr('parent_id', 'match', '^[0-9]+$') | map(attribute='id') | list }}"
       rescue:
         - name: It's ok we're at startup
           ansible.builtin.meta: noop

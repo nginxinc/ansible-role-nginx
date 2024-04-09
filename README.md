@@ -8,7 +8,7 @@
 
 # Ansible NGINX Role
 
-This role installs NGINX Open Source, NGINX Plus, or the NGINX Amplify agent on your target host.
+This role installs NGINX Open Source, NGINX Plus, NGINX Agent or the NGINX Amplify agent on your target host.
 
 **Note:** This role is still in active development. There may be unidentified issues and the role variables may change as development continues.
 
@@ -85,7 +85,7 @@ git clone https://github.com/nginxinc/ansible-role-nginx.git
 
 ## Platforms
 
-The NGINX Ansible role supports all platforms supported by [NGINX Open Source](https://nginx.org/en/linux_packages.html), [NGINX Plus](https://docs.nginx.com/nginx/technical-specs/), and the [NGINX Amplify agent](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-faq.md#21-what-operating-systems-are-supported):
+The NGINX Ansible role supports almost all platforms supported by [NGINX Open Source](https://nginx.org/en/linux_packages.html), [NGINX Plus](https://docs.nginx.com/nginx/technical-specs/), the [NGINX Agent](https://docs.nginx.com/nginx-agent/technical-specifications/), and the [NGINX Amplify agent](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-faq.md#21-what-operating-systems-are-supported):
 
 ### NGINX Open Source
 
@@ -94,10 +94,10 @@ AlmaLinux:
   - 8
   - 9
 Alpine:
-  - 3.15
   - 3.16
   - 3.17
   - 3.18
+  - 3.19
 Amazon Linux:
   - 2
 CentOS:
@@ -166,6 +166,46 @@ Ubuntu:
   - jammy (22.04)
 ```
 
+### NGINX Agent
+
+```yaml
+AlmaLinux:
+  - 8
+  - 9
+Alpine:
+  - 3.16
+  - 3.17
+  - 3.18
+  - 3.19
+Amazon Linux:
+  - 2
+Debian:
+  - bullseye (11)
+  - bookwork (12)
+CentOS:
+  - 7.4+
+FreeBSD:
+  - 13
+  - 14
+Oracle Linux:
+  - 7.4+
+  - 8
+  - 9
+Red Hat:
+  - 7
+  - 8
+  - 9
+Rocky Linux:
+  - 8
+  - 9
+SUSE/SLES:
+  - 12
+  - 15
+Ubuntu:
+  - focal (20.04)
+  - jammy (22.04)
+```
+
 ### NGINX Amplify Agent
 
 ```yaml
@@ -183,7 +223,7 @@ Ubuntu:
   - jammy (22.04)
 ```
 
-**Note:** You can also use this role to compile NGINX Open Source from source, install NGINX Open Source on compatible yet unsupported platforms, or install NGINX Open Source on BSD systems at your own risk.
+**Note:** At your own risk, you can also use this role to compile NGINX Open Source from source, install NGINX Open Source on "compatible" yet unsupported platforms, install NGINX from your respective distribution package manager, or install NGINX Open Source on BSD systems.
 
 ## Role Variables
 
@@ -192,6 +232,7 @@ This role has multiple variables. The descriptions and defaults for all these va
 | Name | Description |
 | ---- | ----------- |
 | **[`main.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/main.yml)** | NGINX installation variables |
+| **[`agent.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/agent.yml)** | NGINX Agent installation variables |
 | **[`amplify.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/amplify.yml)** | NGINX Amplify agent installation variables |
 | **[`bsd.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/bsd.yml)** | BSD installation variables |
 | **[`logrotate.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/logrotate.yml)** | Logrotate configuration variables |
@@ -210,6 +251,7 @@ Working functional playbook examples can be found in the **[`molecule/`](https:/
 
 | Name | Description |
 | ---- | ----------- |
+| **[`agent/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/agent/converge.yml)** | Install and configure the NGINX Agent to connect to the NGINX One SaaS control plane on F5 Distributed Cloud |
 | **[`amplify/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/amplify/converge.yml)** | Install and configure the NGINX Amplify agent |
 | **[`default/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/default/converge.yml)** | Install a specific version of NGINX, install various NGINX supported modules, tweak systemd and set up logrotate |
 | **[`distribution/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/distribution/converge.yml)** | Install NGINX from the distribution's package repository instead of NGINX's package repository |

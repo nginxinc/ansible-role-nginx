@@ -121,7 +121,7 @@ platforms: # Alpine 3.19 only has one version of NGINX Plus available (at the mo
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
   - name: rhel-8
-    image: redhat/ubi8:8.7
+    image: redhat/ubi8:8.9
     # platform: s390x
     dockerfile: ../common/Dockerfile.j2
     privileged: true
@@ -130,7 +130,7 @@ platforms: # Alpine 3.19 only has one version of NGINX Plus available (at the mo
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
   - name: rhel-9
-    image: redhat/ubi9:9.1.0
+    image: redhat/ubi9:9.3
     # platform: aarch64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
@@ -154,7 +154,7 @@ platforms: # Alpine 3.19 only has one version of NGINX Plus available (at the mo
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
-  - name: sles15
+  - name: sles-15
     image: registry.suse.com/bci/bci-base:15.4
     platform: x86_64
     dockerfile: ../common/Dockerfile.j2
@@ -187,3 +187,8 @@ provisioner:
     prepare: prepare.yml
     converge: converge.yml
     verify: verify.yml
+  config_options:
+    defaults:
+      fact_caching: jsonfile
+      fact_caching_connection: /tmp/facts_cache
+      fact_caching_timeout: 7200

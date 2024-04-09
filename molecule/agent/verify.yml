@@ -24,10 +24,10 @@
         url: http://localhost
         status_code: 200
 
-    - name: Verify NGINX has been downgraded
-      ansible.builtin.command: nginx -v
-      args:
-        chdir: "{{ ((ansible_facts['system'] | lower is not search('bsd')) | ternary('/etc/nginx', '/usr/local/sbin')) }}"
-      changed_when: false
-      register: current_version
-      failed_when: current_version is not search(version | regex_search('([0-9]+\\.){2}[0-9]+'))
+    - name: Check if NGINX Agent is installed
+      ansible.builtin.package:
+        name: nginx-agent
+        state: present
+      check_mode: true
+      register: install
+      failed_when: (install is changed) or (install is failed)

@@ -39,15 +39,19 @@ jobs:
     runs-on: ubuntu-22.04
     needs: ansible-lint
     env:
+      AGENT_DATA_PLANE_KEY: ${{ secrets.AGENT_DATA_PLANE_KEY }}
       AMPLIFY_API_KEY: ${{ secrets.AMPLIFY_API_KEY }}
       AMPLIFY_EMAIL: ${{ secrets.AMPLIFY_EMAIL }}
       AMPLIFY_PASSWORD: ${{ secrets.AMPLIFY_PASSWORD }}
       NGINX_CRT: ${{ secrets.NGINX_CRT }}
       NGINX_KEY: ${{ secrets.NGINX_KEY }}
+      ONE_API_TOKEN: ${{ secrets.ONE_API_TOKEN }}
+      ONE_TENANT: ${{ secrets.ONE_TENANT }}
     strategy:
       fail-fast: false
       matrix:
         scenario:
+          - agent
           - amplify
           - default
           - distribution

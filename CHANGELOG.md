@@ -4,8 +4,9 @@
 
 FEATURES:
 
-- Add Alpine Linux 3.19 to the list of NGINX Plus tested and supported distributions.
-- Remove Alpine Linux 3.15 from the list of NGINX Plus tested and supported distributions.
+- Implement the ability to install the NGINX Agent.
+- Add Alpine Linux 3.19 to the list of NGINX Open Source and NGINX Plus tested and supported distributions.
+- Remove Alpine Linux 3.15 from the list of NGINX Open Source and NGINX Plus tested and supported distributions.
 
 ENHANCEMENTS:
 
@@ -20,7 +21,9 @@ BUG FIXES:
 CI/CD:
 
 - Add Molecule tests for NGINX Amplify.
-- Use the local role name (`ansible-role-nginx`) instead of the  fully qualified role name (`nginxinc.nginx`) in Molecule to ensure tests always work as intended in environments where the role has been already installed beforehand.
+- Update the RHEL based tests to use the latest UBI release.
+- Use the local role name (`ansible-role-nginx`) instead of the fully qualified role name (`nginxinc.nginx`) in Molecule to ensure tests always work as intended in environments where the role has been already installed beforehand.
+- Implement F5 CLA signatures.
 
 ## 0.24.2 (October 3rd, 2023)
 

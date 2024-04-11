@@ -19,7 +19,7 @@ jobs:
         uses: contributor-assistant/github-action@dbc1c64d82d3aad5072007a41fff2828ae6d23ec # v2.3.2
         with:
           # Any pull request targeting the following branch will trigger a CLA check
-          branch: 'master'
+          branch: 'main'
           # Path to the CLA document
           path-to-document: 'https://github.com/f5/.github/blob/main/CLA/cla-markdown.md'
           # Custom CLA messages

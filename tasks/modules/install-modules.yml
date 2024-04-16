@@ -61,7 +61,7 @@
     - not (item['name'] | default(item) == "geoip")
       or not ((ansible_facts['os_family'] == 'FreeBSD')
       or (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution'] != 'Amazon' and ansible_facts['distribution_major_version'] is version('8', '>='))
-      or (ansible_facts['distribution'] == 'Amazon' and ansible_facts['distribution_major_version'] is version('2023', '=='))
+      or (ansible_facts['distribution'] == 'Amazon' and ansible_facts['distribution_major_version'] is version('2023', '==')))
     - not (item['name'] | default(item) == 'geoip2')
       or not ((ansible_facts['os_family'] == 'Suse')
       or (ansible_facts['distribution'] == 'Amazon'))

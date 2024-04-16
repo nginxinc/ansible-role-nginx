@@ -21,7 +21,7 @@ RUN \
     && apt-get clean; \
   elif [ $(command -v dnf) ]; then \
     dnf makecache \
-    && dnf --assumeyes install bash iproute sudo /usr/bin/dnf-3 /usr/bin/python3 /usr/bin/python3-config vim \
+    && dnf --assumeyes install bash iproute sudo systemd /usr/bin/dnf-3 /usr/bin/python3 /usr/bin/python3-config vim \
     && dnf clean all; \
   elif [ $(command -v yum) ]; then \
     yum makecache fast \

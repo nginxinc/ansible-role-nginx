@@ -118,6 +118,7 @@ Alpine:
   - 3.19
 Amazon Linux:
   - 2
+  - 2023
 CentOS:
   - 7.4+
 Debian:
@@ -156,6 +157,7 @@ Alpine:
   - 3.19
 Amazon Linux:
   - 2
+  - 2023
 CentOS:
   - 7.4+
 Debian:
@@ -197,6 +199,7 @@ Alpine:
   - 3.19
 Amazon Linux:
   - 2
+  - 2023
 Debian:
   - bullseye (11)
   - bookwork (12)

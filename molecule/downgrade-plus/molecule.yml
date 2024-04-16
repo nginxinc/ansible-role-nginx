@@ -61,6 +61,14 @@ platforms: # Alpine 3.19 only has one version of NGINX Plus available (at the mo
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
+  - name: amazonlinux-2023
+    image: amazonlinux:2023
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    cgroupns_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /usr/sbin/init
   - name: centos-7
     image: centos:7
     platform: x86_64

@@ -11,7 +11,7 @@ FEATURES:
 ENHANCEMENTS:
 
 - Allow strings in addition to a list when configuring `logrotate`.
-- Bump the Ansible `community.general` collection to `8.5.0`, `community.crypto` collection to `2.18.0` and `community.docker` collection to `3.8.1`.
+- Bump the Ansible `community.general` collection to `9.0.0`, `community.crypto` collection to `2.20.0` and `community.docker` collection to `3.10.2`.
 
 BUG FIXES:
 

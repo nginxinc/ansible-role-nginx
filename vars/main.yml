@@ -135,7 +135,7 @@ nginx_plus_default_repository_suse: https://pkgs.nginx.com/plus/sles/{{ ansible_
 nginx_alpine_dependencies: [ca-certificates, coreutils, openssl, pcre2]
 
 # Debian dependencies
-nginx_debian_dependencies: [apt-transport-https, ca-certificates, gpg-agent]
+nginx_debian_dependencies: [apt-transport-https, ca-certificates, gnupg, gpg-agent]
 
 # FreeBSD dependencies
 nginx_freebsd_dependencies: [security/ca_root_nss]

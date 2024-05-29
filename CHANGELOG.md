@@ -15,7 +15,8 @@ ENHANCEMENTS:
 BUG FIXES:
 
 - Avoid re-copying the NGINX Amplify config file every time the role is run.
-- Fix conditional statements should not include jinja2 templating warning.
+- Update conditional statements to avoid include Jinja2 warnings.
+- Fix issue when installing NGINX on BSD systems.
 
 CI/CD:
 

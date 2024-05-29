@@ -7,8 +7,8 @@ FEATURES:
 - Implement the ability to install the NGINX Agent.
 - Add Amazon Linux 2023, Alpine Linux 3.19 and Ubuntu noble(24.04) to the list of NGINX OSS and NGINX Plus tested and supported distributions.
 - Add Ubuntu matic(23.10) to the list of supported NGINX OSS distributions.
-- Remove Alpine Linux 3.15 and Ubuntu lunar (23.04) from the list of supported NGINX OSS distributions.
-- Remove  from the list of NGINX OSS and NGINX Plus tested and supported distributions.
+- Remove Ubuntu lunar (23.04) from the list of supported NGINX OSS distributions.
+- Remove Alpine Linux 3.15 from the list of NGINX OSS and NGINX Plus tested and supported distributions.
 
 ENHANCEMENTS:
 

@@ -180,8 +180,16 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /sbin/init
-  - name: ubuntu-lunar
-    image: ubuntu:lunar
+  - name: ubuntu-mantic
+    image: ubuntu:mantic
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    cgroupns_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
+  - name: ubuntu-noble
+    image: ubuntu:noble
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host

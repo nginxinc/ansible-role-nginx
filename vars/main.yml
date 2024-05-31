@@ -92,11 +92,11 @@ nginx_plus_supported_distributions:
   oraclelinux:
     name: Oracle Linux
     versions: [7, 8, 9]
-    architectures: "{{ (['x86_64'] + ['aarch64']) if (ansible_facts['distribution_major_version'] is version('8', '==')) else ['x86_64'] }}"
+    architectures: "{{ ['x86_64', 'aarch64'] if (ansible_facts['distribution_major_version'] is version('8', '==')) else ['x86_64'] }}"
   redhat:
     name: Red Hat Enterprise Linux
     versions: [7, 8, 9]
-    architectures: "{{ (['x86_64', 'aarch64'] + ['s390x']) if (ansible_facts['distribution_major_version'] is version('8', '>=')) else ['x86_64', 'aarch64'] }}"
+    architectures: "{{ ['x86_64', 'aarch64', 's390x'] if (ansible_facts['distribution_major_version'] is version('8', '>=')) else ['x86_64', 'aarch64'] }}"
   rocky:
     name: Rocky Linux
     versions: [8, 9]
@@ -108,7 +108,7 @@ nginx_plus_supported_distributions:
   ubuntu:
     name: Ubuntu
     versions: [20.04, 22.04, 24.04]
-    architectures: "{{ (['x86_64', 'aarch64'] + ['s390x']) if (ansible_facts['distribution_version'] is version('20.04', '>=')) else ['x86_64', 'aarch64'] }}"
+    architectures: "{{ ['x86_64', 'aarch64', 's390x'] if ((ansible_facts['distribution_version'] is version('20.04', '==')) or (ansible_facts['distribution_version'] is version('22.04', '=='))) else ['x86_64', 'aarch64'] }}"
 
 # Default NGINX signing key
 nginx_default_signing_key_pgp: https://nginx.org/keys/nginx_signing.key

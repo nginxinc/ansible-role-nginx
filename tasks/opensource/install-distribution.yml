@@ -35,7 +35,9 @@
   ansible.builtin.command:
     cmd: amazon-linux-extras enable nginx1
     creates: /usr/sbin/nginx
-  when: ansible_facts['distribution'] == 'Amazon'
+  when:
+    - ansible_facts['distribution'] == 'Amazon'
+    - ansible_facts['distribution_major_version'] is version('2', '==')
 
 - name: "{{ nginx_setup | capitalize }} NGINX from the distribution's package repository"
   ansible.builtin.package:

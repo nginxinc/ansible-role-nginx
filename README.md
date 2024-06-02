@@ -49,7 +49,7 @@ If you wish to install NGINX Plus using this role, you will need to obtain an NG
 
 - Molecule is used to test the various functionalities of the role. The recommended version of Molecule to test this role is `4.x`.
 - Instructions on how to install Molecule can be found in the [Molecule website](https://molecule.readthedocs.io/en/latest/installation.html). *You will also need to install the Molecule Docker driver.*
-- To run the NGINX Plus Molecule tests, you must copy your NGINX Plus license to the role's [`files/license`](https://github.com/nginxinc/ansible-role-nginx/blob/main/files/license/) folder.
+- To run the NGINX Plus Molecule tests, you must copy your NGINX Plus license to the role's [`files/license`](https://github.com/nginxinc/ansible-role-nginx/blob/main/files/license/) directory.
 
   You can alternatively add your NGINX Plus repository certificate and key to the local environment. Run the following commands to export these files as base64-encoded variables and execute the Molecule tests:
 
@@ -61,6 +61,8 @@ If you wish to install NGINX Plus using this role, you will need to obtain an NG
 
 ## Installation
 
+This role can be installed via either Ansible Galaxy (the Ansible community marketplace) or by cloning this repo. Once installed, you will need to include the role it in your Ansible playbook using [the `roles` keyword, the `import_role` module, or the `include_role` module](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html#using-roles).
+
 ### Ansible Galaxy
 
 To install the latest stable release of the role on your system, use:
@@ -69,10 +71,18 @@ To install the latest stable release of the role on your system, use:
 ansible-galaxy install nginxinc.nginx
 ```
 
-Alternatively, if you have already installed the role, update the role to the latest release:
+Alternatively, if you have already installed the role, you can update the role to the latest release by using:
 
 ```bash
 ansible-galaxy install -f nginxinc.nginx
+```
+
+To use the role, include the following task in your playbook:
+
+```yaml
+- name: Install NGINX
+  ansible.builtin.include_role:
+    name: nginxinc.nginx
 ```
 
 ### Git
@@ -81,6 +91,14 @@ To pull the latest edge commit of the role from GitHub, use:
 
 ```bash
 git clone https://github.com/nginxinc/ansible-role-nginx.git
+```
+
+To use the role, include the following task in your playbook:
+
+```yaml
+- name: Install NGINX
+  ansible.builtin.include_role:
+    name: <path/to/repo> # e.g. <roles/ansible-role-nginx> if you clone the repo inside your project's roles directory
 ```
 
 ## Platforms
@@ -100,6 +118,7 @@ Alpine:
   - 3.19
 Amazon Linux:
   - 2
+  - 2023
 CentOS:
   - 7.4+
 Debian:
@@ -122,7 +141,8 @@ SUSE/SLES:
 Ubuntu:
   - focal (20.04)
   - jammy (22.04)
-  - lunar (23.04)
+  - mantic (23.10)
+  - noble (24.04)
 ```
 
 ### NGINX Plus
@@ -138,6 +158,7 @@ Alpine:
   - 3.19
 Amazon Linux:
   - 2
+  - 2023
 CentOS:
   - 7.4+
 Debian:
@@ -164,6 +185,7 @@ SUSE/SLES:
 Ubuntu:
   - focal (20.04)
   - jammy (22.04)
+  - noble (24.04)
 ```
 
 ### NGINX Agent
@@ -179,6 +201,7 @@ Alpine:
   - 3.19
 Amazon Linux:
   - 2
+  - 2023
 Debian:
   - bullseye (11)
   - bookwork (12)
@@ -227,7 +250,7 @@ Ubuntu:
 
 ## Role Variables
 
-This role has multiple variables. The descriptions and defaults for all these variables can be found in the **[`defaults/main/`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/)** folder in the following files:
+This role has multiple variables. The descriptions and defaults for all these variables can be found in the **[`defaults/main/`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/)** directory in the following files:
 
 | Name | Description |
 | ---- | ----------- |
@@ -239,7 +262,7 @@ This role has multiple variables. The descriptions and defaults for all these va
 | **[`selinux.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/selinux.yml)** | SELinux configuration variables |
 | **[`systemd.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/systemd.yml)** | Systemd configuration variables |
 
-Similarly, descriptions and defaults for preset variables can be found in the **[`vars/`](https://github.com/nginxinc/ansible-role-nginx/blob/main/vars/)** folder in the following files:
+Similarly, descriptions and defaults for preset variables can be found in the **[`vars/`](https://github.com/nginxinc/ansible-role-nginx/blob/main/vars/)** directory in the following files:
 
 | Name | Description |
 | ---- | ----------- |
@@ -266,7 +289,7 @@ Working functional playbook examples can be found in the **[`molecule/`](https:/
 | **[`upgrade-plus/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/upgrade-plus/converge.yml)** | Upgrade NGINX Plus |
 | **[`version/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/version/converge.yml)** | Install a specific version of NGINX and various NGINX modules |
 
-Do note that if you install this repository via Ansible Galaxy, you will have to replace the role variable in the sample playbooks from `ansible-role-nginx` to `nginxinc.nginx`.
+**Note:** If you install this repository via Ansible Galaxy, you will need to replace the `include_role` variable in the example playbooks from `ansible-role-nginx` to `nginxinc.nginx`.
 
 ## Other NGINX Ansible Collections and Roles
 

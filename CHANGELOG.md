@@ -5,8 +5,10 @@
 FEATURES:
 
 - Implement the ability to install the NGINX Agent.
-- Add Alpine Linux 3.19 to the list of NGINX Open Source and NGINX Plus tested and supported distributions.
-- Remove Alpine Linux 3.15 from the list of NGINX Open Source and NGINX Plus tested and supported distributions.
+- Add Amazon Linux 2023, Alpine Linux 3.19 and Ubuntu noble to the list of NGINX OSS and NGINX Plus tested and supported distributions.
+- Add Ubuntu matic to the list of supported NGINX OSS distributions.
+- Remove Ubuntu lunar from the list of supported NGINX OSS distributions.
+- Remove Alpine Linux 3.15 from the list of NGINX OSS and NGINX Plus tested and supported distributions.
 
 ENHANCEMENTS:
 
@@ -16,7 +18,8 @@ ENHANCEMENTS:
 BUG FIXES:
 
 - Avoid re-copying the NGINX Amplify config file every time the role is run.
-- Fix conditional statements should not include jinja2 templating warning.
+- Update conditional statements to avoid include Jinja2 warnings.
+- Fix issue when installing NGINX on BSD systems.
 
 CI/CD:
 

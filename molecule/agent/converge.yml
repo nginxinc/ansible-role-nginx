@@ -2,7 +2,7 @@
 - name: Converge
   hosts: all
   tasks:
-    - name: Install NGINX Agent
+    - name: Install NGINX and NGINX Agent
       ansible.builtin.include_role:
         name: ansible-role-nginx
       vars:

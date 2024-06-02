@@ -4,22 +4,22 @@
   pre_tasks:
     - name: Set repo if Alpine
       ansible.builtin.set_fact:
-        version: =1.25.3-r1
+        version: =1.25.5-r1
         cacheable: true
       when: ansible_facts['os_family'] == "Alpine"
     - name: Set repo if Debian
       ansible.builtin.set_fact:
-        version: =1.25.3-1~{{ ansible_facts['distribution_release'] }}
+        version: =1.25.5-1~{{ ansible_facts['distribution_release'] }}
         cacheable: true
       when: ansible_facts['os_family'] == "Debian"
     - name: Set repo if Red Hat
       ansible.builtin.set_fact:
-        version: -1.25.3-1.{{ (ansible_facts['distribution'] == "Amazon") | ternary(('amzn' + ansible_facts['distribution_major_version'] | string), ('el' + ansible_facts['distribution_major_version'] | string)) }}.ngx
+        version: -1.25.5-1.{{ (ansible_facts['distribution'] == "Amazon") | ternary(('amzn' + ansible_facts['distribution_major_version'] | string), ('el' + ansible_facts['distribution_major_version'] | string)) }}.ngx
         cacheable: true
       when: ansible_facts['os_family'] == "RedHat"
     - name: Set repo if SLES
       ansible.builtin.set_fact:
-        version: =1.25.3-1.sles{{ ansible_facts['distribution_major_version'] }}.ngx
+        version: =1.25.5-1.sles{{ ansible_facts['distribution_major_version'] }}.ngx
         cacheable: true
       when: ansible_facts['os_family'] == "Suse"
   tasks:

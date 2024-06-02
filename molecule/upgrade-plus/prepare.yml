@@ -22,19 +22,19 @@
   pre_tasks:
     - name: Set repo if Alpine
       ansible.builtin.set_fact:
-        version: =30-r1
+        version: =31-r1
       when: ansible_facts['os_family'] == "Alpine"
     - name: Set repo if Debian
       ansible.builtin.set_fact:
-        version: =30-1~{{ ansible_facts['distribution_release'] }}
+        version: =31-1~{{ ansible_facts['distribution_release'] }}
       when: ansible_facts['os_family'] == "Debian"
     - name: Set repo if Red Hat
       ansible.builtin.set_fact:
-        version: -30-1.{{ (ansible_facts['distribution'] == "Amazon") | ternary(('amzn' + ansible_facts['distribution_major_version'] | string), ('el' + ansible_facts['distribution_major_version'] | string)) }}.ngx
+        version: -31-1.{{ (ansible_facts['distribution'] == "Amazon") | ternary(('amzn' + ansible_facts['distribution_major_version'] | string), ('el' + ansible_facts['distribution_major_version'] | string)) }}.ngx
       when: ansible_facts['os_family'] == "RedHat"
     - name: Set repo if SLES
       ansible.builtin.set_fact:
-        version: =30-1.sles{{ ansible_facts['distribution_major_version'] }}.ngx
+        version: =31-1.sles{{ ansible_facts['distribution_major_version'] }}.ngx
       when: ansible_facts['os_family'] == "Suse"
   tasks:
     - name: Install NGINX

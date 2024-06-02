@@ -141,7 +141,8 @@ SUSE/SLES:
 Ubuntu:
   - focal (20.04)
   - jammy (22.04)
-  - lunar (23.04)
+  - mantic (23.10)
+  - noble (24.04)
 ```
 
 ### NGINX Plus
@@ -184,6 +185,7 @@ SUSE/SLES:
 Ubuntu:
   - focal (20.04)
   - jammy (22.04)
+  - noble (24.04)
 ```
 
 ### NGINX Agent

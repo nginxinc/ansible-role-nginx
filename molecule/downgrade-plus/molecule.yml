@@ -1,7 +1,7 @@
 ---
 driver:
   name: docker
-platforms: # Alpine 3.19 only has one version of NGINX Plus available (at the moment) so it's impossible to test the downgrade scenario
+platforms: # Ubuntu noble only has one version of NGINX Plus available (at the moment) so it's impossible to test the downgrade scenario
   - name: almalinux-8
     image: almalinux:8
     dockerfile: ../common/Dockerfile.j2
@@ -44,14 +44,14 @@ platforms: # Alpine 3.19 only has one version of NGINX Plus available (at the mo
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /sbin/init
-  # - name: alpine-3.19
-  #   image: alpine:3.19
-  #   dockerfile: ../common/Dockerfile.j2
-  #   privileged: true
-  #   cgroupns_mode: host
-  #   volumes:
-  #     - /sys/fs/cgroup:/sys/fs/cgroup:rw
-  #   command: /sbin/init
+  - name: alpine-3.19
+    image: alpine:3.19
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    cgroupns_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
   - name: amazonlinux-2
     image: amazonlinux:2
     platform: x86_64
@@ -189,6 +189,14 @@ platforms: # Alpine 3.19 only has one version of NGINX Plus available (at the mo
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /sbin/init
+  # - name: ubuntu-noble
+  #   image: ubuntu:noble
+  #   dockerfile: ../common/Dockerfile.j2
+  #   privileged: true
+  #   cgroupns_mode: host
+  #   volumes:
+  #     - /sys/fs/cgroup:/sys/fs/cgroup:rw
+  #   command: /sbin/init
 provisioner:
   name: ansible
   playbooks:

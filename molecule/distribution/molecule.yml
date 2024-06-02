@@ -198,6 +198,22 @@ platforms: # The RHEL UBI 7 image fails to install some NGINX dependencies when 
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /sbin/init
+  - name: ubuntu-mantic
+    image: ubuntu:mantic
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    cgroupns_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
+  - name: ubuntu-noble
+    image: ubuntu:noble
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    cgroupns_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
 provisioner:
   name: ansible
   log: true

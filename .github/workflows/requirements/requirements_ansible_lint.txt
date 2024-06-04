@@ -1,5 +1,5 @@
 ansible-core==2.16.6
 jinja2==3.1.4
-ansible-compat==24.5.1
+ansible-compat==24.6.0
 yamllint==1.35.1
 ansible-lint==24.5.0

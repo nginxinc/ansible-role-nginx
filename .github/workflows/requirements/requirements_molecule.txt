@@ -4,3 +4,4 @@ ansible-compat==24.6.0
 molecule==24.2.1
 molecule-plugins[docker]==23.5.3
 docker==7.1.0
+requests==2.32.3

@@ -1,6 +1,11 @@
 # Changelog
 
-## 0.24.3 (Unreleased)
+## 0.24.3 (July 11, 2024)
+
+DEPRECATION WARNINGS:
+
+- This is the last release that will support RHEL 7 based distributions. If you are using this role to install NGINX on RHEL/CentOS 7, do note that CentOS 7 has reached EoL and RHEL 7 has reached EoM and will not be supported by new NGINX releases moving forward.
+- The NGINX Agent capabilities in this role will be migrated to a separate role sometime in the near future.
 
 FEATURES:
 

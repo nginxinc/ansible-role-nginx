@@ -33,21 +33,17 @@ nginx_supported_distributions:
     name: Amazon Linux
     versions: [2, 2023]
     architectures: [x86_64, aarch64]
-  centos:
-    name: CentOS
-    versions: [7]
-    architectures: [x86_64, aarch64]
   debian:
     name: Debian
     versions: [11, 12]
     architectures: [x86_64, aarch64]
   oraclelinux:
     name: Oracle Linux
-    versions: [7, 8, 9]
+    versions: [8, 9]
     architectures: "{{ ['x86_64', 'aarch64', 's390x'] if (ansible_facts['distribution_major_version'] is version('8', '>=')) else ['x86_64', 'aarch64'] }}"
   redhat:
     name: Red Hat Enterprise Linux
-    versions: [7, 8, 9]
+    versions: [8, 9]
     architectures: "{{ ['x86_64', 'aarch64', 's390x'] if (ansible_facts['distribution_major_version'] is version('8', '>=')) else ['x86_64', 'aarch64'] }}"
   rocky:
     name: Rocky Linux
@@ -77,10 +73,6 @@ nginx_plus_supported_distributions:
     name: Amazon Linux
     versions: [2, 2023]
     architectures: [x86_64, aarch64]
-  centos:
-    name: CentOS
-    versions: [7]
-    architectures: [x86_64, aarch64]
   debian:
     name: Debian
     versions: [11, 12]
@@ -91,11 +83,11 @@ nginx_plus_supported_distributions:
     architectures: [x86_64]
   oraclelinux:
     name: Oracle Linux
-    versions: [7, 8, 9]
+    versions: [8, 9]
     architectures: "{{ ['x86_64', 'aarch64'] if (ansible_facts['distribution_major_version'] is version('8', '==')) else ['x86_64'] }}"
   redhat:
     name: Red Hat Enterprise Linux
-    versions: [7, 8, 9]
+    versions: [8, 9]
     architectures: "{{ ['x86_64', 'aarch64', 's390x'] if (ansible_facts['distribution_major_version'] is version('8', '>=')) else ['x86_64', 'aarch64'] }}"
   rocky:
     name: Rocky Linux
@@ -120,7 +112,7 @@ nginx_default_repository_amazon: https://nginx.org/packages/{{ (nginx_branch == 
 nginx_default_repository_debian:
   - deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}{{ ansible_facts['distribution'] | lower }}/ {{ ansible_facts['distribution_release'] }} nginx
   - deb-src [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}{{ ansible_facts['distribution'] | lower }}/ {{ ansible_facts['distribution_release'] }} nginx
-nginx_default_repository_redhat: https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}{{ (ansible_facts['distribution'] == 'CentOS') | ternary('centos', 'rhel') }}/{{ ansible_facts['distribution_major_version'] }}/$basearch
+nginx_default_repository_redhat: https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}rhel/{{ ansible_facts['distribution_major_version'] }}/$basearch
 nginx_default_repository_suse: https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}sles/{{ ansible_facts['distribution_major_version'] }}
 
 # Default NGINX Plus repositories
@@ -128,7 +120,7 @@ nginx_plus_default_repository_alpine: https://pkgs.nginx.com/plus/alpine/v{{ ans
 nginx_plus_default_repository_amazon: https://pkgs.nginx.com/plus/amzn{{ (ansible_facts['distribution_major_version'] is version('2', '==')) | ternary('2/$releasever', '/2023') }}/$basearch
 nginx_plus_default_repository_debian: deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] https://pkgs.nginx.com/plus/{{ ansible_facts['distribution'] | lower }} {{ ansible_facts['distribution_release'] }} nginx-plus
 nginx_plus_default_repository_freebsd: https://pkgs.nginx.com/plus/freebsd/${ABI}/latest
-nginx_plus_default_repository_redhat: https://pkgs.nginx.com/plus/{{ (ansible_facts['distribution'] == 'CentOS') | ternary('centos', 'rhel') }}/{{ (ansible_facts['distribution_version'] is version('7.4', '>=') and ansible_facts['distribution_version'] is version('8', '<')) | ternary('7.4', ansible_facts['distribution_major_version']) }}/$basearch
+nginx_plus_default_repository_redhat: https://pkgs.nginx.com/plus/rhel/{{ (ansible_facts['distribution_version'] is version('7.4', '>=') and ansible_facts['distribution_version'] is version('8', '<')) | ternary('7.4', ansible_facts['distribution_major_version']) }}/$basearch
 nginx_plus_default_repository_suse: https://pkgs.nginx.com/plus/sles/{{ ansible_facts['distribution_major_version'] }}?ssl_clientcert=/etc/ssl/nginx/nginx-repo-bundle.crt&ssl_verify=peer
 
 # Alpine dependencies

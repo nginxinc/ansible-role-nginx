@@ -1,5 +1,5 @@
 ---
-# Set SELinux enforcing for NGINX (CentOS/Red Hat only) - you may need to open ports on your own
+# Set SELinux enforcing for NGINX (Red Hat only) - you may need to open ports on your own
 nginx_selinux: false
 
 # Enable enforcing mode if true.  Permissive if false (audit only, no enforcing) globally (only works with nginx_selinux: true)

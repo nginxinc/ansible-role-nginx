@@ -119,17 +119,13 @@ Alpine:
 Amazon Linux:
   - 2
   - 2023
-CentOS:
-  - 7.4+
 Debian:
   - bullseye (11)
   - bookworm (12)
 Oracle Linux:
-  - 7
   - 8
   - 9
 Red Hat:
-  - 7.4+
   - 8
   - 9
 Rocky Linux:
@@ -159,8 +155,6 @@ Alpine:
 Amazon Linux:
   - 2
   - 2023
-CentOS:
-  - 7.4+
 Debian:
   - bullseye (11)
   - bookworm (12)
@@ -169,11 +163,9 @@ FreeBSD:
   - 13
   - 14
 Oracle Linux:
-  - 7.4+
   - 8.1+
   - 9
 Red Hat:
-  - 7.4+
   - 8.1+
   - 9
 Rocky Linux:
@@ -205,17 +197,13 @@ Amazon Linux:
 Debian:
   - bullseye (11)
   - bookwork (12)
-CentOS:
-  - 7.4+
 FreeBSD:
   - 13
   - 14
 Oracle Linux:
-  - 7.4+
   - 8
   - 9
 Red Hat:
-  - 7
   - 8
   - 9
 Rocky Linux:

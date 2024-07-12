@@ -1,10 +1,16 @@
 # Changelog
 
+## 0.25.0 (Unreleased)
+
+BREAKING CHANGES:
+
+- Remove support for RHEL 7 based distributions (RHEL/CentOS/Oracle Linux 7). CentOS 7 has reached EoL, RHEL 7 has reached EoM, and Oracle Linux 7 will reach EoL shortly. These distributions will not be supported by new NGINX releases moving forward. If you are still using one of these distributions, please consider upgrading. If you still want to use this role for the time being, please use the previous release (0.24.3). Do note that you will only be able to use NGINX versions released as of the date of the aforementioned release (July 11, 2024).
+
 ## 0.24.3 (July 11, 2024)
 
 DEPRECATION WARNINGS:
 
-- This is the last release that will support RHEL 7 based distributions. If you are using this role to install NGINX on RHEL/CentOS 7, do note that CentOS 7 has reached EoL and RHEL 7 has reached EoM and will not be supported by new NGINX releases moving forward.
+- This is the last release that will support RHEL 7 based distributions. If you are using this role to install NGINX on RHEL/CentOS/Oracle Linux 7, do note that CentOS 7 has reached EoL and RHEL 7 has reached EoM and will not be supported by new NGINX releases moving forward.
 - The NGINX Agent capabilities in this role will be migrated to a separate role sometime in the near future.
 
 FEATURES:

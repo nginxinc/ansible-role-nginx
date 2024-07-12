@@ -1,7 +1,7 @@
 ---
 driver:
   name: docker
-platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions for some undetermined reason
+platforms:
   - name: almalinux-8
     image: almalinux:8
     dockerfile: ../common/Dockerfile.j2
@@ -69,15 +69,6 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
-  - name: centos-7
-    image: centos:7
-    platform: x86_64
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    cgroupns_mode: host
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /usr/sbin/init
   - name: debian-bullseye
     image: debian:bullseye-slim
     dockerfile: ../common/Dockerfile.j2
@@ -104,15 +95,6 @@ platforms: # Oracle Linux 7 works in local tests but bugs out in GitHub actions 
     command: /usr/sbin/init
   - name: oraclelinux-9
     image: oraclelinux:9
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    cgroupns_mode: host
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /usr/sbin/init
-  - name: rhel-7
-    image: registry.access.redhat.com/ubi7:7.9
-    platform: x86_64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host

@@ -25,8 +25,7 @@ RUN \
     && dnf clean all; \
   elif [ $(command -v yum) ]; then \
     yum makecache fast \
-    && yum install -y bash iproute initscripts sudo /usr/bin/python /usr/bin/python2-config vim yum-plugin-ovl \
-    && yum install -y http://mirror.centos.org/centos/7/os/x86_64/Packages/yum-plugin-copr-1.1.31-54.el7_8.noarch.rpm http://mirror.centos.org/centos/7/os/x86_64/Packages/libseccomp-2.3.1-4.el7.x86_64.rpm \
+    && yum install -y bash iproute initscripts sudo /usr/bin/python /usr/bin/python2-config vim yum-plugin-copr yum-plugin-ovl \
     && yum copr enable -y jsynacek/systemd-backports-for-centos-7 \
     && yum update --disableplugin=priorities -y systemd \
     && sed -i 's/plugins=0/plugins=1/g' /etc/yum.conf \

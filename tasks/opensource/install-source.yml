@@ -17,20 +17,9 @@
         update_cache: true
       when: ansible_facts['os_family'] == 'Alpine'
 
-    - name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) Set up build tools
+    - name: (AlmaLinux/Amazon Linux/Oracle Linux/RHEL/Rocky Linux) Set up build tools
       when: ansible_facts['os_family'] == 'RedHat'
       block:
-        - name: (Oracle Linux 7) Enable Oracle Linux 7 optional repositories
-          ansible.builtin.yum_repository:
-            name: ol7_optional_latest
-            description: Oracle Linux 7 optional repositories
-            baseurl: https://yum.oracle.com/repo/OracleLinux/OL7/optional/latest/$basearch/
-            gpgcheck: true
-            enabled: true
-          when:
-            - ansible_facts['distribution'] == 'OracleLinux'
-            - ansible_facts['distribution_major_version'] is version('7', '==')
-
         - name: (RHEL 8) Install Python 3
           ansible.builtin.yum:
             name:
@@ -47,7 +36,7 @@
             link: /usr/bin/python
           when: ansible_facts['distribution_major_version'] is version('8', '==')
 
-        - name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) Install build tools
+        - name: (AlmaLinux/Amazon Linux/Oracle Linux/RHEL/Rocky Linux) Install build tools
           ansible.builtin.yum:
             name:
               - ca-certificates
@@ -116,7 +105,7 @@
         update_cache: true
       when: ansible_facts['os_family'] == 'Alpine'
 
-    - name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) Install PCRE dependency from package
+    - name: (AlmaLinux/Amazon Linux/Oracle Linux/RHEL/Rocky Linux) Install PCRE dependency from package
       ansible.builtin.yum:
         name: "{{ (pcre_release == 2) | ternary('pcre2-devel', 'pcre-devel') }}"
         update_cache: true
@@ -185,7 +174,7 @@
         update_cache: true
       when: ansible_facts['os_family'] == 'Alpine'
 
-    - name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) Install ZLib dependency from package
+    - name: (AlmaLinux/Amazon Linux/Oracle Linux/RHEL/Rocky Linux) Install ZLib dependency from package
       ansible.builtin.yum:
         name: zlib-devel
         update_cache: true
@@ -254,7 +243,7 @@
         update_cache: true
       when: ansible_facts['os_family'] == 'Alpine'
 
-    - name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) Install OpenSSL dependency from package
+    - name: (AlmaLinux/Amazon Linux/Oracle Linux/RHEL/Rocky Linux) Install OpenSSL dependency from package
       ansible.builtin.yum:
         name: openssl-devel
         update_cache: true

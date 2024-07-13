@@ -120,7 +120,7 @@ nginx_plus_default_repository_alpine: https://pkgs.nginx.com/plus/alpine/v{{ ans
 nginx_plus_default_repository_amazon: https://pkgs.nginx.com/plus/amzn{{ (ansible_facts['distribution_major_version'] is version('2', '==')) | ternary('2/$releasever', '/2023') }}/$basearch
 nginx_plus_default_repository_debian: deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] https://pkgs.nginx.com/plus/{{ ansible_facts['distribution'] | lower }} {{ ansible_facts['distribution_release'] }} nginx-plus
 nginx_plus_default_repository_freebsd: https://pkgs.nginx.com/plus/freebsd/${ABI}/latest
-nginx_plus_default_repository_redhat: https://pkgs.nginx.com/plus/rhel/{{ (ansible_facts['distribution_version'] is version('7.4', '>=') and ansible_facts['distribution_version'] is version('8', '<')) | ternary('7.4', ansible_facts['distribution_major_version']) }}/$basearch
+nginx_plus_default_repository_redhat: https://pkgs.nginx.com/plus/rhel/{{ ansible_facts['distribution_major_version'] }}/$basearch
 nginx_plus_default_repository_suse: https://pkgs.nginx.com/plus/sles/{{ ansible_facts['distribution_major_version'] }}?ssl_clientcert=/etc/ssl/nginx/nginx-repo-bundle.crt&ssl_verify=peer
 
 # Alpine dependencies

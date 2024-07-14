@@ -69,15 +69,6 @@ platforms:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
-  - name: centos-7
-    image: centos:7
-    platform: x86_64
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    cgroupns_mode: host
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /usr/sbin/init
   - name: debian-bullseye
     image: debian:bullseye-slim
     dockerfile: ../common/Dockerfile.j2
@@ -94,15 +85,6 @@ platforms:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /sbin/init
-  - name: oraclelinux-7
-    image: oraclelinux:7
-    platform: x86_64
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    cgroupns_mode: host
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /usr/sbin/init
   - name: oraclelinux-8
     image: oraclelinux:8
     dockerfile: ../common/Dockerfile.j2
@@ -113,15 +95,6 @@ platforms:
     command: /usr/sbin/init
   - name: oraclelinux-9
     image: oraclelinux:9
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    cgroupns_mode: host
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /usr/sbin/init
-  - name: rhel-7
-    image: registry.access.redhat.com/ubi7:7.9
-    platform: x86_64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host

@@ -43,7 +43,6 @@ nginx_manage_repo: true
 # Specify repository origin for NGINX Open Source.
 # Only works if 'nginx_type' is set to 'opensource'.
 # Options are 'nginx_repository', 'source' or 'os_repository'.
-# When using 'os_repository' on CentOS/RHEL 7 based systems, you will also need to install the EPEL repository (see the 'nginx_install_epel_release' variable below).
 # Default is nginx_repository.
 nginx_install_from: nginx_repository
 

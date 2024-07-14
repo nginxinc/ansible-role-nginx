@@ -17,11 +17,11 @@ galaxy_info:
     - name: Debian
       versions: [bullseye, bookworm]
     - name: EL
-      versions: ['7', '8', '9']
+      versions: ['8', '9']
     - name: FreeBSD
       versions: ['12.1', '12.2', '12.3', '12.4', '13.0', '13.1', '13.2', '14']
     - name: OracleLinux
-      versions: ['7', '8', '9']
+      versions: ['8', '9']
     - name: Ubuntu
       versions: [focal, jammy, lunar]
     - name: SLES

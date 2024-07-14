@@ -1,5 +1,5 @@
 ---
-- name: (CentOS/RHEL) Install dependencies
+- name: (RHEL) Install dependencies
   ansible.builtin.yum:
     name:
       - libselinux-utils

@@ -1,5 +1,5 @@
 ---
-- name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) Add NGINX Agent repository
+- name: (AlmaLinux/Amazon Linux/Oracle Linux/RHEL/Rocky Linux) Add NGINX Agent repository
   ansible.builtin.yum_repository:
     name: nginx-agent
     file: nginx-agent

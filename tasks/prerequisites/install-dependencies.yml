@@ -13,7 +13,7 @@
     state: latest # noqa package-latest
   when: ansible_facts['os_family'] == 'Debian'
 
-- name: (Amazon Linux/CentOS/Oracle Linux/RHEL) Install dependencies
+- name: (Amazon Linux/Oracle Linux/RHEL) Install dependencies
   ansible.builtin.yum:
     name: "{{ nginx_redhat_dependencies }}"
     update_cache: true

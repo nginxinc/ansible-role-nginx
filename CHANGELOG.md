@@ -15,6 +15,7 @@ CI/CD:
 
 - Update GitHub Actions to Ubuntu 24.04.
 - Switch GitHub Actions from using tags to release hashes.
+- Test `aarch64` and `s390x` architectures in addition to `x86_64`.
 
 ## 0.24.3 (July 11, 2024)
 

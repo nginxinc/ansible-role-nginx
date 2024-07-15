@@ -27,7 +27,7 @@ nginx_supported_distributions:
     architectures: [x86_64, aarch64, s390x]
   alpine:
     name: Alpine Linux
-    versions: [3.17, 3.18, 3.19]
+    versions: [3.17, 3.18, 3.19, 3.20]
     architectures: [x86_64, aarch64]
   amazon:
     name: Amazon Linux

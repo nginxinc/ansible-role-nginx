@@ -112,7 +112,6 @@ AlmaLinux:
   - 8
   - 9
 Alpine:
-  - 3.16
   - 3.17
   - 3.18
   - 3.19
@@ -159,7 +158,6 @@ Debian:
   - bullseye (11)
   - bookworm (12)
 FreeBSD:
-  - 12.1+
   - 13
   - 14
 Oracle Linux:

@@ -7,6 +7,11 @@ BREAKING CHANGES:
 - Remove support for RHEL 7 based distributions (RHEL/CentOS/Oracle Linux 7). CentOS 7 has reached EoL, RHEL 7 has reached EoM, and Oracle Linux 7 will reach EoL shortly. These distributions will not be supported by new NGINX releases moving forward. If you are still using one of these distributions, please consider upgrading. If you still want to use this role for the time being, please use the previous release (0.24.3). Do note that you will only be able to use NGINX versions released as of the date of the aforementioned release (July 11, 2024).
 - Remove support for installing NGINX Open Source on Alpine Linux 3.16.
 
+CI/CD:
+
+- Update GitHub Actions to Ubuntu 24.04.
+- Switch GitHub Actions from using tags to release hashes.
+
 ## 0.24.3 (July 11, 2024)
 
 DEPRECATION WARNINGS:

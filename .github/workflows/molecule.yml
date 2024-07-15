@@ -2,33 +2,31 @@
 name: Molecule CI/CD
 on:
   pull_request:
-    branches:
-      - main
+    branches: [main]
   push:
-    branches:
-      - main
-    tags-ignore:
-      - "**"
+    branches: [main]
+    tags-ignore: ["**"]
   schedule:
     - cron: "0 0 1 * *"
   workflow_dispatch:
+permissions: read-all
 jobs:
   ansible-lint:
     name: Ansible Lint
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Check out the codebase
-        uses: actions/checkout@v4
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
 
       - name: Set up Python 3
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@39cd14951b08e74b54015e9e001cdefcf80e669f # v5.1.1
         with:
           python-version: 3.x
 
-      - name: Install Ansible Lint
+      - name: Install Ansible core and Ansible Lint
         run: pip3 install -r .github/workflows/requirements/requirements_ansible_lint.txt
 
-      - name: Install Ansible collection dependencies
+      - name: Install Ansible core collection dependencies
         run: ansible-galaxy install -r .github/workflows/requirements/requirements_ansible.yml
 
       - name: Run Ansible Lint
@@ -36,7 +34,7 @@ jobs:
 
   molecule:
     name: Molecule
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: ansible-lint
     env:
       AGENT_DATA_PLANE_KEY: ${{ secrets.AGENT_DATA_PLANE_KEY }}
@@ -69,7 +67,7 @@ jobs:
     steps:
       - name: Check out the codebase
         if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}
-        uses: actions/checkout@v4
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
 
       # - name: Set up Docker QEMU
       #   if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}
@@ -79,11 +77,11 @@ jobs:
 
       - name: Set up Python 3
         if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@39cd14951b08e74b54015e9e001cdefcf80e669f # v5.1.1
         with:
           python-version: 3.x
 
-      - name: Install Molecule dependencies
+      - name: Install Ansible core and Molecule
         if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}
         run: pip3 install -r .github/workflows/requirements/requirements_molecule.txt
 

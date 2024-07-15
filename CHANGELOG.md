@@ -11,6 +11,11 @@ FEATURES:
 
 - Add support for installing NGINX Open Source on Alpine Linux 3.20.
 
+CI/CD:
+
+- Update GitHub Actions to Ubuntu 24.04.
+- Switch GitHub Actions from using tags to release hashes.
+
 ## 0.24.3 (July 11, 2024)
 
 DEPRECATION WARNINGS:

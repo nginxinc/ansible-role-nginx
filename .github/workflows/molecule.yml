@@ -27,7 +27,7 @@ jobs:
         run: pip3 install -r .github/workflows/requirements/requirements_ansible_lint.txt
 
       - name: Install Ansible core collection dependencies
-        run: ansible-galaxy install -r .github/workflows/requirements/requirements_ansible.yml
+        run: ansible-galaxy install -r .github/workflows/requirements/requirements_collections.yml
 
       - name: Run Ansible Lint
         run: ansible-lint --force-color
@@ -81,7 +81,7 @@ jobs:
 
       - name: Install Ansible core collection dependencies
         if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}
-        run: ansible-galaxy install -r .github/workflows/requirements/requirements_ansible.yml
+        run: ansible-galaxy install -r .github/workflows/requirements/requirements_collections.yml
 
       - name: Run Molecule tests
         if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}

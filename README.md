@@ -9,48 +9,94 @@
 
 # Ansible NGINX Role
 
-This role installs NGINX Open Source, NGINX Plus, NGINX Agent or the NGINX Amplify agent on your target host.
+This role installs NGINX (NGINX Open Source), NGINX Plus, NGINX Agent and/or the NGINX Amplify agent on your target host(s).
 
-**Note:** This role is still in active development. There may be unidentified issues and the role variables may change as development continues.
+> [!IMPORTANT]
+> This role is still in active development. There may be unidentified issues and the role variables may change as development continues.
 
-## Requirements
+## Role Requirements
 
-### NGINX Plus (Optional)
+### NGINX
 
-If you wish to install NGINX Plus using this role, you will need to obtain an NGINX Plus license beforehand. *You do not need to do anything beforehand if you want to install NGINX OSS.*
+Depending on your target NGINX use case, you might need to obtain a license or API key/token before being able to use the role:
+
+| Product | Requirements |
+|---------|--------------|
+| NGINX | None |
+| NGINX Plus | NGINX Plus license (both a license key and crt files) |
+| NGINX Agent | A compatible control plane and (optionally) an NGINX One SaaS console data plane token |
+| NGINX Amplify | API key found within the NGINX Amplify SaaS console |
 
 ### Ansible
 
-- This role is developed and tested with [maintained](https://docs.ansible.com/ansible/devel/reference_appendices/release_and_maintenance.html) versions of Ansible core (above `2.12`).
-- When using Ansible core, you will also need to install the following collections:
+If you want to use this role, you will need to use a supported version of Ansible core and Jinja2 as well as a few Ansible collections.
 
-    ```yaml
-    ---
-    collections:
-      - name: ansible.posix
-        version: 1.5.4
-      - name: community.general
-        version: 9.0.1
-      - name: community.crypto # Only required if you plan to install NGINX Plus
-        version: 2.20.0
-      - name: community.docker # Only required if you plan to use Molecule (see below)
-        version: 3.10.3
-    ```
+For ease of use, you can install and/or upgrade Ansible core, Jinja2, and the aforementioned Ansible collections by running the following four commands on your Ansible host:
 
-    **Note:** You can alternatively install the Ansible community distribution (what is known as the "old" Ansible) if you don't want to manage individual collections.
+```bash
+pip install --upgrade -r https://raw.githubusercontent.com/nginxinc/ansible-role-nginx/main/.github/workflows/requirements/requirements_ansible.txt
+curl -O https://raw.githubusercontent.com/nginxinc/ansible-role-nginx/main/.github/workflows/requirements/requirements_collections.yml
+ansible-galaxy install --force -r requirements_collections.yml
+rm -f requirements_collections.yml
+```
+
+This will also ensure you are deploying/running this role with a fully tested version of the aforementioned packages/collections.
+
+#### Ansible core
+
+- This role is developed and tested with [maintained](https://docs.ansible.com/ansible/devel/reference_appendices/release_and_maintenance.html) versions of Ansible core and Python.
+- When using Ansible core, you will also need to install the following Ansible collections:
+
+  ```yaml
+  ---
+  collections:
+    - name: ansible.posix
+      version: 1.5.4
+    - name: community.general
+      version: 9.0.1
+    - name: community.crypto # Only required if you plan to install NGINX Plus
+      version: 2.20.0
+    - name: community.docker # Only required if you plan to use Molecule (see below)
+      version: 3.10.3
+  ```
+
 - You will need to run this role as a root user using Ansible's `become` parameter. Make sure you have set up the appropriate permissions on your target hosts.
-- Instructions on how to install Ansible can be found in the [Ansible website](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#upgrading-ansible-from-version-2-9-and-older-to-version-2-10-or-later).
+- Instructions on how to install Ansible core can be found in the [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#upgrading-ansible-from-version-2-9-and-older-to-version-2-10-or-later) docs.
+- Instructions on how to install Ansible collections can be found in the [Ansible collections](https://docs.ansible.com/ansible/latest/collections_guide/collections_installing.html) guide.
 
-### Jinja2
+> [!TIP]
+> You can alternatively install the [Ansible community distribution](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#selecting-an-ansible-package-and-version-to-install) (what is still known Ansible -- instead of Ansible core) if you don't want to manage individual collections.
+
+#### Jinja2
 
 - This role uses Jinja2 templates. Ansible core installs Jinja2 by default, but depending on your install and/or upgrade path, you might be running an outdated version of Jinja2. The minimum version of Jinja2 required for the role to properly function is `3.1`.
 - Instructions on how to install Jinja2 can be found in the [Jinja2 website](https://jinja.palletsprojects.com/en/3.1.x/intro/#installation).
 
-### Molecule (Optional)
+### Testing suite (Optional)
 
-- Molecule is used to test the various functionalities of the role. The recommended version of Molecule to test this role is `4.x`.
-- Instructions on how to install Molecule can be found in the [Molecule website](https://molecule.readthedocs.io/en/latest/installation.html). *You will also need to install the Molecule Docker driver.*
-- To run the NGINX Plus Molecule tests, you must copy your NGINX Plus license to the role's [`files/license`](https://github.com/nginxinc/ansible-role-nginx/blob/main/files/license/) directory.
+If you want to contribute to this role, you will also need to install Ansible Lint and Molecule.
+
+#### Ansible Lint (Optional)
+
+- Ansible Lint is used to lint the role for both Ansible best practices and potential Ansible/YAML issues.
+- Instructions on how to install Ansible Lint can be found in the [Ansible Lint website](https://ansible.readthedocs.io/projects/lint/installing/).
+- Once installed, using Ansible Lint is as easy as running:
+
+  ```bash
+  ansible-lint
+  ```
+
+- For ease of use, you can install and/or upgrade Ansible Lint by running the following command on your Ansible host:
+
+  ```bash
+  pip install -r https://raw.githubusercontent.com/nginxinc/ansible-role-nginx/main/.github/workflows/requirements/requirements_ansible_lint.txt
+  ```
+
+#### Molecule (Optional)
+
+- Molecule is used to test the various functionalities of the role.
+- Instructions on how to install Molecule can be found in the [Molecule website](https://molecule.readthedocs.io/en/latest/installation.html). *You will also need to install the Molecule plugins package and the Docker Python SDK.*
+- To run any of the NGINX Plus Molecule tests, you must first copy your NGINX Plus license to the role's [`files/license`](https://github.com/nginxinc/ansible-role-nginx/blob/main/files/license/) directory.
 
   You can alternatively add your NGINX Plus repository certificate and key to the local environment. Run the following commands to export these files as base64-encoded variables and execute the Molecule tests:
 
@@ -60,9 +106,15 @@ If you wish to install NGINX Plus using this role, you will need to obtain an NG
   molecule test -s plus
   ```
 
-## Installation
+- For ease of use, you can install and/or upgrade Molecule, the Molecule plugins package, and the Docker Python SDK by running the following command on your Ansible host:
 
-This role can be installed via either Ansible Galaxy (the Ansible community marketplace) or by cloning this repo. Once installed, you will need to include the role it in your Ansible playbook using [the `roles` keyword, the `import_role` module, or the `include_role` module](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html#using-roles).
+  ```bash
+  pip install --upgrade -r https://raw.githubusercontent.com/nginxinc/ansible-role-nginx/main/.github/workflows/requirements/requirements_molecule.txt
+  ```
+
+## Role Installation
+
+This role can be installed via either Ansible Galaxy (the Ansible community marketplace) or by cloning this repo. Once installed, you will need to include the role in your Ansible playbook using [the `roles` keyword, the `import_role` module, or the `include_role` module](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html#using-roles).
 
 ### Ansible Galaxy
 
@@ -234,7 +286,8 @@ Ubuntu:
   - jammy (22.04)
 ```
 
-**Note:** At your own risk, you can also use this role to compile NGINX Open Source from source, install NGINX Open Source on "compatible" yet unsupported platforms, install NGINX from your respective distribution package manager, or install NGINX Open Source on BSD systems.
+> [!WARNING]
+> At your own risk, you can also use this role to compile NGINX Open Source from source, install NGINX Open Source on "compatible" yet unsupported platforms, install NGINX from your respective distribution package manager, or install NGINX Open Source on BSD systems.
 
 ## Role Variables
 
@@ -277,7 +330,8 @@ Working functional playbook examples can be found in the **[`molecule/`](https:/
 | **[`upgrade-plus/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/upgrade-plus/converge.yml)** | Upgrade NGINX Plus |
 | **[`version/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/version/converge.yml)** | Install a specific version of NGINX and various NGINX modules |
 
-**Note:** If you install this repository via Ansible Galaxy, you will need to replace the `include_role` variable in the example playbooks from `ansible-role-nginx` to `nginxinc.nginx`.
+> [!NOTE]
+> If you install this repository via Ansible Galaxy, you will need to replace the `include_role` variable in the example playbooks from `ansible-role-nginx` to `nginxinc.nginx`.
 
 ## Other NGINX Ansible Collections and Roles
 

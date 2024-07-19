@@ -7,25 +7,7 @@ galaxy_info:
 
   license: Apache License, Version 2.0
 
-  min_ansible_version: '2.12'
-
-  platforms:
-    - name: Alpine
-      versions: [all]
-    - name: Amazon Linux
-      versions: ['2']
-    - name: Debian
-      versions: [bullseye, bookworm]
-    - name: EL
-      versions: ['8', '9']
-    - name: FreeBSD
-      versions: ['12.1', '12.2', '12.3', '12.4', '13.0', '13.1', '13.2', '14']
-    - name: OracleLinux
-      versions: ['8', '9']
-    - name: Ubuntu
-      versions: [focal, jammy, lunar]
-    - name: SLES
-      versions: ['12', '15']
+  min_ansible_version: '2.16'
 
   galaxy_tags:
     - nginx

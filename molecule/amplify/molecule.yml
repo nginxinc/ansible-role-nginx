@@ -29,7 +29,6 @@ platforms:
     command: /usr/sbin/init
   - name: rhel-9
     image: redhat/ubi9:9.3
-    # platform: aarch64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -38,7 +37,6 @@ platforms:
     command: /usr/sbin/init
   - name: ubuntu-jammy
     image: ubuntu:jammy
-    # platform: aarch64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host

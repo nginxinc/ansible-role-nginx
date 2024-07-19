@@ -11,6 +11,10 @@ FEATURES:
 
 - Add support for installing NGINX Open Source on Alpine Linux 3.20.
 
+DOCUMENTATION:
+
+- Update community docs per the latest [NGINX template repository](https://github.com/nginxinc/template-repository) guidelines.
+
 CI/CD:
 
 - Update GitHub Actions to Ubuntu 24.04.

@@ -15,6 +15,7 @@ CI/CD:
 
 - Update GitHub Actions to Ubuntu 24.04.
 - Switch GitHub Actions from using tags to release hashes.
+- Remove commented out Molecule platforms and GitHub Actions QEMU step for the time being. These changes will be reverted if multi-arch testing can be reinstated in GitHub Actions.
 
 ## 0.24.3 (July 11, 2024)
 

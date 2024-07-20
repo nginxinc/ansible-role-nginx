@@ -45,7 +45,8 @@ To suggest a feature or enhancement, please create an issue on GitHub with the l
 - Fork the repo, create a branch, implement your changes, add any relevant tests, and submit a PR when your changes are **tested** (using Molecule) and ready for review.
 - Fill in the [PR template](/.github/pull_request_template.md).
 
-**Note:** If you'd like to implement a new feature, please consider creating a [feature request issue](/.github/feature_request_template.md) first to start a discussion about the feature.
+> [!NOTE]
+> If you'd like to implement a new feature, please consider creating a [feature request issue](/.github/feature_request_template.md) first to start a discussion about the feature.
 
 #### F5 Contributor License Agreement (CLA)
 

@@ -5,7 +5,7 @@ title: ""
 labels: ""
 assignees: ""
 ---
-> [!WARNING]
+> [!CAUTION]
 > Remember to redact any sensitive information such as authentication credentials or license keys.
 
 ### Describe the bug

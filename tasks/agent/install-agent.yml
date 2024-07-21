@@ -1,5 +1,5 @@
 ---
-- name: Configure NGINX Agent repository
+- name: Manage NGINX Agent repository
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/agent/setup-{{ ansible_facts['os_family'] | lower }}.yml"
   when: ansible_facts['os_family'] in ['Alpine', 'Debian', 'RedHat', 'Suse']
 

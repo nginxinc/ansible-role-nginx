@@ -7,8 +7,10 @@
   delegate_to: localhost
   ignore_errors: true # noqa ignore-errors
 
-- name: Register the version of Jinja2 installedoin your Ansible host
-  ansible.builtin.shell: set -o pipefail && ansible --version | grep jinja | cut -d' ' -f6
+- name: Register the version of Jinja2 installed on your Ansible host
+  ansible.builtin.shell:
+    cmd: set -o pipefail && ansible --version | grep jinja | cut -d' ' -f6
+    executable: /bin/bash
   register: jinja2_version
   changed_when: false
   delegate_to: localhost
@@ -21,7 +23,9 @@
   delegate_to: localhost
 
 - name: Parse list of Ansible collections for the 'community.general' Ansible collection on your Ansible host
-  ansible.builtin.shell: set -o pipefail && ansible-galaxy collection list | grep community.general
+  ansible.builtin.shell:
+    cmd: set -o pipefail && ansible-galaxy collection list | grep community.general
+    executable: /bin/bash
   register: community_general_installed
   changed_when: false
   delegate_to: localhost

@@ -11,6 +11,7 @@ FEATURES:
 
 - Add support for installing NGINX Open Source on Alpine Linux 3.20.
 - Add support for installing NGINX Agent on Ubuntu noble.
+- Add validation tasks to check the Ansible version, the Jinja2 version, and whether the required Ansible collections are installed.
 
 DOCUMENTATION:
 

@@ -1,5 +1,80 @@
 ---
-- name: Check whether you are using a supported NGINX distribution
+- name: Verify you are using a supported Ansible version on your Ansible host
+  ansible.builtin.assert:
+    that: ansible_version['full'] is version('2.16', '>=')
+    success_msg: Ansible {{ ansible_version['full'] }} is supported.
+    fail_msg: Ansible {{ ansible_version['full'] }} has reached End of Life (EoL). Please upgrade to a supported Ansible release.  Check the README for more details.
+  delegate_to: localhost
+  ignore_errors: true # noqa ignore-errors
+
+- name: Register the version of Jinja2 installedoin your Ansible host
+  ansible.builtin.shell: set -o pipefail && ansible --version | grep jinja | cut -d' ' -f6
+  register: jinja2_version
+  changed_when: false
+  delegate_to: localhost
+
+- name: Verify you are using a supported Jinja2 version on your Ansible host
+  ansible.builtin.assert:
+    that: jinja2_version['stdout'] is version('3.1', '>=')
+    success_msg: Jinja2 {{ jinja2_version['stdout'] }} is supported.
+    fail_msg: Jinja2 {{ jinja2_version['stdout'] }} is not supported. Please upgrade to Jinja2 3.1.  Check the README for more details.
+  delegate_to: localhost
+
+- name: Parse list of Ansible collections for the 'community.general' Ansible collection on your Ansible host
+  ansible.builtin.shell: set -o pipefail && ansible-galaxy collection list | grep community.general
+  register: community_general_installed
+  changed_when: false
+  delegate_to: localhost
+
+- name: Verify that the 'community.general' Ansible collection is installed on your Ansible host
+  ansible.builtin.assert:
+    that: community_general_installed['rc'] == 0
+    success_msg: The 'community.general' Ansible collection is installed.
+    fail_msg: The 'community.general' Ansible collection is not installed. Please install the 'community.general' Ansible collection. Check the README for more details.
+  delegate_to: localhost
+
+- name: Verify that the 'ansible.posix' Ansible collection is installed on your Ansible host
+  ansible.builtin.assert:
+    that: lookup('community.general.collection_version', 'ansible.posix') != 'none'
+    success_msg: The 'ansible.posix' Ansible collection is installed.
+    fail_msg: The 'ansible.posix' Ansible collection is not installed. Please install the 'ansible.posix' Ansible collection. Check the README for more details.
+  delegate_to: localhost
+  when: nginx_selinux | bool
+
+- name: Verify that the 'community.crypto' Ansible collection is installed on your Ansible host
+  ansible.builtin.assert:
+    that: lookup('community.general.collection_version', 'community.crypto') != 'none'
+    success_msg: The 'community.crypto' Ansible collection is installed.
+    fail_msg: The 'community.crypto' Ansible collection is not installed. Please install the 'community.crypto' Ansible collection. Check the README for more details.
+  delegate_to: localhost
+  when: nginx_type == 'plus'
+
+- name: Verify that 'nginx_setup' parameter is a valid value
+  ansible.builtin.assert:
+    that: nginx_setup in nginx_setup_vars
+    success_msg: The value you used for 'nginx_setup', {{ nginx_setup }}, is valid.
+    fail_msg: The value you used for 'nginx_setup', {{ nginx_setup }}, is not valid. The valid values are [{{ nginx_setup_vars | join(', ') }}].
+  delegate_to: localhost
+  when: nginx_enable | bool
+  ignore_errors: true # noqa ignore-errors
+
+- name: Verify that 'nginx_branch' parameter is a valid value
+  ansible.builtin.assert:
+    that: nginx_branch in nginx_branch_vars
+    success_msg: The value you used for 'nginx_branch', {{ nginx_branch }}, is valid.
+    fail_msg: The value you used for 'nginx_branch', {{ nginx_branch }}, is not allowed. The valid values are [{{ nginx_branch_vars | join(', ') }}].
+  when: nginx_enable | bool
+  ignore_errors: true # noqa ignore-errors
+
+- name: Verify that 'nginx_install_from' parameter is a valid value
+  ansible.builtin.assert:
+    that: nginx_install_from in nginx_install_from_vars
+    success_msg: The value you used for 'nginx_install_from', {{ nginx_install_from }} is valid.
+    fail_msg: The value you used for 'nginx_install_from', {{ nginx_install_from }}, is not valid. The valid values are [{{ nginx_install_from_vars | join(', ') }}].
+  when: nginx_enable | bool
+  ignore_errors: true # noqa ignore-errors
+
+- name: Verify whether you are using a supported NGINX distribution
   ansible.builtin.assert:
     that:
       - ansible_facts['distribution'] | lower in nginx_distributions.keys() | list
@@ -10,25 +85,4 @@
   when:
     - nginx_enable | bool
     - (nginx_install_from == "nginx_repository" or nginx_type == "plus")
-  ignore_errors: true # noqa ignore-errors
-
-- name: Check that 'nginx_setup' is an allowed value
-  ansible.builtin.assert:
-    that: nginx_setup in nginx_setup_vars
-    fail_msg: The value you used for 'nginx_setup', {{ nginx_setup }}, is not allowed. The allowed values are [{{ nginx_setup_vars | join(', ') }}].
-  when: nginx_enable | bool
-  ignore_errors: true # noqa ignore-errors
-
-- name: Check that 'nginx_branch' is an allowed value
-  ansible.builtin.assert:
-    that: nginx_branch in nginx_branch_vars
-    fail_msg: The value you used for 'nginx_branch', {{ nginx_branch }}, is not allowed. The allowed values are [{{ nginx_branch_vars | join(', ') }}].
-  when: nginx_enable | bool
-  ignore_errors: true # noqa ignore-errors
-
-- name: Check that 'nginx_install_from' is an allowed value
-  ansible.builtin.assert:
-    that: nginx_install_from in nginx_install_from_vars
-    fail_msg: The value you used for 'nginx_install_from', {{ nginx_install_from }}, is not allowed. The allowed values are [{{ nginx_install_from_vars | join(', ') }}].
-  when: nginx_enable | bool
   ignore_errors: true # noqa ignore-errors

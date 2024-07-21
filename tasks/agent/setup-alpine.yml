@@ -1,5 +1,5 @@
 ---
-- name: (Alpine Linux) Add NGINX Agent repository
+- name: (Alpine Linux) Configure NGINX Agent repository
   ansible.builtin.lineinfile:
     path: /etc/apk/repositories
     insertafter: EOF

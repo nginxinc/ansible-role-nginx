@@ -10,6 +10,7 @@ BREAKING CHANGES:
 FEATURES:
 
 - Add support for installing NGINX Open Source on Alpine Linux 3.20.
+- Add support for installing NGINX Agent on Ubuntu noble.
 
 DOCUMENTATION:
 

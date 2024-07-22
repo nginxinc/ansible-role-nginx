@@ -53,11 +53,11 @@ This will also ensure you are deploying/running this role with a fully tested ve
     - name: ansible.posix
       version: 1.5.4
     - name: community.general
-      version: 9.0.1
+      version: 9.2.0
     - name: community.crypto # Only required if you plan to install NGINX Plus
-      version: 2.20.0
+      version: 2.21.1
     - name: community.docker # Only required if you plan to use Molecule (see below)
-      version: 3.10.3
+      version: 3.11.0
   ```
 
 - You will need to run this role as a root user using Ansible's `become` parameter. Make sure you have set up the appropriate permissions on your target hosts.

@@ -1,0 +1,7 @@
+---
+- name: Prepare
+  hosts: all
+  tasks:
+    - name: Install NGINX
+      ansible.builtin.include_role:
+        name: nginxinc.nginx

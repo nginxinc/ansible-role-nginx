@@ -1,4 +1,13 @@
 ---
+- name: Check if NGINX repo is already configured
+  ansible.builtin.stat:
+    path: /etc/apt/sources.list.d/nginx.list
+  register: nginx_repo
+
+# if nginx.list contains mainline and branch is mainline - ok
+# if nginx.list contains stable and branch is stable - ok
+# if no match - delete
+
 - name: (Debian/Ubuntu) {{ (nginx_setup == 'uninstall') | ternary('Remove', 'Configure') }} NGINX repository
   ansible.builtin.apt_repository:
     filename: nginx

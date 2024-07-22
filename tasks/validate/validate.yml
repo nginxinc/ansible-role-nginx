@@ -3,38 +3,35 @@
   ansible.builtin.assert:
     that: ansible_version['full'] is version('2.16', '>=')
     success_msg: Ansible {{ ansible_version['full'] }} is supported.
-    fail_msg: Ansible {{ ansible_version['full'] }} has reached End of Life (EoL). Please upgrade to a supported Ansible release.  Check the README for more details.
+    fail_msg: Ansible {{ ansible_version['full'] }} has reached End of Life (EoL). Please upgrade to a supported Ansible release. Check the README for more details.
   delegate_to: localhost
   ignore_errors: true # noqa ignore-errors
 
-- name: Register the version of Jinja2 installed on your Ansible host
-  ansible.builtin.shell:
-    cmd: set -o pipefail && ansible --version | grep jinja | cut -d' ' -f6
-    executable: /bin/bash
+- name: Extract the version of Jinja2 installed on your Ansible host
+  ansible.builtin.command: ansible --version
   register: jinja2_version
   changed_when: false
   delegate_to: localhost
 
-- name: Verify you are using a supported Jinja2 version on your Ansible host
+- name: Verify that you are using a supported Jinja2 version on your Ansible host
   ansible.builtin.assert:
-    that: jinja2_version['stdout'] is version('3.1', '>=')
-    success_msg: Jinja2 {{ jinja2_version['stdout'] }} is supported.
-    fail_msg: Jinja2 {{ jinja2_version['stdout'] }} is not supported. Please upgrade to Jinja2 3.1.  Check the README for more details.
+    that: (jinja2_version['stdout'] | regex_search('jinja version = ([\\d.]+)', '\\1') | first) is version('3.1', '>=')
+    success_msg: Jinja2 {{ jinja2_version['stdout'] | regex_search('jinja version = ([\d.]+)', '\1') | first }} is supported.
+    fail_msg: Jinja2 {{ jinja2_version['stdout'] | regex_search('jinja version = ([\d.]+)', '\1') | first }} is not supported. Please upgrade to Jinja2 3.1. Check the README for more details.
   delegate_to: localhost
 
-- name: Parse list of Ansible collections for the 'community.general' Ansible collection on your Ansible host
-  ansible.builtin.shell:
-    cmd: set -o pipefail && ansible-galaxy collection list | grep community.general
-    executable: /bin/bash
-  register: community_general_installed
+- name: Extract the list of Ansible collections installed on your Ansible host
+  ansible.builtin.command: ansible-galaxy collection list
+  register: collection_list
   changed_when: false
   delegate_to: localhost
 
 - name: Verify that the 'community.general' Ansible collection is installed on your Ansible host
   ansible.builtin.assert:
-    that: community_general_installed['rc'] == 0
+    that: collection_list is search('community.general')
     success_msg: The 'community.general' Ansible collection is installed.
     fail_msg: The 'community.general' Ansible collection is not installed. Please install the 'community.general' Ansible collection. Check the README for more details.
+  changed_when: false
   delegate_to: localhost
 
 - name: Verify that the 'ansible.posix' Ansible collection is installed on your Ansible host

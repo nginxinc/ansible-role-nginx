@@ -11,6 +11,7 @@
   ansible.posix.selinux:
     state: permissive
     policy: targeted
+  when: not nginx_selinux_enforcing | bool
 
 - name: Allow SELinux HTTP network connections
   ansible.posix.seboolean:

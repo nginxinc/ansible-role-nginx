@@ -2,7 +2,7 @@
 # Set SELinux enforcing for NGINX (Red Hat only) - you may need to open ports on your own
 nginx_selinux: false
 
-# Enable enforcing mode if true.  Permissive if false (audit only, no enforcing) globally (only works with nginx_selinux: true)
+# Enable enforcing mode if true. Permissive if false (audit only, no enforcing) globally (only works with nginx_selinux: true)
 nginx_selinux_enforcing: true
 
 # List of TCP ports to add to http_port_t type (80 and 443 have this type already)

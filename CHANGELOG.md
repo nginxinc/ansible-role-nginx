@@ -14,6 +14,10 @@ FEATURES:
 - Add validation tasks to check the Ansible version, the Jinja2 version, and whether the required Ansible collections for this role are installed.
 - Bump the Ansible `community.general` collection to `9.2.0`, `community.crypto` collection to `2.21.1` and `community.docker` collection to `3.11.0`.
 
+BUG FIXES:
+
+- Do not set SELinux to permissive mode unless `nginx_selinux_enforcing` is set to `false`.
+
 DOCUMENTATION:
 
 - Update community docs per the latest [NGINX template repository](https://github.com/nginxinc/template-repository) guidelines.

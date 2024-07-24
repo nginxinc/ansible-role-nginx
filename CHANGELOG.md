@@ -25,6 +25,7 @@ CI/CD:
 - Switch GitHub Actions from using tags to release hashes.
 - Remove commented out Molecule platforms and GitHub Actions QEMU step for the time being. These changes will be reverted if multi-arch testing can be reinstated in GitHub Actions.
 - Remove platform metadata from the Ansible Galaxy role metadata since platforms are no longer supported in Ansible Galaxy NG.
+- Implement OSSF Scorecard.
 
 ## 0.24.3 (July 11, 2024)
 

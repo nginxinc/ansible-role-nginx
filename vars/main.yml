@@ -1,4 +1,8 @@
 ---
+# Set the minimum version required for Ansible and Jinja2
+nginx_ansible_version: 2.16
+nginx_jinja2_version: 3.1
+
 # Set the values allowed for various variables
 nginx_setup_vars: [install, uninstall, upgrade]
 

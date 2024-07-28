@@ -19,6 +19,10 @@ DOCUMENTATION:
 - Update community docs per the latest [NGINX template repository](https://github.com/nginxinc/template-repository) guidelines.
 - Update and tweak the README. In order to make the installation instructions easier, some file names used by the various GitHub Actions workflows have been renamed.
 
+TESTS:
+
+- Update RHEL UBI images to UBI 8.10 and UBI 9.4.
+
 CI/CD:
 
 - Update GitHub Actions to Ubuntu 24.04.

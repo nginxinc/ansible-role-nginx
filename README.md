@@ -45,6 +45,8 @@ This will also ensure you are deploying/running this role with a fully tested ve
 #### Ansible core
 
 - This role is developed and tested with [maintained](https://docs.ansible.com/ansible/devel/reference_appendices/release_and_maintenance.html) versions of Ansible core and Python.
+
+  ***Note:** Ansible `2.18` does no longer support the `yum` module and as such, is not supported by this role until Amazon Linux 2 reaches EoL.*
 - When using Ansible core, you will also need to install the following Ansible collections:
 
   ```yaml

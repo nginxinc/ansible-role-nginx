@@ -27,6 +27,6 @@
     name: nginx{{ nginx_version | default('') }}
     state: "{{ nginx_state }}"
     update_cache: true
-    allow_downgrade: "{{ omit if ansible_version['full'] is version('2.12', '<') else true }}"
+    allow_downgrade: true
   ignore_errors: "{{ ansible_check_mode }}"
   notify: (Handler) Run NGINX

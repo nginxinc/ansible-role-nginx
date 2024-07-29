@@ -36,7 +36,6 @@
     that: collection_list is search('community.general')
     success_msg: The 'community.general' Ansible collection is installed.
     fail_msg: The 'community.general' Ansible collection is not installed. Please install the 'community.general' Ansible collection. Check the README for more details.
-  changed_when: false
   delegate_to: localhost
   become: false
 
@@ -45,27 +44,27 @@
     that: lookup('community.general.collection_version', 'ansible.posix') != 'none'
     success_msg: The 'ansible.posix' Ansible collection is installed.
     fail_msg: The 'ansible.posix' Ansible collection is not installed. Please install the 'ansible.posix' Ansible collection. Check the README for more details.
+  when: nginx_selinux | bool
   delegate_to: localhost
   become: false
-  when: nginx_selinux | bool
 
 - name: Verify that the 'community.crypto' Ansible collection is installed on your Ansible host
   ansible.builtin.assert:
     that: lookup('community.general.collection_version', 'community.crypto') != 'none'
     success_msg: The 'community.crypto' Ansible collection is installed.
     fail_msg: The 'community.crypto' Ansible collection is not installed. Please install the 'community.crypto' Ansible collection. Check the README for more details.
+  when: nginx_type == 'plus'
   delegate_to: localhost
   become: false
-  when: nginx_type == 'plus'
 
 - name: Verify that 'nginx_setup' parameter is a valid value
   ansible.builtin.assert:
     that: nginx_setup in nginx_setup_vars
     success_msg: The value you used for 'nginx_setup', {{ nginx_setup }}, is valid.
     fail_msg: The value you used for 'nginx_setup', {{ nginx_setup }}, is not valid. The valid values are [{{ nginx_setup_vars | join(', ') }}].
+  when: nginx_enable | bool
   delegate_to: localhost
   become: false
-  when: nginx_enable | bool
   ignore_errors: true # noqa ignore-errors
 
 - name: Verify that 'nginx_branch' parameter is a valid value
@@ -73,9 +72,9 @@
     that: nginx_branch in nginx_branch_vars
     success_msg: The value you used for 'nginx_branch', {{ nginx_branch }}, is valid.
     fail_msg: The value you used for 'nginx_branch', {{ nginx_branch }}, is not allowed. The valid values are [{{ nginx_branch_vars | join(', ') }}].
+  when: nginx_enable | bool
   delegate_to: localhost
   become: false
-  when: nginx_enable | bool
   ignore_errors: true # noqa ignore-errors
 
 - name: Verify that 'nginx_install_from' parameter is a valid value
@@ -83,9 +82,9 @@
     that: nginx_install_from in nginx_install_from_vars
     success_msg: The value you used for 'nginx_install_from', {{ nginx_install_from }} is valid.
     fail_msg: The value you used for 'nginx_install_from', {{ nginx_install_from }}, is not valid. The valid values are [{{ nginx_install_from_vars | join(', ') }}].
+  when: nginx_enable | bool
   delegate_to: localhost
   become: false
-  when: nginx_enable | bool
   ignore_errors: true # noqa ignore-errors
 
 - name: Verify whether you are using a supported NGINX distribution

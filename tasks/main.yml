@@ -1,5 +1,5 @@
 ---
-- name: Validate distribution and role variables
+- name: Validate Ansible/Jinja2 version, Ansible collections, role variables, and supported distributions
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/validate/validate.yml"
   tags: nginx_validate
 

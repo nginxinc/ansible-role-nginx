@@ -45,6 +45,8 @@ This will also ensure you are deploying/running this role with a fully tested ve
 #### Ansible core
 
 - This role is developed and tested with [maintained](https://docs.ansible.com/ansible/devel/reference_appendices/release_and_maintenance.html) versions of Ansible core and Python.
+
+  ***Note:** Ansible `2.18` does no longer support the `yum` module and as such, is not supported by this role until Amazon Linux 2 reaches EoL.*
 - When using Ansible core, you will also need to install the following Ansible collections:
 
   ```yaml
@@ -96,7 +98,7 @@ If you want to contribute to this role, you will also need to install Ansible Li
 
 - Molecule is used to test the various functionalities of the role.
 - Instructions on how to install Molecule can be found in the [Molecule website](https://molecule.readthedocs.io/en/latest/installation.html). *You will also need to install the Molecule plugins package and the Docker Python SDK.*
-- To run any of the NGINX Plus Molecule tests, you must first copy your NGINX Plus license to the role's [`files/license`](https://github.com/nginxinc/ansible-role-nginx/blob/main/files/license/) directory.
+- To run any of the NGINX Plus Molecule tests, you must first copy your NGINX Plus license to the role's [`files/license`](/files/license/) directory.
 
   You can alternatively add your NGINX Plus repository certificate and key to the local environment. Run the following commands to export these files as base64-encoded variables and execute the Molecule tests:
 
@@ -292,44 +294,44 @@ Ubuntu:
 
 ## Role Variables
 
-This role has multiple variables. The descriptions and defaults for all these variables can be found in the **[`defaults/main/`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/)** directory in the following files:
+This role has multiple variables. The descriptions and defaults for all these variables can be found in the **[`defaults/main/`](/defaults/main/)** directory in the following files:
 
 | Name | Description |
 | ---- | ----------- |
-| **[`main.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/main.yml)** | NGINX installation variables |
-| **[`agent.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/agent.yml)** | NGINX Agent installation variables |
-| **[`amplify.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/amplify.yml)** | NGINX Amplify agent installation variables |
-| **[`bsd.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/bsd.yml)** | BSD installation variables |
-| **[`logrotate.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/logrotate.yml)** | Logrotate configuration variables |
-| **[`selinux.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/selinux.yml)** | SELinux configuration variables |
-| **[`systemd.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/defaults/main/systemd.yml)** | Systemd configuration variables |
+| **[`main.yml`](/defaults/main/main.yml)** | NGINX installation variables |
+| **[`agent.yml`](/defaults/main/agent.yml)** | NGINX Agent installation variables |
+| **[`amplify.yml`](/defaults/main/amplify.yml)** | NGINX Amplify agent installation variables |
+| **[`bsd.yml`](/defaults/main/bsd.yml)** | BSD installation variables |
+| **[`logrotate.yml`](/defaults/main/logrotate.yml)** | Logrotate configuration variables |
+| **[`selinux.yml`](/defaults/main/selinux.yml)** | SELinux configuration variables |
+| **[`systemd.yml`](/defaults/main/systemd.yml)** | Systemd configuration variables |
 
-Similarly, descriptions and defaults for preset variables can be found in the **[`vars/`](https://github.com/nginxinc/ansible-role-nginx/blob/main/vars/)** directory in the following files:
+Similarly, descriptions and defaults for preset variables can be found in the **[`vars/`](/vars/)** directory in the following files:
 
 | Name | Description |
 | ---- | ----------- |
-| **[`main.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/vars/main.yml)** | List of supported NGINX platforms, modules, and Linux installation variables |
+| **[`main.yml`](/vars/main.yml)** | List of supported NGINX platforms, modules, and Linux installation variables |
 
 ## Example Playbooks
 
-Working functional playbook examples can be found in the **[`molecule/`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/)** folder in the following files:
+Working functional playbook examples can be found in the **[`molecule/`](/molecule/)** folder in the following files:
 
 | Name | Description |
 | ---- | ----------- |
-| **[`agent/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/agent/converge.yml)** | Install and configure NGINX Agent to connect to the NGINX One SaaS control plane on F5 Distributed Cloud |
-| **[`amplify/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/amplify/converge.yml)** | Install and configure the NGINX Amplify agent |
-| **[`default/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/default/converge.yml)** | Install a specific version of NGINX, install various NGINX supported modules, tweak systemd and set up logrotate |
-| **[`distribution/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/distribution/converge.yml)** | Install NGINX from the distribution's package repository instead of NGINX's package repository |
-| **[`downgrade/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/downgrade/converge.yml)** | Downgrade to a specific version of NGINX |
-| **[`downgrade-plus/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/downgrade-plus/converge.yml)** | Downgrade to a specific version of NGINX Plus |
-| **[`plus/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/plus/converge.yml)** | Install NGINX Plus and various NGINX Plus supported modules |
-| **[`source/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/source/converge.yml)** | Install NGINX from source |
-| **[`stable/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/stable/converge.yml)** | Install NGINX using the latest stable release |
-| **[`uninstall/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/uninstall/converge.yml)** | Uninstall NGINX |
-| **[`uninstall-plus/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/uninstall-plus/converge.yml)** | Uninstall NGINX Plus |
-| **[`upgrade/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/upgrade/converge.yml)** | Upgrade NGINX |
-| **[`upgrade-plus/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/upgrade-plus/converge.yml)** | Upgrade NGINX Plus |
-| **[`version/converge.yml`](https://github.com/nginxinc/ansible-role-nginx/blob/main/molecule/version/converge.yml)** | Install a specific version of NGINX and various NGINX modules |
+| **[`agent/converge.yml`](/molecule/agent/converge.yml)** | Install and configure NGINX Agent to connect to the NGINX One SaaS control plane on F5 Distributed Cloud |
+| **[`amplify/converge.yml`](/molecule/amplify/converge.yml)** | Install and configure the NGINX Amplify agent |
+| **[`default/converge.yml`](/molecule/default/converge.yml)** | Install a specific version of NGINX, install various NGINX supported modules, tweak systemd and set up logrotate |
+| **[`distribution/converge.yml`](/molecule/distribution/converge.yml)** | Install NGINX from the distribution's package repository instead of NGINX's package repository |
+| **[`downgrade/converge.yml`](/molecule/downgrade/converge.yml)** | Downgrade to a specific version of NGINX |
+| **[`downgrade-plus/converge.yml`](/molecule/downgrade-plus/converge.yml)** | Downgrade to a specific version of NGINX Plus |
+| **[`plus/converge.yml`](/molecule/plus/converge.yml)** | Install NGINX Plus and various NGINX Plus supported modules |
+| **[`source/converge.yml`](/molecule/source/converge.yml)** | Install NGINX from source |
+| **[`stable/converge.yml`](/molecule/stable/converge.yml)** | Install NGINX using the latest stable release |
+| **[`uninstall/converge.yml`](/molecule/uninstall/converge.yml)** | Uninstall NGINX |
+| **[`uninstall-plus/converge.yml`](/molecule/uninstall-plus/converge.yml)** | Uninstall NGINX Plus |
+| **[`upgrade/converge.yml`](/molecule/upgrade/converge.yml)** | Upgrade NGINX |
+| **[`upgrade-plus/converge.yml`](/molecule/upgrade-plus/converge.yml)** | Upgrade NGINX Plus |
+| **[`version/converge.yml`](/molecule/version/converge.yml)** | Install a specific version of NGINX and various NGINX modules |
 
 > [!NOTE]
 > If you install this repository via Ansible Galaxy, you will need to replace the `include_role` variable in the example playbooks from `ansible-role-nginx` to `nginxinc.nginx`.
@@ -346,7 +348,7 @@ You can find the Ansible NGINX Unit role to install NGINX Unit [here](https://gi
 
 ## License
 
-[Apache License, Version 2.0](https://github.com/nginxinc/ansible-role-nginx/blob/main/LICENSE)
+[Apache License, Version 2.0](/LICENSE)
 
 ## Author Information
 

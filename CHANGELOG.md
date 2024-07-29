@@ -13,6 +13,7 @@ FEATURES:
 - Add support for installing NGINX Open Source on Alpine Linux 3.20.
 - Add support for installing NGINX Agent on Ubuntu noble.
 - Add validation tasks to check the Ansible version, the Jinja2 version, and whether the required Ansible collections for this role are installed.
+- Bump the minimum version of Ansible supported to `2.16`, whilst clarifying that Ansible `2.18` is not supported at this stage.
 - Bump the Ansible `community.general` collection to `9.2.0`, `community.crypto` collection to `2.21.1` and `community.docker` collection to `3.11.0`.
 
 DOCUMENTATION:
@@ -20,12 +21,18 @@ DOCUMENTATION:
 - Update community docs per the latest [NGINX template repository](https://github.com/nginxinc/template-repository) guidelines.
 - Update and tweak the README. In order to make the installation instructions easier, some file names used by the various GitHub Actions workflows have been renamed.
 
+TESTS:
+
+- Update RHEL UBI images to UBI 8.10 and UBI 9.4.
+
 CI/CD:
 
 - Update GitHub Actions to Ubuntu 24.04.
 - Switch GitHub Actions from using tags to release hashes.
 - Remove commented out Molecule platforms and GitHub Actions QEMU step for the time being. These changes will be reverted if multi-arch testing can be reinstated in GitHub Actions.
+- Bump the minimum version of Ansible supported on Ansible Galaxy to `2.16`.
 - Remove platform metadata from the Ansible Galaxy role metadata since platforms are no longer supported in Ansible Galaxy NG.
+- Implement OSSF Scorecard.
 
 ## 0.24.3 (July 11, 2024)
 
@@ -58,7 +65,7 @@ CI/CD:
 - Add Molecule tests for NGINX Amplify.
 - Update the RHEL based tests to use the latest UBI release.
 - Use the local role name (`ansible-role-nginx`) instead of the fully qualified role name (`nginxinc.nginx`) in Molecule to ensure tests always work as intended in environments where the role has been already installed beforehand.
-- Implement F5 CLA signatures.
+- Implement F5 CLA.
 - Hardcode version of Python requests module given its propensity to break the Docker Python SDK.
 
 ## 0.24.2 (October 3rd, 2023)

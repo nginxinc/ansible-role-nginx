@@ -37,10 +37,10 @@ nginx_agent_configure: false
 #   ca: /path/to/ca
 
 # Specify the log level and path.
-# Default is info for the log level and /var/log/nginx-agent.log for the log path.
+# Default is info for the log level and /var/log/nginx-agent/ for the log path.
 nginx_agent_log:
   level: info
-  path: /var/log/nginx-agent.log
+  path: /var/log/nginx-agent/
 
 # Specify NGINX specific options within NGINX Agent.
 # Default is to not exclude any logs, to use the default socket path and to not treat warnings as errors.

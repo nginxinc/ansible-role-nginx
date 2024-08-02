@@ -1,28 +1,29 @@
 ---
-- name: (AlmaLinux/Amazon Linux/Oracle Linux/RHEL/Rocky Linux) Install GeoIP2 and/or OpenTracing EPEL dependency
+- name: (AlmaLinux/Amazon Linux/Oracle Linux/RHEL/Rocky Linux) Install OpenTracing EPEL dependency
   when:
     - ansible_facts['os_family'] == "RedHat"
-    - not (ansible_facts['distribution'] == "Amazon" and ansible_facts['distribution_major_version'] is version('2023', '=='))
     - ('opentracing' in nginx_modules)
     - nginx_install_epel_release | bool
   block:
-    - name: (AlmaLinux/Amazon Linux/Oracle Linux/RHEL/Rocky Linux) Import EPEL GPG key
-      ansible.builtin.rpm_key:
-        state: present
-        key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ((ansible_facts['distribution'] == 'Amazon') | ternary('7', ansible_facts['distribution_major_version'])) }}
+    - name: (AlmaLinux/Amazon Linux/Oracle Linux/RHEL/Rocky Linux) Install EPEL dependency
+      when: ansible_facts['distribution'] != "Amazon"
+      block:
+        - name: (AlmaLinux/Oracle Linux/RHEL/Rocky Linux) Import EPEL GPG key
+          ansible.builtin.rpm_key:
+            state: present
+            key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_facts['distribution_major_version'] }}
 
-    - name: (AlmaLinux/Amazon Linux/Oracle Linux/RHEL/Rocky Linux) Install EPEL
-      ansible.builtin.yum:
-        name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ((ansible_facts['distribution'] == 'Amazon') | ternary('7', ansible_facts['distribution_major_version'])) }}.noarch.rpm
+        - name: (AlmaLinux/Oracle Linux/RHEL/Rocky Linux) Install EPEL
+          ansible.builtin.yum:
+            name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_facts['distribution_major_version'] }}.noarch.rpm
 
-- name: (Alpine Linux) Install Lua and Encrypted Sessions Alpine Linux 3.17 dependency
-  community.general.apk:
-    name: nginx-plus-module-ndk
-  when:
-    - nginx_type == 'plus'
-    - ansible_facts['os_family'] == 'Alpine'
-    - ansible_facts['distribution_version'] | regex_search('^[0-9]+\\.[0-9]+') is version('3.17', '==')
-    - ('encrypted-sessions' in nginx_modules) or ('lua' in nginx_modules) or ('set-misc' in nginx_modules)
+    - name: (Amazon Linux) Install EPEL
+      ansible.builtin.command:
+        cmd: amazon-linux-extras install -y epel
+        creates: /etc/yum.repos.d/epel.repo
+      when:
+        - ansible_facts['distribution'] == "Amazon"
+        - ansible_facts['distribution_major_version'] is version('2', '==')
 
 - name: Install NGINX modules
   ansible.builtin.package:

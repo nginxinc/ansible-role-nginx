@@ -25,6 +25,10 @@ TESTS:
 
 - Update RHEL UBI images to UBI 8.10 and UBI 9.4.
 
+MAINTENANCE:
+
+- Installing certain NGINX modules on Alpine Linux 3.17 no longer requires installing `nginx-plus-module-ndk` as a separate step.
+
 CI/CD:
 
 - Update GitHub Actions to Ubuntu 24.04.

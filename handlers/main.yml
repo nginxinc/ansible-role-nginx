@@ -46,7 +46,7 @@
 - name: (Handler) Start NGINX Agent
   ansible.builtin.service:
     name: nginx-agent
-    state: started
+    state: restarted
     enabled: true
 
 - name: (Handler) Start logrotate

@@ -19,13 +19,13 @@
 
 - name: (Debian/Ubuntu) Add NGINX signing key
   ansible.builtin.apt_key:
-    id: 8540A6F18833A80E9C1653A42FD21310B49F6B46
+    id: 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
     keyring: /usr/share/keyrings/nginx-archive-keyring.gpg
     url: "{{ keysite }}"
   when: ansible_facts['os_family'] == 'Debian'
 
 - name: (Red Hat/SLES OSs) Add NGINX signing key
   ansible.builtin.rpm_key:
-    fingerprint: 8540A6F18833A80E9C1653A42FD21310B49F6B46
+    fingerprint: 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
     key: "{{ keysite }}"
   when: ansible_facts['os_family'] in ['RedHat', 'Suse']

@@ -17,6 +17,7 @@
           - encrypted-session
           - geoip
           - geoip2
+          - ha-keepalived
           - headers-more
           - image-filter
           - lua

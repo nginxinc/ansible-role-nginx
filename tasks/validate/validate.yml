@@ -99,3 +99,16 @@
     - nginx_enable | bool
     - (nginx_install_from == "nginx_repository" or nginx_type == "plus")
   ignore_errors: true # noqa ignore-errors
+
+- name: Verify that you are installing a supported NGINX dynamic module
+  ansible.builtin.assert:
+    that: (nginx_modules | difference(nginx_modules_list) == [] if nginx_type == 'opensource') or (nginx_modules | difference(nginx_plus_modules_list) == [] if nginx_type == 'plus')
+    success_msg: The NGINX module(s) you are installing are supported.
+    fail_msg: The NGINX module(s) you are installing are not supported. Please check the README for more details.
+  when:
+    - nginx_enable | bool
+    - nginx_modules is defined
+    - nginx_modules | length > 0
+  delegate_to: localhost
+  become: false
+  ignore_errors: true # noqa ignore-errors

@@ -17,7 +17,6 @@
           - encrypted-session
           - geoip
           - geoip2
-          - ha-keepalived
           - headers-more
           - image-filter
           - lua
@@ -30,3 +29,4 @@
           - set-misc
           - subs-filter
           - xslt
+        nginx_keepalived_conf_enable: true

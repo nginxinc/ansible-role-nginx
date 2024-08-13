@@ -1,3 +1,5 @@
+{{ ansible_managed | comment }}
+
 [Service]
 {% if nginx_service_timeoutstartsec is defined %}
 TimeoutStartSec={{ nginx_service_timeoutstartsec }}

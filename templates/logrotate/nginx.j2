@@ -1,3 +1,5 @@
+{{ ansible_managed | comment }}
+
 {% if nginx_logrotate_conf['paths'] is defined and nginx_logrotate_conf['paths'] is not mapping %}
 {% for path in nginx_logrotate_conf['paths'] if nginx_logrotate_conf['paths'] is not string %}
 {{ path }}

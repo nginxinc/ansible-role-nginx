@@ -3,13 +3,14 @@
 # Requires access to either the NGINX stub_status or the NGINX Plus REST API.
 nginx_agent_enable: false
 
+
+########################################################################################################################
+# The following parameters let you configure the static configuration file of NGINX Agent.                             #
+# By default, the config produced is as close a match to the default config provided by NGINX Agent upon installation. #
+########################################################################################################################
+
 # Configure the NGINX Agent.
 nginx_agent_configure: false
-
-#######################################################################################################################
-# The following parameters let you configure NGINX Agent.                                                             #
-# By default, the config produced is as close a match to the default config provided by NGINX Agent upon installation.#
-#######################################################################################################################
 
 # Specify the NGINX Agent API host and port. Optionally, specify the path to the cert and key.
 # Default is not enabled.
@@ -84,3 +85,23 @@ nginx_agent_metrics:
 # nginx_agent_app_protect:
 #   report_interval: 15s
 #   precompiled_publication: true
+
+
+#############################################################################################
+# The following parameters let you configure the dynamic configuration file of NGINX Agent. #
+# By default, nothing is configured.                                                        #
+#############################################################################################
+
+# Configure the NGINX Agent dynamic configuration file.
+# NOTE: This will only run if the NGINX Agent dynamic configuration file has not yet been modified externally.
+# If you want to force push a dynamic configuration file, use the 'nginx_agent_configure_dynamic_force' parameter below.
+# Default is false.
+nginx_agent_configure_dynamic: false
+# Force pushing a new dynamic configuration file to NGINX Agent.
+# NOTE: This will overwrite any changes made to the dynamic configuration file by a control plane, and might lead to unexpected behavior.
+# Default is false.
+nginx_agent_configure_dynamic_force: false
+
+# Specify the NGINX Agent instance group and tags.
+# nginx_agent_instance_group: my_instance_group
+# nginx_agent_tags: [ansible, dev, qa]

@@ -6,3 +6,12 @@
   when:
     - ansible_facts['os_family'] == 'Alpine'
     - ansible_facts['distribution'] == 'Amazon'
+
+- name: Configure NGINX Plus keepalived HA
+  ansible.builtin.template:
+    src: keepalived/keepalived.conf.tmpl.j2
+    dest: /etc/keepalived/keepalived.conf
+    mode: "0644"
+  when:
+    - ansible_facts['os_family'] == 'Alpine'
+    - ansible_facts['distribution'] == 'Amazon'

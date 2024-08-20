@@ -28,12 +28,12 @@ vrrp_instance VI_{{ vrrp['virtual_router_id'] }} {
     unicast_src_ip {{ vrrp['primary_ip'] }}
     unicast_peer {
 {% for ip in vrrp['secondary_ip'] %}
-        {{ vrrp['secondary_ip'] }}
+        {{ ip }}
 {% endfor %}
     }
     virtual_ipaddress {
-{% for ip in {{ vrrp['cluster_ip'] }} %}
-        {{ vrrp['cluster_ip'] }}
+{% for ip in vrrp['cluster_ip'] %}
+        {{ ip }}
 {% endfor %}
     }
     track_script {

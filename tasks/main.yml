@@ -74,13 +74,13 @@
     - nginx_state != 'absent'
   tags: nginx_logrotate_config
 
-- name: Configure NGINX Plus keepalived HA
-  ansible.builtin.include_tasks: "{{ role_path }}/tasks/modules/install-keepalived.yml"
+- name: Install and configure NGINX Plus keepalived HA
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/modules/install-packages.yml"
   when:
-    - nginx_keepalived_conf_enable | bool
+    - nginx_keepalived_enable | bool or nginx_keepalived_conf_enable | bool
     - nginx_type == 'plus'
     - nginx_state != 'absent'
-  tags: nginx_logrotate_config
+  tags: nginx_keepalived
 
 - name: Install NGINX Amplify
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/amplify/install-amplify.yml"

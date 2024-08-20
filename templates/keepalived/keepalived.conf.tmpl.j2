@@ -27,10 +27,14 @@ vrrp_instance VI_{{ vrrp['virtual_router_id'] }} {
     garp_master_refresh_repeat 1
     unicast_src_ip {{ vrrp['primary_ip'] }}
     unicast_peer {
+{% for ip in vrrp['secondary_ip'] %}
         {{ vrrp['secondary_ip'] }}
+{% endfor %}
     }
     virtual_ipaddress {
+{% for ip in {{ vrrp['cluster_ip'] }} %}
         {{ vrrp['cluster_ip'] }}
+{% endfor %}
     }
     track_script {
         chk_nginx_service

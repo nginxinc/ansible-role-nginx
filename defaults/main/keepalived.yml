@@ -1,5 +1,8 @@
 ---
+# Install NGINX Plus HA keepalived package
 nginx_keepalived_enable: false
+
+# Configure NGINX Plus HA keepalived
 nginx_keepalived_conf_enable: false
 nginx_keepalived_conf:
   - virtual_router_id: 1

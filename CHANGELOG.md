@@ -10,7 +10,7 @@ BREAKING CHANGES:
 
 FEATURES:
 
-- Add support for installing the NGINX Plus HA keepalived module.
+- Add support for installing and configuring the NGINX Plus HA keepalived module.
 - Add validation tasks to check the Ansible version, the Jinja2 version, whether the required Ansible collections for this role are installed, and whether you are trying to install a valid NGINX module.
 - Add support for installing NGINX Open Source on Alpine Linux 3.20.
 - Add support for installing NGINX Agent on Ubuntu noble.

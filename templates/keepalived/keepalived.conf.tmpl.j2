@@ -1,0 +1,45 @@
+{{ ansible_managed | comment }}
+
+global_defs {
+    vrrp_version 3
+}
+
+vrrp_script chk_manual_failover {
+    script "/usr/lib/keepalived/nginx-ha-manual-failover"
+    interval 10
+    weight 50
+}
+
+vrrp_script chk_nginx_service {
+    script "/usr/lib/keepalived/nginx-ha-check"
+    interval 3
+    weight 50
+}
+
+{% for vrrp in nginx_keepalived_conf %}
+vrrp_instance VI_{{ vrrp['virtual_router_id'] }} {
+    interface {{ vrrp['primary_dev'] }}
+    priority {{ vrrp['priority'] }}
+    virtual_router_id {{ vrrp['virtual_router_id'] }}
+    advert_int 1
+    accept
+    garp_master_refresh 5
+    garp_master_refresh_repeat 1
+    unicast_src_ip {{ vrrp['primary_ip'] }}
+    unicast_peer {
+{% for ip in vrrp['secondary_ip'] %}
+        {{ ip }}
+{% endfor %}
+    }
+    virtual_ipaddress {
+{% for ip in vrrp['cluster_ip'] %}
+        {{ ip }}
+{% endfor %}
+    }
+    track_script {
+        chk_nginx_service
+        chk_manual_failover
+    }
+    notify "/usr/lib/keepalived/nginx-ha-notify"
+}
+{% endfor %}

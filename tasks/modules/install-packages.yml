@@ -1,0 +1,21 @@
+---
+- name: Install NGINX Plus HA keepalived package
+  ansible.builtin.package:
+    name: nginx-ha-keepalived
+    state: present
+  when:
+    - nginx_keepalived_enable | bool
+    - ansible_facts['os_family'] != 'Alpine'
+    - ansible_facts['distribution'] != 'Amazon'
+  notify: (Handler) Start NGINX Plus HA keepalived
+
+- name: Configure NGINX Plus keepalived HA
+  ansible.builtin.template:
+    src: keepalived/keepalived.conf.tmpl.j2
+    dest: /etc/keepalived/keepalived.conf
+    mode: "0644"
+  when:
+    - nginx_keepalived_conf_enable | bool
+    - ansible_facts['os_family'] != 'Alpine'
+    - ansible_facts['distribution'] != 'Amazon'
+  notify: (Handler) Start NGINX Plus HA keepalived

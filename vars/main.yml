@@ -153,4 +153,4 @@ openssl_version: 3.0.7
 nginx_modules_list: [geoip, image-filter, njs, perl, xslt]
 
 # Supported NGINX Plus dynamic modules
-nginx_plus_modules_list: [auth-spnego, brotli, encrypted-session, geoip, geoip2, headers-more, image-filter, lua, ndk, njs, opentracing, passenger, perl, prometheus, rtmp, set-misc, subs-filter, xslt]
+nginx_plus_modules_list: [auth-spnego, brotli, encrypted-session, geoip, geoip2, ha-keepalived, headers-more, image-filter, lua, ndk, njs, opentracing, passenger, perl, prometheus, rtmp, set-misc, subs-filter, xslt]

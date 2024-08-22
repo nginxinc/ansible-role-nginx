@@ -1,0 +1,123 @@
+{{ ansible_managed | comment }}
+
+{% if nginx_agent_server is defined and nginx_agent_server is mapping %}
+server:
+{% if nginx_agent_server['data_plane_key'] is defined %}
+  token: {{ nginx_agent_server['data_plane_key'] }}
+{% endif %}
+  host: {{ nginx_agent_server['host'] }}
+  grpcPort: {{ nginx_agent_server['port'] }}
+{% endif %}
+
+{% if nginx_agent_tls is defined and nginx_agent_tls is mapping %}
+tls:
+  enable: {{ nginx_agent_tls['enable'] | bool }}
+  skip_verify: {{ nginx_agent_tls['skip_verify'] | bool }}
+{% if nginx_agent_tls['cert'] is defined %}
+  cert: {{ nginx_agent_tls['cert'] }}
+{% endif %}
+{% if nginx_agent_tls['key'] is defined %}
+  key: {{ nginx_agent_tls['key'] }}
+{% endif %}
+{% if nginx_agent_tls['ca'] is defined %}
+  ca: {{ nginx_agent_tls['ca'] }}
+{% endif %}
+{% endif %}
+
+{% if nginx_agent_log is defined and nginx_agent_log is mapping %}
+log:
+{% if nginx_agent_log['level'] is defined %}
+  level: {{ nginx_agent_log['level'] }}
+{% endif %}
+{% if nginx_agent_log['path'] is defined %}
+  path: {{ nginx_agent_log['path'] }}
+{% endif %}
+{% endif %}
+
+{% if nginx_agent_nginx is defined and nginx_agent_nginx is mapping %}
+nginx:
+{% if nginx_agent_nginx['exclude_logs'] is defined %}
+  exclude_logs: {{ nginx_agent_nginx['exclude_logs'] }}
+{% endif %}
+{% if nginx_agent_nginx['socket'] is defined %}
+  socket: {{ nginx_agent_nginx['socket'] }}
+{% endif %}
+{% if nginx_agent_nginx['treat_warnings_as_errors'] is defined and nginx_agent_nginx['treat_warnings_as_errors'] is boolean %}
+  treat_warnings_as_errors: {{ nginx_agent_nginx['treat_warnings_as_errors'] | ternary('true', 'false') }}
+{% endif %}
+{% endif %}
+
+{% if nginx_agent_dataplane_status is defined and nginx_agent_dataplane_status is mapping %}
+dataplane:
+  status:
+{% if nginx_agent_dataplane_status['poll_interval'] is defined %}
+    poll_interval: {{ nginx_agent_dataplane_status['poll_interval'] }}
+{% endif %}
+{% if nginx_agent_dataplane_status['report_interval'] is defined %}
+    report_interval: {{ nginx_agent_dataplane_status['report_interval'] }}
+{% endif %}
+{% endif %}
+
+{% if nginx_agent_metrics is defined and nginx_agent_metrics is mapping %}
+metrics:
+{% if nginx_agent_metrics['bulk_size'] is defined and nginx_agent_metrics['bulk_size'] is number %}
+  bulk_size: {{ nginx_agent_metrics['bulk_size'] }}
+{% endif %}
+{% if nginx_agent_metrics['report_interval'] is defined %}
+  report_interval: {{ nginx_agent_metrics['report_interval'] }}
+{% endif %}
+{% if nginx_agent_metrics['collection_interval'] is defined %}
+  collection_interval: {{ nginx_agent_metrics['collection_interval'] }}
+{% endif %}
+{% if nginx_agent_metrics['mode'] is defined %}
+  mode: {{ nginx_agent_metrics['mode'] }}
+{% endif %}
+{% endif %}
+
+{% if nginx_agent_config_dirs is defined %}
+config_dirs: {{ nginx_agent_config_dirs }}
+{% endif %}
+
+{% if nginx_agent_queue_size is defined and nginx_agent_queue_size is number %}
+queue_size: {{ nginx_agent_queue_size }}
+{% endif %}
+
+{% if nginx_agent_features is defined and nginx_agent_features is not mapping and nginx_agent_features is not string and nginx_agent_features | length > 0 %}
+features:
+{% for feature in nginx_agent_features %}
+  {{ "- " + feature }}
+{% endfor %}
+{% endif %}
+
+{% if nginx_agent_extensions is defined and nginx_agent_extensions is not mapping and nginx_agent_extensions is not string  and nginx_agent_extensions | length > 0 %}
+extensions:
+{% for extension in nginx_agent_extensions %}
+  {{ "- " + extension }}
+{% endfor %}
+{% endif %}
+
+{% if nginx_agent_app_protect is defined and nginx_agent_app_protect is mapping %}
+nginx_app_protect:
+{% if nginx_agent_app_protect['report_interval'] is defined %}
+  report_interval: {{ nginx_agent_app_protect['report_interval'] }}
+{% endif %}
+{% if nginx_agent_app_protect['precompiled_publication'] is defined and nginx_agent_app_protect['precompiled_publication'] is boolean %}
+  precompiled_publication: {{ nginx_agent_app_protect['precompiled_publication'] | ternary('true', 'false') }}
+{% endif %}
+{% endif %}
+
+{% if nginx_agent_api is defined and nginx_agent_api is mapping %}
+api:
+{% if nginx_agent_api['host'] is defined %}
+  host: {{ nginx_agent_api['host'] }}
+{% endif %}
+{% if nginx_agent_api['port'] is defined %}
+  port: {{ nginx_agent_api['port'] }}
+{% endif %}
+{% if nginx_agent_api['cert'] is defined %}
+  cert: {{ nginx_agent_api['cert'] }}
+{% endif %}
+{% if nginx_agent_api['key'] is defined %}
+  key: {{ nginx_agent_api['key'] }}
+{% endif %}
+{% endif %}

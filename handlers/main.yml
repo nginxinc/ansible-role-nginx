@@ -66,3 +66,9 @@
     - logrotate_check['stderr_lines'] != []
     - logrotate_check['rc'] != 0
   listen: (Handler) Run logrotate
+
+- name: (Handler) Start NGINX Plus HA keepalived
+  ansible.builtin.service:
+    name: keepalived
+    state: restarted
+    enabled: true

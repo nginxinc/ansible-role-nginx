@@ -11,9 +11,10 @@ BREAKING CHANGES:
 FEATURES:
 
 - Add support for templating the entire NGINX Agent configuration file.
+- Add support for installing and configuring the NGINX Plus HA keepalived package.
+- Add validation tasks to check the Ansible version, the Jinja2 version, whether the required Ansible collections for this role are installed, and whether you are trying to install a valid NGINX module.
 - Add support for installing NGINX Open Source on Alpine Linux 3.20.
 - Add support for installing NGINX Agent on Ubuntu noble.
-- Add validation tasks to check the Ansible version, the Jinja2 version, and whether the required Ansible collections for this role are installed.
 - Bump the minimum version of Ansible supported to `2.16`, whilst clarifying that Ansible `2.18` is not supported at this stage.
 - Bump the Ansible `community.general` collection to `9.2.0`, `community.crypto` collection to `2.21.1` and `community.docker` collection to `3.11.0`.
 
@@ -29,6 +30,7 @@ TESTS:
 MAINTENANCE:
 
 - Installing certain NGINX modules on Alpine Linux 3.17 no longer requires installing `nginx-plus-module-ndk` as a separate step.
+- Add an `ansible_managed` comment to the various templated configs deployed by the role.
 
 CI/CD:
 

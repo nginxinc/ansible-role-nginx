@@ -1,13 +1,13 @@
 ---
-- name: (Alpine Linux/Debian/SLES OSs) Install NGINX Agent nstat prerequisite
+- name: (Alpine Linux/Debian/SLES OSs) Install NGINX Agent awk and nstat prerequisite
   ansible.builtin.package:
-    name: iproute2
+    name: [awk, iproute2]
     state: present
   when: ansible_facts['os_family'] in ['Alpine', 'Debian', 'Suse']
 
-- name: (Red Hat OSs) Install NGINX Agent nstat prerequisite
+- name: (Red Hat OSs) Install NGINX Agent awk and nstat prerequisite
   ansible.builtin.package:
-    name: iproute
+    name: [awk, iproute]
     state: present
   when: ansible_facts['os_family'] == "RedHat"
 

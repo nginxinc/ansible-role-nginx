@@ -2,5 +2,24 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
-  ]
+  ],
+  "ansible-galaxy": {
+    "fileMatch": ["(^|/)[\\w-]*requirements([_.]\\w+)?\\.ya?ml$"],
+    "packageRules": [
+      {
+        "matchPackageNames": "*",
+        "groupName": "ansible collections"
+      }
+    ]
+  },
+  "pip_requirements": {
+    "fileMatch": ["(^|/)[\\w-]*requirements([_.]\\w+)?\\.(txt|pip)$"],
+    "packageRules": [
+      {
+        "matchPackageNames": "*",
+        "groupName": "python dependencies"
+      }
+    ]
+  },
+  "schedule": ["at 12am every monday"]
 }

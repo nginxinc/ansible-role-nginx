@@ -27,23 +27,20 @@
 
 - name: Install NGINX modules
   ansible.builtin.package:
-    name: "nginx-{{ (nginx_type == 'plus') | ternary('plus-', '') }}module-{{ item['name'] | default(item) }}\
-          {{ (nginx_repository is not defined and ansible_facts['os_family'] == 'Alpine' and nginx_type != 'plus') | ternary('@nginx', '') }}{{ item['version'] | default('') }}"
+    name: nginx-{{ (nginx_type == 'plus') | ternary('plus-', '') }}module-{{ item['name'] | default(item) }}{{ (nginx_repository is not defined and ansible_facts['os_family']
+      == 'Alpine' and nginx_type != 'plus') | ternary('@nginx', '') }}{{ item['version'] | default('') }}
     state: "{{ item['state'] | default('present') }}"
   loop: "{{ nginx_modules }}"
   when:
-    - (item['name'] | default(item) in nginx_modules_list and nginx_type == 'opensource')
-      or (item['name'] | default(item) in nginx_plus_modules_list and nginx_type == 'plus')
-    - not (item['name'] | default(item) == 'brotli')
-      or not (ansible_facts['os_family'] == 'Suse' and ansible_facts['distribution_major_version'] is version('12', '=='))
-    - not (item['name'] | default(item) == "geoip")
-      or not ((ansible_facts['os_family'] == 'FreeBSD')
-      or (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution'] != 'Amazon' and ansible_facts['distribution_major_version'] is version('8', '>='))
-      or (ansible_facts['distribution'] == 'Amazon' and ansible_facts['distribution_major_version'] is version('2023', '==')))
-    - not (item['name'] | default(item) == 'geoip2')
-      or not ((ansible_facts['os_family'] == 'Suse')
-      or (ansible_facts['distribution'] == 'Amazon' and ansible_facts['distribution_major_version'] is version('2', '==')))
-    - not (item['name'] | default(item) == 'lua')
-      or not (ansible_facts['architecture'] == 's390x')
-    - not (item['name'] | default(item) == 'opentracing')
-      or not (ansible_facts['os_family'] == 'Suse' and ansible_facts['distribution_major_version'] is version('12', '=='))
+    - (item['name'] | default(item) in nginx_modules_list and nginx_type == 'opensource') or (item['name'] | default(item) in nginx_plus_modules_list and nginx_type
+      == 'plus')
+    - not (item['name'] | default(item) == 'brotli') or not (ansible_facts['os_family'] == 'Suse' and ansible_facts['distribution_major_version'] is version('12',
+      '=='))
+    - not (item['name'] | default(item) == "geoip") or not ((ansible_facts['os_family'] == 'FreeBSD') or (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution']
+      != 'Amazon' and ansible_facts['distribution_major_version'] is version('8', '>=')) or (ansible_facts['distribution'] == 'Amazon' and ansible_facts['distribution_major_version']
+      is version('2023', '==')))
+    - not (item['name'] | default(item) == 'geoip2') or not ((ansible_facts['os_family'] == 'Suse') or (ansible_facts['distribution'] == 'Amazon' and ansible_facts['distribution_major_version']
+      is version('2', '==')))
+    - not (item['name'] | default(item) == 'lua') or not (ansible_facts['architecture'] == 's390x')
+    - not (item['name'] | default(item) == 'opentracing') or not (ansible_facts['os_family'] == 'Suse' and ansible_facts['distribution_major_version'] is version('12',
+      '=='))

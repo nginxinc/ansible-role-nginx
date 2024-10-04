@@ -8,7 +8,19 @@
     "packageRules": [
       {
         "matchPackageNames": "*",
-        "groupName": "ansible collections"
+        "groupName": "Ansible collections"
+      }
+    ]
+  },
+  "github-actions": {
+    "packageRules": [
+      {
+        "matchPackageNames": "(github|actions)",
+        "groupName": "GitHub Actions"
+      },
+      {
+        "matchPackageNames": "docker/",
+        "groupName": "Docker Actions"
       }
     ]
   },
@@ -17,7 +29,7 @@
     "packageRules": [
       {
         "matchPackageNames": "*",
-        "groupName": "python dependencies"
+        "groupName": "Python dependencies"
       }
     ]
   },

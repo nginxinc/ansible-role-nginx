@@ -7,7 +7,7 @@
     "fileMatch": ["(^|/)[\\w-]*requirements([_.]\\w+)?\\.ya?ml$"],
     "packageRules": [
       {
-        "matchPackageNames": "*",
+        "matchPackageNames": ["*"],
         "groupName": "Ansible collections"
       }
     ]
@@ -15,11 +15,14 @@
   "github-actions": {
     "packageRules": [
       {
-        "matchPackageNames": "(github|actions)",
+        "matchPackageNames": [
+          "actions/**",
+          "github/**"
+        ],
         "groupName": "GitHub Actions"
       },
       {
-        "matchPackageNames": "docker/",
+        "matchPackageNames": ["docker/**"],
         "groupName": "Docker Actions"
       }
     ]
@@ -28,7 +31,7 @@
     "fileMatch": ["(^|/)[\\w-]*requirements([_.]\\w+)?\\.(txt|pip)$"],
     "packageRules": [
       {
-        "matchPackageNames": "*",
+        "matchPackageNames": ["*"],
         "groupName": "Python dependencies"
       }
     ]

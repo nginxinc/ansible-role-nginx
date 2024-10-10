@@ -1,0 +1,40 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "ansible-galaxy": {
+    "fileMatch": ["(^|/)[\\w-]*requirements([_.]\\w+)?\\.ya?ml$"],
+    "packageRules": [
+      {
+        "matchPackageNames": ["*"],
+        "groupName": "Ansible collections"
+      }
+    ]
+  },
+  "github-actions": {
+    "packageRules": [
+      {
+        "matchPackageNames": [
+          "actions/**",
+          "github/**"
+        ],
+        "groupName": "GitHub Actions"
+      },
+      {
+        "matchPackageNames": ["docker/**"],
+        "groupName": "Docker Actions"
+      }
+    ]
+  },
+  "pip_requirements": {
+    "fileMatch": ["(^|/)[\\w-]*requirements([_.]\\w+)?\\.(txt|pip)$"],
+    "packageRules": [
+      {
+        "matchPackageNames": ["*"],
+        "groupName": "Python dependencies"
+      }
+    ]
+  },
+  "schedule": ["at 12am every monday"]
+}

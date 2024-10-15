@@ -11,6 +11,11 @@
       {
         "matchPackageNames": ["*"],
         "groupName": "Ansible collections"
+      },
+      {
+        "matchUpdateTypes": ["minor", "patch"],
+        "matchCurrentVersion": "!/^0/",
+        "automerge": true
       }
     ]
   },
@@ -30,6 +35,15 @@
       {
         "matchPackageNames": ["docker/**"],
         "groupName": "Docker Actions"
+      },
+      {
+        "enabled": false,
+        "matchUpdateTypes": ["digest"]
+      },
+      {
+        "matchUpdateTypes": ["minor", "patch"],
+        "matchCurrentVersion": "!/^0/",
+        "automerge": true
       }
     ]
   },
@@ -39,6 +53,15 @@
       {
         "matchPackageNames": ["*"],
         "groupName": "Python dependencies"
+      },
+      {
+        "matchPackageNames": ["ansible-core"],
+        "separateMinorPatch": true
+      },
+      {
+        "matchUpdateTypes": ["patch"],
+        "matchCurrentVersion": "!/^0/",
+        "automerge": true
       }
     ]
   }

@@ -40,8 +40,8 @@ CI/CD:
 - Bump the minimum version of Ansible supported on Ansible Galaxy to `2.16`.
 - Remove platform metadata from the Ansible Galaxy role metadata since platforms are no longer supported in Ansible Galaxy NG.
 - Implement OSSF Scorecard.
-- Implement Renovate Bot.
-- Automatically add milestone and project to Renovate Bot PRs.
+- Implement Renovate and replace Dependabot.
+- Automatically add milestone and project data to Renovate Bot PRs.
 
 ## 0.24.3 (July 11, 2024)
 

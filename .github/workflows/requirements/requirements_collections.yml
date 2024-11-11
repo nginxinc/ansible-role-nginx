@@ -3,7 +3,7 @@ collections:
   - name: ansible.posix
     version: 1.6.2
   - name: community.general
-    version: 9.5.1
+    version: 10.0.1
   - name: community.crypto
     version: 2.22.3
   - name: community.docker

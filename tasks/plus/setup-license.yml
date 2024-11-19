@@ -39,8 +39,8 @@
     - name: (Alpine Linux) Check that NGINX Plus license is valid
       ansible.builtin.assert:
         that:
-          - cert.expired == false
-          - cert.public_key == key.public_key
+          - cert['expired'] == false
+          - cert['public_key'] == key['public_key']
         success_msg: Your NGINX Plus license is valid!
         fail_msg: Something went wrong! Make sure your NGINX Plus license is valid!
 
@@ -88,8 +88,8 @@
     - name: (Debian/Red Hat/SLES OSs) Check that NGINX Plus license is valid
       ansible.builtin.assert:
         that:
-          - cert.expired == false
-          - cert.public_key == key.public_key
+          - cert['expired'] == false
+          - cert['public_key'] == key['public_key']
         success_msg: Your NGINX Plus license is valid!
         fail_msg: Something went wrong! Make sure your NGINX Plus license is valid!
 
@@ -107,3 +107,77 @@
             dest: /etc/ssl/nginx/nginx-repo-bundle.crt
             mode: "0444"
           when: not bundle['stat']['exists']
+
+- name: Set up NGINX Plus JWT
+  block:
+    - name: Check if NGINX Plus is being installed or upgraded
+      ansible.builtin.package_facts:
+
+    - name: Obtain version of NGINX Plus if it's already installed
+      when: "'nginx-plus' in ansible_facts['packages']"
+      block:
+        - name: Check NGINX Plus version
+          ansible.builtin.command: nginx -v
+          register: nginx_plus_version
+          changed_when: false
+
+        - name: Parse NGINX Plus version
+          ansible.builtin.set_fact:
+            nginx_plus_installed_version: "{{ nginx_plus_version['stderr'] | regex_search('nginx-plus-r(\\d+)', '\\1') | first }}"
+
+    - name: Obtain version of NGINX Plus to be installed (if set)
+      ansible.builtin.set_fact:
+        nginx_plus_target_version: "{{ nginx_version | regex_search('(\\d+)', '\\1') | first }}"
+      when: nginx_version is defined
+
+    - name: Set up JWT
+      when:
+        - nginx_setup in ['install', 'upgrade']
+        - nginx_plus_installed_version is defined and (nginx_setup == 'upgrade' or nginx_plus_target_version is defined and nginx_plus_target_version is version('33', '>='))
+          or nginx_plus_installed_version is not defined and (nginx_plus_target_version is not defined or nginx_plus_target_version is version('33', '>='))
+      block:
+        - name: Create NGINX Plus main directory
+          ansible.builtin.file:
+            path: /etc/nginx
+            state: directory
+            mode: "0755"
+
+        - name: Copy NGINX Plus JWT
+          ansible.builtin.copy:
+            src: "{{ nginx_license['jwt'] }}"
+            dest: /etc/nginx/license.jwt
+            decrypt: true
+            mode: "0444"
+
+        - name: Verify NGINX Plus JWT claims
+          block:
+            - name: Read JWT file
+              ansible.builtin.slurp:
+                src: /etc/nginx/license.jwt
+              register: jwt_file
+
+            - name: Decode JWT payload using base64url
+              ansible.builtin.set_fact:
+                jwt_payload_encoded: "{{ (jwt_file['content'] | b64decode | split('.'))[1] }}"
+
+            - name: Decode JWT payload using base64url
+              ansible.builtin.set_fact:
+                jwt_payload: >-
+                  {{
+                    jwt_payload_encoded
+                    | regex_replace('-', '+')
+                    | regex_replace('_', '/')
+                    | regex_replace('\s*$', '=' * (4 - jwt_payload_encoded | length % 4))
+                    | b64decode
+                    | from_json
+                  }}
+
+            - name: Assert JWT payload 'iss', 'aud', 'iat', and 'f5_sat' claims
+              ansible.builtin.assert:
+                that:
+                  - jwt_payload['iss'] == 'F5 Inc.'
+                  - jwt_payload['aud'] == 'urn:f5:teem'
+                  - (ansible_facts['date_time']['epoch'] | int) >= jwt_payload['iat']
+                  - (ansible_facts['date_time']['epoch'] | int) <= jwt_payload['f5_sat']
+                success_msg: 'JWT is valid'
+                fail_msg: 'JWT is invalid. Double check that the JWT data is correct.'

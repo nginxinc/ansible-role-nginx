@@ -10,5 +10,6 @@
         nginx_license:
           certificate: license/nginx-repo.crt
           key: license/nginx-repo.key
+          jwt: license/license.jwt
         nginx_remove_license: false
         nginx_setup: upgrade

@@ -1,6 +1,6 @@
 ansible-core==2.16.13
 jinja2==3.1.4
-ansible-compat==24.9.1
+ansible-compat==24.10.0
 molecule==24.9.0
 molecule-plugins[docker]==23.5.3
 docker==7.1.0

@@ -144,8 +144,8 @@
 
         - name: Copy NGINX Plus JWT
           ansible.builtin.copy:
-            src: "{{ nginx_license['jwt'] }}"
-            dest: /etc/nginx/license.jwt
+            src: "{{ nginx_license['jwt']['src'] | default(nginx_license['jwt']) }}"
+            dest: "{{ nginx_license['jwt']['dest'] | default((ansible_facts['os_family'] == 'FreeBSD') | ternary('/usr/local/etc/nginx/license.jwt', '/etc/nginx/license.jwt')) }}"
             decrypt: true
             mode: "0444"
 
@@ -153,7 +153,7 @@
           block:
             - name: Read JWT file
               ansible.builtin.slurp:
-                src: /etc/nginx/license.jwt
+                src: "{{ nginx_license['jwt']['dest'] | default((ansible_facts['os_family'] == 'FreeBSD') | ternary('/usr/local/etc/nginx/license.jwt', '/etc/nginx/license.jwt')) }}"
               register: jwt_file
 
             - name: Decode JWT payload using base64url
@@ -179,5 +179,5 @@
                   - jwt_payload['aud'] == 'urn:f5:teem'
                   - (ansible_facts['date_time']['epoch'] | int) >= jwt_payload['iat']
                   - (ansible_facts['date_time']['epoch'] | int) <= jwt_payload['f5_sat']
-                success_msg: 'JWT is valid'
-                fail_msg: 'JWT is invalid. Double check that the JWT data is correct.'
+                success_msg: Your NGINX Plus license JWT is valid!
+                fail_msg: Something went wrong! Make sure your NGINX Plus license JWT is valid!

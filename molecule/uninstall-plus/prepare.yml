@@ -35,4 +35,5 @@
         nginx_license:
           certificate: license/nginx-repo.crt
           key: license/nginx-repo.key
-          jwt: license/license.jwt
+          jwt:
+            src: license/license.jwt

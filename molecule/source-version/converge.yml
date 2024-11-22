@@ -4,7 +4,7 @@
   pre_tasks:
     - name: Set NGINX version
       ansible.builtin.set_fact:
-        ngx_version: 1.26.1
+        ngx_version: 1.27.2
         cacheable: true
   tasks:
     - name: Install NGINX from source

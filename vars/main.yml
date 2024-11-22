@@ -59,7 +59,7 @@ nginx_supported_distributions:
     architectures: [x86_64]
   ubuntu:
     name: Ubuntu
-    versions: [20.04, 22.04, 23.10, 24.04]
+    versions: [20.04, 22.04, 24.04, 24.10]
     architectures: "{{ ['x86_64', 'aarch64', 's390x'] if ((ansible_facts['distribution_version'] is version('20.04', '==')) or (ansible_facts['distribution_version'] is version('22.04', '=='))) else ['x86_64', 'aarch64'] }}"
 
 # Supported NGINX Plus distributions
@@ -71,7 +71,7 @@ nginx_plus_supported_distributions:
     architectures: [x86_64, aarch64]
   alpine:
     name: Alpine Linux
-    versions: [3.16, 3.17, 3.18, 3.19]
+    versions: [3.17, 3.18, 3.19, 3.20]
     architectures: [x86_64, aarch64]
   amazon:
     name: Amazon Linux
@@ -83,7 +83,7 @@ nginx_plus_supported_distributions:
     architectures: [x86_64, aarch64]
   freebsd:
     name: FreeBSD
-    versions: [12, 13, 14]
+    versions: [13, 14]
     architectures: [x86_64]
   oraclelinux:
     name: Oracle Linux
@@ -92,7 +92,7 @@ nginx_plus_supported_distributions:
   redhat:
     name: Red Hat Enterprise Linux
     versions: [8, 9]
-    architectures: "{{ ['x86_64', 'aarch64', 's390x'] if (ansible_facts['distribution_major_version'] is version('8', '>=')) else ['x86_64', 'aarch64'] }}"
+    architectures: [x86_64, aarch64]
   rocky:
     name: Rocky Linux
     versions: [8, 9]
@@ -104,7 +104,7 @@ nginx_plus_supported_distributions:
   ubuntu:
     name: Ubuntu
     versions: [20.04, 22.04, 24.04]
-    architectures: "{{ ['x86_64', 'aarch64', 's390x'] if ((ansible_facts['distribution_version'] is version('20.04', '==')) or (ansible_facts['distribution_version'] is version('22.04', '=='))) else ['x86_64', 'aarch64'] }}"
+    architectures: [x86_64, aarch64]
 
 # Default NGINX signing key
 nginx_default_signing_key_pgp: https://nginx.org/keys/nginx_signing.key
@@ -140,7 +140,7 @@ nginx_freebsd_dependencies: [security/ca_root_nss]
 nginx_redhat_dependencies: [ca-certificates]
 
 # SLES dependencies
-nginx_sles_dependencies: [ca-certificates]
+nginx_sles_dependencies: [ca-certificates, python3-rpm]
 
 # Default locations and versions when 'nginx_install_from' is set to 'source'.
 # Set 'pcre_release' to 1 to install PCRE 1, modify the 'openssl_version' to move back to 1.1.1.

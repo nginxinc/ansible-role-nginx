@@ -4,8 +4,10 @@
 
 BREAKING CHANGES:
 
+- NGINX Plus requires a JWT license starting with R33. Make sure you include the path to the base64 encoded JWT license using the new `nginx_license['jwt']` parameter.
 - Remove support for RHEL 7 based distributions (RHEL/CentOS/Oracle Linux 7). CentOS 7 has reached EoL, RHEL 7 has reached EoM, and Oracle Linux 7 will reach EoL shortly. These distributions will not be supported by new NGINX releases moving forward. If you are still using one of these distributions, please consider upgrading. If you still want to use this role for the time being, please use the previous release (0.24.3). Do note that you will only be able to use NGINX versions released as of the date of the aforementioned release (July 11, 2024).
-- Remove support for installing NGINX Open Source on Alpine Linux 3.16.
+- Remove support for installing NGINX Open Source and NGINX Plus on Alpine Linux 3.16.
+- Remove support for installing NGINX Open Source on Ubuntu mantic.
 - No longer omit `allow_downgrade` module parameter when running Ansible versions lower than `2.12`.
 
 FEATURES:
@@ -13,10 +15,10 @@ FEATURES:
 - Add support for templating the entire NGINX Agent configuration file.
 - Add support for installing and configuring the NGINX Plus HA keepalived package.
 - Add validation tasks to check the Ansible version, the Jinja2 version, whether the required Ansible collections for this role are installed, and whether you are trying to install a valid NGINX module.
-- Add support for installing NGINX Open Source on Alpine Linux 3.20.
+- Add support for installing NGINX Open Source and NGINX Plus on Alpine Linux 3.20.
+- Add support for installing NGINX Open Source on Ubuntu oracular.
 - Add support for installing NGINX Agent on Ubuntu noble.
 - Bump the minimum version of Ansible supported to `2.16`, whilst clarifying that Ansible `2.18` is not supported at this stage.
-- Bump the Ansible `community.general` collection to `9.2.0`, `community.crypto` collection to `2.21.1` and `community.docker` collection to `3.11.0`.
 
 DOCUMENTATION:
 
@@ -34,7 +36,7 @@ MAINTENANCE:
 
 CI/CD:
 
-- Update GitHub Actions to Ubuntu 24.04.
+- Update GitHub Actions to Ubuntu 24.04 (noble).
 - Switch GitHub Actions from using tags to release hashes.
 - Remove commented out Molecule platforms and GitHub Actions QEMU step for the time being. These changes will be reverted if multi-arch testing can be reinstated in GitHub Actions.
 - Bump the minimum version of Ansible supported on Ansible Galaxy to `2.16`.

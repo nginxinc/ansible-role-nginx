@@ -79,11 +79,16 @@ nginx_static_modules: [http_ssl_module]
 # Default is mainline.
 nginx_branch: mainline
 
-# Location of your NGINX Plus license in your local machine.
+# Location of your NGINX Plus license (certificate, key, and JWT) in your local machine. The license JWT is only required starting with NGINX Plus R33 and later.
+# For the license JWT, you can optionally specify a custom destination path for the JWT by using the 'src' and 'dest' parameters.
 # Default is the files folder within the NGINX Ansible role.
 nginx_license:
   certificate: license/nginx-repo.crt
   key: license/nginx-repo.key
+  jwt: license/license.jwt
+  # jwt:
+  #   src: license/license.jwt
+  #   dest: /etc/nginx/license.jwt
 
 # Set up NGINX Plus license before installation.
 # Default is true.

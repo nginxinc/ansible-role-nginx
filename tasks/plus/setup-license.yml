@@ -70,7 +70,7 @@
 
     - name: (OracleLinux 8) Install cryptography package
       ansible.builtin.package:
-        name: "python3.11-cryptography"
+        name: python3.11-cryptography
       when:
         - ansible_facts['distribution'] == "OracleLinux"
         - ansible_facts['distribution_major_version'] == "8"
@@ -133,8 +133,8 @@
     - name: Set up JWT
       when:
         - nginx_setup in ['install', 'upgrade']
-        - nginx_plus_installed_version is defined and (nginx_setup == 'upgrade' or nginx_plus_target_version is defined and nginx_plus_target_version is version('33', '>='))
-          or nginx_plus_installed_version is not defined and (nginx_plus_target_version is not defined or nginx_plus_target_version is version('33', '>='))
+        - nginx_plus_installed_version is defined and (nginx_setup == 'upgrade' or nginx_plus_target_version is defined and nginx_plus_target_version is version('33',
+          '>=')) or nginx_plus_installed_version is not defined and (nginx_plus_target_version is not defined or nginx_plus_target_version is version('33', '>='))
       block:
         - name: Create NGINX Plus main directory
           ansible.builtin.file:
@@ -145,7 +145,8 @@
         - name: Copy NGINX Plus JWT
           ansible.builtin.copy:
             src: "{{ nginx_license['jwt']['src'] | default(nginx_license['jwt']) }}"
-            dest: "{{ nginx_license['jwt']['dest'] | default((ansible_facts['os_family'] == 'FreeBSD') | ternary('/usr/local/etc/nginx/license.jwt', '/etc/nginx/license.jwt')) }}"
+            dest: "{{ nginx_license['jwt']['dest'] | default((ansible_facts['os_family'] == 'FreeBSD') | ternary('/usr/local/etc/nginx/license.jwt', '/etc/nginx/license.jwt'))
+              }}"
             decrypt: true
             mode: "0444"
 
@@ -153,7 +154,8 @@
           block:
             - name: Read JWT file
               ansible.builtin.slurp:
-                src: "{{ nginx_license['jwt']['dest'] | default((ansible_facts['os_family'] == 'FreeBSD') | ternary('/usr/local/etc/nginx/license.jwt', '/etc/nginx/license.jwt')) }}"
+                src: "{{ nginx_license['jwt']['dest'] | default((ansible_facts['os_family'] == 'FreeBSD') | ternary('/usr/local/etc/nginx/license.jwt', '/etc/nginx/license.jwt'))
+                  }}"
               register: jwt_file
 
             - name: Decode JWT payload using base64url

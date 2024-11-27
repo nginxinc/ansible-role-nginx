@@ -3,6 +3,7 @@
   "extends": [
     "config:recommended"
   ],
+  "commitMessageLowerCase": "never",
   "labels": [
     "dependencies"
   ],
@@ -56,7 +57,7 @@
   },
   "github-actions": {
     "addLabels": [
-      "skip-changelog"
+      "skip changelog"
     ],
     "packageRules": [
       {

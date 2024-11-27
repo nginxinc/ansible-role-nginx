@@ -3,87 +3,109 @@ name-template: "$RESOLVED_VERSION"
 tag-template: "$RESOLVED_VERSION"
 include-pre-releases: true
 categories:
-  - title: "💣 Breaking Changes"
+  - title: 💣 Breaking Changes
     labels:
-      - "breaking change"
-  - title: "🔔 Deprecation Warnings"
+      - breaking change
+  - title: 🔔 Deprecation Warnings
     labels:
-      - "deprecation"
-  - title: "🚀 Features"
+      - deprecation
+  - title: 🚀 Features
     labels:
-      - "feature"
-  - title: "🎉 Enhancements"
+      - enhancement
+  - title: 🐛 Bug Fixes
     labels:
-      - "enhancement"
-  - title: "🐛 Bug Fixes"
+      - bug
+  - title: 🧪 Tests
     labels:
-      - "bug"
-  - title: "🧪 Tests"
+      - tests
+  - title: 📝 Documentation
     labels:
-      - "tests"
-  - title: "📝 Documentation"
+      - documentation
+  - title: 👷 CI/CD
     labels:
-      - "documentation"
-  - title: "⬆️ Dependencies"
+      - ci
+  - title: 🔨 Maintenance
     labels:
-      - "dependencies"
+      - chore
+  - title: ⬆️ Dependencies
+    collapse-after: 15
+    labels:
+      - dependencies
+  - title: Other Changes
+    labels:
+      - "*"
 exclude-labels:
-  - "skip-changelog"
+  - skip changelog
 version-resolver:
   minor:
     labels:
-      - "breaking change"
-      - "deprecation"
+      - breaking change
+      - deprecation
   patch:
     labels:
-      - "bug"
-      - "dependencies"
-      - "documentation"
-      - "feature"
-      - "enhancement"
+      - bug
+      - ci
+      - chore
+      - dependencies
+      - documentation
+      - enhancement
+      - tests
   default: patch
 autolabeler:
-  - label: "breaking change"
+  - label: breaking change
     body:
       - "/breaking/i"
-  - label: "deprecation"
+      - "/^\\w+!/i"
+  - label: deprecation
     branch:
       - "/deprecate\/.+/"
     title:
       - "/deprecate/i"
-  - label: "feature"
+  - label: enhancement
     branch:
       - "/feat\/.+/"
       - "/feature\/.+/"
     title:
       - "/feat/i"
       - "/feature/i"
-  - label: "enhancement"
-    branch:
-      - "/enhancement\/.+/"
-    title:
-      - "/enhancement/i"
-  - label: "bug"
+  - label: bug
     branch:
       - "/fix\/.+/"
+      - "/bug\/.+/"
+      - "/bugfix\/.+/"
     title:
       - "/fix/i"
-  - label: "tests"
+      - "/bug/i"
+      - "/bugfix/i"
+  - label: tests
     branch:
-      - "/molecule\/.+/"
-    title:
-      - "/molecule/i"
-  - label: "documentation"
-    branch:
-      - "/docs\/.+/"
+      - "/tests{0,1}\/.+/"
     files:
-      - "**/!(changelog).md"
+      - "/tests/**"
     title:
-      - "/docs/i"
+      - "/tests{0,1}\/.+/i"
+  - label: documentation
+    branch:
+      - "/docs{0,1}\/.+/"
+      - "/documentation\/.+/"
+    files:
+      - "docs/**"
+    title:
+      - "/docs{0,1}\/.+/i"
       - "/documentation/i"
-  - label: "dependencies"
-    files:
-      - ".github/workflows/requirements/*"
+  - label: ci
+    branch:
+      - "/ci\/.+/"
+    title:
+      - "/ci/i"
+  - label: chore
+    branch:
+      - "/chore\/.+/"
+    title:
+      - "/chore/i"
+replacers:
+  - search: "/(\\w+)(\\(\\w+\\))?!?: /g"
+    replace: ""
 template: |
   👾 *Help make the NGINX Ansible role better by participating in our [survey](https://forms.office.com/Pages/ResponsePage.aspx?id=L_093Ttq0UCb4L-DJ9gcUKLQ7uTJaE1PitM_37KR881UM0NCWkY5UlE5MUYyWU1aTUcxV0NRUllJSC4u)!* 👾
 
@@ -101,5 +123,5 @@ template: |
 
   - Functional configuration examples (check `converge.yml` under each `molecule` scenario) -- [github.com/nginxinc/ansible-role-nginx/tree/$RESOLVED_VERSION/molecule](https://github.com/nginxinc/ansible-role-nginx/tree/$RESOLVED_VERSION/molecule).
   - Ansible Galaxy repository -- [galaxy.ansible.com/nginxinc/nginx](https://galaxy.ansible.com/nginxinc/nginx).
-  - NGINX Ansible role & collection introductory blog -- [nginx.com/blog/announcing-nginx-core-collection-ansible](https://www.nginx.com/blog/announcing-nginx-core-collection-ansible).
+  - NGINX Ansible role & collection introductory blog -- [f5.com/blog/announcing-nginx-core-collection-ansible](https://www.f5.com/blog/announcing-nginx-core-collection-ansible).
   - NGINX: Better with Ansible demo -- [github.com/alessfg/nginx-ansible-demo](https://github.com/alessfg/nginx-ansible-demo).

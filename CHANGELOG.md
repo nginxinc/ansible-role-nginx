@@ -43,7 +43,7 @@ CI/CD:
 - Remove platform metadata from the Ansible Galaxy role metadata since platforms are no longer supported in Ansible Galaxy NG.
 - Implement OSSF Scorecard.
 - Implement Renovate and replace Dependabot.
-- Automatically add milestone and project data to Renovate Bot PRs.
+- Automatically add milestone to Renovate Bot PRs and project data to all PRs.
 
 ## 0.24.3 (July 11, 2024)
 

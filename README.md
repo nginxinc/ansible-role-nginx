@@ -159,9 +159,9 @@ To use the role, include the following task in your playbook:
 
 ## Platforms
 
-The NGINX Ansible role supports all platforms supported by the latest mainline/stable release of [NGINX Open Source](https://nginx.org/en/linux_packages.html), [NGINX Plus](https://docs.nginx.com/nginx/technical-specs/), [NGINX Agent](https://docs.nginx.com/nginx-agent/technical-specifications/), and the [NGINX Amplify agent](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-faq.md#21-what-operating-systems-are-supported).
+The NGINX Ansible role aims to work on all platforms supported by the latest mainline/stable release of [NGINX Open Source](https://nginx.org/en/linux_packages.html), [NGINX Plus](https://docs.nginx.com/nginx/technical-specs/), [NGINX Agent](https://docs.nginx.com/nginx-agent/technical-specifications/), and the [NGINX Amplify agent](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-faq.md#21-what-operating-systems-are-supported).
 
-Older releases might work, but keep in mind that NGINX Open Source only actively develops against the latest release of the mainline and stable branches, and NGINX Plus only [officially supports releases for two years](https://docs.nginx.com/nginx/releases/#support-for-current-and-previous-releases).
+Older releases might work, but keep in mind that NGINX Open Source only actively develops against the [latest release of the mainline and stable branches](https://www.f5.com/company/blog/nginx/nginx-1-18-1-19-released), and NGINX Plus only [officially supports releases for two years](https://docs.nginx.com/nginx/releases/#support-for-current-and-previous-releases).
 
 > [!NOTE]
 > Due to the release pipeline of the various projects supported by this role, there is usually a short delay between new releases and support for the release in this role.

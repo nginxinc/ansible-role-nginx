@@ -1,9 +1,10 @@
 [![Ansible Galaxy](https://img.shields.io/badge/galaxy-nginxinc.nginx-5bbdbf.svg)](https://galaxy.ansible.com/nginxinc/nginx)
 [![Molecule CI/CD](https://github.com/nginxinc/ansible-role-nginx/workflows/Molecule%20CI/CD/badge.svg)](https://github.com/nginxinc/ansible-role-nginx/actions/workflows/molecule.yml)
-[![License](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/nginxinc/ansible-role-nginx/badge)](https://securityscorecards.dev/viewer/?uri=github.com/nginxinc/ansible-role-nginx)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Community Support](https://badgen.net/badge/support/community/cyan?icon=awesome)](/SUPPORT.md)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](/CODE_OF_CONDUCT.md)
+[![License](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 # 👾 *Help make the NGINX Ansible role better by participating in our [survey](https://forms.office.com/Pages/ResponsePage.aspx?id=L_093Ttq0UCb4L-DJ9gcUKLQ7uTJaE1PitM_37KR881UM0NCWkY5UlE5MUYyWU1aTUcxV0NRUllJSC4u)!* 👾
 
@@ -47,6 +48,7 @@ This will also ensure you are deploying/running this role with a fully tested ve
 - This role is developed and tested with [maintained](https://docs.ansible.com/ansible/devel/reference_appendices/release_and_maintenance.html) versions of Ansible core and Python.
 
   ***Note:** Ansible `2.18` does no longer support the `yum` module and as such, is not supported by this role until Amazon Linux 2 reaches EoL.*
+- Instructions on how to install Ansible core can be found in the [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#upgrading-ansible-from-version-2-9-and-older-to-version-2-10-or-later) docs.
 - When using Ansible core, you will also need to install the following Ansible collections:
 
   ```yaml
@@ -62,9 +64,8 @@ This will also ensure you are deploying/running this role with a fully tested ve
       version: 4.1.0
   ```
 
-- You will need to run this role as a root user using Ansible's `become` parameter. Make sure you have set up the appropriate permissions on your target hosts.
-- Instructions on how to install Ansible core can be found in the [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#upgrading-ansible-from-version-2-9-and-older-to-version-2-10-or-later) docs.
 - Instructions on how to install Ansible collections can be found in the [Ansible collections](https://docs.ansible.com/ansible/latest/collections_guide/collections_installing.html) guide.
+- You will need to run this role as a root user using Ansible's `become` parameter. Make sure you have set up the appropriate permissions on your target hosts.
 
 > [!TIP]
 > You can alternatively install the [Ansible community distribution](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#selecting-an-ansible-package-and-version-to-install) (what is still known Ansible -- instead of Ansible core) if you don't want to manage individual collections.
@@ -158,7 +159,12 @@ To use the role, include the following task in your playbook:
 
 ## Platforms
 
-The NGINX Ansible role supports almost all platforms supported by [NGINX Open Source](https://nginx.org/en/linux_packages.html), [NGINX Plus](https://docs.nginx.com/nginx/technical-specs/), [NGINX Agent](https://docs.nginx.com/nginx-agent/technical-specifications/), and the [NGINX Amplify agent](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-faq.md#21-what-operating-systems-are-supported):
+The NGINX Ansible role aims to work on all platforms supported by the latest mainline/stable release of [NGINX Open Source](https://nginx.org/en/linux_packages.html), [NGINX Plus](https://docs.nginx.com/nginx/technical-specs/), [NGINX Agent](https://docs.nginx.com/nginx-agent/technical-specifications/), and the [NGINX Amplify agent](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-faq.md#21-what-operating-systems-are-supported).
+
+Older releases might work, but keep in mind that NGINX Open Source only actively develops against the [latest release of the mainline and stable branches](https://www.f5.com/company/blog/nginx/nginx-1-18-1-19-released), and NGINX Plus only [officially supports releases for two years](https://docs.nginx.com/nginx/releases/#support-for-current-and-previous-releases).
+
+> [!NOTE]
+> Due to the release pipeline of the various projects supported by this role, there is usually a short delay between new releases and support for the release in this role.
 
 ### NGINX Open Source
 
@@ -191,8 +197,8 @@ SUSE/SLES:
 Ubuntu:
   - focal (20.04)
   - jammy (22.04)
-  - mantic (23.10)
   - noble (24.04)
+  - oracular (24.10)
 ```
 
 ### NGINX Plus
@@ -202,10 +208,10 @@ AlmaLinux:
   - 8
   - 9
 Alpine:
-  - 3.16
   - 3.17
   - 3.18
   - 3.19
+  - 3.20
 Amazon Linux:
   - 2
   - 2023
@@ -342,8 +348,6 @@ You can find the Ansible NGINX Core collection of roles to install and configure
 You can find the Ansible NGINX configuration role to configure NGINX [here](https://github.com/nginxinc/ansible-role-nginx-config).
 
 You can find the Ansible NGINX App Protect role to install and configure NGINX App Protect WAF and NGINX App Protect DoS [here](https://github.com/nginxinc/ansible-role-nginx-app-protect).
-
-You can find the Ansible NGINX Unit role to install NGINX Unit [here](https://github.com/nginxinc/ansible-role-nginx-unit).
 
 ## License
 

@@ -18,19 +18,19 @@ categories:
   - title: 🧪 Tests
     labels:
       - tests
-  - title: 📝 Documentation
-    labels:
-      - documentation
-  - title: 👷 CI/CD
-    labels:
-      - ci
   - title: 🔨 Maintenance
     labels:
       - chore
+  - title: 👷 CI/CD
+    labels:
+      - ci
   - title: ⬆️ Dependencies
     collapse-after: 15
     labels:
       - dependencies
+  - title: 📝 Documentation
+    labels:
+      - documentation
   - title: Other Changes
     labels:
       - "*"

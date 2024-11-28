@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.25.0 (Unreleased)
+## 0.25.0 (Nov 28, 2024)
 
 BREAKING CHANGES:
 
@@ -10,6 +10,10 @@ BREAKING CHANGES:
 - Remove support for installing NGINX Open Source on Alpine Linux 3.17.
 - Remove support for installing NGINX Open Source on Ubuntu mantic.
 - No longer omit `allow_downgrade` module parameter when running Ansible versions lower than `2.12`.
+
+DEPRECATION WARNINGS:
+
+- The NGINX Agent features contained in this role will be split into a separate role in the next minor release. If you are using this role to install and configure the NGINX Agent, please switch to the new role once it's available.
 
 FEATURES:
 

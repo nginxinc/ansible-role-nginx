@@ -55,7 +55,7 @@ This will also ensure you are deploying/running this role with a fully tested ve
   ---
   collections:
     - name: ansible.posix
-      version: 1.6.2
+      version: 2.0.0
     - name: community.general
       version: 10.0.1
     - name: community.crypto # Only required if you plan to install NGINX Plus

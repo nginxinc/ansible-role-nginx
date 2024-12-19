@@ -15,6 +15,7 @@
   changed_when: false
   delegate_to: localhost
   become: false
+  check_mode: false
 
 - name: Verify that you are using a supported Jinja2 version on your Ansible host
   ansible.builtin.assert:
@@ -30,6 +31,7 @@
   changed_when: false
   delegate_to: localhost
   become: false
+  check_mode: false
 
 - name: Verify that the 'community.general' Ansible collection is installed on your Ansible host
   ansible.builtin.assert:

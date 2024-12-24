@@ -37,7 +37,7 @@
 - name: Check if the NGINX Agent dynamic configuration file has been modified
   ansible.builtin.lineinfile:
     path: /var/lib/nginx-agent/agent-dynamic.conf
-    line: '# agent-dynamic.conf'
+    line: "# agent-dynamic.conf"
     state: present
   check_mode: true
   changed_when: false
@@ -49,7 +49,8 @@
 - name: Dynamically generate NGINX Agent dynamic configuration file if it has not been externally modified
   ansible.builtin.template:
     src: nginx-agent/agent-dynamic.conf.j2
-    dest: "{{ (ansible_facts['system'] | lower is not search('bsd')) | ternary('/var/lib/nginx-agent/agent-dynamic.conf', '/var/db/nginx-agent/agent-dynamic.conf') }}"
+    dest: "{{ (ansible_facts['system'] | lower is not search('bsd')) | ternary('/var/lib/nginx-agent/agent-dynamic.conf', '/var/db/nginx-agent/agent-dynamic.conf')
+      }}"
     mode: "0644"
     backup: true
   when:

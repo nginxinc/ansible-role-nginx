@@ -5,7 +5,9 @@
       - ansible_version['full'] is version(nginx_ansible_version, '>=')
       - ansible_version['full'] is version('2.18', '<')
     success_msg: Ansible {{ ansible_version['full'] }} is supported.
-    fail_msg: ({{ ansible_version['full'] is version('2.18', '>=') }} | ternary('Ansible {{ ansible_version['full'] }} is not yet supported. Please downgrade to a supported Ansible release', 'Ansible {{ ansible_version['full'] }} has reached End of Life (EoL). Please upgrade to a supported Ansible release.') Check the README for more details.
+    fail_msg: ({{ ansible_version['full'] is version('2.18', '>=') }} | ternary('Ansible {{ ansible_version['full'] }} is not yet supported. Please downgrade to a
+      supported Ansible release', 'Ansible {{ ansible_version['full'] }} has reached End of Life (EoL). Please upgrade to a supported Ansible release.') Check the
+      README for more details.
   delegate_to: localhost
   ignore_errors: true # noqa ignore-errors
 
@@ -20,7 +22,8 @@
   ansible.builtin.assert:
     that: (jinja2_version['stdout'] | regex_search('jinja version = ([\\d.]+)', '\\1') | first) is version(nginx_jinja2_version, '>=')
     success_msg: Jinja2 {{ jinja2_version['stdout'] | regex_search('jinja version = ([\d.]+)', '\1') | first }} is supported.
-    fail_msg: Jinja2 {{ jinja2_version['stdout'] | regex_search('jinja version = ([\d.]+)', '\1') | first }} is not supported. Please upgrade to Jinja2 3.1. Check the README for more details.
+    fail_msg: Jinja2 {{ jinja2_version['stdout'] | regex_search('jinja version = ([\d.]+)', '\1') | first }} is not supported. Please upgrade to Jinja2 3.1. Check
+      the README for more details.
   delegate_to: localhost
   become: false
 
@@ -91,10 +94,14 @@
   ansible.builtin.assert:
     that:
       - ansible_facts['distribution'] | lower in nginx_distributions.keys() | list
-      - (ansible_facts['distribution_version'] | regex_search('\\d{1,2}\\.\\d{2}') | float in nginx_distributions[ansible_facts['distribution'] | lower]['versions'] | map('float') if ansible_facts['distribution'] | lower in ['alpine', 'ubuntu'] else ansible_facts['distribution_major_version'] in nginx_distributions[ansible_facts['distribution'] | lower]['versions'] | string)
+      - (ansible_facts['distribution_version'] | regex_search('\\d{1,2}\\.\\d{2}') | float in nginx_distributions[ansible_facts['distribution'] | lower]['versions']
+        | map('float') if ansible_facts['distribution'] | lower in ['alpine', 'ubuntu'] else ansible_facts['distribution_major_version'] in nginx_distributions[ansible_facts['distribution']
+        | lower]['versions'] | string)
       - ansible_facts['architecture'] in nginx_distributions[ansible_facts['distribution'] | lower]['architectures']
-    success_msg: Your distribution, {{ nginx_distributions[ansible_facts['distribution'] | lower]['name'] }} {{ ansible_facts['distribution_version'] }} ({{ ansible_facts['architecture'] }}), is supported by NGINX {{ (nginx_type == 'opensource') | ternary('Open Source', 'Plus') }}.
-    fail_msg: Your distribution, {{ nginx_distributions[ansible_facts['distribution'] | lower]['name'] }} {{ ansible_facts['distribution_version'] }} ({{ ansible_facts['architecture'] }}), is not supported by NGINX {{ (nginx_type == 'opensource') | ternary('Open Source', 'Plus') }}.
+    success_msg: Your distribution, {{ nginx_distributions[ansible_facts['distribution'] | lower]['name'] }} {{ ansible_facts['distribution_version'] }} ({{ ansible_facts['architecture']
+      }}), is supported by NGINX {{ (nginx_type == 'opensource') | ternary('Open Source', 'Plus') }}.
+    fail_msg: Your distribution, {{ nginx_distributions[ansible_facts['distribution'] | lower]['name'] }} {{ ansible_facts['distribution_version'] }} ({{ ansible_facts['architecture']
+      }}), is not supported by NGINX {{ (nginx_type == 'opensource') | ternary('Open Source', 'Plus') }}.
   when:
     - nginx_enable | bool
     - (nginx_install_from == "nginx_repository" or nginx_type == "plus")
@@ -102,7 +109,8 @@
 
 - name: Verify that you are installing a supported NGINX dynamic module
   ansible.builtin.assert:
-    that: (nginx_modules | difference(nginx_modules_list) == [] if nginx_type == 'opensource') or (nginx_modules | difference(nginx_plus_modules_list) == [] if nginx_type == 'plus')
+    that: (nginx_modules | difference(nginx_modules_list) == [] if nginx_type == 'opensource') or (nginx_modules | difference(nginx_plus_modules_list) == [] if nginx_type
+      == 'plus')
     success_msg: The NGINX module(s) you are installing are supported.
     fail_msg: The NGINX module(s) you are installing are not supported. Please check the README for more details.
   when:

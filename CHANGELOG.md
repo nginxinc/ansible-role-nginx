@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.25.1
+
+BUG FIXES:
+
+- Ansible and Jinja software versions validation tasks in ansible check mode.
+
 ## 0.25.0 (Nov 28, 2024)
 
 BREAKING CHANGES:

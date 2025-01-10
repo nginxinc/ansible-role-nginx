@@ -1,7 +1,7 @@
 ---
 collections:
   - name: ansible.posix
-    version: 1.6.2
+    version: 2.0.0
   - name: community.general
     version: 10.0.1
   - name: community.crypto

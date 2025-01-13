@@ -19,22 +19,18 @@
       "matchManagers": [
         "ansible-galaxy",
         "custom.regex"
-      ]
-    }
-  ],
-  "ansible-galaxy": {
-    "fileMatch": [
-      "(^|/)[\\w-]*requirements([_.]\\w+)?\\.ya?ml$"
-    ],
-    "packageRules": [
-      {
-        "automerge": true,
+      ],
+      "automerge": true,
         "matchCurrentVersion": "!/^0/",
         "matchUpdateTypes": [
           "minor",
           "patch"
         ]
-      }
+    }
+  ],
+  "ansible-galaxy": {
+    "fileMatch": [
+      "(^|/)[\\w-]*requirements([_.]\\w+)?\\.ya?ml$"
     ]
   },
   "customManagers": [

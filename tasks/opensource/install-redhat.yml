@@ -1,5 +1,5 @@
 ---
-- name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) {{ (nginx_setup == 'uninstall') | ternary('Remove', 'Configure') }} NGINX repository
+- name: (AlmaLinux/Amazon Linux/Oracle Linux/RHEL/Rocky Linux) {{ (nginx_setup == 'uninstall') | ternary('Remove', 'Configure') }} NGINX repository
   ansible.builtin.yum_repository:
     name: nginx
     baseurl: "{{ nginx_repository | default(lookup('vars', 'nginx_default_repository_' + ((ansible_facts['distribution'] == 'Amazon') | ternary('amazon', 'redhat')))) }}"
@@ -8,19 +8,20 @@
     gpgcheck: true
     mode: "0644"
     module_hotfixes: true
+    priority: 9
     state: "{{ (nginx_state == 'uninstall') | ternary('absent', 'present') }}"
   when: nginx_manage_repo | bool
 
-- name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) Force Yum cache refresh
+- name: (AlmaLinux/Amazon Linux/Oracle Linux/RHEL/Rocky Linux) Force Yum cache refresh
   ansible.builtin.command: yum clean metadata
   when: nginx_manage_repo | bool
   changed_when: false
 
-- name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) {{ nginx_setup | capitalize }} NGINX
+- name: (AlmaLinux/Amazon Linux/Oracle Linux/RHEL/Rocky Linux) {{ nginx_setup | capitalize }} NGINX
   ansible.builtin.yum:
     name: nginx{{ nginx_version | default('') }}
     state: "{{ nginx_state }}"
     update_cache: true
-    allow_downgrade: "{{ omit if ansible_version['full'] is version('2.12', '<') else true }}"
+    allow_downgrade: true
   ignore_errors: "{{ ansible_check_mode }}"
   notify: (Handler) Run NGINX

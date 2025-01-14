@@ -1,12 +1,139 @@
 # Changelog
 
-## 0.24.1 (Unreleased)
+## 0.25.1
+
+BUG FIXES:
+
+- Ansible and Jinja software versions validation tasks in ansible check mode.
+
+## 0.25.0 (Nov 28, 2024)
+
+BREAKING CHANGES:
+
+- NGINX Plus requires a JWT license starting with R33. Make sure you include the path to the base64 encoded JWT license using the new `nginx_license['jwt']` parameter.
+- Remove support for RHEL 7 based distributions (RHEL/CentOS/Oracle Linux 7). CentOS 7 has reached EoL, RHEL 7 has reached EoM, and Oracle Linux 7 will reach EoL shortly. These distributions will not be supported by new NGINX releases moving forward. If you are still using one of these distributions, please consider upgrading. If you still want to use this role for the time being, please use the previous release (0.24.3). Do note that you will only be able to use NGINX versions released as of the date of the aforementioned release (July 11, 2024).
+- Remove support for installing NGINX Open Source and NGINX Plus on Alpine Linux 3.16.
+- Remove support for installing NGINX Open Source on Alpine Linux 3.17.
+- Remove support for installing NGINX Open Source on Ubuntu mantic.
+- No longer omit `allow_downgrade` module parameter when running Ansible versions lower than `2.12`.
+
+DEPRECATION WARNINGS:
+
+- The NGINX Agent features contained in this role will be split into a separate role in the next minor release. If you are using this role to install and configure the NGINX Agent, please switch to the new role once it's available.
+
+FEATURES:
+
+- Add support for templating the entire NGINX Agent configuration file.
+- Add support for installing and configuring the NGINX Plus HA keepalived package.
+- Add validation tasks to check the Ansible version, the Jinja2 version, whether the required Ansible collections for this role are installed, and whether you are trying to install a valid NGINX module.
+- Add support for installing NGINX Open Source and NGINX Plus on Alpine Linux 3.20.
+- Add support for installing NGINX Open Source on Ubuntu oracular.
+- Add support for installing NGINX Agent on Ubuntu noble.
+- Bump the minimum version of Ansible supported to `2.16`, whilst clarifying that Ansible `2.18` is not supported at this stage.
+
+DOCUMENTATION:
+
+- Update community docs per the latest [NGINX template repository](https://github.com/nginxinc/template-repository) guidelines.
+- Update and tweak the README. In order to make the installation instructions easier, some file names used by the various GitHub Actions workflows have been renamed.
+
+TESTS:
+
+- Update RHEL UBI images to UBI 8.10 and UBI 9.4.
+
+MAINTENANCE:
+
+- Installing certain NGINX modules on Alpine Linux 3.17 no longer requires installing `nginx-plus-module-ndk` as a separate step.
+- Add an `ansible_managed` comment to the various templated configs deployed by the role.
+- Tweak Release Drafter to work better with conventional commits.
+
+CI/CD:
+
+- Update GitHub Actions to Ubuntu 24.04 (noble).
+- Switch GitHub Actions from using tags to release hashes.
+- Remove commented out Molecule platforms and GitHub Actions QEMU step for the time being. These changes will be reverted if multi-arch testing can be reinstated in GitHub Actions.
+- Bump the minimum version of Ansible supported on Ansible Galaxy to `2.16`.
+- Remove platform metadata from the Ansible Galaxy role metadata since platforms are no longer supported in Ansible Galaxy NG.
+- Implement OSSF Scorecard.
+- Implement Renovate and replace Dependabot.
+- Automatically add milestone and project data to Renovate Bot PRs.
+
+## 0.24.3 (July 11, 2024)
+
+DEPRECATION WARNINGS:
+
+- This is the last release that will support RHEL 7 based distributions. If you are using this role to install NGINX on RHEL/CentOS/Oracle Linux 7, do note that CentOS 7 has reached EoL and RHEL 7 has reached EoM and will not be supported by new NGINX releases moving forward.
+- The NGINX Agent capabilities in this role will be migrated to a separate role sometime in the near future.
+
+FEATURES:
+
+- Implement the ability to install the NGINX Agent.
+- Add Amazon Linux 2023, Alpine Linux 3.19 and Ubuntu noble to the list of NGINX OSS and NGINX Plus tested and supported distributions.
+- Add Ubuntu matic to the list of supported NGINX OSS distributions.
+- Remove Ubuntu lunar from the list of supported NGINX OSS distributions.
+- Remove Alpine Linux 3.15 from the list of NGINX OSS and NGINX Plus tested and supported distributions.
+
+ENHANCEMENTS:
+
+- Allow strings in addition to a list when configuring `logrotate`.
+- Bump the Ansible `community.general` collection to `9.0.1`, `community.crypto` collection to `2.20.0` and `community.docker` collection to `3.10.3`.
+
+BUG FIXES:
+
+- Avoid re-copying the NGINX Amplify config file every time the role is run.
+- Update conditional statements to avoid include Jinja2 warnings.
+- Fix issue when installing NGINX on BSD systems.
+
+CI/CD:
+
+- Add Molecule tests for NGINX Amplify.
+- Update the RHEL based tests to use the latest UBI release.
+- Use the local role name (`ansible-role-nginx`) instead of the fully qualified role name (`nginxinc.nginx`) in Molecule to ensure tests always work as intended in environments where the role has been already installed beforehand.
+- Implement F5 CLA.
+- Hardcode version of Python requests module given its propensity to break the Docker Python SDK.
+
+## 0.24.2 (October 3rd, 2023)
+
+FEATURES:
+
+- Add Alpine Linux 3.18 and Debian bookworm to the list of NGINX Plus tested and supported distributions.
+- Remove Ubuntu kinetic from the list of NGINX OSS tested and supported distributions.
+- Remove Alpine Linux 3.14 and Ubuntu bionic from the list of NGINX Plus tested and supported distributions.
+- The `geoip2` module for NGINX Plus is no longer supported on Amazon Linux.
+- Add support for specific version for NGINX OSS install from source
+
+CI/CD:
+
+- Reimplement some platforms in the upgrade & downgrade Molecule scenarios since all platforms now have at least two releases.
+- Replace the hardcoded NGINX version check in multiple Molecule scenarios with a dynamic NGINX version check.
+- Explicitly specify the `x86_64` platform in certain Molecule scenarios to avoid compatibility issues in ARM based computers.
+
+## 0.24.1 (July 6, 2023)
+
+FEATURES:
+
+- Add Alpine Linux 3.18, Debian bookworm, and Ubuntu kinetic/lunar to the list of NGINX OSS tested and supported distributions.
+- Remove Alpine Linux 3.14 from the list of NGINX OSS tested and supported distributions.
+- Remove Alpine Linux 3.13 from the list of NGINX Plus tested and supported distributions.
 
 ENHANCEMENTS:
 
 - Refactor the OSS BSD installation process to consolidate tasks and avoid Ansible Lint warnings.
 - Refactor handlers to avoid Ansible Lint warnings.
 - Enable SELinux configuration tasks on Oracle Linux OS.
+- Bump the Ansible `ansible.posix` collection to `1.5.4`, `community.general` collection to `6.4.0`, `community.crypto` collection to `2.14.1` and `community.docker` collection to `3.4.7`.
+- Oracle Linux 8 requires the Python `python3.11-cryptography` package for validating the NGINX Plus repository certificate.
+
+BUG FIXES:
+
+- Fix an issue with the platform validation logic where distribution versions ending in `*.*0` would not be correctly identified.
+
+CI/CD:
+
+- Comment out the platform parameter out of Molecule tests. QEMU based tests are failing when trying to test the newest supported distribution.
+- Split Ansible Lint into its own GitHub Actions job since Molecule no longer runs linters natively.
+- Replace `molecule[docker]` with `molecule` and `molecule-plugins[docker]`.
+- Explicitly set the `ansible-compat` version.
+- Add pre-releases to Release Drafter.
 
 ## 0.24.0 (January 29, 2023)
 
@@ -31,7 +158,8 @@ FEATURES:
 - Validate that various role variables have been set to one of the allowed values.
 - Add support for the newer `ndk` and `set-misc` NGINX Plus dynamic modules and remove old code checks for distributions that are no longer supported.
 - Add AlmaLinux, Oracle Linux and Rocky Linux to the list of NGINX OSS and NGINX Plus tested and supported distributions.
-- Add Alpine Linux 3.17 to the NGINX list of tested and supported platforms (and remove Alpine Linux 3.13 from the list of NGINX OSS supported distributions).
+- Add Alpine Linux 3.17 to the NGINX list of tested and supported platforms.
+- Remove Alpine Linux 3.13 from the list of NGINX OSS supported distributions.
 
 ENHANCEMENTS:
 
@@ -46,14 +174,14 @@ BUG FIXES:
 - Specifying a module version would result in an invalid package name on Alpine Linux.
 - Fix the NGINX installation process when installing NGINX from a distribution's package repository in CentOS/RHEL 7 based distributions.
 - Fix an issue when installing the GeoIP2 module on an UBI 7 container where the the `libmaxminddb` package dependency might not be available via `yum` (if it's not available, `libmaxminddb` is installed from an external source).
-- GitHub actions should now correctly skip \*plus\* scenarios only when the NGINX Plus license secrets are not present.
+- GitHub Actions should now correctly skip \*plus\* scenarios only when the NGINX Plus license secrets are not present.
 - Update the versions of the various packages required to build NGINX from source. The version of `zlib` listed in the role was no longer available.
-- The `ignore-tags` GitHub actions key does not exist. Replace it with the correct key, `tags-ignore`.
+- The `ignore-tags` GitHub Actions key does not exist. Replace it with the correct key, `tags-ignore`.
 - Remove the `arch` option from the Debian family NGINX repository source. In its current form this prevented the role from working any platforms beyond `x86_64`/`amd64` and `aarch64`/`arm64`.
 
 TESTS:
 
-- Update GitHub actions to run on Ubuntu 22.04 (and thus support `cgroups` v2).
+- Update GitHub Actions to run on Ubuntu 22.04 (and thus support `cgroups` v2).
 - Explicitly specify `x86_64`/`amd64` as the platform used in the Amazon Linux 2/CentOS/Oracle Linux/RHEL 7/SLES 15 Molecule Docker images. This will ensure that tests work when run on different host architectures (e.g. newer Macbooks with `aarch64`/`arm64` processors) when running tests in distributions that only support `x86_64`/`amd64` (either due to lack of support for a `cgroups` v2 backport or due to lack of builds for `aarch64`/`arm64`).
 - Explicitly test some distributions using `aarch64` and `s390x` as the Molecule platform. This should ensure the role works as intended across the various architectures that are officially supported.
 - Combine the `module` Molecule scenario with the `default` scenario.
@@ -86,7 +214,7 @@ BUG FIXES:
 
 TESTS:
 
-- Update GitHub actions to only skip \*plus\* scenarios when the NGINX Plus license secrets are not present (it used to only run the NGINX Plus test scenarios during internal PRs).
+- Update GitHub Actions to only skip \*plus\* scenarios when the NGINX Plus license secrets are not present (it used to only run the NGINX Plus test scenarios during internal PRs).
 - Add SLES 15 to all Molecule tests.
 - Create downgrade and upgrade tests for NGINX Plus.
 - Remove Yamllint (Ansible Lint now incorporates Yamllint).
@@ -104,7 +232,7 @@ ENHANCEMENTS:
 - Bump the Ansible `community.general` collection to `4.7.0` and `community.docker` collection to `2.3.0`.
 - Streamline configuring SELinux.
 - Add `TimeoutStartSec` parameter to Systemd template.
-- Update Dependabot to trigger updates at the same time across all NGINX core roles at the same time and to avoid triggering release drafter on GitHub actions dependency updates.
+- Update Dependabot to trigger updates at the same time across all NGINX core roles at the same time and to avoid triggering release drafter on GitHub Actions dependency updates.
 
 BUG FIXES:
 
@@ -162,7 +290,7 @@ BUG FIXES:
 ENHANCEMENTS:
 
 - Change Dependabot frequency from daily to weekly.
-- Minor touch-up of GitHub actions workflows.
+- Minor touch-up of GitHub Actions workflows.
 
 ## 0.21.2 (October 7, 2021)
 
@@ -214,7 +342,7 @@ BREAKING CHANGES:
 ENHANCEMENTS:
 
 - Replace Ansible base with Ansible core. Ansible core will be the "core" Ansible release moving forward from Ansible `2.11`.
-- Update GitHub actions to add a workflow dispatch option.
+- Update GitHub Actions to add a workflow dispatch option.
 - Replace "yes"/"no" boolean values with "true"/"false" to comply with YAML spec `1.2`.
 - Bump the Ansible `community.general` collection to `3.2.0` and `community.docker` collection to `1.7.0`.
 
@@ -245,12 +373,12 @@ FEATURES:
 
 ENHANCEMENTS:
 
-- Only run GitHub actions Galaxy CI/CD workflow when a new release is published.
+- Only run GitHub Actions Galaxy CI/CD workflow when a new release is published.
 - Add Alpine `3.13` to the list of NGINX Plus supported platforms.
-- Specify GitHub actions Ubuntu release.
+- Specify GitHub Actions Ubuntu release.
 - Minor GitHub template tweaks, including the creation of a SECURITY doc.
 - Add Molecule NGINX OSS tests for Alpine 3.13, remove Molecule tests for Debian stretch, and update list of supported platforms.
-- Update Ansible base to `2.10.8`, Ansible Lint to `5.0.7`, Molecule to `3.3.0`, yamllint to `1.26.1` and Docker Python SDK to `5.0.0`.
+- Update Ansible base to `2.10.8`, Ansible Lint to `5.0.7`, Molecule to `3.3.0`, Yamllint to `1.26.1` and Docker Python SDK to `5.0.0`.
 - Consolidate Molecule testing scenarios to address changes introduced in Ansible Lint `5.*`.
 - Override of systemd `Restart` value by using proper `nginx_service_restart` variable.
 
@@ -263,7 +391,7 @@ BUG FIXES:
 
 ENHANCEMENTS:
 
-- The GitHub actions Molecule CI/CD workflow should now correctly avoid running 'plus' related tests on external PRs.
+- The GitHub Actions Molecule CI/CD workflow should now correctly avoid running 'plus' related tests on external PRs.
 - Update Ansible base to `2.10.4`, Ansible to `2.10.5`, Molecule to `3.2.2` and Docker Python SDK to `4.4.1`.
 - Update copyright notice.
 
@@ -275,7 +403,7 @@ BREAKING CHANGES:
 
 ENHANCEMENTS:
 
-The GitHub actions Molecule CI/CD workflow is no longer run on a new release (this is not necessary since it already runs on every push).
+The GitHub Actions Molecule CI/CD workflow is no longer run on a new release (this is not necessary since it already runs on every push).
 
 ## 0.18.2 (December 22, 2020)
 
@@ -284,7 +412,7 @@ ENHANCEMENTS:
 - Update Molecule to `3.2.1` and Docker Python SDK to `4.4.0`.
 - Add Alpine `3.12` to supported platforms for NGINX Plus.
 - Remove Alpine `3.9` and CentOS/RHEL `6` from supported platforms due to EOL.
-- Replace TravisCI with GitHub actions.
+- Replace TravisCI with GitHub Actions.
 
 ## 0.18.1 (November 17, 2020)
 
@@ -322,7 +450,7 @@ ENHANCEMENTS:
 
 - Add survey to README.
 - Improve README structure and use tables where relevant.
-- Update Ansible (now Ansible base) to `2.10.3`, Ansible (now Ansible Community Distribution) to `2.10.3`, Ansible Lint to `4.3.7`, Molecule to `3.1.5`, and yamllint to `1.25.0`.
+- Update Ansible (now Ansible base) to `2.10.3`, Ansible (now Ansible Community Distribution) to `2.10.3`, Ansible Lint to `4.3.7`, Molecule to `3.1.5`, and Yamllint to `1.25.0`.
 - Optimize NGINX Plus install/remove tasks.
 
 BUG FIXES:

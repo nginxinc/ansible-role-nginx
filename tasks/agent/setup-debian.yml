@@ -1,0 +1,7 @@
+---
+- name: (Debian/Ubuntu) Configure NGINX Agent repository
+  ansible.builtin.apt_repository:
+    filename: nginx-agent
+    repo: deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] https://packages.nginx.org/nginx-agent/{{ ansible_facts['distribution'] | lower }} {{ ansible_facts['distribution_release'] | lower }} agent
+    update_cache: true
+    mode: "0644"

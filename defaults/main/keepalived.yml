@@ -1,0 +1,15 @@
+---
+# Install NGINX Plus HA keepalived package
+nginx_keepalived_enable: false
+
+# Configure NGINX Plus HA keepalived
+nginx_keepalived_conf_enable: false
+nginx_keepalived_conf:
+  - virtual_router_id: 1
+    primary_dev: eth0
+    priority: 101
+    primary_ip: 192.168.100.100
+    secondary_ip:
+      - 192.168.100.101
+    cluster_ip:
+      - 192.168.100.150

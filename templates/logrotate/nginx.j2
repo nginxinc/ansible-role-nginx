@@ -1,10 +1,20 @@
-{% for path in nginx_logrotate_conf.paths %}
+{{ ansible_managed | comment }}
+
+{% if nginx_logrotate_conf['paths'] is defined and nginx_logrotate_conf['paths'] is not mapping %}
+{% for path in nginx_logrotate_conf['paths'] if nginx_logrotate_conf['paths'] is not string %}
 {{ path }}
+{% else %}
+{{ nginx_logrotate_conf['paths'] }}
 {% endfor %}
+{%- endif %}
 {
-{% for option in nginx_logrotate_conf.options %}
+{% if nginx_logrotate_conf['options'] is defined and nginx_logrotate_conf['options'] is not mapping %}
+{% for option in nginx_logrotate_conf['options'] if nginx_logrotate_conf['options'] is not string %}
     {{ option }}
+{% else %}
+    {{ nginx_logrotate_conf['options'] }}
 {% endfor %}
+{%- endif %}
     postrotate
 {% if ansible_facts['os_family'] == "Debian" %}
         if [ -f /var/run/nginx.pid ]; then

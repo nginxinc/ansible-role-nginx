@@ -1,5 +1,14 @@
+#####################
 # Main global owner #
 #####################
 * @alessfg
-/.github/workflows/
+
+################################################
+# Enable auto merge on GitHub Action workflows #
+################################################
+/.github/workflows
+
+##############################################
+# Markdown does not require a specific owner #
+##############################################
 *.md

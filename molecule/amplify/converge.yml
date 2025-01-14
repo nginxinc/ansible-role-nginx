@@ -1,0 +1,10 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: Install NGINX and NGINX Amplify
+      ansible.builtin.include_role:
+        name: ansible-role-nginx
+      vars:
+        nginx_amplify_enable: true
+        nginx_amplify_api_key: "{{ lookup('env', 'AMPLIFY_API_KEY') }}"

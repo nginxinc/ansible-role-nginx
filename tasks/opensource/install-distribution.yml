@@ -1,41 +1,11 @@
 ---
-- name: (CentOS/RHEL 7) Set up the EPEL repository
-  when:
-    - ansible_facts['distribution'] in ['CentOS', 'RedHat']
-    - ansible_facts['distribution_major_version'] is version('7', '==')
-    - nginx_install_epel_release | bool
-  block:
-    - name: (CentOS/RHEL 7) Import the EPEL repository GPG key
-      ansible.builtin.rpm_key:
-        state: present
-        key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ((ansible_facts['distribution'] == 'Amazon') | ternary('7', ansible_facts['distribution_major_version'])) }}
-
-    - name: (CentOS/RHEL 7) Install the EPEL repository
-      ansible.builtin.yum:
-        name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ((ansible_facts['distribution'] == 'Amazon') | ternary('7', ansible_facts['distribution_major_version'])) }}.noarch.rpm
-
-- name: (Oracle Linux 7) Install the EPEL repository
-  ansible.builtin.yum:
-    name: oracle-epel-release-el7
-  when:
-    - ansible_facts['distribution'] == 'OracleLinux'
-    - ansible_facts['distribution_major_version'] is version('7', '==')
-    - nginx_install_epel_release | bool
-
-- name: (CentOS) Remove the nodocs flag from yum.conf
-  ansible.builtin.lineinfile:
-    path: /etc/yum.conf
-    state: absent
-    line: tsflags=nodocs
-  when:
-    - ansible_facts['distribution'] == 'CentOS'
-    - ansible_facts['distribution_major_version'] is version('7', '==')
-
 - name: (Amazon Linux) Enable the NGINX Amazon extras package repository
   ansible.builtin.command:
     cmd: amazon-linux-extras enable nginx1
     creates: /usr/sbin/nginx
-  when: ansible_facts['distribution'] == 'Amazon'
+  when:
+    - ansible_facts['distribution'] == 'Amazon'
+    - ansible_facts['distribution_major_version'] is version('2', '==')
 
 - name: "{{ nginx_setup | capitalize }} NGINX from the distribution's package repository"
   ansible.builtin.package:

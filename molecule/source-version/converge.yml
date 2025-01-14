@@ -1,0 +1,20 @@
+---
+- name: Converge
+  hosts: all
+  pre_tasks:
+    - name: Set NGINX version
+      ansible.builtin.set_fact:
+        ngx_version: 1.27.2
+        cacheable: true
+  tasks:
+    - name: Install NGINX from source
+      ansible.builtin.include_role:
+        name: ansible-role-nginx
+      vars:
+        nginx_install_from: source
+        nginx_version: "{{ ngx_version }}"
+        nginx_static_modules: [http_ssl_module]
+        nginx_install_source_build_tools: true
+        nginx_install_source_pcre: false
+        nginx_install_source_openssl: false
+        nginx_install_source_zlib: false

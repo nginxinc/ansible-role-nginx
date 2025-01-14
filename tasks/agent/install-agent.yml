@@ -1,0 +1,58 @@
+---
+- name: Install NGINX Agent awk prerequisite
+  ansible.builtin.package:
+    name: gawk
+    state: present
+
+- name: (Alpine Linux/Debian/SLES OSs) Install NGINX Agent awk and nstat prerequisite
+  ansible.builtin.package:
+    name: iproute2
+    state: present
+  when: ansible_facts['os_family'] in ['Alpine', 'Debian', 'Suse']
+
+- name: (Red Hat OSs) Install NGINX Agent awk and nstat prerequisite
+  ansible.builtin.package:
+    name: iproute
+    state: present
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: Manage NGINX Agent repository
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/agent/setup-{{ ansible_facts['os_family'] | lower }}.yml"
+  when: ansible_facts['os_family'] in ['Alpine', 'Debian', 'RedHat', 'Suse']
+
+- name: Install NGINX Agent
+  ansible.builtin.package:
+    name: nginx-agent
+    state: present
+
+- name: Dynamically generate NGINX Agent static configuration file
+  ansible.builtin.template:
+    src: nginx-agent/nginx-agent.conf.j2
+    dest: /etc/nginx-agent/nginx-agent.conf
+    mode: "0644"
+    backup: true
+  when: nginx_agent_configure | bool
+  notify: (Handler) Start NGINX Agent
+
+- name: Check if the NGINX Agent dynamic configuration file has been modified
+  ansible.builtin.lineinfile:
+    path: /var/lib/nginx-agent/agent-dynamic.conf
+    line: '# agent-dynamic.conf'
+    state: present
+  check_mode: true
+  changed_when: false
+  when:
+    - nginx_agent_configure_dynamic | bool
+    - not nginx_agent_configure_dynamic_force | bool
+  register: default_conf
+
+- name: Dynamically generate NGINX Agent dynamic configuration file if it has not been externally modified
+  ansible.builtin.template:
+    src: nginx-agent/agent-dynamic.conf.j2
+    dest: "{{ (ansible_facts['system'] | lower is not search('bsd')) | ternary('/var/lib/nginx-agent/agent-dynamic.conf', '/var/db/nginx-agent/agent-dynamic.conf') }}"
+    mode: "0644"
+    backup: true
+  when:
+    - nginx_agent_configure_dynamic | bool
+    - (default_conf['msg'] is defined and default_conf['msg'] != 'line added') or nginx_agent_configure_dynamic_force | bool
+  notify: (Handler) Start NGINX Agent

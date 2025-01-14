@@ -1,4 +1,8 @@
 ---
+# Set the minimum version required for Ansible and Jinja2
+nginx_ansible_version: 2.16
+nginx_jinja2_version: 3.1
+
 # Set the values allowed for various variables
 nginx_setup_vars: [install, uninstall, upgrade]
 
@@ -27,28 +31,24 @@ nginx_supported_distributions:
     architectures: [x86_64, aarch64, s390x]
   alpine:
     name: Alpine Linux
-    versions: [3.14, 3.15, 3.16, 3.17]
+    versions: [3.17, 3.18, 3.19, 3.20]
     architectures: [x86_64, aarch64]
   amazon:
     name: Amazon Linux
-    versions: [2]
-    architectures: [x86_64, aarch64]
-  centos:
-    name: CentOS
-    versions: [7]
+    versions: [2, 2023]
     architectures: [x86_64, aarch64]
   debian:
     name: Debian
-    versions: [11]
+    versions: [11, 12]
     architectures: [x86_64, aarch64]
   oraclelinux:
     name: Oracle Linux
-    versions: [7, 8, 9]
-    architectures: "{{ (['x86_64', 'aarch64'] + ['s390x']) if (ansible_facts['distribution_major_version'] is version('8', '>=')) else ['x86_64', 'aarch64'] }}"
+    versions: [8, 9]
+    architectures: "{{ ['x86_64', 'aarch64', 's390x'] if (ansible_facts['distribution_major_version'] is version('8', '>=')) else ['x86_64', 'aarch64'] }}"
   redhat:
     name: Red Hat Enterprise Linux
-    versions: [7, 8, 9]
-    architectures: "{{ (['x86_64', 'aarch64'] + ['s390x']) if (ansible_facts['distribution_major_version'] is version('8', '>=')) else ['x86_64', 'aarch64'] }}"
+    versions: [8, 9]
+    architectures: "{{ ['x86_64', 'aarch64', 's390x'] if (ansible_facts['distribution_major_version'] is version('8', '>=')) else ['x86_64', 'aarch64'] }}"
   rocky:
     name: Rocky Linux
     versions: [8, 9]
@@ -59,8 +59,8 @@ nginx_supported_distributions:
     architectures: [x86_64]
   ubuntu:
     name: Ubuntu
-    versions: [18.04, 20.04, 22.04, 22.10]
-    architectures: "{{ (['x86_64', 'aarch64'] + ['s390x']) if ((ansible_facts['distribution_version'] is version('20.04', '==')) or (ansible_facts['distribution_version'] is version('22.04', '=='))) else ['x86_64', 'aarch64'] }}"
+    versions: [20.04, 22.04, 24.04, 24.10]
+    architectures: "{{ ['x86_64', 'aarch64', 's390x'] if ((ansible_facts['distribution_version'] is version('20.04', '==')) or (ansible_facts['distribution_version'] is version('22.04', '=='))) else ['x86_64', 'aarch64'] }}"
 
 # Supported NGINX Plus distributions
 # https://docs.nginx.com/nginx/technical-specs/
@@ -71,32 +71,28 @@ nginx_plus_supported_distributions:
     architectures: [x86_64, aarch64]
   alpine:
     name: Alpine Linux
-    versions: [3.13, 3.14, 3.15, 3.16, 3.17]
+    versions: [3.17, 3.18, 3.19, 3.20]
     architectures: [x86_64, aarch64]
   amazon:
     name: Amazon Linux
-    versions: [2]
-    architectures: [x86_64, aarch64]
-  centos:
-    name: CentOS
-    versions: [7]
+    versions: [2, 2023]
     architectures: [x86_64, aarch64]
   debian:
     name: Debian
-    versions: [11]
+    versions: [11, 12]
     architectures: [x86_64, aarch64]
   freebsd:
     name: FreeBSD
-    versions: [12, 13]
+    versions: [13, 14]
     architectures: [x86_64]
   oraclelinux:
     name: Oracle Linux
-    versions: [7, 8, 9]
-    architectures: "{{ (['x86_64'] + ['aarch64']) if (ansible_facts['distribution_major_version'] is version('8', '==')) else ['x86_64'] }}"
+    versions: [8, 9]
+    architectures: "{{ ['x86_64', 'aarch64'] if (ansible_facts['distribution_major_version'] is version('8', '==')) else ['x86_64'] }}"
   redhat:
     name: Red Hat Enterprise Linux
-    versions: [7, 8, 9]
-    architectures: "{{ (['x86_64', 'aarch64'] + ['s390x']) if (ansible_facts['distribution_major_version'] is version('8', '>=')) else ['x86_64', 'aarch64'] }}"
+    versions: [8, 9]
+    architectures: [x86_64, aarch64]
   rocky:
     name: Rocky Linux
     versions: [8, 9]
@@ -107,35 +103,35 @@ nginx_plus_supported_distributions:
     architectures: [x86_64]
   ubuntu:
     name: Ubuntu
-    versions: [18.04, 20.04, 22.04]
-    architectures: "{{ (['x86_64', 'aarch64'] + ['s390x']) if (ansible_facts['distribution_version'] is version('20.04', '>=')) else ['x86_64', 'aarch64'] }}"
+    versions: [20.04, 22.04, 24.04]
+    architectures: [x86_64, aarch64]
 
 # Default NGINX signing key
 nginx_default_signing_key_pgp: https://nginx.org/keys/nginx_signing.key
 nginx_default_signing_key_rsa_pub: https://nginx.org/keys/nginx_signing.rsa.pub
 
 # Default NGINX Open Source repositories
-nginx_default_repository_alpine: "@nginx http://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}alpine/v{{ ansible_facts['distribution_version'] | regex_search('^[0-9]+\\.[0-9]+') }}/main"
-nginx_default_repository_amazon: https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}/amzn2/$releasever/$basearch
+nginx_default_repository_alpine: "@nginx https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}alpine/v{{ ansible_facts['distribution_version'] | regex_search('^[0-9]+\\.[0-9]+') }}/main"
+nginx_default_repository_amazon: https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}/amzn{{ (ansible_facts['distribution_major_version'] is version('2', '==')) | ternary('2/$releasever', '/2023') }}/$basearch
 nginx_default_repository_debian:
   - deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}{{ ansible_facts['distribution'] | lower }}/ {{ ansible_facts['distribution_release'] }} nginx
   - deb-src [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}{{ ansible_facts['distribution'] | lower }}/ {{ ansible_facts['distribution_release'] }} nginx
-nginx_default_repository_redhat: https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}{{ (ansible_facts['distribution'] == 'CentOS') | ternary('centos', 'rhel') }}/{{ ansible_facts['distribution_major_version'] }}/$basearch/
+nginx_default_repository_redhat: https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}rhel/{{ ansible_facts['distribution_major_version'] }}/$basearch
 nginx_default_repository_suse: https://nginx.org/packages/{{ (nginx_branch == 'mainline') | ternary('mainline/', '') }}sles/{{ ansible_facts['distribution_major_version'] }}
 
 # Default NGINX Plus repositories
 nginx_plus_default_repository_alpine: https://pkgs.nginx.com/plus/alpine/v{{ ansible_facts['distribution_version'] | regex_search('^[0-9]+\.[0-9]+') }}/main
-nginx_plus_default_repository_amazon: https://pkgs.nginx.com/plus/amzn{{ (ansible_facts['distribution_major_version'] is version('2', '==')) | ternary('2', '') }}/$releasever/$basearch
+nginx_plus_default_repository_amazon: https://pkgs.nginx.com/plus/amzn{{ (ansible_facts['distribution_major_version'] is version('2', '==')) | ternary('2/$releasever', '/2023') }}/$basearch
 nginx_plus_default_repository_debian: deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] https://pkgs.nginx.com/plus/{{ ansible_facts['distribution'] | lower }} {{ ansible_facts['distribution_release'] }} nginx-plus
 nginx_plus_default_repository_freebsd: https://pkgs.nginx.com/plus/freebsd/${ABI}/latest
-nginx_plus_default_repository_redhat: https://pkgs.nginx.com/plus/{{ (ansible_facts['distribution'] == 'CentOS') | ternary('centos', 'rhel') }}/{{ (ansible_facts['distribution_version'] is version('7.4', '>=') and ansible_facts['distribution_version'] is version('8', '<')) | ternary('7.4', ansible_facts['distribution_major_version']) }}/$basearch/
+nginx_plus_default_repository_redhat: https://pkgs.nginx.com/plus/rhel/{{ ansible_facts['distribution_major_version'] }}/$basearch
 nginx_plus_default_repository_suse: https://pkgs.nginx.com/plus/sles/{{ ansible_facts['distribution_major_version'] }}?ssl_clientcert=/etc/ssl/nginx/nginx-repo-bundle.crt&ssl_verify=peer
 
 # Alpine dependencies
 nginx_alpine_dependencies: [ca-certificates, coreutils, openssl, pcre2]
 
 # Debian dependencies
-nginx_debian_dependencies: [apt-transport-https, ca-certificates, gpg-agent]
+nginx_debian_dependencies: [apt-transport-https, ca-certificates, gnupg, gpg-agent]
 
 # FreeBSD dependencies
 nginx_freebsd_dependencies: [security/ca_root_nss]
@@ -144,7 +140,7 @@ nginx_freebsd_dependencies: [security/ca_root_nss]
 nginx_redhat_dependencies: [ca-certificates]
 
 # SLES dependencies
-nginx_sles_dependencies: [ca-certificates]
+nginx_sles_dependencies: [ca-certificates, python3-rpm]
 
 # Default locations and versions when 'nginx_install_from' is set to 'source'.
 # Set 'pcre_release' to 1 to install PCRE 1, modify the 'openssl_version' to move back to 1.1.1.
@@ -157,4 +153,4 @@ openssl_version: 3.0.7
 nginx_modules_list: [geoip, image-filter, njs, perl, xslt]
 
 # Supported NGINX Plus dynamic modules
-nginx_plus_modules_list: [auth-spnego, brotli, encrypted-session, geoip, geoip2, headers-more, image-filter, lua, ndk, njs, opentracing, passenger, perl, prometheus, rtmp, set-misc, subs-filter, xslt]
+nginx_plus_modules_list: [auth-spnego, brotli, encrypted-session, geoip, geoip2, ha-keepalived, headers-more, image-filter, lua, ndk, njs, opentracing, passenger, perl, prometheus, rtmp, set-misc, subs-filter, xslt]

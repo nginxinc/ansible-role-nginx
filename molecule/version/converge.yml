@@ -4,23 +4,27 @@
   pre_tasks:
     - name: Set repo if Alpine
       ansible.builtin.set_fact:
-        ngx_version: =1.23.2-r1
-        njs: =1.23.2.7.9-r1
+        ngx_version: =1.27.2-r1
+        njs_version: =1.27.2.0.8.6-r1
+        cacheable: true
       when: ansible_facts['os_family'] == "Alpine"
     - name: Set repo if Debian
       ansible.builtin.set_fact:
-        ngx_version: =1.23.2-1~{{ ansible_facts['distribution_release'] }}
-        njs_version: =1.23.2+0.7.9-1~{{ ansible_facts['distribution_release'] }}
+        ngx_version: =1.27.2-1~{{ ansible_facts['distribution_release'] }}
+        njs_version: =1.27.2+0.8.6-1~{{ ansible_facts['distribution_release'] }}
+        cacheable: true
       when: ansible_facts['os_family'] == "Debian"
     - name: Set repo if Red Hat
       ansible.builtin.set_fact:
-        ngx_version: -1.23.2-1.{{ (ansible_facts['distribution'] == "Amazon") | ternary('amzn2', ('el' + ansible_facts['distribution_major_version'] | string)) }}.ngx
-        njs_version: -1.23.2+0.7.9-1.{{ (ansible_facts['distribution'] == "Amazon") | ternary('amzn2', ('el' + ansible_facts['distribution_major_version'] | string)) }}.ngx
+        ngx_version: -1.27.2-1.{{ (ansible_facts['distribution'] == "Amazon") | ternary(('amzn' + ansible_facts['distribution_major_version'] | string), ('el' + ansible_facts['distribution_major_version'] | string)) }}.ngx
+        njs_version: -1.27.2+0.8.6-1.{{ (ansible_facts['distribution'] == "Amazon") | ternary(('amzn' + ansible_facts['distribution_major_version'] | string), ('el' + ansible_facts['distribution_major_version'] | string)) }}.ngx
+        cacheable: true
       when: ansible_facts['os_family'] == "RedHat"
     - name: Set repo if SLES
       ansible.builtin.set_fact:
-        ngx_version: =1.23.2-1.sles{{ ansible_facts['distribution_major_version'] }}.ngx
-        njs_version: =1.23.2+0.7.9-1.sles{{ ansible_facts['distribution_major_version'] }}.ngx
+        ngx_version: =1.27.2-1.sles{{ ansible_facts['distribution_major_version'] }}.ngx
+        njs_version: =1.27.2+0.8.6-1.sles{{ ansible_facts['distribution_major_version'] }}.ngx
+        cacheable: true
       when: ansible_facts['os_family'] == "Suse"
   tasks:
     - name: Install NGINX

@@ -2,33 +2,64 @@
 name: Molecule CI/CD
 on:
   pull_request:
-    branches:
-      - main
+    branches: [main]
   push:
-    branches:
-      - main
-    tags-ignore:
-      - "**"
+    branches: [main]
+    tags-ignore: ["**"]
+  merge_group:
   schedule:
     - cron: "0 0 1 * *"
   workflow_dispatch:
+permissions: read-all
 jobs:
+  ansible-lint:
+    name: Ansible Lint
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out the codebase
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Set up Python 3
+        uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
+        with:
+          python-version: 3.x
+
+      - name: Install Ansible core and Ansible Lint
+        run: pip3 install -r .github/workflows/requirements/requirements_ansible_lint.txt
+
+      - name: Install Ansible core collection dependencies
+        run: ansible-galaxy install -r .github/workflows/requirements/requirements_collections.yml
+
+      - name: Run Ansible Lint
+        run: ansible-lint --force-color
+
   molecule:
     name: Molecule
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
+    needs: ansible-lint
     env:
+      AGENT_DATA_PLANE_KEY: ${{ secrets.AGENT_DATA_PLANE_KEY }}
+      AMPLIFY_API_KEY: ${{ secrets.AMPLIFY_API_KEY }}
+      AMPLIFY_EMAIL: ${{ secrets.AMPLIFY_EMAIL }}
+      AMPLIFY_PASSWORD: ${{ secrets.AMPLIFY_PASSWORD }}
       NGINX_CRT: ${{ secrets.NGINX_CRT }}
       NGINX_KEY: ${{ secrets.NGINX_KEY }}
+      NGINX_JWT: ${{ secrets.NGINX_JWT }}
+      ONE_API_TOKEN: ${{ secrets.ONE_API_TOKEN }}
+      ONE_TENANT: ${{ secrets.ONE_TENANT }}
     strategy:
       fail-fast: false
       matrix:
         scenario:
+          - agent
+          - amplify
           - default
           - distribution
           - downgrade
           - downgrade-plus
           - plus
           - source
+          - source-version
           - stable
           - uninstall
           - uninstall-plus
@@ -38,27 +69,21 @@ jobs:
     steps:
       - name: Check out the codebase
         if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}
-        uses: actions/checkout@v3
-
-      - name: Set up Docker QEMU
-        if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}
-        uses: docker/setup-qemu-action@v2
-        with:
-          platforms: aarch64,s390x
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Set up Python 3
         if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
         with:
           python-version: 3.x
 
-      - name: Install Molecule dependencies
+      - name: Install Ansible core and Molecule
         if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}
         run: pip3 install -r .github/workflows/requirements/requirements_molecule.txt
 
-      - name: Install Ansible core dependencies
+      - name: Install Ansible core collection dependencies
         if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}
-        run: ansible-galaxy install -r .github/workflows/requirements/requirements_ansible.yml
+        run: ansible-galaxy install -r .github/workflows/requirements/requirements_collections.yml
 
       - name: Run Molecule tests
         if: ${{ !(contains(matrix.scenario, 'plus')) || (env.NGINX_CRT != 0 && env.NGINX_KEY != 0) }}

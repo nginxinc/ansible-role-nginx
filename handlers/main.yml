@@ -28,7 +28,7 @@
 
 - name: (Handler) Print NGINX error if syntax check fails
   ansible.builtin.debug:
-    var: config_check.stderr_lines
+    var: config_check['stderr_lines']
   failed_when: config_check['rc'] != 0
   when:
     - config_check['stderr_lines'] is defined
@@ -41,10 +41,16 @@
   ansible.builtin.service:
     name: amplify-agent
     state: started
+    enabled: true
+
+- name: (Handler) Start NGINX Agent
+  ansible.builtin.service:
+    name: nginx-agent
+    state: restarted
+    enabled: true
 
 - name: (Handler) Start logrotate
-  ansible.builtin.command:
-    cmd: logrotate -f /etc/logrotate.d/nginx
+  ansible.builtin.command: logrotate -f /etc/logrotate.d/nginx
   register: logrotate_check
   ignore_errors: true
   check_mode: false
@@ -53,10 +59,16 @@
 
 - name: (Handler) Print logrotate error if config check fails
   ansible.builtin.debug:
-    var: logrotate_check.stderr_lines
+    var: logrotate_check['stderr_lines']
   failed_when: logrotate_check['rc'] != 0
   when:
     - logrotate_check['stderr_lines'] is defined
     - logrotate_check['stderr_lines'] != []
     - logrotate_check['rc'] != 0
   listen: (Handler) Run logrotate
+
+- name: (Handler) Start NGINX Plus HA keepalived
+  ansible.builtin.service:
+    name: keepalived
+    state: restarted
+    enabled: true

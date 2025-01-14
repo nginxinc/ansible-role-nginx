@@ -1,10 +1,7 @@
 ---
 driver:
   name: docker
-lint: |
-  set -e
-  ansible-lint --force-color
-platforms: # Alpine 3.17 only has one version of NGINX Plus available (at the moment) so it's impossible to test the downgrade scenario
+platforms: # Alpine Linux 3.20 only has one version of NGINX Plus available (at the moment) so it's impossible to test the downgrade scenario
   - name: almalinux-8
     image: almalinux:8
     dockerfile: ../common/Dockerfile.j2
@@ -21,39 +18,39 @@ platforms: # Alpine 3.17 only has one version of NGINX Plus available (at the mo
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
-  - name: alpine-3.13
-    image: alpine:3.13
+  - name: alpine-3.17
+    image: alpine:3.17
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /sbin/init
-  - name: alpine-3.14
-    image: alpine:3.14
+  - name: alpine-3.18
+    image: alpine:3.18
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /sbin/init
-  - name: alpine-3.15
-    image: alpine:3.15
+  - name: alpine-3.19
+    image: alpine:3.19
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /sbin/init
-  - name: alpine-3.16
-    image: alpine:3.16
-    platform: x86_64
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    cgroupns_mode: host
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /sbin/init
+  # - name: alpine-3.20
+  #   image: alpine:3.20
+  #   platform: x86_64
+  #   dockerfile: ../common/Dockerfile.j2
+  #   privileged: true
+  #   cgroupns_mode: host
+  #   volumes:
+  #     - /sys/fs/cgroup:/sys/fs/cgroup:rw
+  #   command: /sbin/init
   - name: amazonlinux-2
     image: amazonlinux:2
     platform: x86_64
@@ -63,9 +60,8 @@ platforms: # Alpine 3.17 only has one version of NGINX Plus available (at the mo
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
-  - name: centos-7
-    image: centos:7
-    platform: x86_64
+  - name: amazonlinux-2023
+    image: amazonlinux:2023
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -80,15 +76,14 @@ platforms: # Alpine 3.17 only has one version of NGINX Plus available (at the mo
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /sbin/init
-  - name: oraclelinux-7
-    image: oraclelinux:7
-    platform: x86_64
+  - name: debian-bookworm
+    image: debian:bookworm-slim
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /usr/sbin/init
+    command: /sbin/init
   - name: oraclelinux-8
     image: oraclelinux:8
     dockerfile: ../common/Dockerfile.j2
@@ -99,14 +94,6 @@ platforms: # Alpine 3.17 only has one version of NGINX Plus available (at the mo
     command: /usr/sbin/init
   - name: oraclelinux-9
     image: oraclelinux:9
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    cgroupns_mode: host
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /usr/sbin/init
-  - name: rhel-7
-    image: registry.access.redhat.com/ubi7:7.9
     platform: x86_64
     dockerfile: ../common/Dockerfile.j2
     privileged: true
@@ -115,8 +102,7 @@ platforms: # Alpine 3.17 only has one version of NGINX Plus available (at the mo
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
   - name: rhel-8
-    image: redhat/ubi8:8.7
-    platform: s390x
+    image: redhat/ubi8:8.10
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -124,8 +110,7 @@ platforms: # Alpine 3.17 only has one version of NGINX Plus available (at the mo
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
   - name: rhel-9
-    image: redhat/ubi9:9.1.0
-    platform: aarch64
+    image: redhat/ubi9:9.5
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -141,14 +126,14 @@ platforms: # Alpine 3.17 only has one version of NGINX Plus available (at the mo
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
   - name: rockylinux-9
-    image: rockylinux:9.0.20220720
+    image: rockylinux:9.0
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
-  - name: sles15
+  - name: sles-15
     image: registry.suse.com/bci/bci-base:15.4
     platform: x86_64
     dockerfile: ../common/Dockerfile.j2
@@ -157,18 +142,8 @@ platforms: # Alpine 3.17 only has one version of NGINX Plus available (at the mo
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
-  - name: ubuntu-bionic
-    image: ubuntu:bionic
-    platform: x86_64
-    dockerfile: ../common/Dockerfile.j2
-    privileged: true
-    cgroupns_mode: host
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    command: /sbin/init
   - name: ubuntu-focal
     image: ubuntu:focal
-    platform: s390x
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -177,7 +152,14 @@ platforms: # Alpine 3.17 only has one version of NGINX Plus available (at the mo
     command: /sbin/init
   - name: ubuntu-jammy
     image: ubuntu:jammy
-    platform: aarch64
+    dockerfile: ../common/Dockerfile.j2
+    privileged: true
+    cgroupns_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
+  - name: ubuntu-noble
+    image: ubuntu:noble
     dockerfile: ../common/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
@@ -190,3 +172,8 @@ provisioner:
     prepare: prepare.yml
     converge: converge.yml
     verify: verify.yml
+  config_options:
+    defaults:
+      fact_caching: jsonfile
+      fact_caching_connection: /tmp/facts_cache
+      fact_caching_timeout: 7200

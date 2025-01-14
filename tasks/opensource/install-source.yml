@@ -17,20 +17,9 @@
         update_cache: true
       when: ansible_facts['os_family'] == 'Alpine'
 
-    - name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) Set up build tools
+    - name: (AlmaLinux/Amazon Linux/Oracle Linux/RHEL/Rocky Linux) Set up build tools
       when: ansible_facts['os_family'] == 'RedHat'
       block:
-        - name: (Oracle Linux 7) Enable Oracle Linux 7 optional repositories
-          ansible.builtin.yum_repository:
-            name: ol7_optional_latest
-            description: Oracle Linux 7 optional repositories
-            baseurl: https://yum.oracle.com/repo/OracleLinux/OL7/optional/latest/$basearch/
-            gpgcheck: true
-            enabled: true
-          when:
-            - ansible_facts['distribution'] == 'OracleLinux'
-            - ansible_facts['distribution_major_version'] is version('7', '==')
-
         - name: (RHEL 8) Install Python 3
           ansible.builtin.yum:
             name:
@@ -47,7 +36,7 @@
             link: /usr/bin/python
           when: ansible_facts['distribution_major_version'] is version('8', '==')
 
-        - name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) Install build tools
+        - name: (AlmaLinux/Amazon Linux/Oracle Linux/RHEL/Rocky Linux) Install build tools
           ansible.builtin.yum:
             name:
               - ca-certificates
@@ -116,7 +105,7 @@
         update_cache: true
       when: ansible_facts['os_family'] == 'Alpine'
 
-    - name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) Install PCRE dependency from package
+    - name: (AlmaLinux/Amazon Linux/Oracle Linux/RHEL/Rocky Linux) Install PCRE dependency from package
       ansible.builtin.yum:
         name: "{{ (pcre_release == 2) | ternary('pcre2-devel', 'pcre-devel') }}"
         update_cache: true
@@ -185,7 +174,7 @@
         update_cache: true
       when: ansible_facts['os_family'] == 'Alpine'
 
-    - name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) Install ZLib dependency from package
+    - name: (AlmaLinux/Amazon Linux/Oracle Linux/RHEL/Rocky Linux) Install ZLib dependency from package
       ansible.builtin.yum:
         name: zlib-devel
         update_cache: true
@@ -254,7 +243,7 @@
         update_cache: true
       when: ansible_facts['os_family'] == 'Alpine'
 
-    - name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) Install OpenSSL dependency from package
+    - name: (AlmaLinux/Amazon Linux/Oracle Linux/RHEL/Rocky Linux) Install OpenSSL dependency from package
       ansible.builtin.yum:
         name: openssl-devel
         update_cache: true
@@ -314,24 +303,25 @@
         chdir: /tmp/openssl-{{ openssl_version }}
         target: install
 
-- name: Get NGINX version
+- name: Get latest NGINX version
+  when: nginx_version is undefined
   block:
-    - name: Fetch NGINX version
+    - name: Fetch NGINX latest version
       ansible.builtin.uri:
         url: https://version.nginx.com/nginx/{{ nginx_branch }}
         return_content: true
       check_mode: false
-      register: nginx_versions
+      register: nginx_latest_version
 
     - name: Set NGINX version
       ansible.builtin.set_fact:
-        nginx_version: "{{ 'nginx-' + (nginx_versions['content'] | regex_search('([0-9]+\\.){2}[0-9]+')) }}"
+        nginx_version: "{{ (nginx_latest_version['content'] | regex_search('([0-9]+\\.){2}[0-9]+')) }}"
 
-    - name: Check for NGINX install
-      ansible.builtin.stat:
-        path: /usr/sbin/nginx
-        follow: true
-      register: nginx_result
+- name: Check for NGINX install
+  ansible.builtin.stat:
+    path: /usr/sbin/nginx
+    follow: true
+  register: nginx_result
 
 - name: Add NGINX group
   ansible.builtin.group:
@@ -352,8 +342,8 @@
   block:
     - name: Download NGINX
       ansible.builtin.get_url:
-        url: https://nginx.org/download/{{ nginx_version }}.tar.gz
-        dest: /tmp/{{ nginx_version }}.tar.gz
+        url: https://nginx.org/download/nginx-{{ nginx_version }}.tar.gz
+        dest: /tmp/nginx-{{ nginx_version }}.tar.gz
         mode: "0600"
       register: nginx_source
 
@@ -387,17 +377,17 @@
           {{ nginx_install_source_zlib | ternary('--with-zlib=../zlib-' + zlib_version | string, '') }}
           {{ nginx_install_source_openssl | ternary('--with-openssl=../openssl-' + openssl_version | string, '') }}
           {{ nginx_install_source_static_modules | default('') }}
-        chdir: /tmp/{{ nginx_version }}
+        chdir: /tmp/nginx-{{ nginx_version }}
         creates: /tmp/makefile
       register: nginx_configure
 
     - name: Make NGINX
       community.general.make:
-        chdir: /tmp/{{ nginx_version }}
+        chdir: /tmp/nginx-{{ nginx_version }}
 
     - name: Install NGINX
       community.general.make:
-        chdir: /tmp/{{ nginx_version }}
+        chdir: /tmp/nginx-{{ nginx_version }}
         target: install
 
     - name: Set up systemd

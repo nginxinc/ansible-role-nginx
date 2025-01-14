@@ -1,0 +1,30 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: Install NGINX and NGINX Agent
+      ansible.builtin.include_role:
+        name: ansible-role-nginx
+      vars:
+        nginx_agent_enable: true
+        nginx_agent_configure: true
+        nginx_agent_server:
+          host: agent.connect.nginx.com
+          port: 443
+          data_plane_key: "{{ lookup('env', 'AGENT_DATA_PLANE_KEY') }}"
+        nginx_agent_tls:
+          enable: true
+          skip_verify: false
+        nginx_agent_nginx:
+          exclude_logs: '""'
+          socket: '"unix:/var/run/nginx-agent/nginx.sock"'
+          treat_warnings_as_errors: false
+        nginx_agent_config_dirs: '"/etc/nginx:/usr/local/etc/nginx:/usr/share/nginx/modules"'
+        nginx_agent_queue_size: 100
+        nginx_agent_extensions: ['metrics']
+        nginx_agent_api:
+          host: 127.0.0.1
+          port: 8081
+        nginx_agent_configure_dynamic: true
+        nginx_agent_instance_group: ansible_instance_group
+        nginx_agent_tags: ['ansible', 'dev']

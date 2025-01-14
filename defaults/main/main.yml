@@ -18,6 +18,9 @@ nginx_type: opensource
 # nginx_version: "=1.23.2-1~jammy"
 # For NGINX Plus you'll need to specify the R* release like below (Ubuntu jammy example).
 # nginx_version: "=28-1~jammy"
+# For Open source and from source the version should be of the following format 1.25.1
+# As in https://nginx.org/download/ `nginx-<version>.<extension>`
+# nginx_version: "1.25.1"
 
 # Start NGINX service.
 # Default is true.
@@ -40,7 +43,6 @@ nginx_manage_repo: true
 # Specify repository origin for NGINX Open Source.
 # Only works if 'nginx_type' is set to 'opensource'.
 # Options are 'nginx_repository', 'source' or 'os_repository'.
-# When using 'os_repository' on CentOS/RHEL 7 based systems, you will also need to install the EPEL repository (see the 'nginx_install_epel_release' variable below).
 # Default is nginx_repository.
 nginx_install_from: nginx_repository
 
@@ -77,11 +79,16 @@ nginx_static_modules: [http_ssl_module]
 # Default is mainline.
 nginx_branch: mainline
 
-# Location of your NGINX Plus license in your local machine.
+# Location of your NGINX Plus license (certificate, key, and JWT) in your local machine. The license JWT is only required starting with NGINX Plus R33 and later.
+# For the license JWT, you can optionally specify a custom destination path for the JWT by using the 'src' and 'dest' parameters.
 # Default is the files folder within the NGINX Ansible role.
 nginx_license:
   certificate: license/nginx-repo.crt
   key: license/nginx-repo.key
+  jwt: license/license.jwt
+  # jwt:
+  #   src: license/license.jwt
+  #   dest: /etc/nginx/license.jwt
 
 # Set up NGINX Plus license before installation.
 # Default is true.

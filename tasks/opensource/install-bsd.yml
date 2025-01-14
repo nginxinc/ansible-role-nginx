@@ -15,7 +15,7 @@
         creates: /usr/ports
 
 - name: (DragonFlyBSD/FreeBSD/HardenedBSD) {{ nginx_setup | capitalize }} NGINX
-  when: ansible_facts['system'] in ['DragonFlyBSD', 'FreeBSD' 'HardenedBSD']
+  when: ansible_facts['system'] in ['DragonFlyBSD', 'FreeBSD', 'HardenedBSD']
   block:
     - name: (DragonFlyBSD/FreeBSD/HardenedBSD) {{ nginx_setup | capitalize }} NGINX package
       community.general.pkgng:
@@ -65,7 +65,7 @@
     - name: (NetBSD) {{ nginx_setup | capitalize }} NGINX package
       community.general.pkgin:
         name: nginx{{ nginx_version | default('') }}
-        state: "{{ nginx_state }}"
+        state: "{{ (nginx_state == 'uninstall') | ternary('absent', 'present') }}"
       when: nginx_bsd_install_packages | bool
       notify: (Handler) Run NGINX
 

@@ -3,17 +3,24 @@
   hosts: localhost
   gather_facts: false
   tasks:
-    - name: Create ephemeral license certificate file from b64 decoded env var # noqa template-instead-of-copy
+    - name: Create ephemeral license certificate file from b64 decoded env var
       ansible.builtin.copy:
         content: "{{ lookup('env', 'NGINX_CRT') | b64decode }}"
         dest: ../../files/license/nginx-repo.crt
         force: false
         mode: "0444"
 
-    - name: Create ephemeral license key file from b64 decoded env var # noqa template-instead-of-copy
+    - name: Create ephemeral license key file from b64 decoded env var
       ansible.builtin.copy:
         content: "{{ lookup('env', 'NGINX_KEY') | b64decode }}"
         dest: ../../files/license/nginx-repo.key
+        force: false
+        mode: "0444"
+
+    - name: Create ephemeral license JWT file from b64 encoded env var
+      ansible.builtin.copy:
+        content: "{{ lookup('env', 'NGINX_JWT') }}"
+        dest: ../../files/license/license.jwt
         force: false
         mode: "0444"
 
@@ -22,19 +29,19 @@
   pre_tasks:
     - name: Set repo if Alpine
       ansible.builtin.set_fact:
-        version: =27-r1
+        version: =32-r1
       when: ansible_facts['os_family'] == "Alpine"
     - name: Set repo if Debian
       ansible.builtin.set_fact:
-        version: =27-1~{{ ansible_facts['distribution_release'] }}
+        version: =32-1~{{ ansible_facts['distribution_release'] }}
       when: ansible_facts['os_family'] == "Debian"
     - name: Set repo if Red Hat
       ansible.builtin.set_fact:
-        version: -27-1.{{ (ansible_facts['distribution'] == "Amazon") | ternary('amzn2', ('el' + ansible_facts['distribution_major_version'] | string)) }}.ngx
+        version: -32-1.{{ (ansible_facts['distribution'] == "Amazon") | ternary(('amzn' + ansible_facts['distribution_major_version'] | string), ('el' + ansible_facts['distribution_major_version'] | string)) }}.ngx
       when: ansible_facts['os_family'] == "RedHat"
     - name: Set repo if SLES
       ansible.builtin.set_fact:
-        version: =27-1.sles{{ ansible_facts['distribution_major_version'] }}.ngx
+        version: =32-1.sles{{ ansible_facts['distribution_major_version'] }}.ngx
       when: ansible_facts['os_family'] == "Suse"
   tasks:
     - name: Install NGINX

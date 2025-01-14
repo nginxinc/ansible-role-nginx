@@ -1,0 +1,5 @@
+---
+- name: (SLES) Configure NGINX Agent repository
+  community.general.zypper_repository:
+    name: nginx-agent
+    repo: https://packages.nginx.org/nginx-agent/sles/{{ ansible_facts['distribution_major_version'] }}

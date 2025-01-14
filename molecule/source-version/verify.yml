@@ -1,0 +1,25 @@
+---
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Check if NGINX service is running
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: true
+      check_mode: true
+      register: service
+      failed_when: (service is changed) or (service is failed)
+
+    - name: Verify NGINX is up and running
+      ansible.builtin.uri:
+        url: http://localhost
+        status_code: 200
+
+    - name: Verify the correct version of NGINX has been installed
+      ansible.builtin.command: nginx -v
+      args:
+        chdir: "{{ ((ansible_facts['system'] | lower is not search('bsd')) | ternary('/etc/nginx', '/usr/local/sbin')) }}"
+      changed_when: false
+      register: version
+      failed_when: version is not search(ngx_version | regex_search('([0-9]+\\.){2}[0-9]+'))

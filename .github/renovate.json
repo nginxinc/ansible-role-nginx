@@ -1,0 +1,116 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "commitMessageLowerCase": "never",
+  "labels": [
+    "dependencies"
+  ],
+  "prConcurrentLimit": 0,
+  "prHourlyLimit": 0,
+  "schedule": [
+    "* 0-7 * * 1"
+  ],
+  "separateMultipleMajor": true,
+  "packageRules": [
+    {
+      "groupName": "Ansible collections",
+      "matchManagers": [
+        "ansible-galaxy",
+        "custom.regex"
+      ],
+      "automerge": true,
+        "matchCurrentVersion": "!/^0/",
+        "matchUpdateTypes": [
+          "minor",
+          "patch"
+        ]
+    }
+  ],
+  "ansible-galaxy": {
+    "fileMatch": [
+      "(^|/)[\\w-]*requirements([_.]\\w+)?\\.ya?ml$"
+    ]
+  },
+  "customManagers": [
+    {
+      "customType": "regex",
+      "datasourceTemplate": "galaxy-collection",
+      "fileMatch": [
+        "README.md"
+      ],
+      "matchStrings": [
+        "- name: (?<depName>\\w+\\.\\w+)(?:\\s+#.*)?\\s+version: (?<currentValue>\\d+\\.\\d+\\.\\d+)"
+      ],
+      "versioningTemplate": "semver"
+    }
+  ],
+  "dockerfile": {
+    "ignorePaths": [
+      "molecule/**/Dockerfile.j2"
+    ]
+  },
+  "github-actions": {
+    "addLabels": [
+      "skip changelog"
+    ],
+    "packageRules": [
+      {
+        "groupName": "GitHub Actions",
+        "matchPackageNames": [
+          "actions/**",
+          "github/**"
+        ]
+      },
+      {
+        "groupName": "Docker Actions",
+        "matchPackageNames": [
+          "docker/**"
+        ]
+      },
+      {
+        "enabled": false,
+        "matchUpdateTypes": [
+          "digest"
+        ]
+      },
+      {
+        "automerge": true,
+        "matchUpdateTypes": [
+          "minor",
+          "patch"
+        ],
+        "matchCurrentVersion": "!/^0/"
+      }
+    ]
+  },
+  "pip_requirements": {
+    "fileMatch": [
+      "(^|/)[\\w-]*requirements([_.]\\w+)?\\.(txt|pip)$"
+    ],
+    "packageRules": [
+      {
+        "groupName": "Python dependencies",
+        "matchPackageNames": [
+          "*"
+        ]
+      },
+      {
+        "groupName": "Ansible core",
+        "matchPackageNames": [
+          "ansible-core"
+        ],
+        "separateMinorPatch": true,
+        "separateMultipleMinor": true
+      },
+      {
+        "automerge": true,
+        "matchUpdateTypes": [
+          "patch"
+        ],
+        "matchCurrentVersion": "!/^0/"
+      }
+    ]
+  }
+}

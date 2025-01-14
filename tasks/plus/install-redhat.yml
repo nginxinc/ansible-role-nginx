@@ -1,5 +1,5 @@
 ---
-- name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) {{ (nginx_license_status is defined or nginx_setup == 'uninstall') | ternary('Remove', 'Configure') }} NGINX Plus repository
+- name: (AlmaLinux/Amazon Linux/Oracle Linux/RHEL/Rocky Linux) {{ (nginx_license_status is defined or nginx_setup == 'uninstall') | ternary('Remove', 'Configure') }} NGINX Plus repository
   ansible.builtin.yum_repository:
     name: nginx-plus
     baseurl: "{{ nginx_repository | default(lookup('vars', 'nginx_plus_default_repository_' + ((ansible_facts['distribution'] == 'Amazon') | ternary('amazon', 'redhat')))) }}"
@@ -12,17 +12,17 @@
     mode: "0644"
   when: nginx_manage_repo | bool
 
-- name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) Force Yum cache refresh
+- name: (AlmaLinux/Amazon Linux/Oracle Linux/RHEL/Rocky Linux) Force Yum cache refresh
   ansible.builtin.command: yum clean metadata
   when: nginx_manage_repo | bool
   changed_when: false
 
-- name: (AlmaLinux/Amazon Linux/CentOS/Oracle Linux/RHEL/Rocky Linux) {{ nginx_setup | capitalize }} NGINX Plus
+- name: (AlmaLinux/Amazon Linux/Oracle Linux/RHEL/Rocky Linux) {{ nginx_setup | capitalize }} NGINX Plus
   ansible.builtin.yum:
     name: nginx-plus{{ nginx_version | default('') }}
     state: "{{ nginx_state }}"
     update_cache: true
-    allow_downgrade: "{{ omit if ansible_version['full'] is version('2.12', '<') else true }}"
+    allow_downgrade: true
   ignore_errors: "{{ ansible_check_mode }}"
   when: nginx_license_status is not defined
   notify: (Handler) Run NGINX

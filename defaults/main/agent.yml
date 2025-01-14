@@ -1,0 +1,107 @@
+---
+# Install the NGINX Agent.
+# Requires access to either the NGINX stub_status or the NGINX Plus REST API.
+nginx_agent_enable: false
+
+
+########################################################################################################################
+# The following parameters let you configure the static configuration file of NGINX Agent.                             #
+# By default, the config produced is as close a match to the default config provided by NGINX Agent upon installation. #
+########################################################################################################################
+
+# Configure the NGINX Agent.
+nginx_agent_configure: false
+
+# Specify the NGINX Agent API host and port. Optionally, specify the path to the cert and key.
+# Default is not enabled.
+# nginx_agent_api:
+#   host: 127.0.0.1
+#   port: 8081
+#   cert: /path/to/cert
+#   key: /path/to/key
+
+# Specify the control plane server host, port, and data plane key/token.
+# The data plane key is required to authenticate NGINX Agent with the NGINX One SaaS control plane available in F5 Distributed Cloud.
+# Default is the NGINX One SaaS control plane available in F5 Distributed Cloud.
+# nginx_agent_server:
+#   host: agent.connect.nginx.com
+#   port: 443
+#   data_plane_key: ''
+
+# Enable TLS communication between data plane and control plane.
+# Optionally, specify the path to the TLS certificate, key, and CA certificate to enable mTLS.
+# nginx_agent_tls:
+#   enable: true
+#   skip_verify: false
+#   cert: /path/to/cert
+#   key: /path/to/key
+#   ca: /path/to/ca
+
+# Specify the log level and path.
+# Default is info for the log level and /var/log/nginx-agent/ for the log path.
+nginx_agent_log:
+  level: info
+  path: /var/log/nginx-agent/
+
+# Specify NGINX specific options within NGINX Agent.
+# Default is to not exclude any logs, to use the default socket path and to not treat warnings as errors.
+nginx_agent_nginx:
+  exclude_logs: '""'
+  socket: '"unix:/var/run/nginx-agent/nginx.sock"'
+  # treat_warnings_as_errors: false
+
+# Specify how often NGINX Agent polls the dataplane.
+# Default is 30s for poll interval and 24h for report interval.
+nginx_agent_dataplane_status:
+  poll_interval: 30s
+  report_interval: 24h
+
+# Specify how often NGINX Agent reports metrics to the control plane.
+# Default is 20 for the buffer/bulk size, 1m for report interval, 15s for collection interval and aggregated for mode.
+nginx_agent_metrics:
+  bulk_size: 20
+  report_interval: 1m
+  collection_interval: 15s
+  mode: aggregated
+
+# NGINX Open Source default config paths.
+# Default can be seen below.
+# nginx_agent_config_dirs: '"/etc/nginx:/usr/local/etc/nginx:/usr/share/nginx/modules"'
+
+# Internal NGINX Agent queue size.
+# Default is 100.
+# nginx_agent_queue_size: 100
+
+# NGINX Agent features.
+# Default is an empty list. See https://docs.nginx.com/nginx-agent/configuration/configuration-overview/ for more details.
+# nginx_agent_features: []
+
+# NGINX Agent extensions.
+# Default is an empty list. To enable NGINX App Protect reporting within NGINX Agent, use the 'nginx-app-protect' extension as below.
+# nginx_agent_extensions: ['nginx-app-protect']
+
+# NGINX Agent NGINX App Protect settings.
+# Default is not enabled.
+# nginx_agent_app_protect:
+#   report_interval: 15s
+#   precompiled_publication: true
+
+
+#############################################################################################
+# The following parameters let you configure the dynamic configuration file of NGINX Agent. #
+# By default, nothing is configured.                                                        #
+#############################################################################################
+
+# Configure the NGINX Agent dynamic configuration file.
+# NOTE: This will only run if the NGINX Agent dynamic configuration file has not yet been modified externally.
+# If you want to force push a dynamic configuration file, use the 'nginx_agent_configure_dynamic_force' parameter below.
+# Default is false.
+nginx_agent_configure_dynamic: false
+# Force pushing a new dynamic configuration file to NGINX Agent.
+# NOTE: This will overwrite any changes made to the dynamic configuration file by a control plane, and might lead to unexpected behavior.
+# Default is false.
+nginx_agent_configure_dynamic_force: false
+
+# Specify the NGINX Agent instance group and tags.
+# nginx_agent_instance_group: my_instance_group
+# nginx_agent_tags: [ansible, dev, qa]

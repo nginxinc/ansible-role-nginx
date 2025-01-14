@@ -1,6 +1,7 @@
-ansible-core==2.14.4
-jinja2==3.1.2
-ansible-lint==6.14.4
-yamllint==1.30.0
-molecule[docker]==4.0.4
-docker==6.0.1
+ansible-core==2.16.14
+jinja2==3.1.5
+ansible-compat==24.10.0
+molecule==24.12.0
+molecule-plugins[docker]==23.6.0
+docker==7.1.0
+requests==2.32.3

@@ -1,0 +1,58 @@
+---
+- name: Cleanup
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Cleanup NGINX Amplify instances
+      block:
+        - name: Wait for containers to be up
+          ansible.builtin.wait_for_connection:
+            delay: 1
+            timeout: 2
+          ignore_errors: true
+          register: container
+
+        - name: Containers are not up, quit from here
+          ansible.builtin.fail:
+          when: container['failed'] | bool
+
+        - name: Gather facts
+          ansible.builtin.setup:
+            gather_subset:
+              - "!all"
+              - "!any"
+              - distribution
+
+        - name: Login to NGINX Amplify
+          ansible.builtin.uri:
+            url: https://amplify.nginx.com/sapi/auth/login
+            method: POST
+            headers:
+              Content-Type: application/json
+            body_format: json
+            body:
+              email: "{{ lookup('env', 'AMPLIFY_EMAIL') }}"
+              password: "{{ lookup('env', 'AMPLIFY_PASSWORD') }}"
+          register: login
+
+        - name: Get list of NGINX Amplify dangling instance IDs
+          ansible.builtin.uri:
+            url: https://amplify.nginx.com/sapi/inventory/objects/?all=true&filter=false
+            method: GET
+            headers:
+              Cookie: "{{ login['cookies_string'] }}"
+              Connection: keep-alive
+            follow_redirects: all
+          register: get_ids
+
+        - name: Remove dangling instances from NGINX Amplify
+          ansible.builtin.uri:
+            url: https://amplify.nginx.com/sapi/inventory/objects/{{ item }}
+            method: DELETE
+            status_code: 204
+            headers:
+              Cookie: "{{ login['cookies_string'] }}"
+          loop: "{{ get_ids['json'] | rejectattr('parent_id', 'match', '^[0-9]+$') | map(attribute='id') | list }}"
+      rescue:
+        - name: It's ok we're at startup
+          ansible.builtin.meta: noop

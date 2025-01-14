@@ -1,0 +1,12 @@
+---
+- name: (AlmaLinux/Amazon Linux/Oracle Linux/RHEL/Rocky Linux) Configure NGINX Agent repository
+  ansible.builtin.yum_repository:
+    name: nginx-agent
+    file: nginx-agent
+    baseurl: https://packages.nginx.org/nginx-agent/{{ (ansible_facts['distribution'] == 'Amazon') | ternary((ansible_facts['distribution_major_version'] is version('2', '==')) | ternary('amzn2', 'amzn'), 'centos') }}/{{ ansible_facts['distribution_major_version'] }}/$basearch
+    description: NGINX Agent
+    enabled: true
+    gpgcheck: true
+    gpgkey: https://nginx.org/keys/nginx_signing.key
+    module_hotfixes: true
+    mode: "0644"

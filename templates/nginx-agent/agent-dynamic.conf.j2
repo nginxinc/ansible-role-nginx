@@ -1,0 +1,11 @@
+{{ ansible_managed | comment }}
+
+{% if nginx_agent_instance_group is defined %}
+instance_group: {{ nginx_agent_instance_group }}
+{% endif %}
+{% if nginx_agent_tags is defined %}
+tags:
+{% for tag in nginx_agent_tags %}
+  - {{ tag }}
+{% endfor %}
+{% endif %}

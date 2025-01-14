@@ -3,17 +3,24 @@
   hosts: localhost
   gather_facts: false
   tasks:
-    - name: Create ephemeral license certificate file from b64 decoded env var # noqa template-instead-of-copy
+    - name: Create ephemeral license certificate file from b64 decoded env var
       ansible.builtin.copy:
         content: "{{ lookup('env', 'NGINX_CRT') | b64decode }}"
         dest: ../../files/license/nginx-repo.crt
         force: false
         mode: "0444"
 
-    - name: Create ephemeral license key file from b64 decoded env var # noqa template-instead-of-copy
+    - name: Create ephemeral license key file from b64 decoded env var
       ansible.builtin.copy:
         content: "{{ lookup('env', 'NGINX_KEY') | b64decode }}"
         dest: ../../files/license/nginx-repo.key
+        force: false
+        mode: "0444"
+
+    - name: Create ephemeral license JWT file from b64 encoded env var
+      ansible.builtin.copy:
+        content: "{{ lookup('env', 'NGINX_JWT') }}"
+        dest: ../../files/license/license.jwt
         force: false
         mode: "0444"
 
@@ -28,3 +35,4 @@
         nginx_license:
           certificate: license/nginx-repo.crt
           key: license/nginx-repo.key
+          jwt: license/license.jwt

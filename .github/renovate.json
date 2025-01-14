@@ -101,7 +101,8 @@
         "matchPackageNames": [
           "ansible-core"
         ],
-        "separateMinorPatch": true
+        "separateMinorPatch": true,
+        "separateMultipleMinor": true
       },
       {
         "automerge": true,

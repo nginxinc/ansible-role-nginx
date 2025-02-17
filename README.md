@@ -57,11 +57,11 @@ This will also ensure you are deploying/running this role with a fully tested ve
     - name: ansible.posix
       version: 2.0.0
     - name: community.general
-      version: 10.3.0
+      version: 10.3.1
     - name: community.crypto # Only required if you plan to install NGINX Plus
       version: 2.25.0
     - name: community.docker # Only required if you plan to use Molecule (see below)
-      version: 4.3.1
+      version: 4.4.0
   ```
 
 - Instructions on how to install Ansible collections can be found in the [Ansible collections](https://docs.ansible.com/ansible/latest/collections_guide/collections_installing.html) guide.

@@ -12,7 +12,6 @@
   "schedule": [
     "* 0-7 * * 1"
   ],
-  "separateMultipleMajor": true,
   "packageRules": [
     {
       "groupName": "Ansible collections",

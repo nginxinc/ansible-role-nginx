@@ -9,6 +9,6 @@
 
 - name: "{{ nginx_setup | capitalize }} NGINX from the distribution's package repository"
   ansible.builtin.package:
-    name: "{{ nginx_distribution_package_name | default('nginx' + (nginx_version | default(''))) }}"
+    name: "{{ nginx_distribution_package_name | default('nginx' + (nginx_version | default('') | string)) }}"
     state: "{{ nginx_state }}"
   notify: (Handler) Run NGINX

@@ -1,0 +1,19 @@
+- name: (Python 2) Get version 2.7 'pip' script
+  ansible.builtin.get_url:
+    url: "https://bootstrap.pypa.io/pip/2.7/get-pip.py"
+    dest: "/tmp/get-pip.py"
+    mode: "0755"
+
+- name: (Python 2) Check if 'pip' binary exists
+  ansible.builtin.stat:
+    path: /usr/bin/pip
+  ignore_errors: true
+  register: pip
+
+- name: (Python 2) Install 'pip' version 2.7
+  ansible.builtin.command: "python get-pip.py"
+  args:
+    chdir: /tmp/
+  when: not pip.stat.exists
+  register: pip_install
+  changed_when: pip_install.changed

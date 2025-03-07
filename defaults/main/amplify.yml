@@ -4,4 +4,4 @@
 # Use your NGINX Amplify API key.
 # Default is null.
 nginx_amplify_enable: false
-nginx_amplify_api_key: null
+nginx_amplify_api_key:

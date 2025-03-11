@@ -104,6 +104,17 @@
         "separateMultipleMinor": true
       },
       {
+        "groupName": "Ansible devtools",
+        "matchPackageNames": [
+          "ansible-compat",
+          "ansible-lint",
+          "molecule",
+          "molecule-plugins"
+        ],
+        "separateMajorMinor": false,
+        "separateMinorPatch": true
+      },
+      {
         "automerge": true,
         "matchUpdateTypes": [
           "patch"

@@ -36,14 +36,12 @@
           - name: brotli
             version: "{{ ngx_version }}"
           - name: geoip
-            version: "{{ ngx_version }}"
           - name: image-filter
             version: "{{ ngx_version }}"
           - name: njs
             state: present
             version: "{{ njs_version }}"
           - name: perl
-            version: "{{ ngx_version }}"
           - name: xslt
             version: "{{ ngx_version }}"
         nginx_service_modify: true

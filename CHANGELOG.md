@@ -1,10 +1,11 @@
 # Changelog
 
-## 0.25.1
+## 0.25.1 (Unreleased)
 
 BUG FIXES:
 
-- Ansible and Jinja software versions validation tasks in ansible check mode.
+- Fix Ansible and Jinja versions validation tasks in ansible check mode.
+- Correctly use the `nginx_version` (if defined) for NGINX module versions.
 
 ## 0.25.0 (Nov 28, 2024)
 

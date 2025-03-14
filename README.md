@@ -59,9 +59,9 @@ This will also ensure you are deploying/running this role with a fully tested ve
     - name: community.general
       version: 10.4.0
     - name: community.crypto # Only required if you plan to install NGINX Plus
-      version: 2.25.0
+      version: 2.26.0
     - name: community.docker # Only required if you plan to use Molecule (see below)
-      version: 4.5.0
+      version: 4.5.1
   ```
 
 - Instructions on how to install Ansible collections can be found in the [Ansible collections](https://docs.ansible.com/ansible/latest/collections_guide/collections_installing.html) guide.

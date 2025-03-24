@@ -8,6 +8,16 @@
         state: present
       check_mode: true
       register: install
+      when: ansible_facts['os_family'] != 'Debian'
+      failed_when: (install is changed) or (install is failed)
+
+    - name: Check if NGINX is installed
+      ansible.builtin.package:
+        name: nginx-core
+        state: present
+      check_mode: true
+      register: install
+      when: ansible_facts['os_family'] == 'Debian'
       failed_when: (install is changed) or (install is failed)
 
     - name: Check if NGINX service is running

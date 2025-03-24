@@ -2,10 +2,10 @@
 - name: Converge
   hosts: all
   pre_tasks:
-    - name: Set package name if Alpine
+    - name: Set package name if Debian
       ansible.builtin.set_fact:
-        nginx_package_name: "@nginx:1.24/common"
-      when: ansible_facts['os_family'] == "Alpine"
+        nginx_package_name: nginx-core
+      when: ansible_facts['os_family'] == "Debian"
   tasks:
     - name: Install NGINX
       ansible.builtin.include_role:

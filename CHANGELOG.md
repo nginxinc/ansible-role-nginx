@@ -2,6 +2,10 @@
 
 ## 0.25.1 (Unreleased)
 
+FEATURES:
+
+- Add a parameter, `nginx_distribution_package`, to override the default NGINX package when installing NGINX from your distribution/OS repository.
+
 BUG FIXES:
 
 - Fix Ansible and Jinja versions validation tasks in ansible check mode.

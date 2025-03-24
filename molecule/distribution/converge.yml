@@ -1,9 +1,15 @@
 ---
 - name: Converge
   hosts: all
+  pre_tasks:
+    - name: Set package name if Alpine
+      ansible.builtin.set_fact:
+        nginx_package_name: "@nginx:1.24/common"
+      when: ansible_facts['os_family'] == "Alpine"
   tasks:
     - name: Install NGINX
       ansible.builtin.include_role:
         name: ansible-role-nginx
       vars:
         nginx_install_from: os_repository
+        nginx_distribution_name: "{{ nginx_package_name }}"

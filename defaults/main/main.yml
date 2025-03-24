@@ -46,6 +46,11 @@ nginx_manage_repo: true
 # Default is nginx_repository.
 nginx_install_from: nginx_repository
 
+# (Optional) Specify repository for NGINX Open Source or NGINX Plus.
+# Only works if 'install_from' is set to 'nginx_repository' when installing NGINX Open Source.
+# Defaults are the official NGINX repositories.
+# nginx_repository: deb https://nginx.org/packages/mainline/debian/ buster nginx
+
 # Specify source install options for NGINX Open Source.
 # Options represent whether to install from source also or to install from packages (default).
 # These only apply if 'nginx_install_from' is set to 'source'.
@@ -57,21 +62,19 @@ nginx_install_source_pcre: false
 nginx_install_source_openssl: true
 nginx_install_source_zlib: false
 
-# Specify source install module for NGINX Open Source.
+# Specify source install modules for NGINX Open Source.
 # You can select any of the static modules listed on http://nginx.org/en/docs/configure.html.
 # Format is '--with-*' where '*' should be used as static module name in the list below. (see an example below).
 # Default is 'http_ssl_module'. (DO NOT remove it if you need SSL support).
 nginx_static_modules: [http_ssl_module]
 # nginx_static_modules: ['http_v2_module']  # Example for '--with-http_v2_module'
 
+# (Optional) Specify NGINX package name when installing nginx from an 'os_repository'.
+# nginx_distribution_package: @nginx:1.24/common
+
 # (Optional) Choose where to fetch the NGINX signing key from.
 # Default is the official NGINX signing key host.
 # nginx_signing_key: http://nginx.org/keys/nginx_signing.key
-
-# (Optional) Specify repository for NGINX Open Source or NGINX Plus.
-# Only works if 'install_from' is set to 'nginx_repository' when installing NGINX Open Source.
-# Defaults are the official NGINX repositories.
-# nginx_repository: deb https://nginx.org/packages/mainline/debian/ buster nginx
 
 # Specify which branch of NGINX Open Source you want to install.
 # Options are 'mainline' or 'stable'.

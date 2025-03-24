@@ -1,9 +1,15 @@
 ---
 - name: Converge
   hosts: all
+  pre_tasks:
+    - name: Set package name if Debian
+      ansible.builtin.set_fact:
+        nginx_package_name: nginx-core
+      when: ansible_facts['os_family'] == "Debian"
   tasks:
     - name: Install NGINX
       ansible.builtin.include_role:
         name: ansible-role-nginx
       vars:
         nginx_install_from: os_repository
+        nginx_distribution_package: "{{ nginx_package_name }}"

@@ -4,7 +4,7 @@
 
 FEATURES:
 
-- Add a parameter, `nginx_distribution_package`, to override the default NGINX package when installing NGINX from your distribution/OS repository.
+- Add a parameter, `nginx_distribution_package`, to override the default NGINX package name when installing NGINX from your distribution/OS repository.
 
 BUG FIXES:
 

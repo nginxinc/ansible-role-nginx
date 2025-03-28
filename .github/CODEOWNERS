@@ -1,14 +1,9 @@
 #####################
 # Main global owner #
 #####################
-* @alessfg
+* @nginx/ansible
 
 ################################################
 # Enable auto merge on GitHub Action workflows #
 ################################################
 /.github/workflows
-
-##############################################
-# Markdown does not require a specific owner #
-##############################################
-*.md

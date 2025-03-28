@@ -11,6 +11,10 @@ BUG FIXES:
 - Fix Ansible and Jinja versions validation tasks in ansible check mode.
 - Correctly use the `nginx_version` (if defined) for NGINX module versions.
 
+DOCUMENTATION:
+
+- Update community docs & required workflows per the latest [NGINX template repository](https://github.com/nginx/template-repository) guidelines.
+
 ## 0.25.0 (Nov 28, 2024)
 
 BREAKING CHANGES:

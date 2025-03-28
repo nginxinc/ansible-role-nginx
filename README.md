@@ -1,10 +1,11 @@
 [![Ansible Galaxy](https://img.shields.io/badge/galaxy-nginxinc.nginx-5bbdbf.svg)](https://galaxy.ansible.com/nginxinc/nginx)
-[![Molecule CI/CD](https://github.com/nginxinc/ansible-role-nginx/workflows/Molecule%20CI/CD/badge.svg)](https://github.com/nginxinc/ansible-role-nginx/actions/workflows/molecule.yml)
+[![Molecule CI/CD](https://github.com/nginxinc/ansible-role-nginx/actions/workflows/molecule.yml/badge.svg)](https://github.com/nginxinc/ansible-role-nginx/actions/workflows/molecule.yml)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/nginxinc/ansible-role-nginx/badge)](https://securityscorecards.dev/viewer/?uri=github.com/nginxinc/ansible-role-nginx)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Community Support](https://badgen.net/badge/support/community/cyan?icon=awesome)](/SUPPORT.md)
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](/CODE_OF_CONDUCT.md)
+[![Community Forum](https://img.shields.io/badge/community-forum-009639?logo=discourse&link=https%3A%2F%2Fcommunity.nginx.org)](https://community.nginx.org)
 [![License](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](/CODE_OF_CONDUCT.md)
 
 # 👾 *Help make the NGINX Ansible role better by participating in our [survey](https://forms.office.com/Pages/ResponsePage.aspx?id=L_093Ttq0UCb4L-DJ9gcUKLQ7uTJaE1PitM_37KR881UM0NCWkY5UlE5MUYyWU1aTUcxV0NRUllJSC4u)!* 👾
 
@@ -361,4 +362,4 @@ You can find the Ansible NGINX App Protect role to install and configure NGINX A
 
 [Tom Gamull](https://github.com/magicalyak)
 
-&copy; [F5, Inc.](https://www.f5.com/) 2018 - 2024
+&copy; [F5, Inc.](https://www.f5.com/) 2018 - 2025

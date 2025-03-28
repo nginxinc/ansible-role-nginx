@@ -1,0 +1,10 @@
+---
+annotations:
+  - checks:
+      - fuzzing
+      - packaging
+      - pinned-dependencies
+      - sast
+      - signed-releases
+    reasons:
+      - reason: not-applicable

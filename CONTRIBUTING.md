@@ -5,21 +5,15 @@ The following is a set of guidelines for contributing to the NGINX Ansible role.
 #### Table Of Contents
 
 [Getting Started](#getting-started)
-
 [Contributing](#contributing)
-
 [Code Guidelines](#code-guidelines)
-
-- [Git Guidelines](#git-guidelines)
-- [Ansible Guidelines](#ansible-guidelines)
-
 [Code of Conduct](/CODE_OF_CONDUCT.md)
 
 ## Getting Started
 
-Follow this project's [Installation Guide](/README.md#Installation) to install Ansible, Ansible Lint, and Molecule and get ready to develop and test the NGINX Ansible role.
+Follow the role's [installation guide](/README.md#Installation) to install Ansible, Ansible Lint, and Molecule and get ready to develop and test the NGINX Ansible role.
 
-### Project Structure
+### Project Overview & Structure
 
 - The NGINX Ansible role is written in [`yaml`](https://yaml.org) and supports NGINX Open Source, NGINX Plus, NGINX Agent and NGINX Amplify.
 - The project follows the standard [Ansible role directory structure](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html):
@@ -34,11 +28,11 @@ Follow this project's [Installation Guide](/README.md#Installation) to install A
 
 ### Report a Bug
 
-To report a bug, open an issue on GitHub with the label `bug` using the available bug report issue template. Please ensure the bug has not already been reported. **If the bug is a potential security vulnerability, please report it using our [security policy](/SECURITY.md).**
+To report a bug, open an issue on GitHub with the label `bug` using the available [bug report issue form](/.github/ISSUE_TEMPLATE/bug_report.yml). Please ensure the bug has not already been reported. **If the bug is a potential security vulnerability, please report it using our [security policy](/SECURITY.md).**
 
 ### Suggest a Feature or Enhancement
 
-To suggest a feature or enhancement, please create an issue on GitHub with the label `enhancement` using the available [feature request template](/.github/feature_request_template.md). Please ensure the feature or enhancement has not already been suggested.
+To suggest a feature or enhancement, please create an issue on GitHub with the label `enhancement` using the available [feature request issue form](/.github/ISSUE_TEMPLATE/feature_request.yml). Please ensure the feature or enhancement has not already been suggested.
 
 ### Open a Pull Request (PR)
 
@@ -46,11 +40,11 @@ To suggest a feature or enhancement, please create an issue on GitHub with the l
 - Fill in the [PR template](/.github/pull_request_template.md).
 
 > [!NOTE]
-> If you'd like to implement a new feature, please consider creating a [feature request issue](/.github/feature_request_template.md) first to start a discussion about the feature.
+> If you'd like to implement a new feature, please consider creating a [feature request issue](/.github/ISSUE_TEMPLATE/feature_request.yml) first to start a discussion about the feature.
 
 #### F5 Contributor License Agreement (CLA)
 
-F5 requires all external contributors to agree to the terms of the F5 CLA (available [here](https://github.com/f5/.github/blob/main/CLA/cla-markdown.md)) before any of their changes can be incorporated into an F5 Open Source repository.
+F5 requires all contributors to agree to the terms of the F5 CLA (available [here](https://github.com/f5/f5-cla/blob/main/docs/f5_cla.md)) before any of their changes can be incorporated into an F5 Open Source repository (even contributions to the F5 CLA itself!).
 
 If you have not yet agreed to the F5 CLA terms and submit a PR to this repository, a bot will prompt you to view and agree to the F5 CLA. You will have to agree to the F5 CLA terms through a comment in the PR before any of your changes can be merged. Your agreement signature will be safely stored by F5 and no longer be required in future PRs.
 

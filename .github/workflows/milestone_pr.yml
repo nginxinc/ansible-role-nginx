@@ -38,5 +38,5 @@ jobs:
       - name: Add Project
         uses: actions/add-to-project@244f685bbc3b7adfa8466e08b698b5577571133e # v.1.0.2
         with:
-          project-url: https://github.com/orgs/nginxinc/projects/17/views/1
+          project-url: https://github.com/orgs/nginx/projects/30/views/1
           github-token: ${{ secrets.ADD_TO_PROJECT_TOKEN }}

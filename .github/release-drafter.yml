@@ -127,7 +127,7 @@ template: |
 
   ## Resources
 
-  - Functional configuration examples (check `converge.yml` under each `molecule` scenario) -- [github.com/nginxinc/ansible-role-nginx/tree/$RESOLVED_VERSION/molecule](https://github.com/nginxinc/ansible-role-nginx/tree/$RESOLVED_VERSION/molecule).
+  - Functional configuration examples (check `converge.yml` under each `molecule` scenario) -- [github.com/nginx/ansible-role-nginx/tree/$RESOLVED_VERSION/molecule](https://github.com/nginx/ansible-role-nginx/tree/$RESOLVED_VERSION/molecule).
   - Ansible Galaxy repository -- [galaxy.ansible.com/nginxinc/nginx](https://galaxy.ansible.com/nginxinc/nginx).
   - NGINX Ansible role & collection introductory blog -- [f5.com/blog/announcing-nginx-core-collection-ansible](https://www.f5.com/blog/announcing-nginx-core-collection-ansible).
   - NGINX: Better with Ansible demo -- [github.com/alessfg/nginx-ansible-demo](https://github.com/alessfg/nginx-ansible-demo).

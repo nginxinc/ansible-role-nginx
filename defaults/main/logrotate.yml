@@ -3,7 +3,7 @@
 nginx_logrotate_conf_enable: false
 nginx_logrotate_conf:
   paths: /var/log/nginx/*.log # String or list of strings
-    # - /var/log/nginx/*.log
+  # - /var/log/nginx/*.log
   options: # daily # String or a list of strings
     - daily
     - missingok

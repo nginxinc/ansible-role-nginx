@@ -2,7 +2,8 @@
 - name: (AlmaLinux/Amazon Linux/Oracle Linux/RHEL/Rocky Linux) {{ (nginx_setup == 'uninstall') | ternary('Remove', 'Configure') }} NGINX repository
   ansible.builtin.yum_repository:
     name: nginx
-    baseurl: "{{ nginx_repository | default(lookup('vars', 'nginx_default_repository_' + ((ansible_facts['distribution'] == 'Amazon') | ternary('amazon', 'redhat')))) }}"
+    baseurl: "{{ nginx_repository | default(lookup('vars', 'nginx_default_repository_' + ((ansible_facts['distribution'] == 'Amazon') | ternary('amazon', 'redhat'))))
+      }}"
     description: NGINX Repository
     enabled: true
     gpgcheck: true
